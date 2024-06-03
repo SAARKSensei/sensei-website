@@ -24,7 +24,7 @@ export const FAQ = ({ faq }) => {
           />
           <label
             htmlFor={`question${faq.id}`}
-            className="ml-auto peer-checked:bg-[#FF8B13] peer-checked:rotate-0 rotate-45 transition-transform rounded-full bg-grey_2 p-2"
+            className="ml-auto peer-checked:bg-[#FF8B13] peer-checked:rotate-0 rotate-45 transition-transform rounded-full bg-grey_2 p-2 cursor-pointer"
           >
             <svg
               width="20"
@@ -36,14 +36,14 @@ export const FAQ = ({ faq }) => {
               <path
                 d="M14.9492 4.94922L5.04972 14.8487"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
               <path
                 d="M14.9492 14.8496L5.04972 4.95011"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </svg>
           </label>

@@ -10,7 +10,7 @@ import fullSmileStar from "@/assets/fullSmileStar.svg";
 
 const Background = () => {
   return (
-    <div className="w-screen overflow-hidden absolute left-0 top-0 h-full z-[-1]">
+    <div className="w-full overflow-hidden absolute left-0 top-0 h-full z-[-1]">
       <Image
         src={Star}
         alt="star"

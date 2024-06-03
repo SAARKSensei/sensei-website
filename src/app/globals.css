@@ -22,12 +22,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -36,59 +33,74 @@ body {
   }
 }
 
-@layer base {
-}
+@layer base {}
+
 @layer components {
   .h1 {
     @apply text-5xl font-bold font-Nunito;
   }
+
   .h2 {
     @apply text-[42px] font-bold leading-[44px] font-Nunito;
   }
+
   .h3 {
     @apply text-4xl font-normal font-Nunito;
   }
+
   .h4 {
     @apply text-2xl font-normal font-Nunito;
   }
+
   .h5 {
     @apply text-lg font-semibold font-Nunito;
   }
+
   .h5_b {
     @apply text-lg font-bold font-Nunito;
   }
+
   .body_3 {
     @apply text-base font-normal font-Nunito;
   }
+
   .body3_b {
     @apply text-base font-bold font-Nunito;
   }
+
   .body_2 {
     @apply text-lg font-normal font-Nunito;
   }
+
   .body_1 {
     @apply text-2xl leading-7 font-medium font-Nunito;
   }
+
   .body1_b {
     @apply text-2xl font-bold leading-7 font-Nunito;
   }
+
   .button_text {
     @apply text-lg font-bold font-Nunito;
   }
+
   .button_1 {
     @apply px-9 py-4 rounded-full text-lg font-bold font-Nunito;
   }
+
   .text-grad {
     @apply bg-grad_1 w-fit text-transparent bg-clip-text;
   }
 }
+
 @keyframes scrollText {
   to {
     transform: translateX(-50%);
   }
 }
-.shadow {
-}
+
+.shadow {}
+
 .scrollText {
   animation: scrollText 15s linear infinite;
 }

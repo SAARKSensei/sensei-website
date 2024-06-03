@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import Phoneicon from "@/assets/phone.svg";
 import DownArrow from "@/assets/varroww.svg";
-import mainLogo from "@/assets/Main logo.svg";
+import mainLogo from "@/assets/mainlogo.svg";
 import user from "@/assets/user.svg";
 import Bell from "@/assets/bell.svg";
 import Logout from "@/assets/logoutnavbar.svg";
@@ -45,12 +45,12 @@ const Navbar = () => {
               src={DownArrow}
               alt="down arrow"
               className=" h-4 m-4  -rotate-90 group-hover:rotate-90 transition-all cursor-pointer"
-              // onClick={toggleDropdown}
+            // onClick={toggleDropdown}
             />
             <div className="hidden group-hover:flex rounded-xl py-3 px-4 w-max bg-[#26355A] flex-col absolute -right-4 top-10 z-50">
               <div
                 className=" h-[64px] w-full flex items-center gap-5"
-                // onClick={() => setPinModal(true)}
+              // onClick={() => setPinModal(true)}
               >
                 <Image
                   src={Useraccount}
@@ -77,7 +77,7 @@ const Navbar = () => {
               </div>
               <div
                 className="h-[64px] w-full flex items-center gap-5 cursor-pointer"
-                // onClick={() => signOut()}
+              // onClick={() => signOut()}
               >
                 <Image src={Logout} alt="Logout" />
                 <h1 className="text-lg cursor-pointer	text-white">Logout</h1>

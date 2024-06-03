@@ -13,12 +13,12 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-40 bg-[#FEF5F3]">
       <HeroSection />
-      <Section2Home />
+      {/* <Section2Home />
       <Section3Home />
       <Section4Home />
       <Features />
       <Comments />
-      <DiscoverSensei />
+      <DiscoverSensei /> */}
       <FAQS />
       <Footer />
     </div>
