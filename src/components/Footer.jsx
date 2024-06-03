@@ -100,25 +100,27 @@ const Footer = () => {
             </div>
             <div className="flex-grow-[.3] -order-1 md:order-none">
               <div className="flex gap-10 lg:gap-20 text-sm md:justify-normal md:text-base">
-                <div className="w-1/2 cursor-pointer text-[#FF8B13] font-NunitoSans font-regular text-base leading-5 flex flex-col gap-2.5 md:gap-4">
-                  <h2>About</h2>
-                  <h2>Growers</h2>
-                  <h2>Merchants</h2>
-                  <h2>Partners</h2>
-                  <h2>Contact</h2>
+                <div className="w-1/2 text-[#FF8B13] font-NunitoSans font-regular text-base leading-5 flex flex-col gap-2.5 md:gap-4">
+                  <h2 className="cursor-pointer w-fit">About</h2>
+                  <h2 className="cursor-pointer w-fit">Growers</h2>
+                  <h2 className="cursor-pointer w-fit">Merchants</h2>
+                  <h2 className="cursor-pointer w-fit">Partners</h2>
+                  <h2 className="cursor-pointer w-fit">Contact</h2>
                 </div>
-                <div className="w-1/2 cursor-pointer text-white font-NunitoSans font-normal text-sm flex flex-col gap-2.5 leading-5 md:gap-4">
-                  <h2>Facebook</h2>
-                  <h2>Twitter</h2>
+                <div className="w-1/2 text-white font-NunitoSans font-normal text-sm flex flex-col gap-2.5 leading-5 md:gap-4">
+                  <h2 className="cursor-pointer w-fit">Facebook</h2>
+                  <h2 className="cursor-pointer w-fit">Twitter</h2>
                   <Link
                     href={
                       "https://www.linkedin.com/company/mr-sensei/?viewAsMember=true"
                     }
+                    className="w-fit"
                   >
                     <h2>Linkedin</h2>
                   </Link>
                   <Link
                     href={"https://www.instagram.com/the_sensei_community/"}
+                    className="w-fit"
                   >
                     <h2>Instagram</h2>
                   </Link>
