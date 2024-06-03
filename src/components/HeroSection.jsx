@@ -12,10 +12,10 @@ const HeroSection = () => {
   return (
     <div>
       <Navbar />
-      <div className="relative  z-[0] ">
+      <div className="relative z-[0] ">
         <Background />
         <div className=" container py-20 mx-auto gap-10 flex flex-col w-full">
-          <h1 className="max-w-[800px] mx-auto h2 lg:h1 text-center  leading-snug">
+          <h1 className="max-w-[800px] mx-auto h2 lg:h1 text-center leading-snug">
             Life skills that empower your child in this digital world{" "}
             <span className="bg-grad_1 bg-clip-text text-transparent ">
               mentally

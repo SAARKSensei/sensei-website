@@ -45,7 +45,7 @@ body {
   }
 
   .h3 {
-    @apply text-4xl font-normal font-Nunito;
+    @apply text-lg md:text-4xl font-normal font-Nunito;
   }
 
   .h4 {
@@ -69,7 +69,7 @@ body {
   }
 
   .body_2 {
-    @apply text-lg font-normal font-Nunito;
+    @apply text-base md:text-2xl font-normal md:font-medium md:leading-7 font-Nunito;
   }
 
   .body_1 {
@@ -77,7 +77,7 @@ body {
   }
 
   .body1_b {
-    @apply text-2xl font-bold leading-7 font-Nunito;
+    @apply text-lg md:text-2xl md:leading-7 font-bold font-Nunito;
   }
 
   .button_text {
