@@ -12,12 +12,14 @@ const AboutUs = () => {
                     src={SmallScreenCollage}
                     alt='Collage'
                     sizes='auto'
+                    loading='lazy'
                     className='w-full block sm:hidden'
                 />
                 <Image
                     src={LargeScreenCollage}
                     alt='Collage'
                     sizes='auto'
+                    loading='lazy'
                     className='w-full hidden sm:block'
                 />
             </div>
