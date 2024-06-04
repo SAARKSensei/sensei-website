@@ -56,8 +56,8 @@ body {
     @apply text-lg font-semibold font-Nunito;
   }
 
-  .h5_b {
-    @apply text-lg font-bold font-Nunito;
+  .para {
+    @apply text-lg md:text-2xl font-medium font-Nunito;
   }
 
   .body_3 {
@@ -85,7 +85,7 @@ body {
   }
 
   .button_1 {
-    @apply px-9 py-4 rounded-full text-lg font-bold font-Nunito;
+    @apply px-8 py-4 rounded-full text-lg font-bold font-Nunito;
   }
 
   .text-grad {
