@@ -1,10 +1,11 @@
 import Comments from "@/components/Comments";
-import DiscoverSensei from "@/components/DiscoverSensei";
 import FAQS from "@/components/FAQS";
 import Features from "@/components/Features";
 import Footer from "@/components/Footer";
+import GetStarted from "@/components/GetStarted";
 import HeroSection from "@/components/HeroSection";
 import InfiniteScroll from "@/components/InfiniteScroll";
+import Journey from "@/components/Journey";
 import Navbar from "@/components/Navbar";
 import Section2Home from "@/components/Section2Home";
 import Section3Home from "@/components/Section3Home";
@@ -17,8 +18,9 @@ export default function Home() {
       <Section3Home />
       <Section4Home />
       <Features />
-      <Comments />
-      <DiscoverSensei /> */}
+      <Comments />*/}
+      <GetStarted />
+      <Journey />
       <FAQS />
       <Footer />
     </div>

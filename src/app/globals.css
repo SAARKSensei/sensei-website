@@ -61,7 +61,7 @@ body {
   }
 
   .body_3 {
-    @apply text-base font-normal font-Nunito;
+    @apply text-base md:text-2xl font-normal md:font-medium font-Nunito;
   }
 
   .body3_b {
