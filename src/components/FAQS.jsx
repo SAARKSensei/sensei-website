@@ -18,7 +18,6 @@ const FAQS = () => {
 };
 export const FAQ = ({ faq }) => {
   const [checked, setChecked] = useState(false)
-  console.log(checked)
   return (
     <div className="flex gap-6 p-5 has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10 border-b-2 has-[:checked]:rounded-xl border-grey_2 align-middle h-fit">
       <div className="flex flex-col gap-4 w-full">
