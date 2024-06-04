@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { faqs } from "@/utils/data";
 const FAQS = () => {
   return (
@@ -9,25 +10,28 @@ const FAQS = () => {
           <FAQ key={index} faq={faq} />
         ))}
       </div>
-      <div className="min-w-[258px] md:min-w-[273px] h-12 md:h-14 rounded-[50px] px-6 md:px-8 py-3 md:py-4 bg-grad_1">
+      <div className="min-w-[258px] md:min-w-[273px] h-12 md:h-14 rounded-[50px] px-6 md:px-8 py-3 md:py-4 bg-grad_1 cursor-pointer">
         <p className="text-white text-center body1_b">Sign Up for FREE activity</p>
       </div>
     </div>
   );
 };
 export const FAQ = ({ faq }) => {
+  const [checked, setChecked] = useState(false)
+  console.log(checked)
   return (
     <div className="flex gap-6 p-5 has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10 border-b-2 has-[:checked]:rounded-xl border-grey_2 align-middle h-fit">
       <div className="flex flex-col gap-4 w-full">
         <div className="peer body_1 flex items-center gap-4">
-          <div className="flex gap-4 peer-checked:text-[#FF8B13] text-[#787878]">
-            <p className="body1_b">{faq.id >= 10 ? "" : "0"}{faq.id}</p>
-            <p className="h3">{faq.question}</p>
+          <div className="flex gap-4">
+            <p className={`body1_b ${checked ? "text-[#FF8B13]" : "text-[#787878]"}`}>{faq.id >= 10 ? "" : "0"}{faq.id}</p>
+            <p className={`h3 ${checked ? "text-[#FF8B13]" : "text-[#787878]"}`}>{faq.question}</p>
           </div>
           <input
             className="peer appearance-none"
             id={`question${faq.id}`}
             type="checkbox"
+            onClick={() => setChecked(!checked)}
           />
           <label
             htmlFor={`question${faq.id}`}
