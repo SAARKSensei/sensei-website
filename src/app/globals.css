@@ -104,3 +104,17 @@ body {
 .scrollText {
   animation: scrollText 15s linear infinite;
 }
+
+.btn_lnrbg::after {
+  content: '';
+  position: absolute;
+  height: 107%;
+  width: 102%;
+  border-radius: 1000px;
+  background-image: linear-gradient(to right, #F8BF3B 0%, #FF8B13 31%, #EF5F3D 100%);
+  z-index: -1;
+}
+
+.btn_lnrbg:hover {
+  z-index: 0;
+}

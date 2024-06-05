@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 const AboutUs = () => {
     return (
-        <div className='w-full px-5 flex flex-col items-center sm:flex-row gap-8'>
+        <div className='max-w-7xl mx-auto px-5 flex flex-col justify-between items-center sm:flex-row gap-8'>
             <div className='w-full sm:w-1/2 sm:order-2'>
                 <Image
                     src={Collage}
