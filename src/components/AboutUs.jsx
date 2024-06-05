@@ -1,7 +1,6 @@
 import React from 'react'
 
-import SmallScreenCollage from "@/assets/smallscreencollage.svg"
-import LargeScreenCollage from "@/assets/largescreencollage.svg"
+import Collage from "../assets/collage.png"
 import Image from 'next/image'
 
 const AboutUs = () => {
@@ -9,18 +8,11 @@ const AboutUs = () => {
         <div className='w-full px-5 flex flex-col items-center sm:flex-row gap-8'>
             <div className='w-full sm:w-1/2 sm:order-2'>
                 <Image
-                    src={SmallScreenCollage}
+                    src={Collage}
                     alt='Collage'
                     sizes='auto'
                     loading='lazy'
-                    className='w-full block sm:hidden'
-                />
-                <Image
-                    src={LargeScreenCollage}
-                    alt='Collage'
-                    sizes='auto'
-                    loading='lazy'
-                    className='w-full hidden sm:block'
+                    className='w-full'
                 />
             </div>
             <div className='w-full sm:w-1/2 flex flex-col gap-6 sm:order-1'>
