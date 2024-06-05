@@ -108,7 +108,34 @@ const OurModules = () => {
                         className='z-10 -translate-x-8'
                     />
                 </div>
-                <div className='w-full h-[356px] sm:w-1/2 hidden sm:block group'></div>
+                <div className='w-full h-[356px] sm:w-1/2 hidden sm:block relative'>
+                    <div className='absolute inset-0'>
+                        <Image
+                            src={BurstStarWhite}
+                            alt='burst white'
+                            sizes='auto'
+                            className='absolute top-[3%] left-[5%] scale-125'
+                        />
+                        <Image
+                            src={BurstPuckerYellow}
+                            alt='burst yellow'
+                            sizes='auto'
+                            className='absolute top-[6%] right-[30%] scale-125'
+                        />
+                        <Image
+                            src={BurstStarOrange}
+                            alt='burst orange'
+                            sizes='auto'
+                            className='absolute bottom-[50%] right-[10%] scale-125'
+                        />
+                        <Image
+                            src={BurstPuckerPeach}
+                            alt='burst peach'
+                            sizes='auto'
+                            className='absolute bottom-[40%] left-[10%] scale-125'
+                        />
+                    </div>
+                </div>
                 <Image
                     src={SmallPhone}
                     alt='small phones'
