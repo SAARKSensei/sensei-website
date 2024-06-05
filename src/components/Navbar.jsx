@@ -19,7 +19,7 @@ const Navbar = () => {
   // const currentUserData = useSelector((state) => state?.currentUser?.data);
 
   return (
-    <div className="flex justify-between items-center w-full h-auto py-2 rounded-b-2xl px-5 mg:px-10 lg:px-20 bg-[#2C3D68] ">
+    <div className="flex  relative z-10 justify-between items-center w-full h-auto py-2 rounded-b-2xl px-5 mg:px-10 lg:px-20 bg-[#2C3D68] ">
       <Image src={mainLogo} alt="main logo" className="w-[102px] h-12" />
       <div className="flex items-center justify-between gap-2">
         <Link

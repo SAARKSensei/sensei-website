@@ -69,6 +69,9 @@ body {
   .body_1 {
     @apply text-2xl leading-7 font-medium font-Nunito;
   }
+  .body_5 {
+    @apply text-xs font-normal font-Nunito;
+  }
   .body1_b {
     @apply text-2xl font-bold leading-7 font-Nunito;
   }
