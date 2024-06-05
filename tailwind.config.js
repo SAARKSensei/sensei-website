@@ -25,7 +25,8 @@ module.exports = {
         grey_2: "#DEDEDE",
       },
       fontFamily: {
-        Nunito: ["Nunito", "sans-serif"],
+        Nunito: "'Nunito', serif",
+        NunitoSans: "'Nunito sans', serif",
       },
     },
   },

@@ -1,34 +1,43 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { faqs } from "@/utils/data";
+import FreeActivityBtn from "./FreeActivityBtn";
 const FAQS = () => {
   return (
-    <div className="flex flex-col max-w-[min(90vw,1000px)] container mx-auto">
-      <h2 className="h2 text-grad mb-20 mx-auto">Frequently Asked Questions</h2>
-      {faqs.map((faq, index) => (
-        <FAQ key={index} faq={faq} />
-      ))}
+    <div className="flex flex-col max-w-[min(90vw,1000px)] container mx-auto items-center gap-11">
+      <h2 className="h2 text-grad mx-auto">Frequently Asked Questions</h2>
+      <div className="w-full flex flex-col gap-6">
+        {faqs.map((faq, index) => (
+          <FAQ key={index} faq={faq} />
+        ))}
+      </div>
+      <FreeActivityBtn />
     </div>
   );
 };
 export const FAQ = ({ faq }) => {
+  const [checked, setChecked] = useState(false)
   return (
-    <div className="flex gap-5 p-10 has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10 border-b-2 has-[:checked]:rounded-xl border-grey_2 align-middle h-fit">
-      <p className="body1_b mt-1 text-grey_1">{faq.id}</p>
-      <div className=" has-[:checked]:text-black  text-grey_1 flex flex-col gap-1 w-full">
-        <p className="peer body_1 flex items-center ">
-          {faq.question}
+    <div className="flex gap-6 p-5 has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10 border-b-2 has-[:checked]:rounded-xl border-grey_2 align-middle h-fit">
+      <div className="flex flex-col gap-4 w-full">
+        <div className="peer body_1 flex items-center gap-4">
+          <div className="flex gap-4">
+            <p className={`body1_b ${checked ? "text-[#FF8B13]" : "text-[#787878]"}`}>{faq.id >= 10 ? "" : "0"}{faq.id}</p>
+            <p className={`h3 ${checked ? "text-[#FF8B13]" : "text-[#787878]"}`}>{faq.question}</p>
+          </div>
           <input
-            className="peer appearance-none "
+            className="peer appearance-none"
             id={`question${faq.id}`}
             type="checkbox"
+            onClick={() => setChecked(!checked)}
           />
           <label
             htmlFor={`question${faq.id}`}
-            className="ml-auto peer-checked:bg-[#FF8B13] peer-checked:rotate-0 rotate-45 transition-transform rounded-full bg-grey_2 p-2"
+            className="ml-auto peer-checked:rotate-0 peer-checked:opacity-100 opacity-25 rotate-45 transition-transform rounded-full bg-[#FF8B13]   p-2 cursor-pointer"
           >
             <svg
-              width="20"
-              height="20"
+              width="30"
+              height="30"
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -36,19 +45,21 @@ export const FAQ = ({ faq }) => {
               <path
                 d="M14.9492 4.94922L5.04972 14.8487"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
+                className="opacity-100"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
               <path
                 d="M14.9492 14.8496L5.04972 4.95011"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
+                className="opacity-100"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </svg>
           </label>
-        </p>
-        <p className="body_2 hidden peer-has-[:checked]:block ">{faq.answer}</p>
+        </div>
+        <p className="body_2 hidden peer-has-[:checked]:block text-[#787878]">{faq.answer}</p>
       </div>
     </div>
   );

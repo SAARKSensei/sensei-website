@@ -38,34 +38,44 @@ body {
 
 @layer base {
 }
+
 @layer components {
   .h1 {
     @apply text-5xl font-bold font-Nunito;
   }
+
   .h2 {
     @apply text-[42px] font-bold leading-[44px] font-Nunito;
   }
+
   .h3 {
-    @apply text-4xl font-normal font-Nunito;
+    @apply text-lg md:text-4xl font-normal font-Nunito;
   }
+
   .h4 {
     @apply text-2xl font-normal font-Nunito;
   }
+
   .h5 {
     @apply text-lg font-semibold font-Nunito;
   }
-  .h5_b {
-    @apply text-lg font-bold font-Nunito;
+
+  .para {
+    @apply text-lg md:text-2xl font-medium font-Nunito;
   }
+
   .body_3 {
-    @apply text-base font-normal font-Nunito;
+    @apply text-base md:text-2xl font-normal md:font-medium font-Nunito;
   }
+
   .body3_b {
     @apply text-base font-bold font-Nunito;
   }
+
   .body_2 {
-    @apply text-lg font-normal font-Nunito;
+    @apply text-base md:text-2xl font-normal md:font-medium md:leading-7 font-Nunito;
   }
+
   .body_1 {
     @apply text-2xl leading-7 font-medium font-Nunito;
   }
@@ -73,25 +83,31 @@ body {
     @apply text-xs font-normal font-Nunito;
   }
   .body1_b {
-    @apply text-2xl font-bold leading-7 font-Nunito;
+    @apply text-lg md:text-2xl md:leading-7 font-bold font-Nunito;
   }
+
   .button_text {
     @apply text-lg font-bold font-Nunito;
   }
+
   .button_1 {
-    @apply px-9 py-4 rounded-full text-lg font-bold font-Nunito;
+    @apply px-8 py-4 rounded-full text-lg font-bold font-Nunito;
   }
+
   .text-grad {
     @apply bg-grad_1 w-fit text-transparent bg-clip-text;
   }
 }
+
 @keyframes scrollText {
   to {
     transform: translateX(-50%);
   }
 }
+
 .shadow {
 }
+
 .scrollText {
   animation: scrollText 15s linear infinite;
 }
