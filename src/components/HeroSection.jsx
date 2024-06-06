@@ -11,8 +11,8 @@ import Navbar from "./Navbar";
 import Boy from "@/assets/DSC_0354.png";
 import topology from "@/assets/Topology-1.svg";
 import ellipse from "@/assets/Ellipse.svg";
-import personality from "@/assets/personality.svg";
-import heromobile from "@/assets/heromobile.svg";
+import personality from "@/assets/personality.png";
+import heromobile from "@/assets/mobileHero.png";
 import tic from "@/assets/tick.svg";
 import google from "@/assets/google.svg";
 import whatsapp from "@/assets/whatsapp.svg";
@@ -72,53 +72,6 @@ const HeroSection = () => {
               </div>
             </div>
           </div>
-          {/* <div className="flex flex-wrap lg:flex-nowrap max-md:gap-10  my-5 md:my-0  justify-around">
-            <div className="w-fit relative  pl-[64px] pr-[23px] pb-[20px]">
-            <Image
-                src={girl}
-                alt="girl"
-                height={254}
-                width={189}
-                className="rounded-full min-w-[189px] "
-              />
-              <div className="absolute bg-secondary p-4 bottom-0 left-0 rounded-lg">
-                <Image src={boxes} alt="boxes" sizes="auto" />
-              </div>
-              <div className="absolute bg-primary p-2 top-0 right-1 rounded-lg">
-                <Image src={muser} alt="muser" sizes="auto" />
-              </div>{" "}
-            </div>
-            <div className="lg:order-1 max-md:order-1 w-fit relative ml-10 pr-[98px] pl-[27px] pb-[20px]">
-              <Image
-                src={boy}
-                alt="boy"
-                height={254}
-                width={189}
-                className="rounded-full min-w-[189px]"
-              />
-             
-              <div className="absolute top-10 h-fit bg-orange-600 text-white w-[68px] text-center p-2 bottom-0 left-0 rounded-lg">
-                &#x25B6;
-              </div>{" "}
-            </div>
-            <div className="flex max-w-[416px] flex-col gap-4 md:gap-[44px] md:mt-[44px]">
-              <div className="border rounded-full items-center p-[2px] pl-2 gap-2 border-grey_2 flex mx-auto body1_b max-w-[95vw] w-full h-[65px]">
-                <h1 className="text-grey_2 ">+91</h1>
-                <input
-                  type="Number"
-                  className="w-1 flex-grow [appearance:textfield] bg-transparent focus:outline-none"
-                  maxLength={10}
-                />
-                <h4 className="button_text bg-grad_1 p-4 px-9 rounded-full text-white">
-                  Login
-                </h4>
-              </div>
-              <p className="body_3 text-grey_1 text-center">
-                Designed by Psychologists & Counselors and aligned with National
-                Education Policy 2020
-              </p>
-            </div>
-          </div> */}
           <div className="relative min-w-[min(900px,50vw)] max-h-[min(900px,50vw)] max-[900px]:min-w-[90vw] max-[900px]:order-[-1] max-[900px]:mb-40 max-sm:mb-20 mx-auto">
             <Image
               src={bgtopo}
