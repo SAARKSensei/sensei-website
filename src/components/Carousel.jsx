@@ -70,8 +70,9 @@ export const CarouselItemWraper = ({ children, index }) => {
   const { curr } = useContext(CarouselContext);
   return (
     <div
-      className={`p-4 ${curr === index ? "z-[10] !scale-100 !blur-0" : ""
-        } scale-50 my-auto h-fit blur-[2px] bg-white transition-all ease-out duration-500 flex flex-col gap-2 w-full min-w-[100%] rounded-[20px] shadow-cs`}
+      className={`p-8 ${
+        curr === index ? "z-[10] !scale-100 !blur-0" : ""
+      } scale-50 my-auto h-fit blur-[2px] bg-white transition-all ease-out duration-500 flex flex-col gap-2 w-full min-w-[100%] rounded-[20px] shadow-cs`}
     >
       {children}
     </div>
