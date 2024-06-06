@@ -19,11 +19,10 @@ const TypingAni = ({ texts, delay }) => {
         setCurrentIndex((prevIndex) => prevIndex + 1);
       }
     }, d);
-    // console.log(d);
     return () => clearTimeout(timeout);
   }, [currentIndex, delay, ind, texts]);
   return (
-    <span className="bg-grad_1 inline-block min-w-[200px] max-w-fit bg-clip-text text-transparent ">
+    <span className="bg-grad_1 inline-block min-w-[200px] max-w-fit bg-clip-text text-transparent">
       {currentText}
     </span>
   );

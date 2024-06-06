@@ -30,7 +30,7 @@ const HeroImageAny = ({ delay = 2000 }) => {
         className="absolute transition-opacity bottom-0 z-[1] rounded-full min-w-[176px] "
       />
       <div
-        className={` ${Images[currentIndex].color} absolute transition-all duration-500 ease-in-out   aanimate-spin pt-[175px] max-[1150px]:pt-[137px] max-sm:pt-[87.7px] ${Images[currentIndex].rotate} bottom-0 z-0`}
+        className={` ${Images[currentIndex].color} absolute transition-all duration-500 ease-in-out pt-[175px] max-[1150px]:pt-[137px] max-sm:pt-[87.7px] ${Images[currentIndex].rotate} bottom-0 z-0`}
       >
         {" "}
         <svg

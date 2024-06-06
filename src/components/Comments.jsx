@@ -5,10 +5,10 @@ import { comments } from "@/utils/data";
 import Carousel, { CarouselItemWraper } from "./Carousel";
 const Comments = () => {
   return (
-    <div className="container  mx-auto  ">
-      <div className="max-w-[min(100%,850px)] mx-auto  gap-5 content-center flex  flex-col ">
+    <div className="container mx-auto ">
+      <div className="max-w-[min(100%,850px)] mx-auto gap-5 content-center flex flex-col">
         {/* <div className="flex flex-col "> */}
-        <h2 className=" max-w-[90vw] text-grad h2 mx-auto h-fit lg:col-start-2">
+        <h2 className="max-w-[90vw] text-grad h2 mx-auto h-fit lg:col-start-2">
           We hear your voices
         </h2>
         <Carousel>

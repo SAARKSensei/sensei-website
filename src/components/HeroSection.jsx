@@ -21,6 +21,7 @@ import bgtopo from "@/assets/bgtopo.svg";
 import TypingAni from "./TypingAni";
 import { Herotexts } from "@/utils/data";
 import HeroImageAny from "./HeroImageAny";
+import FreeActivityBtn from "./FreeActivityBtn";
 const HeroSection = () => {
   return (
     <div className="min-h-max">
@@ -33,9 +34,7 @@ const HeroSection = () => {
               Life skills that empower your child in this digital world{" "}
               <TypingAni texts={Herotexts} delay={100} />
             </h1>
-            <button className=" whitespace-nowrap  button_1 bg-grad_1 text-white w-fit">
-              Sign Up for FREE activity
-            </button>
+            <FreeActivityBtn />
 
             <div className=" whitespace-nowrap ">
               <p className="body_3 text-grey_1 flex items-center gap-1">
