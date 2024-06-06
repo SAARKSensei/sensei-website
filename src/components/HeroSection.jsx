@@ -8,99 +8,122 @@ import muser from "@/assets/miniuser.svg";
 import flower from "@/assets/flower.svg";
 import InfiniteScroll from "./InfiniteScroll";
 import Navbar from "./Navbar";
+import Boy from "@/assets/DSC_0354.png";
+import topology from "@/assets/Topology-1.svg";
+import ellipse from "@/assets/Ellipse.svg";
+import personality from "@/assets/personality.png";
+import heromobile from "@/assets/mobileHero.png";
+import tic from "@/assets/tick.svg";
+import google from "@/assets/google.svg";
+import whatsapp from "@/assets/whatsapp.svg";
+import userround from "@/assets/user-round.svg";
+import bgtopo from "@/assets/bgtopo.svg";
+import TypingAni from "./TypingAni";
+import { Herotexts } from "@/utils/data";
+import HeroImageAny from "./HeroImageAny";
+import FreeActivityBtn from "./FreeActivityBtn";
 const HeroSection = () => {
   return (
-    <div>
+    <div className="min-h-max">
       <Navbar />
-      <div className="relative z-[0] ">
-        <Background />
-        <div className=" container py-20 mx-auto gap-10 flex flex-col w-full">
-          <h1 className="max-w-[800px] mx-auto h2 lg:h1 text-center leading-snug">
-            Life skills that empower your child in this digital world{" "}
-            <span className="bg-grad_1 bg-clip-text text-transparent ">
-              mentally
-            </span>
-          </h1>
-          <div className="flex flex-wrap lg:flex-nowrap max-md:gap-10  my-5 md:my-0  justify-around">
-            <div className="w-fit relative  pl-[64px] pr-[23px] pb-[20px]">
-              <Image
-                src={girl}
-                alt="girl"
-                height={254}
-                width={189}
-                className="rounded-full min-w-[189px] "
-              />
-              <div className="absolute bg-secondary p-4 bottom-0 left-0 rounded-lg">
-                <Image src={boxes} alt="boxes" sizes="auto" />
-              </div>
-              <div className="absolute bg-primary p-2 top-0 right-1 rounded-lg">
-                <Image src={muser} alt="muser" sizes="auto" />
-              </div>{" "}
-            </div>
-            <div className="lg:order-1 max-md:order-1 w-fit relative ml-10 pr-[98px] pl-[27px] pb-[20px]">
-              <Image
-                src={boy}
-                alt="boy"
-                height={254}
-                width={189}
-                className="rounded-full min-w-[189px]"
-              />
-              <div className="absolute bg-white drop-shadow-lg p-2 bottom-0 w-[219px] h-[80px] right-1 rounded-lg">
-                <Image
-                  src={flower}
-                  alt="flower"
-                  sizes="auto"
-                  className="right-5 absolute -top-7"
-                />
-                <div className=" w-[90%] bg-[#F2F2F2] h-[18px] rounded-full absolute bottom-4 left-0 right-0 mx-auto  ">
-                  <span className=" bg-primary rounded-full w-1/2 h-full absolute" />
-                </div>
-              </div>
-              <div className="absolute top-10 h-fit bg-orange-600 text-white w-[68px] text-center p-2 bottom-0 left-0 rounded-lg">
-                &#x25B6;
-              </div>{" "}
-            </div>
-            <div className="flex max-w-[416px] flex-col gap-4 md:gap-[44px] md:mt-[44px]">
-              <div className="border rounded-full items-center p-[2px] pl-2 gap-2 border-grey_2 flex mx-auto body1_b max-w-[95vw] w-full h-[65px]">
-                <h1 className="text-grey_2 ">+91</h1>
-                <input
-                  type="Number"
-                  className="w-1 flex-grow [appearance:textfield] bg-transparent focus:outline-none"
-                  maxLength={10}
-                />
-                <h4 className="button_text bg-grad_1 p-4 px-9 rounded-full text-white">
-                  Login
-                </h4>
-              </div>
-              <p className="body_3 text-grey_1 text-center">
-                Designed by Psychologists & Counselors and aligned with National
-                Education Policy 2020
+      <div className=" relative z-[1] ">
+        {/* <Background /> */}
+        <div className=" container max-w-[90vw]  pt-20 pb-10 mx-auto gap-10 flex max-[900px]:flex-col  justify-between w-full h-full">
+          <div className="flex min-w-[40vw]  flex-col gap-10">
+            <h1 className="max-w-[800px] h2 lg:h1 min-h-max  leading-snug">
+              Life skills that empower your child in this digital world{" "}
+              <TypingAni texts={Herotexts} delay={100} />
+            </h1>
+            <FreeActivityBtn />
+
+            <div className=" whitespace-nowrap ">
+              <p className="body_3 text-grey_1 flex items-center gap-1">
+                <Image src={tic} alt="tic" sizes="auto" />
+                Designed by Psychologists & Counselors
+              </p>
+
+              <p className="body_3 text-grey_1 flex items-center gap-1">
+                <Image src={tic} alt="tic" sizes="auto" />
+                Aligned with National Education Policy{" "}
               </p>
             </div>
+            <div className=" flex min-w-max gap-4 items-center">
+              <div>
+                <p className="body1_b flex items-center gap-2 border-b-2 border-grey_2 pb-1  ">
+                  <Image src={google} alt="google" width={36} height={36} />
+                  4.3/5
+                </p>
+                <p className="body_3 text-grey_1">Google rating</p>
+              </div>
+              <div>
+                <p className="body1_b flex items-center gap-2 border-b-2 border-grey_2 pb-1  ">
+                  <Image src={userround} alt="userround" sizes="auto" />
+                  150+
+                </p>
+                <p className="body_3 text-grey_1">Active users</p>
+              </div>
+              <div>
+                <p className="body1_b flex items-center gap-2 border-b-2 border-grey_2 pb-1  ">
+                  <Image src={whatsapp} alt="whatsapp" sizes="auto" />
+                  350+{" "}
+                </p>
+                <p className="body_3 text-grey_1">Parents Community</p>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-10 justify-around container flex-wrap">
-            <div className="w-[200px]">
-              <h1 className="h2 text-secondary">30 Lakhs</h1>
-              <p className="body_3 text-grey_1">
+          <div className="relative min-w-[min(900px,50vw)] max-h-[min(900px,50vw)] max-[900px]:min-w-[90vw] max-[900px]:order-[-1] max-[900px]:mb-40 max-sm:mb-20 mx-auto">
+            <Image
+              src={bgtopo}
+              alt="bgtopo"
+              sizes="auto"
+              className="absolute  max-[900px]:min-w-[150vw] max-[900px]:-bottom-[20vw] -right-[20vw]  min-[900px]:left-0 md:max-w-[min(900px,70vw)] min-w-[700px] min-[900px]:-top-[10vw]"
+            />
+            <HeroImageAny />
+            <Image
+              src={personality}
+              alt="personality"
+              sizes="auto"
+              className="absolute max-w-[max(15vw,80px)] max-[900px]:top-10 max-[900px]:left-[10vw] top-20 left-[2vw]"
+            />
+            <Image
+              src={heromobile}
+              alt="heromobile"
+              sizes="auto"
+              className="absolute max-w-[max(15vw,65px)] max-[900px]:-right-5 max-[900px]:top-20 top-28 right-10"
+            />
+            <div className="absolute bg-white drop-shadow-lg p-2 bottom-0 w-[165px] max-sm:w-[107px] max-sm:h-[39px] h-[60px] left-0 rounded-lg max-[900px]:-bottom-10 max-[900px]:left-16">
+              <Image
+                src={flower}
+                alt="flower"
+                width={86}
+                className="right-5 max-sm:right-2 max-sm:max-w-[56px] absolute -top-[30px] max-sm:-top-5"
+              />
+              <div className=" w-[90%] bg-[#F2F2F2] h-[13px] max-sm:h-[8px] rounded-full absolute bottom-2 left-0 right-0 mx-auto  ">
+                <span className=" bg-primary rounded-full w-1/2 h-full absolute" />
+              </div>
+            </div>
+            <div className="w-[180px] absolute max-sm:scale-50 max-[900px]:-top-20 top-0 max-[900px]:-right-10 right-0 h-[90px] drop-shadow-lg bg-white p-2 rounded-xl">
+              <h1 className="h5_b text-grad">30 Lakhs</h1>
+              <p className="body_5 text-grey_1">
                 Class 10th student failed in 2023 board exams
               </p>
             </div>
-            <div className="w-[200px]">
-              <h1 className="h2 text-secondary">35%</h1>
-              <p className="body_3 text-grey_1">
-                Students have lack of social interaction{" "}
+            <div className="w-[180px] absolute max-sm:scale-50  h-[90px] max-sm:left-0 -top-10 left-20 drop-shadow-lg bg-white p-2 rounded-xl">
+              <h1 className="h5_b text-grad">1 out of 7</h1>
+              <p className="body_5 text-grey_1">
+                children experiences a mental health disorder{" "}
               </p>
             </div>
-            <div className="w-[200px]">
-              <h1 className="h2 text-secondary">1,673</h1>
-              <p className="body_3 text-grey_1">
+            <div className="w-[180px] absolute max-sm:scale-50 max-[900px]:-right-10 max-[900px]:-bottom-16 h-[90px] bottom-0 right-10 drop-shadow-lg bg-white p-2 rounded-xl">
+              <h1 className="h5_b text-grad">1,673</h1>
+              <p className="body_5 text-grey_1">
                 Suicide cases due to failure in examination in year 2021{" "}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <InfiniteScroll />
+      {/* <InfiniteScroll /> */}
     </div>
   );
 };

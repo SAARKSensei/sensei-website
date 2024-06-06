@@ -76,6 +76,10 @@ body {
     @apply text-2xl leading-7 font-medium font-Nunito;
   }
 
+  .body_5 {
+    @apply text-xs font-normal font-Nunito;
+  }
+
   .body1_b {
     @apply text-lg md:text-2xl md:leading-7 font-bold font-Nunito;
   }

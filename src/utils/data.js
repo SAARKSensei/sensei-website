@@ -42,6 +42,8 @@ export const features = [
       "Get a report on your child's strengths, weaknesses, and areas for skill development.",
   },
 ];
+export const Herotexts = ["mentally", "emotionally", "ethically"];
+
 export const cards = [
   {
     title: "For Family",
