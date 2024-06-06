@@ -40,37 +40,37 @@ const Psychologists = () => {
                         src={RnadomGirl1}
                         alt='random girl'
                         sizes='auto'
-                        className='absolute top-[12%] left-[2%] transition-all duration-500 group-hover:top-[15%] group-hover:left-0'
+                        className='w-28 absolute top-[12%] left-[2%] transition-all duration-500 group-hover:top-[15%] group-hover:left-0'
                     />
                     <Image
                         src={RandomBoy1}
                         alt='random boy'
                         sizes='auto'
-                        className='absolute top-0 left-[40%] transition-all duration-500 group-hover:-top-[5%]'
+                        className='w-[90px] absolute top-0 left-[40%] transition-all duration-500 group-hover:-top-[5%]'
                     />
                     <Image
                         src={RnadomGirl2}
                         alt='random girl'
                         sizes='auto'
-                        className='absolute top-[20%] right-[8%] transition-all duration-500 group-hover:right-[4%]'
+                        className='w-[93px] absolute top-[20%] right-[8%] transition-all duration-500 group-hover:right-[4%]'
                     />
                     <Image
                         src={RnadomGirl3}
                         alt='random girl'
                         sizes='auto'
-                        className='absolute bottom-[2%] right-0 transition-all duration-500 group-hover:bottom-0 group-hover:-right-[4%]'
+                        className='w-36 absolute bottom-[2%] right-0 transition-all duration-500 group-hover:bottom-0 group-hover:-right-[4%]'
                     />
                     <Image
                         src={RnadomGirl4}
                         alt='random girl'
                         sizes='auto'
-                        className='absolute bottom-0 left-[30%] transition-all duration-500 group-hover:-bottom-[4%]'
+                        className='w-[92px] absolute bottom-0 left-[30%] transition-all duration-500 group-hover:-bottom-[4%]'
                     />
                     <Image
                         src={RandomBoy2}
                         alt='random boy'
                         sizes='auto'
-                        className='absolute top-[45%] left-[7%] transition-all duration-500 group-hover:top-[49%] group-hover:left-[3%]'
+                        className='w-[85px] absolute top-[45%] left-[7%] transition-all duration-500 group-hover:top-[49%] group-hover:left-[3%]'
                     />
                 </div>
             </div>

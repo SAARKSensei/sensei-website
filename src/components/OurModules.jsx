@@ -8,8 +8,9 @@ import BurstStarWhite from "@/assets/burststarwhite.svg"
 import BurstPuckerPeach from "@/assets/burstpuckerpeach.svg"
 import BurstPuckerYellow from "@/assets/burstpuckeryellow.svg"
 import Ticked from "@/assets/tick.svg"
-import SmallPhone from "@/assets/smallphone.png"
-import BigPhones from "@/assets/bigphone.png"
+
+import SmallPhone from "@/assets/smallphone.svg"
+import BigPhones from "@/assets/bigphone.svg"
 
 
 const OurModules = () => {
