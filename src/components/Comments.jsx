@@ -9,8 +9,8 @@ const Comments = () => {
     <div className="container mx-auto flex flex-col gap-16">
       <div className="max-w-[min(100%,850px)] mx-auto gap-5 content-center flex flex-col">
         {/* <div className="flex flex-col "> */}
-        <h2 className="max-w-[90vw] text-grad h2 mx-auto h-fit lg:col-start-2">
-          We hear your voices
+        <h2 className="max-w-[90vw] text-secondary h4 mx-auto h-fit lg:col-start-2">
+          Testimonials{" "}
         </h2>
         <Carousel>
           {comments.map((comment, index) => (
