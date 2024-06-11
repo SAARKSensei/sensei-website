@@ -1,8 +1,7 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-// import { useSelector } from "react-redux";
-// import { signOut } from "next-auth/react";
 
 import Phoneicon from "@/assets/phone.svg";
 import DownArrow from "@/assets/varroww.svg";
@@ -13,44 +12,59 @@ import Logout from "@/assets/logoutnavbar.svg";
 import Useraccount from "@/assets/useraccount.svg";
 import Family from "@/assets/family1.svg";
 import Lock from "@/assets/lock1.svg";
-
+import { usePathname } from "next/navigation";
+import navmenu from "@/assets/navmenu.svg";
+import { navLinks } from "@/utils/data";
 const Navbar = () => {
-  // const parentData = useSelector((state) => state?.parents?.data);
-  // const currentUserData = useSelector((state) => state?.currentUser?.data);
+  const pathname = usePathname();
 
   return (
-    <div className="flex  relative z-10 justify-between items-center w-full h-auto py-2 rounded-b-2xl px-5 mg:px-10 lg:px-20 bg-[#2C3D68] ">
-      <Image src={mainLogo} alt="main logo" className="w-[102px] h-12" />
+    <div className="relative z-10 flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 py-2 md:px-10 lg:px-20">
+      <Image src={mainLogo} alt="main logo" className="h-12 w-[102px]" />
+      <div className="group mr-4 max-md:ml-auto">
+        <Image src={navmenu} alt="navmenu" className="h-6 w-6 md:hidden" />
+        <div className="absolute hidden flex-col rounded-lg bg-secondary p-4 text-white group-hover:flex md:static md:flex md:flex-row md:gap-5 lg:gap-10">
+          {navLinks.map((link, index) => (
+            <Link
+              key={index}
+              href={link.link}
+              className={`${pathname === link.link ? "text-primary" : ""} button_text`}
+            >
+              {link.title}
+            </Link>
+          ))}
+        </div>
+      </div>
       <div className="flex items-center justify-between gap-2">
-        <Link
+        {/* <Link
           href=""
-          className=" max-sm:hidden flex items-center gap-1 text-[#F58720] font-Nunito font-bold italic text-base"
+          className="flex items-center gap-1 font-Nunito text-base font-bold italic text-[#F58720] max-sm:hidden"
         >
           <span>For support</span>
-          <Image src={Phoneicon} alt="phone icon" className="w-6 h-6" />
+          <Image src={Phoneicon} alt="phone icon" className="h-6 w-6" />
           <span>96659 52556</span>
         </Link>
-        <h2 className="text-white font-bold font-Nunito text-lg">
-          {/* {parentData?.name ? parentData?.name : currentUserData?.name} */}
+        <h2 className="font-Nunito text-lg font-bold text-white">
+          {/* {parentData?.name ? parentData?.name : currentUserData?.name} 
           ParentName
-        </h2>
-        <div className="flex relative items-center">
+        </h2> */}
+        <div className="relative flex items-center">
           <Image
             alt="user"
             src={user}
-            className="text-[#FF8B13] mr-7 bg-white rounded-full min-w-8 h-8 p-1"
+            className="mr-7 h-8 min-w-8 rounded-full bg-white p-1 text-[#FF8B13]"
           />
-          <div className="flex absolute left-7 align-middle group ">
+          <div className="group absolute left-7 flex align-middle">
             <Image
               src={DownArrow}
               alt="down arrow"
-              className=" h-4 m-4  -rotate-90 group-hover:rotate-90 transition-all cursor-pointer"
-            // onClick={toggleDropdown}
+              className="m-4 h-4 -rotate-90 cursor-pointer transition-all group-hover:rotate-90"
+              // onClick={toggleDropdown}
             />
-            <div className="hidden group-hover:flex rounded-xl py-3 px-4 w-max bg-[#26355A] flex-col absolute -right-4 top-10 z-50">
+            <div className="absolute -right-4 top-10 z-50 hidden w-max flex-col rounded-xl bg-[#26355A] px-4 py-3 group-hover:flex">
               <div
-                className=" h-[64px] w-full flex items-center gap-5"
-              // onClick={() => setPinModal(true)}
+                className="flex h-[64px] w-full items-center gap-5"
+                // onClick={() => setPinModal(true)}
               >
                 <Image
                   src={Useraccount}
@@ -59,28 +73,28 @@ const Navbar = () => {
                 />
                 <h1
                   href={"parent/account"}
-                  className=" cursor-pointer text-lg text-white"
+                  className="cursor-pointer text-lg text-white"
                 >
                   Account
                 </h1>
               </div>
               <Link
-                className=" h-[64px] w-full flex items-center gap-5"
+                className="flex h-[64px] w-full items-center gap-5"
                 href={"/familypage"}
               >
                 <Image src={Family} alt="Family" />
-                <p className="text-lg	text-white">Family</p>
+                <p className="text-lg text-white">Family</p>
               </Link>
-              <div className=" h-[64px] w-full flex items-center gap-5">
+              <div className="flex h-[64px] w-full items-center gap-5">
                 <Image src={Lock} alt="Lock" />
-                <h1 className="text-lg	text-white">PIN Lock</h1>
+                <h1 className="text-lg text-white">PIN Lock</h1>
               </div>
               <div
-                className="h-[64px] w-full flex items-center gap-5 cursor-pointer"
-              // onClick={() => signOut()}
+                className="flex h-[64px] w-full cursor-pointer items-center gap-5"
+                // onClick={() => signOut()}
               >
                 <Image src={Logout} alt="Logout" />
-                <h1 className="text-lg cursor-pointer	text-white">Logout</h1>
+                <h1 className="cursor-pointer text-lg text-white">Logout</h1>
               </div>
             </div>
           </div>

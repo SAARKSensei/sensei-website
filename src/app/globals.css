@@ -22,9 +22,12 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
+  background: linear-gradient(
+      to bottom,
       transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -33,67 +36,73 @@ body {
   }
 }
 
-@layer base {}
+@layer base {
+}
 
 @layer components {
   .h1 {
-    @apply text-5xl font-bold font-Nunito;
+    @apply font-Nunito text-5xl font-bold;
   }
 
   .h2 {
-    @apply text-[42px] font-bold leading-[44px] font-Nunito;
+    @apply font-Nunito text-[42px] font-bold leading-[44px];
   }
 
   .h3 {
-    @apply text-lg md:text-4xl font-normal font-Nunito;
+    @apply font-Nunito text-lg font-normal md:text-4xl;
   }
 
   .h4 {
-    @apply text-2xl font-normal font-Nunito;
+    @apply font-Nunito text-2xl font-normal;
   }
 
   .h5 {
-    @apply text-lg font-semibold font-Nunito;
+    @apply font-Nunito text-lg font-semibold;
   }
-
+  .h5_b {
+    @apply font-Nunito text-lg font-bold;
+  }
   .para {
-    @apply text-lg md:text-2xl font-medium font-Nunito;
+    @apply font-Nunito text-lg font-medium;
   }
 
   .body_3 {
-    @apply text-base md:text-2xl font-normal md:font-medium font-Nunito;
+    @apply font-Nunito text-base font-normal;
   }
 
   .body3_b {
-    @apply text-base font-bold font-Nunito;
+    @apply font-Nunito text-base font-bold;
   }
 
   .body_2 {
-    @apply text-base md:text-2xl font-normal md:font-medium md:leading-7 font-Nunito;
+    @apply font-Nunito text-base font-normal md:text-2xl md:font-medium md:leading-7;
   }
 
   .body_1 {
-    @apply text-2xl leading-7 font-medium font-Nunito;
+    @apply font-Nunito text-2xl font-medium leading-7;
+  }
+  .body_4 {
+    @apply font-Nunito text-sm font-normal;
   }
 
   .body_5 {
-    @apply text-xs font-normal font-Nunito;
+    @apply font-Nunito text-xs font-normal;
   }
 
   .body1_b {
-    @apply text-lg md:text-2xl md:leading-7 font-bold font-Nunito;
+    @apply font-Nunito text-lg font-bold md:text-2xl md:leading-7;
   }
 
   .button_text {
-    @apply text-lg font-bold font-Nunito;
+    @apply font-Nunito text-lg font-bold;
   }
 
   .button_1 {
-    @apply px-8 py-4 rounded-full text-lg font-bold font-Nunito;
+    @apply rounded-full px-8 py-4 font-Nunito text-lg font-bold;
   }
 
   .text-grad {
-    @apply bg-grad_1 w-fit text-transparent bg-clip-text;
+    @apply w-fit bg-grad_1 bg-clip-text text-transparent;
   }
 }
 
@@ -103,19 +112,25 @@ body {
   }
 }
 
-.shadow {}
+.shadow {
+}
 
 .scrollText {
   animation: scrollText 15s linear infinite;
 }
 
 .btn_lnrbg::after {
-  content: '';
+  content: "";
   position: absolute;
   height: 107%;
   width: 102%;
   border-radius: 1000px;
-  background-image: linear-gradient(to right, #F8BF3B 0%, #FF8B13 31%, #EF5F3D 100%);
+  background-image: linear-gradient(
+    to right,
+    #f8bf3b 0%,
+    #ff8b13 31%,
+    #ef5f3d 100%
+  );
   z-index: -1;
 }
 

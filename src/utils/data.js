@@ -1,6 +1,6 @@
 import interactiveLearning from "@/assets/interactiveLearning.svg";
 import parentingSupport from "@/assets/ParentingSupport.svg";
-import securePlatform from "@/assets/securePlatfrom.svg";
+import securePlatform from "@/assets/SecurePlatform.svg";
 import ageAppropriate from "@/assets/ageAppropriate.svg";
 import focusLearning from "@/assets/FocusOnLearning.svg";
 import personalizedInsight from "@/assets/personalizedInsight.svg";
@@ -167,5 +167,107 @@ export const faqs = [
     question: "Will Sensei come to my Society and conduct these sessions?",
     answer:
       "Sensei goes beyond the internet, bringing engaging activity-based sessions right to your society club house which will be conducted by psychologists. At Sensei we believe this format of learning is best delivered by kinaesthetics format. Contact to know more!",
+  },
+];
+export const navLinks = [
+  {
+    title: "Home",
+    link: "/",
+  },
+  {
+    title: "About Us",
+    link: "/about",
+  },
+  {
+    title: "ABL Modules",
+    link: "/ablmodules",
+  },
+  {
+    title: "Pricing",
+    link: "/pricing",
+  },
+  {
+    title: "Contact Us",
+    link: "/contact",
+  },
+];
+export const ABLFilters = [
+  {
+    id: 1,
+    name: "Age group",
+    options: [
+      {
+        id: 1,
+        name: "5-7 years",
+      },
+      {
+        id: 2,
+        name: "8-10 years",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Topics",
+    options: [
+      {
+        id: 1,
+        name: "Emotional Well-being (EW)",
+      },
+      {
+        id: 2,
+        name: "Safe & Self Awareness (SSA)",
+      },
+      {
+        id: 3,
+        name: "Moral Guidance & Ethics (MG)",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Concerns",
+    options: [
+      {
+        id: 1,
+        name: "Difficulty following instructions",
+      },
+      {
+        id: 2,
+        name: "Frequent tantrums/ meltdowns",
+      },
+      {
+        id: 3,
+        name: "Trouble sharing and taking turns",
+      },
+      {
+        id: 4,
+        name: "Disorganized and forgetful behavior",
+      },
+      {
+        id: 5,
+        name: "Resistance to trying new things",
+      },
+      {
+        id: 6,
+        name: "Struggles with focus and concentration",
+      },
+      {
+        id: 7,
+        name: "Difficulty making friends",
+      },
+      {
+        id: 8,
+        name: "Inconsistent sleep routines",
+      },
+      {
+        id: 9,
+        name: "Excessive worry or anxiety",
+      },
+      {
+        id: 10,
+        name: "Struggles with self-confidence",
+      },
+    ],
   },
 ];

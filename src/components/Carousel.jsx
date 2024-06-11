@@ -40,17 +40,17 @@ const Carousel = ({ children }) => {
   return (
     <div className="relative">
       <div
-        className="flex m-[55px] mt-0 z-0 transition-transform ease-out duration-1000"
+        className="z-0 m-[55px] mt-0 flex transition-transform duration-1000 ease-out"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
         <CarouselContext.Provider value={{ curr }}>
           {children}
         </CarouselContext.Provider>
       </div>
-      <div className="absolute z-[1] mb-[55px] -inset-10 inset-0 flex items-center justify-between p-4">
+      <div className="absolute -inset-10 z-[1] mb-[55px] flex items-center justify-between p-4 max-sm:inset-0">
         <button
           onClick={prev}
-          className="w-[60px] h-[60px] max-md:w-[40px] max-md:h-[40px] rounded-full shadow bg-primary hover:bg-opacity-50 bg-opacity-25"
+          className="h-[60px] w-[60px] rounded-full bg-primary bg-opacity-25 shadow hover:bg-opacity-50 max-md:h-[40px] max-md:w-[40px]"
         >
           {" "}
           <Image
@@ -62,23 +62,20 @@ const Carousel = ({ children }) => {
         </button>
         <button
           onClick={next}
-          className="w-[60px] h-[60px] max-md:w-[40px] max-md:h-[40px] rounded-full shadow bg-primary hover:bg-opacity-50 bg-opacity-25"
+          className="h-[60px] w-[60px] rounded-full bg-primary bg-opacity-25 shadow hover:bg-opacity-50 max-md:h-[40px] max-md:w-[40px]"
         >
           {" "}
-          <Image src={arrow} alt="arrow" sizes="auto" className="mx-auto " />
+          <Image src={arrow} alt="arrow" sizes="auto" className="mx-auto" />
         </button>
       </div>
 
-      <div className="absolute bottom-4 right-0 left-0">
+      <div className="absolute bottom-4 left-0 right-0">
         <div className="flex items-center justify-center gap-2">
           {comments.map((_, i) => (
             <div
               key={i}
               onClick={() => setCurr(i)}
-              className={`
-                  transition-all w-3 h-3 bg-primary opacity-25 rounded-full
-                  ${curr === i ? "p-2" : "bg-opacity-50"}
-                `}
+              className={`h-3 w-3 rounded-full bg-primary opacity-25 transition-all ${curr === i ? "p-2" : "bg-opacity-50"} `}
             />
           ))}
         </div>
@@ -90,9 +87,9 @@ export const CarouselItemWraper = ({ children, index }) => {
   const { curr } = useContext(CarouselContext);
   return (
     <div
-      className={`p-8  ${
-        curr === index ? "z-[10] !opacity-100 !scale-100 !blur-0" : ""
-      } scale-50 opacity-[92%] my-auto h-fit blur-[3.5px] bg-white transition-all ease-out duration-1000 flex flex-col gap-2 w-full min-w-[100%] rounded-[20px] shadow-cs`}
+      className={`p-8 ${
+        curr === index ? "z-[10] !scale-100 !opacity-100 !blur-0" : ""
+      } my-auto flex h-fit w-full min-w-[100%] scale-50 flex-col gap-2 rounded-[20px] bg-white opacity-[92%] shadow-cs blur-[3.5px] transition-all duration-1000 ease-out`}
     >
       {children}
     </div>

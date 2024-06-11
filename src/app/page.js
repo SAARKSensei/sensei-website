@@ -10,7 +10,7 @@ import Psychologists from "@/components/Psychologists";
 import Comments from "@/components/Comments";
 export default function Home() {
   return (
-    <div className="flex overflow-x-hidden flex-col gap-40 bg-[#FEF5F3]">
+    <div className="flex flex-col gap-40 overflow-x-hidden bg-[#FEF5F3] pb-40">
       <HeroSection />
       <ParentIssues />
       <Psychologists />
@@ -20,7 +20,6 @@ export default function Home() {
       <GetStarted />
       <Journey />
       <FAQS />
-      <Footer />
     </div>
   );
 }
