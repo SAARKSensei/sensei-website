@@ -4,6 +4,81 @@ import securePlatform from "@/assets/SecurePlatform.svg";
 import ageAppropriate from "@/assets/ageAppropriate.svg";
 import focusLearning from "@/assets/FocusOnLearning.svg";
 import personalizedInsight from "@/assets/personalizedInsight.svg";
+import sankalp_kumar from "@/assets/us/sankalp_kumar.jpg";
+import abhishek_paswan from "@/assets/us/abhishek_paswan.jpg";
+import arshit_mishra from "@/assets/us/arshit_mishra.jpg";
+import shreyas_thakre from "@/assets/us/shreyas_thakre.jpg";
+import rohit_raj from "@/assets/us/rohit_raj.jpg";
+import ananta_paul from "@/assets/us/ananta_paul.jpg";
+import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
+import ayaan_baksh from "@/assets/us/ayaan_baksh.jpg";
+import aprajita_dixit from "@/assets/us/aparajita_dixit.jpg";
+import roma_kaushik from "@/assets/us/roma_kaushik.jpg";
+export const psychologists = [
+  {
+    name: "Dr. Aprajita Dixit",
+    description: "Child & Adolescent Counsellor",
+    img: aprajita_dixit,
+  },
+  {
+    name: "Roma Kaushik",
+    description: "Child Psychologist",
+    img: roma_kaushik,
+  },
+];
+export const team = [
+  {
+    name: "Sankalp Kumar",
+    description: "Co-Founder CEO",
+    img: sankalp_kumar,
+  },
+  {
+    name: "Abhishek Paswan",
+    description: "Co-Founder COO",
+    img: abhishek_paswan,
+  },
+  {
+    name: "Arshit Mishra",
+    description: "Co- Founder | Curriculum Lead",
+    img: arshit_mishra,
+  },
+  {
+    name: "Shreyas Thakre",
+    description: "Jr.Frontend Developer",
+    img: shreyas_thakre,
+  },
+  {
+    name: "Rohit Raj",
+    description: "Jr.Graphic Designer",
+    img: rohit_raj,
+  },
+  {
+    name: "Ananta Paul",
+    description: "Frontend Developer Intern",
+    img: ananta_paul,
+    linkedIn_url: "https://www.linkedin.com/in/anantapaul/",
+  },
+  {
+    name: "Ayaan Baksh",
+    description: "Social Media Marketing Intern",
+    img: ayaan_baksh,
+  },
+  {
+    name: "Ashwini Narkhede",
+    description: "Marketing Intern",
+    img: ashwini_narkhede,
+  },
+  {
+    name: "Manika Chaudhary",
+    description: "Psychology Intern",
+    img: ashwini_narkhede,
+  },
+  {
+    name: "Hardik Gupta",
+    description: "Psychology Intern",
+    img: ashwini_narkhede,
+  },
+];
 export const features = [
   {
     image: interactiveLearning,
@@ -46,13 +121,6 @@ export const Herotexts = ["mentally", "emotionally", "ethically"];
 
 export const cards = [
   {
-    title: "For Family",
-    description:
-      "We encourage parents to bond with their child. Our experts sensibly curate activity modules as per Indian parents. You can follow the steps from our app and teach your child while having fun.",
-    button: "Explore",
-    image: "family",
-  },
-  {
     title: "For Society",
     description:
       "We make weekends fun and productive! Sensei's team of professionals visit your society clubhouse where we hold weekly sessions and empower parents along with kids.",
@@ -65,6 +133,13 @@ export const cards = [
       "We believe classrooms are where we see friendships, problem-solving, and teamwork in action. Research says that Learning social skills blossoms through play and interaction with friends!",
     button: "Explore",
     image: "school",
+  },
+  {
+    title: "For NGO",
+    description:
+      "Lorem ipsum dolor sit amet consectetur. Sit donec adipiscing tristique posuere sit eu. Id mauris in nulla senectus volutpat eget venenatis ultrices urna. Ac facilisis tempor cras convallis a et risus enim ultrices.",
+    button: "Explore",
+    image: "family",
   },
 ];
 export const comments = [

@@ -206,3 +206,9 @@ body {
     opacity: 0;
   }
 }
+.bg-hover-trans {
+  transition: all 0.5s ease;
+}
+.bg-hover-trans:hover {
+  background: transparent;
+}
