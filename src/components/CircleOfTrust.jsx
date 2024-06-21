@@ -26,7 +26,7 @@ const CircleOfTrust = () => {
 };
 export const Card = ({ card, image, color }) => {
   return (
-    <div className="relative flex max-w-[min(524px,90vw)] flex-col gap-4 rounded-[20px] bg-white p-10">
+    <div className="relative flex max-w-[min(524px,90vw)] flex-col gap-4 overflow-hidden rounded-[20px] bg-white p-10">
       <p className="body1_b">{card.title}</p>
       <span
         style={{ backgroundColor: color }}
@@ -46,7 +46,7 @@ export const Card = ({ card, image, color }) => {
         src={image}
         alt={card.image}
         sizes="auto"
-        className="absolute bottom-0 right-0"
+        className="absolute -bottom-12 right-0"
       />
     </div>
   );

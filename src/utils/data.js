@@ -14,6 +14,154 @@ import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
 import ayaan_baksh from "@/assets/us/ayaan_baksh.jpg";
 import aprajita_dixit from "@/assets/us/aparajita_dixit.jpg";
 import roma_kaushik from "@/assets/us/roma_kaushik.jpg";
+export const plans = {
+  Family: {
+    features: {
+      subjects: [
+        {
+          name: "Emotional Well-Being",
+          id: 1,
+        },
+        {
+          name: "Self & Social Awareness",
+          id: 2,
+        },
+        {
+          name: "Moral-Guidance & Ethics",
+          id: 3,
+        },
+      ],
+      includes: [
+        {
+          name: "For 5-10 years children",
+          id: 1,
+        },
+        {
+          name: "24 Interactive activities",
+          id: 2,
+        },
+        {
+          name: "12 Digital activities",
+          id: 3,
+        },
+        {
+          name: "E-learning materials",
+          id: 4,
+        },
+      ],
+    },
+    plans: [
+      {
+        name: "Basic",
+        description:
+          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
+        curr_price: "₹699",
+        price: "₹747",
+        billed: "Billed annually",
+        subjects: { 1: true, 2: false, 3: false },
+        duration: "3 Months",
+        includes: { 1: true, 2: true, 3: true, 4: true },
+        monthly: {
+          curr_price: "₹249",
+          price: "₹499",
+        },
+      },
+      {
+        name: "Intermediate",
+        description:
+          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nisl lectus urna nisi mauris",
+        curr_price: "₹1399",
+        price: "₹1494",
+        billed: "Billed annually",
+        subjects: { 1: true, 2: true, 3: false },
+        duration: "6 Months",
+        includes: { 1: true, 2: true, 3: true, 4: true },
+        tag: "Best Selling",
+        monthly: {
+          curr_price: "₹249",
+          price: "₹499",
+        },
+      },
+      {
+        name: "In-depth",
+        description:
+          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nisl lectus urna nisl mauris.",
+        curr_price: "₹1999",
+        price: "₹2241",
+        billed: "Billed annually",
+        subjects: { 1: true, 2: true, 3: true },
+        duration: "9 Months",
+        includes: { 1: true, 2: true, 3: true, 4: true },
+        tag: "Recomended",
+        monthly: {
+          curr_price: "₹249",
+          price: "₹499",
+        },
+      },
+    ],
+  },
+  Society: {
+    features: {
+      subjects: [
+        {
+          name: "Emotional Well-Being",
+          id: 1,
+        },
+        {
+          name: "Self & Social Awareness",
+          id: 2,
+        },
+        {
+          name: "Moral-Guidance & Ethics",
+          id: 3,
+        },
+      ],
+      includes: [
+        {
+          name: "For 5-10 years children",
+          id: 1,
+        },
+        {
+          name: "72 Interactive activities",
+          id: 2,
+        },
+        {
+          name: "36 Digital activities",
+          id: 3,
+        },
+        {
+          name: "At your nearest location",
+          id: 4,
+        },
+        {
+          name: "Counsellor as facilitator",
+          id: 5,
+        },
+        {
+          name: "E-learning materials",
+          id: 6,
+        },
+      ],
+    },
+    plans: [
+      {
+        name: "Starting @",
+        description:
+          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
+        curr_price: "₹14,999",
+        price: "₹17,991",
+        billed: "Billed annually",
+        subjects: { 1: true, 2: true, 3: true },
+        duration: "9 Months",
+        includes: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true },
+        monthly: {
+          curr_price: "₹1999",
+          price: "",
+        },
+      },
+    ],
+  },
+};
 export const psychologists = [
   {
     name: "Dr. Aprajita Dixit",
