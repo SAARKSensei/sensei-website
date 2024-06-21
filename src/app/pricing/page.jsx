@@ -15,11 +15,6 @@ const Page = () => {
           {" "}
           Get the <span className="text-primary">Results</span> You Deserve
         </h1>
-        <p className="body_1 max-w-[600px] text-center">
-          Lorem ipsum dolor sit amet consectetur. Proin nunc sodales netus
-          pharetra lacus. Massa fringilla urna risus eleifend viverra ac quam
-          euismod in. Diam tincidunt.
-        </p>
       </div>
       <div className="flex w-fit gap-2 rounded-full shadow-cs shadow-orange-100">
         {["Family", "Society", "School"].map((p, index) => (
@@ -41,7 +36,6 @@ const Page = () => {
   );
 };
 const Plan = ({ plan, features }) => {
-  console.log(plan, features);
 
   return (
     <div

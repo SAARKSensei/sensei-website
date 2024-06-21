@@ -10,10 +10,12 @@ import arshit_mishra from "@/assets/us/arshit_mishra.jpg";
 import shreyas_thakre from "@/assets/us/shreyas_thakre.jpg";
 import rohit_raj from "@/assets/us/rohit_raj.jpg";
 import ananta_paul from "@/assets/us/ananta_paul.jpg";
-import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
 import ayaan_baksh from "@/assets/us/ayaan_baksh.jpg";
 import aprajita_dixit from "@/assets/us/aparajita_dixit.jpg";
 import roma_kaushik from "@/assets/us/roma_kaushik.jpg";
+import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
+import manika_choudhary from "@/assets/us/manika_choudhary.jpg";
+import hardik_gupta from "@/assets/us/hardik_gupta.jpg"
 export const plans = {
   Family: {
     features: {
@@ -147,7 +149,7 @@ export const plans = {
       {
         name: "Starting @",
         description:
-          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
+          "",
         curr_price: "₹14,999",
         price: "₹17,991",
         billed: "Billed annually",
@@ -167,11 +169,13 @@ export const psychologists = [
     name: "Dr. Aprajita Dixit",
     description: "Child & Adolescent Counsellor",
     img: aprajita_dixit,
+    linkedIn_url: "https://www.linkedin.com/in/aprajita-dixit-7a277179"
   },
   {
     name: "Roma Kaushik",
     description: "Child Psychologist",
     img: roma_kaushik,
+    linkedIn_url: "https://www.linkedin.com/in/roma-kaushik-3a01aa140/"
   },
 ];
 export const team = [
@@ -179,26 +183,31 @@ export const team = [
     name: "Sankalp Kumar",
     description: "Co-Founder CEO",
     img: sankalp_kumar,
+    linkedIn_url: 'https://www.linkedin.com/in/sankalp-kumar-68b49a169/',
   },
   {
     name: "Abhishek Paswan",
     description: "Co-Founder COO",
     img: abhishek_paswan,
+    linkedIn_url: "https://www.linkedin.com/in/abhishek-paswan-44bb01113/",
   },
   {
     name: "Arshit Mishra",
     description: "Co- Founder | Curriculum Lead",
     img: arshit_mishra,
+    linkedIn_url: "https://www.linkedin.com/in/arshit-mishra-61317011a/",
   },
   {
     name: "Shreyas Thakre",
     description: "Jr.Frontend Developer",
     img: shreyas_thakre,
+    linkedIn_url: "https://www.linkedin.com/in/shreyas-thakare-691261151",
   },
   {
     name: "Rohit Raj",
     description: "Jr.Graphic Designer",
     img: rohit_raj,
+    linkedIn_url: "https://www.linkedin.com/in/18rohitraj/",
   },
   {
     name: "Ananta Paul",
@@ -210,21 +219,25 @@ export const team = [
     name: "Ayaan Baksh",
     description: "Social Media Marketing Intern",
     img: ayaan_baksh,
+    linkedIn_url: "https://www.linkedin.com/in/ayaan-baksh-2a3780260/",
   },
   {
     name: "Ashwini Narkhede",
     description: "Marketing Intern",
     img: ashwini_narkhede,
+    linkedIn_url: "https://www.linkedin.com/in/ashwini-narkhede-97663217a/"
   },
   {
     name: "Manika Chaudhary",
     description: "Psychology Intern",
-    img: ashwini_narkhede,
+    img: manika_choudhary,
+    linkedIn_url: "https://linkedin.com/in/manika-chaudhary-67710610b/",
   },
   {
     name: "Hardik Gupta",
     description: "Psychology Intern",
-    img: ashwini_narkhede,
+    img: hardik_gupta,
+    linkedIn_url: "https://linkedin.com/in/hardik-r-58964a239?u/",
   },
 ];
 export const features = [
@@ -285,7 +298,7 @@ export const cards = [
   {
     title: "For NGO",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Sit donec adipiscing tristique posuere sit eu. Id mauris in nulla senectus volutpat eget venenatis ultrices urna. Ac facilisis tempor cras convallis a et risus enim ultrices.",
+      "",
     button: "Explore",
     image: "family",
   },
@@ -401,10 +414,10 @@ export const navLinks = [
     title: "About Us",
     link: "/about",
   },
-  {
-    title: "ABL Modules",
-    link: "/ablmodules",
-  },
+  // {
+  //   title: "ABL Modules",
+  //   link: "/ablmodules",
+  // },
   {
     title: "Pricing",
     link: "/pricing",

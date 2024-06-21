@@ -11,6 +11,7 @@ import Ticked from "@/assets/tick.svg"
 
 import SmallPhone from "@/assets/smallphone.svg"
 import BigPhones from "@/assets/bigphone.svg"
+import FreeActivityBtn from './FreeActivityBtn'
 
 
 const OurModules = () => {
@@ -91,9 +92,10 @@ const OurModules = () => {
                             <p className='font-Nunito text-base sm:text-lg font-normal sm:font-medium'>ABL modules promote knowledge retention, engagement and critical thinking</p>
                         </div>
                     </div>
-                    <button className='w-fit bg-[#2C3D68] border-none flex items-center justify-center px-6 py-4 rounded-full text-white button_text relative btn_lnrbg'>
+                    {/* <button className='w-fit bg-[#2C3D68] border-none flex items-center justify-center px-6 py-4 rounded-full text-white button_text relative btn_lnrbg'>
                         Explore ABL Modules
-                    </button>
+                    </button> */}
+                    <FreeActivityBtn />
                 </div>
                 <div className='w-full h-fit flex sm:hidden mx-auto'>
                     <Image

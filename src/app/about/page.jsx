@@ -15,8 +15,7 @@ const Page = () => {
       <Image src={group} alt="group" width={910} height={440} />
       <div className="flex gap-4 max-md:flex-wrap">
         <h1 className="h1">
-          Lorem ipsum dolor sit amet consectetur. Amet cras enim odio eleifend
-          dignissim .
+          Our Passionate team of developers, designers & child experts craft engaging learning experiences for you & your child.
         </h1>
         <div className="flex flex-col gap-4 text-grey_1">
           <div className="flex gap-2 max-sm:flex-wrap">
