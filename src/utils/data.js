@@ -295,13 +295,13 @@ export const cards = [
     button: "Explore",
     image: "school",
   },
-  {
-    title: "For NGO",
-    description:
-      "",
-    button: "Explore",
-    image: "family",
-  },
+  // {
+  //   title: "For NGO",
+  //   description:
+  //     "",
+  //   button: "Explore",
+  //   image: "family",
+  // },
 ];
 export const comments = [
   {

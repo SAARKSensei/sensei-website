@@ -17,7 +17,7 @@ const CircleOfTrust = () => {
         </div>
         <Card card={cards[0]} image={buildings} color={"#FF8B13"} />
         <Card card={cards[1]} image={school} color={"#EF5F3D"} />
-        <Card card={cards[2]} image={school} color={"#F8BF3B"} />
+        {/* <Card card={cards[2]} image={school} color={"#F8BF3B"} /> */}
       </div>
     </div>
   );
