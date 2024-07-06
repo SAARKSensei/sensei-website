@@ -8,7 +8,7 @@ import Features from "@/components/Features";
 import Activities from "@/components/Activities";
 const Page = () => {
   return (
-    <div className="flex flex-col items-center gap-40 py-40">
+    <div className="flex flex-col items-center gap-40 py-10">
       <div className="container flex w-fit items-center gap-4 p-4 max-sm:flex-col">
         <div className="flex flex-col gap-4">
           <h4 className="h4">Our Modules</h4>

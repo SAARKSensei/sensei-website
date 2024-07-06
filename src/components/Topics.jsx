@@ -30,7 +30,7 @@ const Topics = () => {
           </p>
         </div>
         <div className="flex flex-wrap justify-around gap-5">
-          <div className="flex w-[min(416px,90vw)] flex-col gap-2 rounded-[20px] bg-gradient-to-r from-[#E5F1FE] to-[#9FC5EF] p-4">
+          <div className="flex w-[min(400px,90vw)] flex-col gap-2 rounded-[20px] bg-gradient-to-r from-[#E5F1FE] to-[#9FC5EF] p-4">
             <div className="w-fit rounded-md bg-[#9FC5EF] p-1">
               <Image src={wellBeing} alt="wellBeing" />
             </div>
@@ -43,7 +43,7 @@ const Topics = () => {
               <li className="body_3">Building Resilience</li>
             </ul>
           </div>
-          <div className="flex w-[min(416px,90vw)] flex-col gap-2 rounded-[20px] bg-gradient-to-r from-[#FFE5E2] to-[#F6B0A8] p-4">
+          <div className="flex w-[min(400px,90vw)] flex-col gap-2 rounded-[20px] bg-gradient-to-r from-[#FFE5E2] to-[#F6B0A8] p-4">
             <div className="w-fit rounded-md bg-[#F6B0A8] p-1">
               <Image src={awareness} alt="wellBeing" />
             </div>
@@ -58,7 +58,7 @@ const Topics = () => {
               <li className="body_3">Safe and Unsafe Touch</li>
             </ul>
           </div>
-          <div className="flex w-[min(416px,90vw)] flex-col gap-2 rounded-[20px] bg-gradient-to-r from-[#FFE8B1] to-[#F8BF3B] p-4">
+          <div className="flex w-[min(400px,90vw)] flex-col gap-2 rounded-[20px] bg-gradient-to-r from-[#FFE8B1] to-[#F8BF3B] p-4">
             <div className="w-fit rounded-md bg-[#F8BF3B] p-1">
               <Image src={decision} alt="wellBeing" />
             </div>

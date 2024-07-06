@@ -12,21 +12,19 @@ const CircleOfTrust = () => {
           <h4 className="h4 text-secondary">Our Verticals</h4>
 
           <p className="body_2 mx-auto max-w-[1000px]">
-            Lorem ipsum dolor sit amet consectetur. Proin nunc sodales netus
-            pharetra lacus. Massa fringilla urna risus eleifend viverra ac quam
-            euismod in. Diam tincidunt.
+            Children evolve in interconnected environments, or microsystems. By offering programs in places such as societies and classrooms, Sensei bridges the gap between different microsystems.
           </p>
         </div>
         <Card card={cards[0]} image={buildings} color={"#FF8B13"} />
         <Card card={cards[1]} image={school} color={"#EF5F3D"} />
-        <Card card={cards[2]} image={school} color={"#F8BF3B"} />
+        {/* <Card card={cards[2]} image={school} color={"#F8BF3B"} /> */}
       </div>
     </div>
   );
 };
 export const Card = ({ card, image, color }) => {
   return (
-    <div className="relative flex max-w-[min(524px,90vw)] flex-col gap-4 rounded-[20px] bg-white p-10">
+    <div className="relative flex max-w-[min(524px,90vw)] flex-col gap-4 overflow-hidden rounded-[20px] bg-white p-10">
       <p className="body1_b">{card.title}</p>
       <span
         style={{ backgroundColor: color }}
@@ -34,19 +32,19 @@ export const Card = ({ card, image, color }) => {
       />
       <p className="body_3">{card.description} </p>
 
-      <button className="group relative z-[10] h-fit w-fit">
+      {/* <button className="group relative z-[10] h-fit w-fit">
         <span className="absolute -inset-[2px] z-[-1] block rounded-full bg-grad_1" />
         <span className="absolute inset-0 z-[-1] block rounded-full bg-white" />
 
         <span className="button_1 text-grad relative block group-hover:bg-clip-border group-hover:text-white">
           {card.button}
         </span>
-      </button>
+      </button> */}
       <Image
         src={image}
         alt={card.image}
         sizes="auto"
-        className="absolute bottom-0 right-0"
+        className="absolute -bottom-12 right-0"
       />
     </div>
   );

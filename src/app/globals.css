@@ -75,7 +75,7 @@ body {
   }
 
   .body_2 {
-    @apply font-Nunito text-base font-normal md:text-2xl md:font-medium md:leading-7;
+    @apply font-Nunito text-lg font-normal md:leading-7;
   }
 
   .body_1 {
@@ -211,4 +211,13 @@ body {
 }
 .bg-hover-trans:hover {
   background: transparent;
+}
+.ribbon:before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 0px;
+  width: 10px;
+  border: 16px solid;
+  border-left-color: transparent;
 }
