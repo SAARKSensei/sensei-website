@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, useContext, createContext } from "react";
 import Image from "next/image";
 import { comments } from "@/utils/data";
-import arrow from "@/assets/rightArrow.svg";
+import arrow from "@/assets/rightArrow.svg?url";
 const CarouselContext = createContext();
 
 const Carousel = ({ children }) => {

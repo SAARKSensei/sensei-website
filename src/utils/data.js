@@ -1,19 +1,10 @@
-import interactiveLearning from "@/assets/interactiveLearning.svg";
-import parentingSupport from "@/assets/ParentingSupport.svg";
-import securePlatform from "@/assets/SecurePlatform.svg";
-import ageAppropriate from "@/assets/ageAppropriate.svg";
-import focusLearning from "@/assets/FocusOnLearning.svg";
-import personalizedInsight from "@/assets/personalizedInsight.svg";
-import sankalp_kumar from "@/assets/us/sankalp_kumar.jpg";
-import abhishek_paswan from "@/assets/us/abhishek_paswan.jpg";
-import arshit_mishra from "@/assets/us/arshit_mishra.jpg";
-import shreyas_thakre from "@/assets/us/shreyas_thakre.jpg";
-import rohit_raj from "@/assets/us/rohit_raj.jpg";
-import ananta_paul from "@/assets/us/ananta_paul.jpg";
-import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
-import ayaan_baksh from "@/assets/us/ayaan_baksh.jpg";
-import aprajita_dixit from "@/assets/us/aparajita_dixit.jpg";
-import roma_kaushik from "@/assets/us/roma_kaushik.jpg";
+import interactiveLearning from "@/assets/interactiveLearning.svg?url";
+import parentingSupport from "@/assets/ParentingSupport.svg?url";
+import securePlatform from "@/assets/SecurePlatform.svg?url";
+import ageAppropriate from "@/assets/ageAppropriate.svg?url";
+import focusLearning from "@/assets/FocusOnLearning.svg?url";
+import personalizedInsight from "@/assets/personalizedInsight.svg?url";
+
 export const plans = {
   Family: {
     features: {
@@ -146,8 +137,7 @@ export const plans = {
     plans: [
       {
         name: "Starting @",
-        description:
-          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
+        description: "",
         curr_price: "₹14,999",
         price: "₹17,991",
         billed: "One Time Payment",
@@ -167,11 +157,13 @@ export const psychologists = [
     name: "Dr. Aprajita Dixit",
     description: "Child & Adolescent Counsellor",
     img: aprajita_dixit,
+    linkedIn_url: "https://www.linkedin.com/in/aprajita-dixit-7a277179",
   },
   {
     name: "Roma Kaushik",
     description: "Child Psychologist",
     img: roma_kaushik,
+    linkedIn_url: "https://www.linkedin.com/in/roma-kaushik-3a01aa140/",
   },
 ];
 export const team = [
@@ -179,6 +171,7 @@ export const team = [
     name: "Sankalp Kumar",
     description: "Co-Founder CEO",
     img: sankalp_kumar,
+    linkedIn_url: "https://www.linkedin.com/in/sankalp-kumar-68b49a169/",
   },
   {
     name: "Abhishek Paswan",
@@ -215,6 +208,7 @@ export const team = [
     name: "Ashwini Narkhede",
     description: "Marketing Intern",
     img: ashwini_narkhede,
+    linkedIn_url: "https://www.linkedin.com/in/ashwini-narkhede-97663217a/",
   },
   {
     name: "Manika Chaudhary",
@@ -406,13 +400,13 @@ export const navLinks = [
     link: "/about",
   },
   {
-    title: "ABL Modules",
-    link: "/ablmodules",
+    title: "Blogs",
+    link: "/blogs",
   },
-  {
-    title: "Pricing",
-    link: "/pricing",
-  },
+  // {
+  //   title: "ABL Modules",
+  //   link: "/ablmodules",
+  // },
   {
     title: "Contact Us",
     link: "/contact",

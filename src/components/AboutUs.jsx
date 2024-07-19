@@ -17,7 +17,9 @@ const AboutUs = () => {
         />
       </div>
       <div className="flex w-full flex-col gap-6 sm:order-1 sm:w-1/2">
-        <p className="body_2 text-[#2C3D68]">About Us</p>
+        <h2 className="h4 h-fit max-w-[90vw] uppercase text-secondary lg:col-start-2">
+          About Us
+        </h2>
         <p className="para leading-10">
           At Sensei, we are dedicated to revolutionizing education by blending
           activity-based learning (ABL) with essential life-skills, mental

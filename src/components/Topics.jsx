@@ -1,9 +1,9 @@
 import React from "react";
 import Background from "./BackGround";
 import Image from "next/image";
-import wellBeing from "@/assets/wellBeing.svg";
-import awareness from "@/assets/awareness.svg";
-import decision from "@/assets/decision.svg";
+import wellBeing from "@/assets/wellBeing.svg?url";
+import awareness from "@/assets/awareness.svg?url";
+import decision from "@/assets/decision.svg?url";
 const Topics = () => {
   return (
     <div className="container relative z-[1] flex flex-col items-center gap-2 p-4">

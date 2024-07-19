@@ -1,13 +1,16 @@
 import React from "react";
-import contact from "../assets/contactimg.svg";
+import Contact from "../assets/contactimg.svg";
 import Image from "next/image";
+import Stars from "./Stars";
 const ContactUs = () => {
   return (
-    <div className="relative flex w-full flex-wrap justify-center gap-10">
-      <div className="flex flex-col gap-10">
+    <div className="flex w-full flex-wrap justify-center gap-10">
+      <div className="relative flex flex-col gap-10">
+        <Stars />
         <div className="text-left">
-          <h4 className="h4 text-secondary">Hello visitor</h4>
-
+          <h4 className="h4 h-fit max-w-[90vw] uppercase text-secondary">
+            Hello visitor
+          </h4>
           <h1 className="inline-block bg-grad_1 bg-clip-text text-left font-Nunito text-5xl font-bold text-transparent lg:text-7xl lg:font-extrabold">
             Get in touch
           </h1>
@@ -15,12 +18,13 @@ const ContactUs = () => {
             Let&apos;s embark on the exciting journey together!{" "}
           </p>
         </div>
-        <Image
+        {/* <Image
           src={contact}
           alt="contact"
           className="-order-1 border border-white md:order-none"
           sizes="auto"
-        />
+        /> */}
+        <Contact />
       </div>
       <form
         action=""

@@ -3,21 +3,21 @@ import Background from "@/components/BackGround.jsx";
 import Image from "next/image";
 import girl from "@/assets/girl.jpg";
 import boy from "@/assets/boyj.jpg";
-import boxes from "@/assets/boxes.svg";
-import muser from "@/assets/miniuser.svg";
-import flower from "@/assets/flower.svg";
+import boxes from "@/assets/boxes.svg?url";
+import muser from "@/assets/miniuser.svg?url";
+import flower from "@/assets/flower.svg?url";
 import InfiniteScroll from "./InfiniteScroll";
 import Navbar from "./Navbar";
 import Boy from "@/assets/DSC_0354.png";
-import topology from "@/assets/Topology-1.svg";
-import ellipse from "@/assets/Ellipse.svg";
+import topology from "@/assets/Topology-1.svg?url";
+import ellipse from "@/assets/Ellipse.svg?url";
 import personality from "@/assets/personality.png";
 import heromobile from "@/assets/mobileHero.png";
-import tic from "@/assets/tick.svg";
-import google from "@/assets/google.svg";
-import whatsapp from "@/assets/whatsapp.svg";
-import userround from "@/assets/user-round.svg";
-import bgtopo from "@/assets/bgtopo.svg";
+import tic from "@/assets/tick.svg?url";
+import google from "@/assets/google.svg?url";
+import whatsapp from "@/assets/whatsapp.svg?url";
+import userround from "@/assets/user-round.svg?url";
+import bgtopo from "@/assets/bgtopo.svg?url";
 import TypingAni from "./TypingAni";
 import { Herotexts } from "@/utils/data";
 import HeroImageAny from "./HeroImageAny";
@@ -31,7 +31,9 @@ const HeroSection = () => {
           <div className="flex min-w-[40vw] flex-col gap-10">
             <h1 className="h2 lg:h1 min-h-max max-w-[800px] leading-snug">
               Life skills that empower your child in this digital world{" "}
-              <TypingAni texts={Herotexts} delay={100} />
+              <span className="inline-block min-w-[200px] max-w-fit bg-grad_1 bg-clip-text text-transparent">
+                <TypingAni texts={Herotexts} delay={2000} speed={100} />
+              </span>
             </h1>
             <FreeActivityBtn />
 

@@ -41,48 +41,48 @@ body {
 
 @layer components {
   .h1 {
-    @apply font-Nunito text-5xl font-bold;
+    @apply font-Nunito text-xl font-bold sm:text-2xl md:text-5xl;
   }
 
   .h2 {
-    @apply font-Nunito text-[42px] font-bold leading-[44px];
+    @apply font-Nunito text-3xl font-bold leading-[44px] md:text-[42px];
   }
 
   .h3 {
-    @apply font-Nunito text-lg font-normal md:text-4xl;
+    @apply font-Nunito text-lg md:text-4xl;
   }
 
   .h4 {
-    @apply font-Nunito text-2xl font-normal;
+    @apply font-Nunito text-base font-normal md:text-2xl;
   }
 
   .h5 {
-    @apply font-Nunito text-lg font-semibold;
+    @apply font-Nunito text-sm font-semibold md:text-lg;
   }
   .h5_b {
-    @apply font-Nunito text-lg font-bold;
+    @apply font-Nunito text-sm font-bold md:text-lg;
   }
   .para {
-    @apply font-Nunito text-lg font-medium;
+    @apply font-Nunito text-sm font-medium md:text-lg;
   }
 
   .body_3 {
-    @apply font-Nunito text-base font-normal;
+    @apply font-Nunito text-xs font-normal md:text-base;
   }
 
   .body3_b {
-    @apply font-Nunito text-base font-bold;
+    @apply font-Nunito text-xs font-bold md:text-base;
   }
 
   .body_2 {
-    @apply font-Nunito text-lg font-normal md:leading-7;
+    @apply font-Nunito text-sm font-normal md:text-lg md:leading-7;
   }
 
   .body_1 {
-    @apply font-Nunito text-2xl font-medium leading-7;
+    @apply font-Nunito text-lg font-medium leading-7 md:text-2xl;
   }
   .body_4 {
-    @apply font-Nunito text-sm font-normal;
+    @apply font-Nunito text-xs font-normal md:text-sm;
   }
 
   .body_5 {
@@ -104,6 +104,24 @@ body {
   .text-grad {
     @apply w-fit bg-grad_1 bg-clip-text text-transparent;
   }
+  .disable {
+    @apply !pointer-events-none !bg-[#F6F6F6] !text-[#B3B3B3] !shadow-none !outline-none;
+  }
+  .button--submit {
+    @apply w-[129px] rounded-lg bg-[#2C3D68] px-6 py-3 text-lg font-semibold text-[#FF8B13];
+  }
+  .button-action-fill {
+    @apply disabled:disable rounded-lg bg-[#FF8B13] px-6 py-3 font-medium text-secondary shadow-xl active:bg-[#E07200] active:text-white;
+  }
+  .button-action-outline {
+    @apply disabled:disable w-fit rounded-full border-primary px-3 py-2 font-medium text-secondary outline outline-2 outline-primary hover:outline-1 active:bg-primary active:text-white md:px-6 md:py-3;
+  }
+  .center-x {
+    @apply left-1/2 right-1/2 -translate-x-1/2;
+  }
+  .center-y {
+    @apply bottom-1/2 top-1/2 -translate-y-1/2;
+  }
 }
 
 @keyframes scrollText {
@@ -111,8 +129,18 @@ body {
     transform: translateX(-50%);
   }
 }
+.backgroud-color {
+  background: linear-gradient(to top, #f8bf3b, #ef5f3d, #f5712c, #ff8b13);
+}
 
-.shadow {
+.backgroud-button {
+  background: linear-gradient(to left, #f8bf3b, #ef5f3d, #f5712c, #ff8b13);
+}
+.custome-box-shadow {
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 .scrollText {
@@ -220,4 +248,67 @@ body {
   width: 10px;
   border: 16px solid;
   border-left-color: transparent;
+}
+@media screen and (max-width: 768px) {
+  .ribbon:before {
+    width: 0px;
+    border: 12px solid;
+  }
+}
+.underline-grad::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 7%;
+  background-image: linear-gradient(
+    to right,
+    #f8bf3b 0%,
+    #ff8b13 31%,
+    #ef5f3d 100%
+  );
+}
+@keyframes pop {
+  0% {
+    opacity: 0;
+    translate: 0% 100%;
+  }
+  100% {
+    opacity: 1;
+    translate: 0% 0%;
+  }
+}
+
+.popup {
+  animation: pop 0.5s ease-in-out;
+}
+@keyframes scale {
+  50% {
+    transform: scale(2);
+  }
+}
+.animate-scale {
+  animation: scale 2s ease-in-out infinite;
+}
+@keyframes scale1 {
+  0%,
+  100% {
+    transform: scale(2);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+.animate-scale1 {
+  animation: scale1 2s infinite;
+}
+
+.loading-circle {
+  animation: load 5s linear forwards;
+}
+@keyframes load {
+  100% {
+    stroke-dashoffset: 0px;
+  }
 }
