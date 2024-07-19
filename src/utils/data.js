@@ -152,75 +152,7 @@ export const plans = {
     ],
   },
 };
-export const psychologists = [
-  {
-    name: "Dr. Aprajita Dixit",
-    description: "Child & Adolescent Counsellor",
-    img: aprajita_dixit,
-    linkedIn_url: "https://www.linkedin.com/in/aprajita-dixit-7a277179",
-  },
-  {
-    name: "Roma Kaushik",
-    description: "Child Psychologist",
-    img: roma_kaushik,
-    linkedIn_url: "https://www.linkedin.com/in/roma-kaushik-3a01aa140/",
-  },
-];
-export const team = [
-  {
-    name: "Sankalp Kumar",
-    description: "Co-Founder CEO",
-    img: sankalp_kumar,
-    linkedIn_url: "https://www.linkedin.com/in/sankalp-kumar-68b49a169/",
-  },
-  {
-    name: "Abhishek Paswan",
-    description: "Co-Founder COO",
-    img: abhishek_paswan,
-  },
-  {
-    name: "Arshit Mishra",
-    description: "Co- Founder | Curriculum Lead",
-    img: arshit_mishra,
-  },
-  {
-    name: "Shreyas Thakre",
-    description: "Jr.Frontend Developer",
-    img: shreyas_thakre,
-  },
-  {
-    name: "Rohit Raj",
-    description: "Jr.Graphic Designer",
-    img: rohit_raj,
-  },
-  {
-    name: "Ananta Paul",
-    description: "Frontend Developer Intern",
-    img: ananta_paul,
-    linkedIn_url: "https://www.linkedin.com/in/anantapaul/",
-  },
-  {
-    name: "Ayaan Baksh",
-    description: "Social Media Marketing Intern",
-    img: ayaan_baksh,
-  },
-  {
-    name: "Ashwini Narkhede",
-    description: "Marketing Intern",
-    img: ashwini_narkhede,
-    linkedIn_url: "https://www.linkedin.com/in/ashwini-narkhede-97663217a/",
-  },
-  {
-    name: "Manika Chaudhary",
-    description: "Psychology Intern",
-    img: ashwini_narkhede,
-  },
-  {
-    name: "Hardik Gupta",
-    description: "Psychology Intern",
-    img: ashwini_narkhede,
-  },
-];
+
 export const features = [
   {
     image: interactiveLearning,
@@ -276,13 +208,6 @@ export const cards = [
     button: "Explore",
     image: "school",
   },
-  // {
-  //   title: "For NGO",
-  //   description:
-  //     "",
-  //   button: "Explore",
-  //   image: "family",
-  // },
 ];
 export const comments = [
   {
@@ -403,10 +328,7 @@ export const navLinks = [
     title: "Blogs",
     link: "/blogs",
   },
-  // {
-  //   title: "ABL Modules",
-  //   link: "/ablmodules",
-  // },
+
   {
     title: "Contact Us",
     link: "/contact",
@@ -697,12 +619,6 @@ export const subjectData = [
     innerSubjectDivColor: "#FCEECA",
     innerBarColor: "#FCD97D",
   },
-  // {
-  //   subjectName: "Career Guidance",
-  //   percentage: "64%",
-  //   innerSubjectDivColor: "#CFD5E5",
-  //   innerBarColor: "#2C3D68",
-  // },
 ];
 
 export const counsellorData = [
