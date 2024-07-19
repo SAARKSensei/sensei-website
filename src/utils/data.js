@@ -10,12 +10,10 @@ import arshit_mishra from "@/assets/us/arshit_mishra.jpg";
 import shreyas_thakre from "@/assets/us/shreyas_thakre.jpg";
 import rohit_raj from "@/assets/us/rohit_raj.jpg";
 import ananta_paul from "@/assets/us/ananta_paul.jpg";
+import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
 import ayaan_baksh from "@/assets/us/ayaan_baksh.jpg";
 import aprajita_dixit from "@/assets/us/aparajita_dixit.jpg";
 import roma_kaushik from "@/assets/us/roma_kaushik.jpg";
-import ashwini_narkhede from "@/assets/us/ashwini_narkhede.jpg";
-import manika_choudhary from "@/assets/us/manika_choudhary.jpg";
-import hardik_gupta from "@/assets/us/hardik_gupta.jpg"
 export const plans = {
   Family: {
     features: {
@@ -55,11 +53,11 @@ export const plans = {
     plans: [
       {
         name: "Basic",
-        description:
+        ddescription:
           "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
         curr_price: "₹699",
         price: "₹747",
-        billed: "Billed annually",
+        billed: "One Time Payment",
         subjects: { 1: true, 2: false, 3: false },
         duration: "3 Months",
         includes: { 1: true, 2: true, 3: true, 4: true },
@@ -70,11 +68,11 @@ export const plans = {
       },
       {
         name: "Intermediate",
-        description:
+        ddescription:
           "Lorem ipsum dolor sit amet consectetur. Mauris mattis nisl lectus urna nisi mauris",
         curr_price: "₹1399",
         price: "₹1494",
-        billed: "Billed annually",
+        billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: false },
         duration: "6 Months",
         includes: { 1: true, 2: true, 3: true, 4: true },
@@ -86,11 +84,11 @@ export const plans = {
       },
       {
         name: "In-depth",
-        description:
+        ddescription:
           "Lorem ipsum dolor sit amet consectetur. Mauris mattis nisl lectus urna nisl mauris.",
         curr_price: "₹1999",
         price: "₹2241",
-        billed: "Billed annually",
+        billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: true },
         duration: "9 Months",
         includes: { 1: true, 2: true, 3: true, 4: true },
@@ -149,10 +147,10 @@ export const plans = {
       {
         name: "Starting @",
         description:
-          "",
+          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
         curr_price: "₹14,999",
         price: "₹17,991",
-        billed: "Billed annually",
+        billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: true },
         duration: "9 Months",
         includes: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true },
@@ -169,13 +167,11 @@ export const psychologists = [
     name: "Dr. Aprajita Dixit",
     description: "Child & Adolescent Counsellor",
     img: aprajita_dixit,
-    linkedIn_url: "https://www.linkedin.com/in/aprajita-dixit-7a277179"
   },
   {
     name: "Roma Kaushik",
     description: "Child Psychologist",
     img: roma_kaushik,
-    linkedIn_url: "https://www.linkedin.com/in/roma-kaushik-3a01aa140/"
   },
 ];
 export const team = [
@@ -183,31 +179,26 @@ export const team = [
     name: "Sankalp Kumar",
     description: "Co-Founder CEO",
     img: sankalp_kumar,
-    linkedIn_url: 'https://www.linkedin.com/in/sankalp-kumar-68b49a169/',
   },
   {
     name: "Abhishek Paswan",
     description: "Co-Founder COO",
     img: abhishek_paswan,
-    linkedIn_url: "https://www.linkedin.com/in/abhishek-paswan-44bb01113/",
   },
   {
     name: "Arshit Mishra",
     description: "Co- Founder | Curriculum Lead",
     img: arshit_mishra,
-    linkedIn_url: "https://www.linkedin.com/in/arshit-mishra-61317011a/",
   },
   {
     name: "Shreyas Thakre",
     description: "Jr.Frontend Developer",
     img: shreyas_thakre,
-    linkedIn_url: "https://www.linkedin.com/in/shreyas-thakare-691261151",
   },
   {
     name: "Rohit Raj",
     description: "Jr.Graphic Designer",
     img: rohit_raj,
-    linkedIn_url: "https://www.linkedin.com/in/18rohitraj/",
   },
   {
     name: "Ananta Paul",
@@ -219,25 +210,21 @@ export const team = [
     name: "Ayaan Baksh",
     description: "Social Media Marketing Intern",
     img: ayaan_baksh,
-    linkedIn_url: "https://www.linkedin.com/in/ayaan-baksh-2a3780260/",
   },
   {
     name: "Ashwini Narkhede",
     description: "Marketing Intern",
     img: ashwini_narkhede,
-    linkedIn_url: "https://www.linkedin.com/in/ashwini-narkhede-97663217a/"
   },
   {
     name: "Manika Chaudhary",
     description: "Psychology Intern",
-    img: manika_choudhary,
-    linkedIn_url: "https://linkedin.com/in/manika-chaudhary-67710610b/",
+    img: ashwini_narkhede,
   },
   {
     name: "Hardik Gupta",
     description: "Psychology Intern",
-    img: hardik_gupta,
-    linkedIn_url: "https://linkedin.com/in/hardik-r-58964a239?u/",
+    img: ashwini_narkhede,
   },
 ];
 export const features = [
@@ -411,13 +398,17 @@ export const navLinks = [
     link: "/",
   },
   {
+    title: "Pricing",
+    link: "/pricing",
+  },
+  {
     title: "About Us",
     link: "/about",
   },
-  // {
-  //   title: "ABL Modules",
-  //   link: "/ablmodules",
-  // },
+  {
+    title: "ABL Modules",
+    link: "/ablmodules",
+  },
   {
     title: "Pricing",
     link: "/pricing",
@@ -507,3 +498,278 @@ export const ABLFilters = [
     ],
   },
 ];
+export const blogs = [
+  {
+    title: "Encouraging Children to Openly Discuss Feelings at Home",
+    image:
+      "https://drive.google.com/uc?export=view&id=10vfz1XOxvAwUbP-2F8NbAmxVxYYtmECR",
+    description:
+      "In the journey of raising children, there are many essential parts to consider, and one of the most important yet often overlooked is the encouragement of open conversations about feelings at home. Many parents prioritize teaching manners, academic skills, and physical health, but emotional well-being is equally essential for a child's development into a balanced and strong adult. Encouraging an environment of open communication about feelings at home is not just beneficial but necessary:",
+    date: "April 12, 2024",
+    duration: "5 min read",
+    blogger: "Sensei",
+    points: [
+      {
+        title: "Emotional Awareness and Intelligence",
+        description:
+          "Children experience a wide range of emotions from a very young age. By openly discussing feelings, parents help children to recognize and label their emotions. This builds emotional awareness and intelligence, essential skills that enable children to navigate their emotional views more effectively.",
+      },
+      {
+        title: "Building Trust and Security",
+        description:
+          "When children feel they can openly express their feelings without judgment or dismissal, it creates a sense of trust and security within the family. This trust is like the solid ground that a strong parent-child relationship stands on. It helps children feel secure when they need advice and comfort during tough emotional moments.",
+      },
+      {
+        title: "Healthy Coping Mechanisms",
+        description:
+          "Open conversations about feelings provide opportunities to discuss healthy ways to cope with emotions. Instead of suppressing or ignoring feelings, children learn constructive ways to manage them. This could include deep breathing exercises, journaling, talking to a trusted adult, or engaging in physical activities.",
+      },
+      {
+        title: "Strengthening Communication Skills",
+        description:
+          "Effective communication is a fundamental life skill. By discussing feelings openly, parents model how to express oneself clearly and respectfully. Kids learn to express their feelings and ideas, which helps them talk well with friends, teachers, and later on, co-workers when they grow up.",
+      },
+      {
+        title: "Understanding Empathy and Compassion",
+        description:
+          "When children learn to talk about their feelings, they also develop empathy and compassion for others' emotions. They understand that everyone experiences a range of feelings, and this understanding fosters kindness and supportive behavior towards others.",
+      },
+      {
+        title: "Addressing Mental Health Early",
+        description:
+          "Mental health is as important as physical health, and open conversations about feelings can help identify early signs of emotional distress or mental health issues. Starting to help and support kids early can really make a big difference in how they feel and grow, and it can stop bigger problems from happening when they get older.",
+      },
+      {
+        title: "Navigating Challenges Effectively",
+        description:
+          "Life is filled with challenges, disappointments, and successes. By discussing feelings openly, children learn that it’s normal to experience a mix of emotions during different situations. They learn and improve, which is essential for handling life's difficulties.",
+      },
+      {
+        title: "Creating a Positive Family Culture",
+        description:
+          "Encouraging open conversations about feelings helps create a positive family culture where emotions are respected and valued. It brings everyone together, so each family member feels listened to and valued.",
+      },
+      {
+        title: "Practical Tips for Encouraging Open Conversations",
+        description:
+          "- Lead by Example: Share your own feelings and emotions openly. - Create a Safe Space: Ensure children feel comfortable expressing themselves without fear of criticism. - Active Listening: Pay attention and validate their feelings without immediately offering solutions. - Use Age-Appropriate Language:  Your approach should be based on your child's age and maturity level. - Regular Check-Ins: Schedule time for family discussions about feelings or establish daily routines where feelings can naturally be shared.",
+      },
+    ],
+    conclusion:
+      "In conclusion, building open conversations about feelings at home is not just a parenting choice but a necessity for nurturing emotionally intelligent, resilient, and mentally healthy children. It helps kids build good relationships, talk well with others, and feel happy throughout their lives. When parents make these talks a priority, they give their children the confidence and know-how to handle feelings well. This prepares them to succeed in everything they undertake.",
+  },
+  {
+    title: "Mindfulness Activities for Kids: Simple Exercises to Promote Calm",
+    image:
+      "https://drive.google.com/uc?export=view&id=1mIqSE9bAWGVLXSaR-8FPb4_XtpQv8Z5q",
+    description:
+      "Do you ever feel like your child is bursting with energy? You’re not alone! In our fast-paced world, it's essential to teach kids how to relax and focus. That's where mindfulness comes in. Mindfulness isn't just for grown-ups. It's a way to be aware of the present moment, without judgment. For children, this can translate to feeling more relaxed, focused, and equipped to manage difficult emotions. Mindfulness can be fun! Here are some simple activities to get your little one started:",
+    date: "April 12, 2024",
+    duration: "5 min read",
+    blogger: "Sensei",
+    points: [
+      {
+        title: "The Breathing Buddy",
+        description:
+          "Our breath is always with us, making it a fantastic anchor for mindfulness. Have your child lay down or sit comfortably, with a stuffed animal on their tummy. Ask them to pretend the stuffy is their 'breathing buddy' and watch it rise and fall with each inhale and exhale. Count breaths together, up to ten if they can manage.",
+      },
+      {
+        title: "The Senses Scavenger Hunt",
+        description:
+          "Turn your walk into a mindfulness adventure! Challenge your child to find something soft, something rough, something red, something sweet-smelling. This helps them focus on their surroundings instead of just their swirling thoughts.",
+      },
+      {
+        title: "The Glitter Jar",
+        description:
+          "Feeling overwhelmed? Shake up a jar of water with some glitter in it. Watch the sparkles swirl and settle, just like our emotions. Talk about how calming down can take time, just like the glitter.",
+      },
+      {
+        title: "Mindful Munching",
+        description:
+          "Turn snack time into a mini-meditation! Give your child a raisin or piece of chocolate and ask them to explore it with all their senses. How does it feel? What is the scent of it? Encourage them to savor each bite, slowing down and appreciating the simple pleasure of eating.",
+      },
+      {
+        title: "The Body Scan",
+        description:
+          "This is a great one for bedtime! Have your child lay down and close their eyes. Guide them to focus on different parts of their body, one at a time. Ask them to wiggle their toes, feel their belly rise and fall with each breath, and tense and release their shoulders.",
+      },
+    ],
+    conclusion:
+      "Remember that mindfulness is a continuous journey rather than a final destination. Be patient, keep it fun, and let your child explore at their own pace. Who knows, maybe you'll even learn a thing or two from your little mindfulness master!",
+  },
+  {
+    title:
+      "Creating a Safe and Supportive Environment for Emotional Growth in Teens",
+    image:
+      "https://drive.google.com/uc?export=view&id=1XqBtFJSjbYy7oj_WSkLEVxF8-E5mxWzt",
+    description:
+      "Navigating the teenage years can be a rollercoaster of emotions. Between academic pressures, social dynamics, and personal development, it's a time filled with both exciting opportunities and challenging obstacles. As adults—whether as parents, teachers, or mentors—creating a safe and supportive environment for teenagers is crucial. It helps them develop emotional resilience, build self-confidence, and grow into well-rounded individuals. Here’s how you can create a nurturing environment for teens aged 12-18.",
+    date: "April 12, 2024",
+    duration: "5 min read",
+    blogger: "Sensei",
+    points: [
+      {
+        title: "Practice Active Listening",
+        description:
+          "One of the most impactful things you can do is listen. Teens need to feel heard and understood. To practice active listening: Give Full Attention: When a teenager wants to talk, put aside distractions. Show you’re genuinely interested by maintaining eye contact and responding thoughtfully. Validate Their Feelings: Even if you don’t fully understand their experiences, acknowledge their emotions. Saying things like, “That sounds really tough,” or “I can see why you feel that way,” helps them feel validated. Avoid Immediate Fixes: Instead of jumping in with solutions, sometimes just being there and listening can be the most supportive response.",
+      },
+      {
+        title: "Encourage Open Communication",
+        description:
+          "Creating an environment where teens feel comfortable sharing their thoughts and feelings is key to their emotional growth: Be Approachable: Make sure teens know they can come to you without fear of judgment or punishment. Let them know their opinions and feelings are valued. Ask Open-Ended Questions: Instead of yes-or-no questions, try asking, “How did that make you feel?” or “What’s been on your mind lately?” This encourages deeper conversations. Create Safe Spaces: Designate times or spaces where teens can talk openly. This might be during family dinners, one-on-one chats, or even casual hangouts.",
+      },
+      {
+        title: "Support Their Individual Needs",
+        description:
+          "Every teenager is unique and has different emotional needs. To support them effectively: Recognize Their Strengths: Celebrate their achievements and encourage their interests. This helps build self-esteem and a sense of accomplishment. Respect Their Boundaries: Not all teens are ready to talk about everything. Respect their need for privacy and let them open up when they’re ready. Provide Resources: Offer access to counseling, support groups, or educational materials that can help them manage stress and emotional challenges.",
+      },
+      {
+        title: "Promote Positive Interactions",
+        description:
+          "A positive and supportive environment contributes greatly to emotional well-being: Encourage Positive Relationships: Foster an environment where respectful and supportive friendships are valued. Teach teens how to build healthy relationships. Model Positive Behavior: Demonstrate healthy ways to handle stress and conflict. Your actions often speak louder than words. Celebrate Efforts and Achievements: Whether it’s a small victory or a big accomplishment, acknowledge and celebrate their efforts. This reinforces a positive self-image.",
+      },
+      {
+        title: "Be a Supportive Role Model",
+        description:
+          "Your behavior influences how teens handle their own emotions: Show Empathy: Demonstrate understanding and compassion in your interactions. When you show empathy, it encourages teens to practice it as well. Be Honest About Your Feelings: Sharing your own experiences and emotions can help teens understand that it’s okay to feel and express their own feelings. Encourage Problem-Solving: Instead of solving their problems for them, guide them through problem-solving strategies. This helps them develop critical thinking and emotional resilience.",
+      },
+    ],
+    conclusion:
+      "Creating a safe and supportive environment for teens involves active listening, encouraging open communication, supporting individual needs, promoting positive interactions, and being a role model. By fostering these elements, you help teens navigate their emotional journey with confidence and resilience. Remember, the teenage years are a crucial time for emotional development, and your support can make a significant difference in their growth and well-being.",
+  },
+];
+export const searches = [
+  {
+    text: "Decision Making",
+    color: "#FF8B13",
+  },
+  {
+    text: "Critical Thinking",
+    color: "#F8BF3B",
+  },
+  {
+    text: "Empathy",
+    color: "#9FC5EF",
+  },
+  {
+    text: "Active Listening",
+    color: "#3AA176",
+  },
+  {
+    text: "Building Resilience",
+    color: "#0764A7",
+  },
+  {
+    text: "Mindfulness",
+    color: "#F6B0A8",
+  },
+  {
+    text: "Social Skills",
+    color: "#EF5F3D",
+  },
+  {
+    text: "Stress Management",
+    color: "#FF8B13",
+  },
+  {
+    text: "Boost Self-Esteem",
+    color: "#3AA176",
+  },
+  {
+    text: "Emotional intelligence",
+    color: "#0764A7",
+  },
+  {
+    text: "Time Management",
+    color: "#F8BF3B",
+  },
+];
+export const subjectData = [
+  {
+    subjectName: "Emotional Wellness",
+    percentage: "54%",
+    innerSubjectDivColor: "#CEE2E5",
+    innerBarColor: "#89DAE5",
+  },
+  {
+    subjectName: "Self And Social Awareness",
+    percentage: "36%",
+    innerSubjectDivColor: "#FFD9B2",
+    innerBarColor: "#FF8B13",
+  },
+  {
+    subjectName: "Moral Guidence",
+    percentage: "71%",
+    innerSubjectDivColor: "#FCEECA",
+    innerBarColor: "#FCD97D",
+  },
+  // {
+  //   subjectName: "Career Guidance",
+  //   percentage: "64%",
+  //   innerSubjectDivColor: "#CFD5E5",
+  //   innerBarColor: "#2C3D68",
+  // },
+];
+
+export const counsellorData = [
+  {
+    counsellorName: "Carter Mango",
+    speciality: "Speciality",
+    rating: 4.8,
+    price: 2350,
+  },
+  {
+    counsellorName: "Haylie Dokidis",
+    speciality: "Speciality",
+    rating: 4.2,
+    price: 1850,
+  },
+];
+
+export const interactivieActivities = [
+  {
+    unit: 1.1,
+    time: "30mins",
+    topic: "Self-Identity",
+  },
+  {
+    unit: 1.2,
+    time: "30mins",
+    topic: "Strength and Challenges",
+  },
+  {
+    unit: 2.1,
+    time: "30mins",
+    topic: "My body and Emotions",
+  },
+  {
+    unit: 2.2,
+    time: "30mins",
+    topic: "Strength and Challenges",
+  },
+];
+
+export const gamifiedActivities = [
+  {
+    unit: "ASA 1",
+    time: "5mins",
+    topic: "My Favourite Things",
+  },
+  {
+    unit: "ASA 2",
+    time: "5mins",
+    topic: "My Proud Moments",
+  },
+  {
+    unit: "ASA 3",
+    time: "5mins",
+    topic: "Name and Family Tree",
+  },
+  {
+    unit: "ASA 4",
+    time: "5mins",
+    topic: "Strength and Challenges",
+  },
+];
+
+export const activityData = [interactivieActivities, gamifiedActivities];
