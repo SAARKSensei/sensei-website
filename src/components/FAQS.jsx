@@ -2,13 +2,17 @@
 import React, { useState } from "react";
 import { faqs } from "@/utils/data";
 import FreeActivityBtn from "./FreeActivityBtn";
+import Stars from "./Stars";
 const FAQS = () => {
   const [checkedId, setCheckedId] = useState(-1);
 
   return (
-    <div className="flex flex-col max-w-[min(90vw,1000px)] container mx-auto items-center gap-11">
-      <h2 className="h2 text-grad mx-auto">Frequently Asked Questions</h2>
-      <div className="w-full flex flex-col gap-6">
+    <div className="container relative mx-auto flex max-w-[min(90vw,1000px)] flex-col items-center gap-11">
+      <Stars />
+      <h2 className="h4 mx-auto h-fit max-w-[90vw] uppercase text-secondary lg:col-start-2">
+        Frequently Asked Questions
+      </h2>
+      <div className="flex w-full flex-col gap-6">
         {faqs.map((faq, index) => (
           <FAQ
             key={index}
@@ -24,9 +28,9 @@ const FAQS = () => {
 };
 export const FAQ = ({ faq, checkedId, setCheckedId }) => {
   return (
-    <div className="flex gap-6 p-5 has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10 border-b-2 has-[:checked]:rounded-xl border-grey_2 align-middle h-fit">
-      <div className="flex flex-col gap-4 w-full">
-        <div className="peer body_1 flex items-start gap-4">
+    <div className="flex h-fit gap-6 border-b-2 border-grey_2 p-5 align-middle has-[:checked]:rounded-xl has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10">
+      <div className="flex w-full flex-col gap-4">
+        <div className="body_1 peer flex items-start gap-4">
           <div className="flex items-start gap-4">
             <p
               className={`body1_b ${
@@ -53,7 +57,7 @@ export const FAQ = ({ faq, checkedId, setCheckedId }) => {
           <label
             onClick={() => setCheckedId(checkedId === faq.id ? -1 : faq.id)}
             htmlFor={`question${faq.id}`}
-            className="ml-auto peer-checked:rotate-0 peer-checked:opacity-100 opacity-25 rotate-45 transition-transform rounded-full bg-[#FF8B13]   p-2 cursor-pointer"
+            className="ml-auto rotate-45 cursor-pointer rounded-full bg-[#FF8B13] p-2 opacity-25 transition-transform peer-checked:rotate-0 peer-checked:opacity-100"
           >
             <svg
               width="30"
@@ -79,7 +83,7 @@ export const FAQ = ({ faq, checkedId, setCheckedId }) => {
             </svg>
           </label>
         </div>
-        <p className="body_2 hidden peer-has-[:checked]:block text-[#787878]">
+        <p className="body_2 hidden text-[#787878] peer-has-[:checked]:block">
           {faq.answer}
         </p>
       </div>

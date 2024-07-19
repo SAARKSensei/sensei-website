@@ -10,7 +10,7 @@ import Psychologists from "@/components/Psychologists";
 import Comments from "@/components/Comments";
 export default function Home() {
   return (
-    <div className="flex flex-col gap-40 overflow-x-hidden bg-[#FEF5F3] pb-40">
+    <div className="bbg-[#FEF5F3] flex flex-col gap-20 overflow-x-hidden pb-20 md:gap-40 md:pb-40">
       <HeroSection />
       <ParentIssues />
       <Psychologists />

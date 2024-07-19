@@ -1,14 +1,15 @@
 import React from "react";
 import Image from "next/image";
-import SenseiLogo from "@/assets/Main logo.svg";
+import SenseiLogo from "@/assets/mainlogo.svg";
 import Link from "next/link";
-import minisaark from "@/assets/minisaark.svg";
-import Msme from "@/assets/msme.svg";
-import startIndia from "@/assets/startIndia.svg";
-import mail from "@/assets/mail.svg";
-import location from "@/assets/location.svg";
-import phone from "@/assets/phone.svg";
-import Stars from "@/assets/stars.svg";
+import minisaark from "@/assets/minisaark.svg?url";
+import Msme from "@/assets/msme.svg?url";
+import startIndia from "@/assets/startIndia.svg?url";
+import mail from "@/assets/mail.svg?url";
+import location from "@/assets/location.svg?url";
+import phone from "@/assets/phone.svg?url";
+import Stars from "@/assets/stars.svg?url";
+import { navLinks } from "@/utils/data";
 const Footer = () => {
   const d = new Date();
   let year = d.getFullYear();
@@ -52,12 +53,7 @@ const Footer = () => {
             <div className="flex flex-wrap justify-around gap-5 md:flex-col md:justify-between">
               <div className="flex grow items-center justify-around gap-2 md:gap-5 lg:gap-10">
                 <div className="flex w-fit flex-col items-center">
-                  <Image
-                    src={SenseiLogo}
-                    size="auto"
-                    className="w-fit md:h-[70px] lg:h-[97px]"
-                    alt="senseilogo"
-                  />
+                  <SenseiLogo className="w-fit text-white md:h-[70px] lg:h-[97px]" />
                   <p className="flex flex-wrap justify-center pt-0 text-xs text-white">
                     A product by &nbsp;
                     <Image
@@ -84,15 +80,25 @@ const Footer = () => {
             <div className="-order-1 flex-grow-[.3] md:order-none">
               <div className="flex justify-around gap-10 text-sm md:justify-normal md:text-base lg:gap-20">
                 <div className="flex cursor-pointer flex-col gap-3 font-NunitoSans text-sm font-normal text-white md:gap-4">
-                  <h2>About</h2>
-                  <h2>Growers</h2>
-                  <h2>Merchants</h2>
-                  <h2>Partners</h2>
-                  <h2>Contact</h2>
+                  {navLinks.map((link, index) => (
+                    <Link key={index} href={link.link}>
+                      <h2>{link.title}</h2>
+                    </Link>
+                  ))}
                 </div>
                 <div className="flex cursor-pointer flex-col gap-3 font-NunitoSans text-sm font-normal text-white md:gap-4">
-                  <h2>Facebook</h2>
-                  <h2>Twitter</h2>
+                  <h2></h2>
+                  <h2></h2>
+                  <Link
+                    href={
+                      "https://www.facebook.com/people/Sensei/61550832106968/"
+                    }
+                  >
+                    <h2>Facebook</h2>
+                  </Link>
+                  <Link href={"https://x.com/senseilifeskill"}>
+                    <h2>Twitter</h2>
+                  </Link>
                   <Link
                     href={
                       "https://www.linkedin.com/company/mr-sensei/?viewAsMember=true"

@@ -1,5 +1,5 @@
 import React from "react";
-import thunder from "@/assets/thunder.svg";
+import thunder from "@/assets/thunder.svg?url";
 import Image from "next/image";
 import mobile from "@/assets/mobileHero.png";
 import personality from "@/assets/personality.png";

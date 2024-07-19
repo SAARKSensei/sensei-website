@@ -2,27 +2,37 @@
 import React, { useState } from "react";
 import { plans } from "@/utils/data";
 import Image from "next/image";
-import right from "@/assets/tick.svg";
-import cross from "@/assets/cross1.svg";
+import right from "@/assets/tick.svg?url";
+import cross from "@/assets/cross1.svg?url";
+import Stars from "@/components/Stars";
+import ABLTopology from "@/assets/ABLTopology-1.svg?url";
 const Page = () => {
-  const [plan, setPlan] = useState("Society");
+  const [plan, setPlan] = useState("Family");
   //   console.log(plan);
   return (
-    <div className="flex flex-col items-center gap-10 py-20">
-      <div className="flex flex-col items-center gap-2">
-        <h4 className="h4 uppercase text-secondary">Pricing</h4>
+    <div
+      style={{
+        backgroundImage: `url(${ABLTopology.src})`,
+      }}
+      className="flex flex-col items-center gap-10 px-5 py-20"
+    >
+      <div className="relative flex flex-col items-center gap-2">
+        <Stars />
+        <h4 className="h4 mx-auto h-fit w-full max-w-[90vw] text-center uppercase text-secondary lg:col-start-2">
+          Pricing
+        </h4>
         <h1 className="h1 text-secondary">
           {" "}
           Get the <span className="text-primary">Results</span> You Deserve
         </h1>
-        <p className="body_1 max-w-[600px] text-center">
+        {/* <p className="body_1 max-w-[600px] text-center">
           Lorem ipsum dolor sit amet consectetur. Proin nunc sodales netus
           pharetra lacus. Massa fringilla urna risus eleifend viverra ac quam
           euismod in. Diam tincidunt.
-        </p>
+        </p> */}
       </div>
       <div className="flex w-fit gap-2 rounded-full shadow-cs shadow-orange-100">
-        {["Family", "Society", "School"].map((p, index) => (
+        {["Family", "Society"].map((p, index) => (
           <button
             key={index}
             onClick={() => setPlan(p)}
@@ -47,7 +57,7 @@ const Plan = ({ plan, features }) => {
     <div
       className={`max-w-[min(416px,calc(100vw-16px))] rounded-[10px] ${plan.tag === "Recomended" ? "bg-secondary text-white" : "bg-white"} shadow-cs`}
     >
-      <div className="relative flex flex-col gap-2 p-4">
+      <div className="relative flex flex-col gap-2 p-6 md:p-12">
         {plan?.tag && (
           <div
             className={`body3_b ribbon absolute right-0 top-6 ${plan.name === "Intermediate" ? "bg-[#EF5F3D] text-white before:border-[#EF5F3D]" : "bg-[#F8BF3B] text-secondary before:border-[#F8BF3B]"} p-1 px-4 before:border-l-transparent`}
@@ -132,4 +142,3 @@ const Plan = ({ plan, features }) => {
   );
 };
 export default Page;
-right;

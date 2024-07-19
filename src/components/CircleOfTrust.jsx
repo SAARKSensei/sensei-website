@@ -1,25 +1,28 @@
 import React from "react";
 import Image from "next/image";
-import family from "@/assets/family.svg";
-import buildings from "@/assets/buildings.svg";
-import school from "@/assets/school.svg";
+import family from "@/assets/family.svg?url";
+import buildings from "@/assets/buildings.svg?url";
+import school from "@/assets/school.svg?url";
 import { cards } from "@/utils/data";
 const CircleOfTrust = () => {
   return (
     <div className="container mx-auto flex flex-col gap-10">
-      <div className="flex flex-wrap items-center justify-around gap-5">
-        <div className="flex max-w-[524px] flex-col gap-2 p-10">
-          <h4 className="h4 text-secondary">Our Verticals</h4>
-
+      <div className="mx-auto flex flex-wrap justify-evenly gap-5">
+        <div className="flex max-w-[524px] flex-1 flex-col gap-2 p-10">
+          <h2 className="h4 h-fit max-w-[90vw] uppercase text-secondary lg:col-start-2">
+            Our Verticals
+          </h2>
           <p className="body_2 mx-auto max-w-[1000px]">
-            Lorem ipsum dolor sit amet consectetur. Proin nunc sodales netus
-            pharetra lacus. Massa fringilla urna risus eleifend viverra ac quam
-            euismod in. Diam tincidunt.
+            Children evolve in interconnected environments, or microsystems. By
+            offering programs in places such as societies and classrooms, Sensei
+            bridges the gap between different microsystems.
           </p>
         </div>
-        <Card card={cards[0]} image={buildings} color={"#FF8B13"} />
-        <Card card={cards[1]} image={school} color={"#EF5F3D"} />
-        <Card card={cards[2]} image={school} color={"#F8BF3B"} />
+        <div className="flex flex-col">
+          <Card card={cards[0]} image={buildings} color={"#FF8B13"} />
+          <Card card={cards[1]} image={school} color={"#EF5F3D"} />
+        </div>
+        {/* <Card card={cards[2]} image={school} color={"#F8BF3B"} /> */}
       </div>
     </div>
   );

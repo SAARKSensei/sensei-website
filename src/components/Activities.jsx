@@ -1,14 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import ABLTopology from "@/assets/ABLTopology-1.svg";
+import ABLTopology from "@/assets/ABLTopology-1.svg?url";
 import { ABLFilters } from "@/utils/data";
-import reset from "@/assets/reset.svg";
-import filterOutline from "@/assets/filter-outline.svg";
+import reset from "@/assets/reset.svg?url";
+import filterOutline from "@/assets/filter-outline.svg?url";
 const Activities = () => {
   return (
     <div className="relative w-full">
       <div className="absolute inset-0 -inset-y-20 -z-10 w-screen bg-opacity-10 bg-gradient-to-r from-[#F8BF3B]/10 from-[0%] via-[#FF8B13]/10 via-[31%] to-[#EF5F3D]/10 to-[100%]">
-        <Image src={ABLTopology} alt="ABLTopology" />
+        {/* <Image src={ABLTopology} alt="ABLTopology" /> */}
       </div>
       <div className="container mx-auto mb-10 flex flex-col gap-4 text-center">
         <h2 className="h4 text-secondary">Activities </h2>
@@ -50,7 +50,7 @@ const Activities = () => {
   );
 };
 
-const Activity = () => {
+export const Activity = () => {
   const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
   return (
     <div className="">
