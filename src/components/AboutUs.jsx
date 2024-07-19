@@ -2,6 +2,7 @@ import React from "react";
 
 import Collage from "../assets/us/collage.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const AboutUs = () => {
   return (
@@ -31,9 +32,9 @@ const AboutUs = () => {
                     <span className="absolute bg-[#FEF5F3] inset-0 rounded-full z-[-1]" />
                     <span className="text-grad">About Us</span>
                 </div> */}
-        <div className="text-grad button_text relative flex w-fit cursor-pointer items-center justify-center rounded-full border-2 border-[#FF8B13] bg-white px-8 py-4">
+        <Link href={"/about"} className="text-grad button_text relative flex w-fit cursor-pointer items-center justify-center rounded-full border-2 border-[#FF8B13] bg-white px-8 py-4">
           About Us
-        </div>
+        </Link>
       </div>
     </div>
   );

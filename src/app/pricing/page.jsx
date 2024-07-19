@@ -51,8 +51,6 @@ const Page = () => {
   );
 };
 const Plan = ({ plan, features }) => {
-  console.log(plan, features);
-
   return (
     <div
       className={`max-w-[min(416px,calc(100vw-16px))] rounded-[10px] ${plan.tag === "Recomended" ? "bg-secondary text-white" : "bg-white"} shadow-cs`}

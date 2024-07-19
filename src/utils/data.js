@@ -137,8 +137,7 @@ export const plans = {
     plans: [
       {
         name: "Starting @",
-        ddescription:
-          "Lorem ipsum dolor sit amet consectetur. Mauris mattis nist lectus urna nisi mauris.",
+        description: "",
         curr_price: "₹14,999",
         price: "₹17,991",
         billed: "One Time Payment",
@@ -153,71 +152,82 @@ export const plans = {
     ],
   },
 };
-// export const psychologists = [
-//   {
-//     name: "Dr. Aprajita Dixit",
-//     description: "Child & Adolescent Counsellor",
-//     img: aprajita_dixit,
-//   },
-//   {
-//     name: "Roma Kaushik",
-//     description: "Child Psychologist",
-//     img: roma_kaushik,
-//   },
-// ];
-// export const team = [
-//   {
-//     name: "Sankalp Kumar",
-//     description: "Co-Founder CEO",
-//     img: sankalp_kumar,
-//   },
-//   {
-//     name: "Abhishek Paswan",
-//     description: "Co-Founder COO",
-//     img: abhishek_paswan,
-//   },
-//   {
-//     name: "Arshit Mishra",
-//     description: "Co- Founder | Curriculum Lead",
-//     img: arshit_mishra,
-//   },
-//   {
-//     name: "Shreyas Thakre",
-//     description: "Jr.Frontend Developer",
-//     img: shreyas_thakre,
-//   },
-//   {
-//     name: "Rohit Raj",
-//     description: "Jr.Graphic Designer",
-//     img: rohit_raj,
-//   },
-//   {
-//     name: "Ananta Paul",
-//     description: "Frontend Developer Intern",
-//     img: ananta_paul,
-//     linkedIn_url: "https://www.linkedin.com/in/anantapaul/",
-//   },
-//   {
-//     name: "Ayaan Baksh",
-//     description: "Social Media Marketing Intern",
-//     img: ayaan_baksh,
-//   },
-//   {
-//     name: "Ashwini Narkhede",
-//     description: "Marketing Intern",
-//     img: ashwini_narkhede,
-//   },
-//   {
-//     name: "Manika Chaudhary",
-//     description: "Psychology Intern",
-//     img: ashwini_narkhede,
-//   },
-//   {
-//     name: "Hardik Gupta",
-//     description: "Psychology Intern",
-//     img: ashwini_narkhede,
-//   },
-// ];
+export const psychologists = [
+  {
+    name: "Dr. Aprajita Dixit",
+    description: "Child & Adolescent Counsellor",
+    img: aprajita_dixit,
+    linkedIn_url: "https://www.linkedin.com/in/aprajita-dixit-7a277179",
+  },
+  {
+    name: "Roma Kaushik",
+    description: "Child Psychologist",
+    img: roma_kaushik,
+    linkedIn_url: "https://www.linkedin.com/in/roma-kaushik-3a01aa140/",
+  },
+];
+export const team = [
+  {
+    name: "Sankalp Kumar",
+    description: "Co-Founder CEO",
+    img: sankalp_kumar,
+    linkedIn_url: "https://www.linkedin.com/in/sankalp-kumar-68b49a169/",
+  },
+  {
+    name: "Abhishek Paswan",
+    description: "Co-Founder COO",
+    img: abhishek_paswan,
+    linkedIn_url: "https://www.linkedin.com/in/abhishek-paswan-44bb01113/",
+  },
+  {
+    name: "Arshit Mishra",
+    description: "Co- Founder | Curriculum Lead",
+    img: arshit_mishra,
+    linkedIn_url: "https://www.linkedin.com/in/arshit-mishra-61317011a/",
+  },
+  {
+    name: "Shreyas Thakre",
+    description: "Jr.Frontend Developer",
+    img: shreyas_thakre,
+    linkedIn_url: "https://www.linkedin.com/in/shreyas-thakare-691261151",
+  },
+  {
+    name: "Rohit Raj",
+    description: "Jr.Graphic Designer",
+    img: rohit_raj,
+    linkedIn_url: "https://www.linkedin.com/in/18rohitraj/",
+  },
+  {
+    name: "Ananta Paul",
+    description: "Frontend Developer Intern",
+    img: ananta_paul,
+    linkedIn_url: "https://www.linkedin.com/in/anantapaul/",
+  },
+  {
+    name: "Ayaan Baksh",
+    description: "Social Media Marketing Intern",
+    img: ayaan_baksh,
+    linkedIn_url: "https://www.linkedin.com/in/ayaan-baksh-2a3780260/",
+  },
+  {
+    name: "Ashwini Narkhede",
+    description: "Marketing Intern",
+    img: ashwini_narkhede,
+    linkedIn_url: "https://www.linkedin.com/in/ashwini-narkhede-97663217a/",
+  },
+  {
+    name: "Manika Chaudhary",
+    description: "Psychology Intern",
+    img: manika_choudhary,
+    linkedIn_url: "https://linkedin.com/in/manika-chaudhary-67710610b/",
+  },
+  {
+    name: "Hardik Gupta",
+    description: "Psychology Intern",
+    img: hardik_gupta,
+    linkedIn_url: "https://linkedin.com/in/hardik-r-58964a239?u/",
+  },
+];
 export const features = [
   {
     image: interactiveLearning,
@@ -273,13 +283,13 @@ export const cards = [
     button: "Explore",
     image: "school",
   },
-  {
-    title: "For NGO",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Sit donec adipiscing tristique posuere sit eu. Id mauris in nulla senectus volutpat eget venenatis ultrices urna. Ac facilisis tempor cras convallis a et risus enim ultrices.",
-    button: "Explore",
-    image: "family",
-  },
+  // {
+  //   title: "For NGO",
+  //   description:
+  //     "",
+  //   button: "Explore",
+  //   image: "family",
+  // },
 ];
 export const comments = [
   {

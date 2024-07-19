@@ -37,14 +37,14 @@ export const Card = ({ card, image, color }) => {
       />
       <p className="body_3">{card.description} </p>
 
-      <button className="group relative z-[10] h-fit w-fit">
+      {/* <button className="group relative z-[10] h-fit w-fit">
         <span className="absolute -inset-[2px] z-[-1] block rounded-full bg-grad_1" />
         <span className="absolute inset-0 z-[-1] block rounded-full bg-white" />
 
         <span className="button_1 text-grad relative block group-hover:bg-clip-border group-hover:text-white">
           {card.button}
         </span>
-      </button>
+      </button> */}
       <Image
         src={image}
         alt={card.image}
