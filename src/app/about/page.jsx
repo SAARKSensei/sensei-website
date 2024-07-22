@@ -22,13 +22,13 @@ const Page = async () => {
       return data.values;
     })
     .catch((error) => console.log("Error:", error));
-  const team = res.filter(
+  const team = res?.filter(
     (person, index) =>
       index !== 0 &&
       !person[1].includes("Psycho") &&
       !person[1].includes("Counsellor"),
   );
-  const psychologists = res.filter(
+  const psychologists = res?.filter(
     (person, index) =>
       index !== 0 &&
       (person[1].includes("Psycho") || person[1].includes("Counsellor")),
