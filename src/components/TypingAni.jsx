@@ -27,7 +27,7 @@ const TypingAni = ({ texts, speed, delay }) => {
       }
     }, d);
     return () => clearTimeout(timeout);
-  }, [currentIndex, delay, ind, texts, speed]);
+  }, [currentIndex, delay, ind, texts, speed, duration]);
   return <>{currentText}</>;
 };
 
