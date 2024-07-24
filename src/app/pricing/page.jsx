@@ -4,8 +4,9 @@ import { plans } from "@/utils/data";
 import Image from "next/image";
 import right from "@/assets/tick.svg?url";
 import cross from "@/assets/cross1.svg?url";
-import Stars from "@/components/Stars";
+import Stars from "@/components/miniComps/Stars";
 import ABLTopology from "@/assets/ABLTopology-1.svg?url";
+
 const Page = () => {
   const [plan, setPlan] = useState("Family");
   //   console.log(plan);

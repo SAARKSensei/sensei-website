@@ -5,36 +5,34 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useRef, useEffect } from "react";
-import { fetchParentsRequest } from "@/Redux/slice/parentSlice";
-import { fetchChildrenRequest } from "@/Redux/slice/childrenSlice";
+// import { fetchParentsRequest } from "@/Redux/slice/parentSlice";
+// import { fetchChildrenRequest } from "@/Redux/slice/childrenSlice";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
-
-import Danger from "@/Images/danger.svg?url";
-import LeftSide from "@/components/LeftSide";
 import axios from "axios";
+import Danger from "@/Images/danger.svg?url";
+import LeftSide from "@/components/loginComps/LeftSide";
 
 const Page = () => {
   //Fetching Parent and child data
   const { data: session, status } = useSession();
-  const parentData = useSelector((state) => state?.parents?.data);
+  // const parentData = useSelector((state) => state?.parents?.data);
   const currentUserData = useSelector((state) => state?.currentUser?.data);
-  const phone = currentUserData?.phoneNumber;
   const router = useRouter();
-  const [canResend, setCanResend] = useState(false);
   let [countDown, setCountDown] = useState(120);
   const [loading, setLoading] = useState(false);
   //Getting phone nuomber from search params
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const [orderId, setOrderId] = useState(currentUserData?.orderId);
 
   //Dispatching actions to get parent and children data from provided details
   const dispatch = useDispatch();
-  const id = parentData?.id;
-  useEffect(() => {
-    dispatch(fetchParentsRequest({ phone }));
-    dispatch(fetchChildrenRequest({ id }));
-  }, [id, phone, dispatch]);
+  // const id = parentData?.id;
+  // useEffect(() => {
+  //   dispatch(fetchParentsRequest({ phone }));
+  //   dispatch(fetchChildrenRequest({ id }));
+  // }, [id, phone, dispatch]);
 
   //otp input functionality
 
@@ -59,7 +57,6 @@ const Page = () => {
 
   const handleKeyDown = (inputs, index, e) => {
     //also select the value of the input
-
     // On pressing the Arrow keys, move the focus on the left and right side
     if (e.key === "ArrowLeft" && index > 0) {
       e.preventDefault();
@@ -76,32 +73,47 @@ const Page = () => {
       } else focusInput(inputs, index - 1);
     }
   };
+  const otpResend = async () => {
+    try {
+      const otpRes = await axios.get(`/otp/${currentUserData?.phoneNumber}`);
+      setOrderId(otpRes?.data?.orderId);
+      //console.log(otpRes);
+      setCountDown(120);
+    } catch (error) {
+      // toast.warn("Enter correct number");
+      alert(error?.response?.data || "Enter correct number");
+      console.error(error);
+    }
+  };
 
   const detailsHandler = async () => {
     setLoading(true);
     const finalOtp = otpInputs.reduce((acc, input) => {
       return acc + input.current.value;
     }, "");
-    console.log("otp", finalOtp);
-    console.log("sign", {
-      phone,
-      name: currentUserData?.name,
-      otp: finalOtp,
-      orderId: currentUserData?.orderId,
-    });
+    ////console.log("otp", finalOtp);
+    // console.log("sign", {
+    //   phone: currentUserData?.phoneNumber,
+    //   name: currentUserData?.name,
+    //   otp: finalOtp,
+    //   orderId: currentUserData?.orderId,
+    // });
     const res = await signIn("credentials", {
-      phone,
+      phone: currentUserData?.phoneNumber,
       name: currentUserData?.name,
       otp: finalOtp,
-      orderId: currentUserData?.orderId,
-      // callbackUrl: callbackUrl,
+      orderId: orderId,
+      callbackUrl: callbackUrl,
       redirect: false,
     });
 
-    console.log(res);
+    //console.log(res);
 
     const status = res?.status;
-    if (status === 200) router.push("/dashboard");
+    if (status === 200) router.push("/parentingsolutions");
+    else {
+      alert("Please enter the correct OTP");
+    }
     setLoading(false);
     // console.log(res, session, status);
     // if (!res?.ok) return;
@@ -126,7 +138,6 @@ const Page = () => {
       return () => clearTimeout(timer);
     } else {
       setCountDown(0);
-      setCanResend(true);
     }
   }, [countDown]);
 
@@ -182,11 +193,14 @@ const Page = () => {
               ))}
             </div>
             <div className="mx-auto mt-3 flex w-full justify-between">
-              {canResend ? (
+              {countDown === 0 ? (
                 <>
-                  <h4 className="text-sm font-semibold text-[#F58720]">
+                  <button
+                    onClick={() => otpResend()}
+                    className="text-sm font-semibold text-[#F58720]"
+                  >
                     Resend OTP
-                  </h4>
+                  </button>
                 </>
               ) : (
                 <>

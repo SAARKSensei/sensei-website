@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Animatebg from "./Animatebg";
+import Animatebg from "@/Animatebg";
 import Image from "next/image";
 import varrow from "@/Images/varroww.svg";
 const Process = () => {
@@ -17,16 +17,16 @@ const Process = () => {
         width: `${event.currentTarget.offsetWidth}px`,
       });
     }
-    console.log(trans);
+    //console.log(trans);
   };
 
   return (
     <Animatebg>
-      <div className=" flex   items-center justify-between font-Nunito text-white  text-base ">
-        <h1 className=" font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold  text-left ">
+      <div className="flex items-center justify-between font-Nunito text-base text-white">
+        <h1 className="text-left font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold">
           PROCESS
         </h1>
-        <span className="hidden fflex gap-8 p-2 px-3 bg-white rounded-md cursor-pointer">
+        <span className="fflex hidden cursor-pointer gap-8 rounded-md bg-white p-2 px-3">
           <Image src={varrow} alt="varrow" sizes="auto" className="" />
           <Image
             src={varrow}
@@ -36,31 +36,31 @@ const Process = () => {
           />
         </span>
       </div>
-      <div className=" scroll overflow-x-auto">
+      <div className="scroll overflow-x-auto">
         <div
           ref={menuRef}
-          className="min-w-fit min-h-fit pb-4  my-4 scroll relative whitespace-nowrap gap-4 flex  items-center justify-between font-Nunito text-white  text-base"
+          className="scroll relative my-4 flex min-h-fit min-w-fit items-center justify-between gap-4 whitespace-nowrap pb-4 font-Nunito text-base text-white"
         >
-          <span className="  absolute rounded-full  right-0 left-0 bottom-2 h-1 bg-white"></span>
+          <span className="absolute bottom-2 left-0 right-0 h-1 rounded-full bg-white"></span>
           <span
             style={trans}
-            className=" min-w-10 absolute left-0 rounded-full  bottom-2 h-1 white z-10 bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D]  transition-all duration-500"
+            className="white absolute bottom-2 left-0 z-10 h-1 min-w-10 rounded-full bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] transition-all duration-500"
           />
           <label
             onClick={handleMouseOver}
             // onMouseLeave={handleMouseLeave}
             for="Introduction"
-            className="min-w-fit  menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               defaultChecked
               name="process"
               type="radio"
               id="Introduction"
-              className=" peer/1 appearance-none checked:"
+              className="peer/1 checked: appearance-none"
             />
             <svg
-              className=" peer-checked/1:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/1:text-white peer-checked/1:border-0  text-gray-400  border-2 min-w-[25px] min-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="min-h-[25px] min-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/1:border-0 peer-checked/1:bg-gradient-to-r peer-checked/1:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -72,7 +72,7 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className=" font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold  text-left ">
+            <h1 className="text-left font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold">
               Introduction
             </h1>{" "}
             <span className="text-xs">(5 minutes)</span>
@@ -82,16 +82,16 @@ const Process = () => {
             onClick={handleMouseOver}
             // onMouseLeave={handleMouseLeave}
             for="PickEmotionCard2"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
               type="radio"
               id="PickEmotionCard2"
-              className=" peer/2 appearance-none checked:"
+              className="peer/2 checked: appearance-none"
             />
             <svg
-              className=" peer-checked/2:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/2:text-white peer-checked/2:border-0  text-gray-400  border-2 min-w-[25px] min-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="min-h-[25px] min-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/2:border-0 peer-checked/2:bg-gradient-to-r peer-checked/2:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -103,7 +103,7 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className=" font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold  text-left ">
+            <h1 className="text-left font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold">
               Pick Emotion Card
             </h1>{" "}
             <span className="text-xs">(5 minutes)</span>
@@ -112,16 +112,16 @@ const Process = () => {
             onClick={handleMouseOver}
             // onMouseLeave={handleMouseLeave}
             for="PickEmotionCard3"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
               type="radio"
               id="PickEmotionCard3"
-              className=" peer/3 appearance-none checked:"
+              className="peer/3 checked: appearance-none"
             />
             <svg
-              className=" peer-checked/3:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/3:text-white peer-checked/3:border-0  text-gray-400  border-2 min-w-[25px] min-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="min-h-[25px] min-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/3:border-0 peer-checked/3:bg-gradient-to-r peer-checked/3:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -133,7 +133,7 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className=" font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold  text-left ">
+            <h1 className="text-left font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold">
               Pick Emotion Card
             </h1>{" "}
             <span className="text-xs">(5 minutes)</span>
@@ -142,16 +142,16 @@ const Process = () => {
             onClick={handleMouseOver}
             // onMouseLeave={handleMouseLeave}
             for="PickEmotionCard4"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
               type="radio"
               id="PickEmotionCard4"
-              className=" peer/4 appearance-none checked:"
+              className="peer/4 checked: appearance-none"
             />
             <svg
-              className=" peer-checked/4:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/4:text-white peer-checked/4:border-0  text-gray-400  border-2 min-w-[25px] min-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="min-h-[25px] min-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/4:border-0 peer-checked/4:bg-gradient-to-r peer-checked/4:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -163,7 +163,7 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className=" font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold  text-left ">
+            <h1 className="text-left font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold">
               Pick Emotion Card
             </h1>{" "}
             <span className="text-xs">(5 minutes)</span>
@@ -171,7 +171,7 @@ const Process = () => {
         </div>
       </div>
       <div className="group">
-        <ul className="p-5 group-[#PickEmotionCard2:checked~&]:block list-disc text-white ">
+        <ul className="list-disc p-5 text-white group-[#PickEmotionCard2:checked~&]:block">
           <li>
             Begin by discussing emotions with the children. Ask them to name
             different emotions they know.

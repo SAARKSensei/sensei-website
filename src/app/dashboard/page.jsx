@@ -8,7 +8,7 @@ import addchild from "@/Images/addchild.png";
 import Subject from "@/components/Modules/Subject";
 // import Navbar3 from "@/components/Navbar3";
 // import CounsellorCard from "@/components/CounsellorCard";
-import Background1 from "@/components/BackGround.jsx";
+import Background1 from "@/components/miniComps/BackGround.jsx";
 import Activities from "@/components/Modules/Activities";
 import { subjectData, counsellorData } from "@/utils/data";
 

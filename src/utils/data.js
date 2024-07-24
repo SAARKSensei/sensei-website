@@ -152,7 +152,82 @@ export const plans = {
     ],
   },
 };
-
+// export const psychologists = [
+//   {
+//     name: "Dr. Aprajita Dixit",
+//     description: "Child & Adolescent Counsellor",
+//     img: aprajita_dixit,
+//     linkedIn_url: "https://www.linkedin.com/in/aprajita-dixit-7a277179",
+//   },
+//   {
+//     name: "Roma Kaushik",
+//     description: "Child Psychologist",
+//     img: roma_kaushik,
+//     linkedIn_url: "https://www.linkedin.com/in/roma-kaushik-3a01aa140/",
+//   },
+// ];
+// export const team = [
+//   {
+//     name: "Sankalp Kumar",
+//     description: "Co-Founder CEO",
+//     img: sankalp_kumar,
+//     linkedIn_url: "https://www.linkedin.com/in/sankalp-kumar-68b49a169/",
+//   },
+//   {
+//     name: "Abhishek Paswan",
+//     description: "Co-Founder COO",
+//     img: abhishek_paswan,
+//     linkedIn_url: "https://www.linkedin.com/in/abhishek-paswan-44bb01113/",
+//   },
+//   {
+//     name: "Arshit Mishra",
+//     description: "Co- Founder | Curriculum Lead",
+//     img: arshit_mishra,
+//     linkedIn_url: "https://www.linkedin.com/in/arshit-mishra-61317011a/",
+//   },
+//   {
+//     name: "Shreyas Thakre",
+//     description: "Jr.Frontend Developer",
+//     img: shreyas_thakre,
+//     linkedIn_url: "https://www.linkedin.com/in/shreyas-thakare-691261151",
+//   },
+//   {
+//     name: "Rohit Raj",
+//     description: "Jr.Graphic Designer",
+//     img: rohit_raj,
+//     linkedIn_url: "https://www.linkedin.com/in/18rohitraj/",
+//   },
+//   {
+//     name: "Ananta Paul",
+//     description: "Frontend Developer Intern",
+//     img: ananta_paul,
+//     linkedIn_url: "https://www.linkedin.com/in/anantapaul/",
+//   },
+//   {
+//     name: "Ayaan Baksh",
+//     description: "Social Media Marketing Intern",
+//     img: ayaan_baksh,
+//     linkedIn_url: "https://www.linkedin.com/in/ayaan-baksh-2a3780260/",
+//   },
+//   {
+//     name: "Ashwini Narkhede",
+//     description: "Marketing Intern",
+//     img: ashwini_narkhede,
+//     linkedIn_url: "https://www.linkedin.com/in/ashwini-narkhede-97663217a/",
+//   },
+//   {
+//     name: "Manika Chaudhary",
+//     description: "Psychology Intern",
+//     img: manika_choudhary,
+//     linkedIn_url: "https://linkedin.com/in/manika-chaudhary-67710610b/",
+//   },
+//   {
+//     name: "Hardik Gupta",
+//     description: "Psychology Intern",
+//     img: hardik_gupta,
+//     linkedIn_url: "https://linkedin.com/in/hardik-r-58964a239?u/",
+//   },
+// ];
 export const features = [
   {
     image: interactiveLearning,
@@ -326,7 +401,7 @@ export const navLinks = [
   },
   {
     title: "Blogs",
-    link: "/blogs",
+    link: "/blogs/0",
   },
 
   {
@@ -683,3 +758,134 @@ export const gamifiedActivities = [
 ];
 
 export const activityData = [interactivieActivities, gamifiedActivities];
+export const cities = [
+  "Jaipur",
+  "Lucknow",
+  "Kanpur",
+  "Nagpur",
+  "Surat",
+  "Patna",
+  "Indore",
+  "Vadodara",
+  "Bhopal",
+  "Coimbatore",
+  "Visakhapatnam",
+  "Agra",
+  "Madurai",
+  "Varanasi",
+  "Allahabad",
+  "Mumbai",
+  "Delhi",
+  "Bengaluru",
+  "Kolkata",
+  "Chennai",
+  "Hyderabad",
+  "Pune",
+  "Ahmedabad",
+];
+export const tags = [
+  "Mental Wellness",
+  "Emotional Well-Being",
+  "Life skill education",
+  "SEL curriculum",
+  "Self and Social Awareness",
+  "Moral Guidance and Ethics",
+  "National Education Policy",
+];
+export const blogsp = [
+  {
+    id: 1,
+    title: "How to manage your child’s separation anxiety",
+    tagLines: "Child Development and Behavior",
+    image:
+      "https://www.unicef.org/parenting/sites/unicef.org.parenting/files/styles/hero_extended/public/UN066587.JPG.webp?itok=EvPPdqUn",
+    description:
+      "Spending time away from your little one can be painful for both of you. But sometimes, saying goodbye can create feelings of worry and upset in your child. Here are some things to look out for and ways you can help your young one manage such difficult feelings and ultimately feel more safe and secure.",
+    date: "",
+    blogger: "unicef",
+    logo: "https://e7.pngegg.com/pngimages/737/888/png-clipart-unicef-logo-united-states-unicef-united-nations-organization-child-unicef-symbol-globe-logo-thumbnail.png",
+    link: "https://www.unicef.org/parenting/child-care/managing-child-separation-anxiety",
+  },
+  {
+    id: 2,
+    title: "21 Healthy Discipline Strategies for Positive Parenting",
+    tagLines: "Child Development and Behavior",
+    image:
+      "https://positive.b-cdn.net/wp-content/uploads/2021/01/Discipline-Strategies-300x150.jpg",
+    description:
+      "Parenting comes with its own set of challenges, with new demands and stressors being placed on families in the forms of rapidly developing technology, easier access to information, and the looming presence of social media.",
+    date: "27 Feb 2024",
+    blogger: "Dr. Gabriella",
+    logo: "https://secure.gravatar.com/avatar/c3abf170cc2f56ca14b367bebeee0aad?s=280&d=https%3A%2F%2Fpositivepsychology.com%2Fwp-content%2Fthemes%2Fpositivepsychology%2Fdist%2Fimages%2Fdefault_user.jpg&r=g",
+    link: "https://positivepsychology.com/discipline-strategies/",
+  },
+  {
+    id: 3,
+    title: "Balancing Work and Family: Tips for Working Parents",
+    tagLines: "Child Development and Behavior",
+    image:
+      "https://childdevelopmentinfo.com/wp-content/uploads/2024/02/parentwork.jpg",
+    tagLines: "Expert Parenting Articles, Family Building",
+    description:
+      "In today’s fast-paced and demanding world, working parents have a unique challenge of balancing their professional responsibilities with their family life. Parenting in this day and age requires managing multiple priorities and can feel like a never-ending juggling act. But don’t worry, with the right mindset and strategies, it’s possible to achieve a work-life balance!",
+    date: "February 7, 2024",
+    blogger: "Robert Myers,Phd",
+    logo: "https://childdevelopmentinfo.com/wp-content/uploads/2019/07/Robert-Myers-PhD-square-100x100.jpg",
+    link: "https://childdevelopmentinfo.com/parenting/balancing-work-and-family-tips-for-working-parents/",
+  },
+  {
+    id: 4,
+    title: "8 Ways Parents Can Teach Kindness to Kids",
+    tagLines: "Child Development and Behavior",
+    image:
+      "https://blog.cincinnatichildrens.org/wp-content/uploads/2023/12/8-Ways-Parents-Can-Teach-Kindness-to-Kids.2.smaller.jpg",
+    description:
+      "Kids understand kindness at a very early age. In fact, babies as young as 8-12 months can demonstrate kindness by sharing their food and toys with others. Kindness is the trait of being selfless, generous, considerate and friendly; qualities that most parents like to foster in their children. And with good reason – acts of kindness impact the levels of certain neurotransmitters in our brains that affect happiness and attachment to others.Further, for those kids who seem to naturally struggle with kindness, the good news is that it can be taught just like any other skill. And the earlier it’s taught, the better! Here are a few ways to foster kindness in kids: ",
+    date: "2024-02-27",
+    blogger: "Lynne Merk, PhD",
+    logo: "https://blog.cincinnatichildrens.org/wp-content/uploads/2019/12/Lynne-Merk-PhD_avatar_1575303381-96x96.jpg",
+    link: "https://blog.cincinnatichildrens.org/healthy-living/child-development-and-behavior/8-ways-parents-can-teach-kindness-to-kids/",
+  },
+];
+export const news = [
+  {
+    id: 1,
+    title: "Temper Tantrums",
+    tagLines: "Child Development and Behavior",
+    image:
+      "https://i.vimeocdn.com/video/832566638-8d9ae6030ba779e59f68c76b31a6023dd4e582641786f7e4c20eba5646d3df9e-d?mw=600&mh=337",
+    description:
+      "Temper tantrums can be frustrating for any parent. But instead of looking at them as disasters, treat tantrums as opportunities for education.",
+    date: "June 2022",
+    blogger: "Elizabeth M. Schilling, PhD",
+    logo: "https://photo.nemours.org/E/3937/244x278",
+    link: "https://kidshealth.org/en/parents/tantrums.html",
+  },
+  {
+    id: 2,
+    title: "How Chores Help Kids Build Independence",
+    tagLines: "Child Development and Behavior",
+    image:
+      "https://www.strong4life.com/-/media/Strong4Life/emotional-wellness/independence-and-problem-solving/elementary_age_girl_taking_out_the_trash_002_R.jpg",
+    description:
+      "Getting kids involved in household chores can be tough sometimes. It’s more than likely faster and easier to do things around the house ourselves. But when we don’t give kids chores, and just do things ourselves, it takes away opportunities for them to learn real-life skills and build confidence, independence and ultimately resilience (able to handle life’s ups and downs). Learn more about why chores are good for kids, how to assign kids chores and how to navigate resistance to chores.",
+    date: "",
+    blogger: "Strong4Life",
+    logo: "",
+    link: " https://www.strong4life.com/en/emotional-wellness/independence-and-problem-solving/how-chores-help-kids-build-independence#:~:text=For%20example%2C%20put%20away%20clean,re%20expected%20to%20complete%20them.",
+  },
+  {
+    id: 3,
+    title: "Sleep: The importance of a bedtime routine",
+    tagLines: "Child Development and Behavior",
+
+    image:
+      "https://naitreetgrandir.com/documentsng/images/imagesprincipalegrande/sleep-importance-of-bedtime-routine.jpg",
+    description:
+      "Some children’s sleep problems can be attributed to their parents’ behaviour at bedtime. Well-intentioned parents may unwittingly engage in overprotective behaviours, such as staying with their child until they fall asleep or letting their child sleep in their bed if they wake up at night. ",
+    date: "November 2023 ",
+    blogger: "Évelyne Touchette",
+    logo: "",
+    lonk: "https://naitreetgrandir.com/en/step/5-8-years/family-life/sleep-importance-of-bedtime-routine/#:~:text=Getting%20adequate%20sleep%20in%20terms,ve%20learned%20during%20the%20day.",
+  },
+];
