@@ -144,7 +144,7 @@ body {
 }
 
 .scrollText {
-  animation: scrollText 30s linear infinite;
+  animation: scrollText 40s linear infinite;
 }
 
 .btn_lnrbg::after {

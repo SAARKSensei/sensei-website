@@ -44,7 +44,7 @@ const Navbar = () => {
     <>
       <span className="block h-[75px] w-full" />
       <div
-        className={`${scrolled.curr >= 300 ? "fixed bg-secondary/80 " + (scrolled.prev > scrolled.curr ? "top-0" : "-top-40") : "absolute"} tranmsition-all z-[100] flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 py-2 duration-500 md:px-10 lg:px-20`}
+        className={`${scrolled.curr >= 300 ? "fixed bg-secondary/80 " + (scrolled.prev > scrolled.curr ? "top-0 backdrop-blur-sm" : "-top-40 backdrop-blur-0") : "absolute"} tranmsition-all z-[100] flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 py-2 duration-500 md:px-10 lg:px-20`}
       >
         <Link href="/">
           <MainLogo className="h-[54px] w-[102px] text-white" />

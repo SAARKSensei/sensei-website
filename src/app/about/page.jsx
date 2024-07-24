@@ -11,6 +11,8 @@ import Background from "@/components/miniComps/BackGround";
 import CircleOfTrust from "../../components/homeComps/CircleOfTrust";
 export const metadata = {
   title: "About",
+  description:
+    "Our Passionate team of developers, designers & child experts craft engaging learning experiences for you & your child.",
 };
 const Page = async () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_SHEET_KEY; // Replace with your API key
@@ -55,7 +57,7 @@ const Page = async () => {
         </h1>
         <div className="flex flex-col gap-4 text-grey_1">
           <div className="flex gap-2 max-sm:flex-wrap">
-            <Vision className="m-4" />
+            <Vision className="m-4 min-w-max" />
             <div>
               <h4 className="h4 h-fit max-w-[90vw] uppercase text-secondary">
                 Vision
@@ -71,7 +73,7 @@ const Page = async () => {
             </div>
           </div>
           <div className="flex gap-2 max-sm:flex-wrap">
-            <Mission className="m-[22.5px]" />
+            <Mission className="m-[22.5px] min-w-max" />
             <div>
               <h4 className="h4 h-fit max-w-[90vw] uppercase text-secondary">
                 Mission
