@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { faqs } from "@/utils/data";
-import FreeActivityBtn from "./FreeActivityBtn";
-import Stars from "./Stars";
+import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
+import Stars from "@/components/miniComps/Stars";
 const FAQS = () => {
   const [checkedId, setCheckedId] = useState(-1);
 
@@ -52,10 +52,11 @@ export const FAQ = ({ faq, checkedId, setCheckedId }) => {
             className="peer appearance-none"
             id={`question${faq.id}`}
             type="checkbox"
-            checked={checkedId === faq.id}
+            defaultChecked={checkedId === faq.id}
+            onChange={() => setCheckedId(checkedId === faq.id ? -1 : faq.id)}
           />
           <label
-            onClick={() => setCheckedId(checkedId === faq.id ? -1 : faq.id)}
+            // onClick={() => setCheckedId(checkedId === faq.id ? -1 : faq.id)}
             htmlFor={`question${faq.id}`}
             className="ml-auto rotate-45 cursor-pointer rounded-full bg-[#FF8B13] p-2 opacity-25 transition-transform peer-checked:rotate-0 peer-checked:opacity-100"
           >

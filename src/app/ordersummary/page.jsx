@@ -6,7 +6,7 @@ import Script from "next/script";
 import axios from "axios";
 import { removeCurrentChild } from "@/Redux/slice/currentChildSlice";
 
-import Background from "@/components/BackGround";
+import Background from "@/components/miniComps/BackGround";
 import OrderCard from "@/components/OrderCard";
 
 const Page = () => {
@@ -27,12 +27,12 @@ const Page = () => {
 
     const amount = currentChildData?.planPrice / 100;
     const currency = "INR";
-    console.log(
-      process.env.NEXT_PUBLIC_RAZORPAY_KEY,
-      amount,
-      currency,
-      currentUserData?.orderId,
-    );
+    // console.log(
+    //   process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+    //   amount,
+    //   currency,
+    //   currentUserData?.orderId,
+    // );
     var options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
       amount,

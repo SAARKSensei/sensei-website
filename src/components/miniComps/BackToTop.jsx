@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { useEffect, useState } from "react";
-import UpArrow from "../../Images/uparrow.svg?url";
+import UpArrow from "@/Images/uparrow.svg?url";
 
 const BackToTop = () => {
   const [scrolled, setScrolled] = useState(false);

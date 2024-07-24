@@ -2,16 +2,16 @@ import React from "react";
 import Image from "next/image";
 
 import PsychologistsImg from "@/assets/us/psychologists.png";
-import Aparjita from "../assets/us/aparjita.svg?url";
-import RandomBoy1 from "../assets/us/randomboy1.png";
-import RandomBoy2 from "../assets/us/randomboy2.png";
-import RnadomGirl1 from "../assets/us/randomgirl1.png";
-import RnadomGirl2 from "../assets/us/randomgirl2.png";
-import RnadomGirl3 from "../assets/us/randomgirl3.png";
-import RnadomGirl4 from "../assets/us/randomgirl4.png";
+import Aparjita from "@/assets/us/aparjita.svg?url";
+import RandomBoy1 from "@/assets/us/randomboy1.png";
+import RandomBoy2 from "@/assets/us/randomboy2.png";
+import RnadomGirl1 from "@/assets/us/randomgirl1.png";
+import RnadomGirl2 from "@/assets/us/randomgirl2.png";
+import RnadomGirl3 from "@/assets/us/randomgirl3.png";
+import RnadomGirl4 from "@/assets/us/randomgirl4.png";
 
-import FreeActivityBtn from "./FreeActivityBtn";
-import Stars from "./Stars";
+import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
+import Stars from "@/components/miniComps/Stars";
 
 const Psychologists = () => {
   return (

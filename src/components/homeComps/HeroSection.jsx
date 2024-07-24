@@ -1,27 +1,18 @@
 import React from "react";
-import Background from "@/components/BackGround.jsx";
+import Background from "@/components/miniComps/BackGround.jsx";
 import Image from "next/image";
-import girl from "@/assets/girl.jpg";
-import boy from "@/assets/boyj.jpg";
-import boxes from "@/assets/boxes.svg?url";
-import muser from "@/assets/miniuser.svg?url";
-import flower from "@/assets/flower.svg?url";
-import InfiniteScroll from "./InfiniteScroll";
-import Navbar from "./Navbar";
-import Boy from "@/assets/DSC_0354.png";
-import topology from "@/assets/Topology-1.svg?url";
-import ellipse from "@/assets/Ellipse.svg?url";
+import Flower from "@/assets/flower.svg";
 import personality from "@/assets/personality.png";
 import heromobile from "@/assets/mobileHero.png";
 import tic from "@/assets/tick.svg?url";
 import google from "@/assets/google.svg?url";
-import whatsapp from "@/assets/whatsapp.svg?url";
+import Whatsapp from "@/assets/whatsapp.svg";
 import userround from "@/assets/user-round.svg?url";
 import bgtopo from "@/assets/bgtopo.svg?url";
-import TypingAni from "./TypingAni";
+import TypingAni from "@/components/miniComps/TypingAni";
 import { Herotexts } from "@/utils/data";
 import HeroImageAny from "./HeroImageAny";
-import FreeActivityBtn from "./FreeActivityBtn";
+import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
 const HeroSection = () => {
   return (
     <div className="min-h-max">
@@ -65,7 +56,7 @@ const HeroSection = () => {
               </div>
               <div>
                 <p className="body1_b flex items-center gap-2 border-b-2 border-grey_2 pb-1">
-                  <Image src={whatsapp} alt="whatsapp" sizes="auto" />
+                  <Whatsapp className="text-[#3AA176]" />
                   350+{" "}
                 </p>
                 <p className="body_3 text-grey_1">Parents Community</p>
@@ -93,12 +84,7 @@ const HeroSection = () => {
               className="absolute right-10 top-28 max-w-[max(15vw,65px)] max-[900px]:-right-5 max-[900px]:top-20"
             />
             <div className="absolute bottom-0 left-0 h-[60px] w-[165px] rounded-lg bg-white p-2 drop-shadow-lg max-[900px]:-bottom-10 max-[900px]:left-16 max-sm:h-[39px] max-sm:w-[107px]">
-              <Image
-                src={flower}
-                alt="flower"
-                width={86}
-                className="absolute -top-[30px] right-5 max-sm:-top-5 max-sm:right-2 max-sm:max-w-[56px]"
-              />
+              <Flower className="absolute -top-[30px] right-5 max-w-[83px] max-sm:-top-5 max-sm:right-2 max-sm:max-w-[56px]" />
               <div className="absolute bottom-2 left-0 right-0 mx-auto h-[13px] w-[90%] rounded-full bg-[#F2F2F2] max-sm:h-[8px]">
                 <span className="absolute h-full w-1/2 rounded-full bg-primary" />
               </div>

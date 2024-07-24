@@ -1,14 +1,38 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import { blogs } from "@/utils/data";
 import arrow from "@/assets/arrow-left-circle.svg?url";
-import FbLinkdMailLink from "@/components/FbLinkdMailLink";
+// import FbLinkdMailLink from "@/components/miniComps/FbLinkdMailLink";
 import Mainlogo from "@/assets/mainlogo.svg";
 import heart from "@/assets/heart1.svg?url";
 import send from "@/assets/send.svg?url";
-const Page = () => {
-  const [blog, setBlog] = React.useState(blogs[0]);
+import ClientLink from "@/components/miniComps/ClientLink";
+
+export async function getStaticPaths() {
+  const paths = blogs.map((_, index) => ({
+    params: { blogId: index.toString() },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export function generateMetadata({ params: { blogId } }) {
+  return {
+    title: blogs[blogId].title,
+    description: blogs[blogId].description,
+    openGraph: {
+      images: [
+        {
+          url: blogs[blogId].image,
+        },
+      ],
+    },
+  };
+}
+const Page = ({ params: { blogId } }) => {
+  const blog = blogs[blogId];
   return (
     <div className="container mx-auto flex flex-col gap-4 p-4 py-20">
       <div className="flex items-center gap-2 text-primary">
@@ -66,11 +90,9 @@ const Page = () => {
             </h5>
             <div className="flex gap-4 p-4 max-lg:overflow-scroll lg:flex-col">
               {blogs.map((blog, index) => (
-                <Blog
-                  key={index}
-                  blog={blog}
-                  blogAction={(blog) => setBlog(blog)}
-                />
+                <ClientLink href={`/blogs/${index}`} key={index}>
+                  <Blog blog={blog} />
+                </ClientLink>
               ))}
             </div>
           </div>
@@ -105,12 +127,9 @@ const Page = () => {
     </div>
   );
 };
-const Blog = ({ blog, blogAction }) => {
+const Blog = ({ blog }) => {
   return (
-    <div
-      onClick={() => blogAction(blog)}
-      className="flex w-full min-w-[min(95vw,380px)] flex-col rounded-lg bg-white shadow-cs"
-    >
+    <div className="flex w-full min-w-[min(95vw,380px)] flex-col rounded-lg bg-white shadow-cs">
       <div className="relative mb-2 h-[230px] w-full">
         <Image
           src={blog.image}

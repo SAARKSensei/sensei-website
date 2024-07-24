@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUserData } from "@/Redux/slice/currentuserslice";
 // import { toast } from "react-toastify";
 
-import LeftSide from "@/components/LeftSide";
+import LeftSide from "@/components/loginComps/LeftSide";
 
 const page = () => {
   const [phoneNum, setPhoneNum] = useState("");
@@ -23,6 +23,7 @@ const page = () => {
     try {
       const otpRes = await axios.get(`/otp/${phoneNum}`);
       const status = otpRes.status;
+      //console.log(otpRes);
       setOrderid(otpRes?.data?.orderId);
       router.push("/otpverification");
     } catch (error) {
@@ -67,7 +68,7 @@ const page = () => {
                 htmlFor="name"
                 className="font-Nunito text-base font-normal"
               >
-                Parent Name
+                Child Name
               </label>
               <div className="mt-1.5 flex w-full rounded-md border border-gray-300 bg-white px-3 py-3 shadow-lg sm:w-[276px]">
                 <input

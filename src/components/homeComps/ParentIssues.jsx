@@ -6,10 +6,10 @@ import { ReactTyped } from "react-typed";
 
 import Magnify from "@/assets/magnify.svg?url";
 import Dots from "@/assets/dots.svg?url";
-import Squares from "../assets/squares.svg?url";
+import Squares from "@/assets/squares.svg?url";
 
-import FreeActivityBtn from "./FreeActivityBtn";
-import TypingAni, { FadeInOut } from "./TypingAni";
+import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
+import TypingAni, { FadeInOut } from "@/components/miniComps/TypingAni";
 import { searches } from "@/utils/data";
 const ParentIssues = () => {
   return (

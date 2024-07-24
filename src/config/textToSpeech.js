@@ -30,7 +30,7 @@ export const getTextToAudio = cache(async (text) => {
       url: synthesisResponse.data.SynthesisTask.TimestampsUri,
     });
 
-    console.log(timestampsResponse.data);
+    //console.log(timestampsResponse.data);
 
     return {
       audio: audioUri,

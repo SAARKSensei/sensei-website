@@ -32,6 +32,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "**",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
         hostname: "innerspacetherapy.in",
         port: "",
         pathname: "/**",

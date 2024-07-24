@@ -3,9 +3,9 @@ import thunder from "@/assets/thunder.svg?url";
 import Image from "next/image";
 import mobile from "@/assets/mobileHero.png";
 import personality from "@/assets/personality.png";
-import Topics from "@/components/Topics";
-import Features from "@/components/Features";
-import Activities from "@/components/Activities";
+import Topics from "@/components/homeComps/Topics";
+import Features from "@/components/homeComps/Features";
+import Activities from "@/components/activityComps/Activities";
 const Page = () => {
   return (
     <div className="flex flex-col items-center gap-40 py-10">

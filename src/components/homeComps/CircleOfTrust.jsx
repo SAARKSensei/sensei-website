@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import family from "@/assets/family.svg?url";
+// import family from "@/assets/family.svg?url";
 import buildings from "@/assets/buildings.svg?url";
 import school from "@/assets/school.svg?url";
 import { cards } from "@/utils/data";

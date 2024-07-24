@@ -1,10 +1,10 @@
 import React from "react";
-import f1 from "../../Images/f1.svg";
-import f2 from "../../Images/f2.svg";
-import f3 from "../../Images/f3.svg";
-import f4 from "../../Images/f4.svg";
+import f1 from "@/Images/f1.svg";
+import f2 from "@/Images/f2.svg";
+import f3 from "@/Images/f3.svg";
+import f4 from "@/Images/f4.svg";
 import Image from "next/image";
-import Animatebg from "./Animatebg";
+import Animatebg from "@/Animatebg";
 const Facilities = () => {
   const howdoing = [
     {
@@ -40,30 +40,30 @@ const Facilities = () => {
   ];
   return (
     <Animatebg>
-      <h1 className="px-4 pb-5 md:px-0 pl-4 text-white font-nunito  py-4 font-Nunito text-4xl lg:text-6xl lg:font-extrabold font-bold  text-left ">
+      <h1 className="font-nunito px-4 py-4 pb-5 pl-4 text-left font-Nunito text-4xl font-bold text-white md:px-0 lg:text-6xl lg:font-extrabold">
         What we offer to Schools
       </h1>
-      <div className="px-4 md:px-0 scroll flex max-w-screen overflow-x-scroll items-center gap-10">
-        <div className="min-h-[257px] min-w-[239px] md:min-h-[315px] md:min-w-[308px] ">
+      <div className="scroll max-w-screen flex items-center gap-10 overflow-x-scroll px-4 md:px-0">
+        <div className="min-h-[257px] min-w-[239px] md:min-h-[315px] md:min-w-[308px]">
           <Image
             src={f1}
             alt="f1"
-            className=" border rounded-lg border-white py-4 md:py-10"
+            className="rounded-lg border border-white py-4 md:py-10"
             sizes="auto"
           />
-          <h1 className="text-white max-w-[308px] text-xl rounded-lg  grad-bg-2 p-2 md:p-4 px-3">
+          <h1 className="grad-bg-2 max-w-[308px] rounded-lg p-2 px-3 text-xl text-white md:p-4">
             Acitvity based Learning Modules
           </h1>
         </div>
 
-        <div className="min-h-[257px] min-w-[239px] md:min-h-[315px] md:min-w-[308px] ">
+        <div className="min-h-[257px] min-w-[239px] md:min-h-[315px] md:min-w-[308px]">
           <Image
             src={f2}
             alt="f2"
-            className=" border rounded-lg border-white py-4 md:py-10"
+            className="rounded-lg border border-white py-4 md:py-10"
             sizes="auto"
           />
-          <h1 className="text-white max-w-[308px] text-xl rounded-lg  grad-bg-2 p-2 md:p-4 px-3">
+          <h1 className="grad-bg-2 max-w-[308px] rounded-lg p-2 px-3 text-xl text-white md:p-4">
             Upskilling your Teacher/Counsellor{" "}
           </h1>
         </div>
@@ -71,10 +71,10 @@ const Facilities = () => {
           <Image
             src={f3}
             alt="f3"
-            className=" border rounded-lg border-white py-4 md:py-10"
+            className="rounded-lg border border-white py-4 md:py-10"
             sizes="auto"
           />
-          <h1 className="text-white max-w-[308px] text-xl rounded-lg  grad-bg-2 p-2 md:p-4 px-3 ">
+          <h1 className="grad-bg-2 max-w-[308px] rounded-lg p-2 px-3 text-xl text-white md:p-4">
             Customer Relationship Management Tool{" "}
           </h1>
         </div>
@@ -82,29 +82,29 @@ const Facilities = () => {
           <Image
             src={f4}
             alt="f4"
-            className=" border rounded-lg border-white py-4 md:py-10"
+            className="rounded-lg border border-white py-4 md:py-10"
             sizes="auto"
           />
-          <h1 className="text-white max-w-[308px] text-xl rounded-lg  grad-bg-2 p-2 md:p-4 px-3">
+          <h1 className="grad-bg-2 max-w-[308px] rounded-lg p-2 px-3 text-xl text-white md:p-4">
             Personalized Student Life-skill Report
           </h1>
         </div>
       </div>
-      <h1 className=" text-white font-Nunito p-4 pt-10  md:p-0 md:pt-10 md:pb-5 min-[1300px]:pt-20  text-4xl lg:text-6xl lg:font-extrabold font-bold  text-left ">
+      <h1 className="p-4 pt-10 text-left font-Nunito text-4xl font-bold text-white md:p-0 md:pb-5 md:pt-10 lg:text-6xl lg:font-extrabold min-[1300px]:pt-20">
         How are we doing it?
       </h1>
-      <div className=" flex max-w-screen flex-wrap items-center md:gap-5 lg:gap-10">
+      <div className="max-w-screen flex flex-wrap items-center md:gap-5 lg:gap-10">
         {howdoing.map((cur) => (
-          <div key={cur.id} className="max-w-[393px] ">
-            <div className="flex  items-center">
-              <span className="h-[54px] text-white rounded-r-lg font-bold p-2 text-right  w-[71px] bg-[#FF8B13] text-2xl md:text-4xl">
+          <div key={cur.id} className="max-w-[393px]">
+            <div className="flex items-center">
+              <span className="h-[54px] w-[71px] rounded-r-lg bg-[#FF8B13] p-2 text-right text-2xl font-bold text-white md:text-4xl">
                 {cur.id}
               </span>
-              <h1 className="text-white text-xl rounded-lg p-2 md:p-4 px-3 ">
+              <h1 className="rounded-lg p-2 px-3 text-xl text-white md:p-4">
                 {cur.heading}
               </h1>
             </div>
-            <p className="text-white p-4 md:px-0 font-light">{cur.content}</p>
+            <p className="p-4 font-light text-white md:px-0">{cur.content}</p>
           </div>
         ))}
         ;

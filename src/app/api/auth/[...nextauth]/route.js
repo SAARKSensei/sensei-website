@@ -20,7 +20,7 @@ export const authOptions = {
       async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
         const { name, phone, otp, orderId } = credentials;
-        // console.log("credentials", credentials);
+        //console.log("credentials", credentials);
         try {
           const otpRes = await axios.post(
             "https://sensei-app-c8da1e59e645.herokuapp.com/sensei/api/v1/authenticate",
@@ -31,77 +31,99 @@ export const authOptions = {
               orderId: orderId,
             },
           );
-          const otpData = { ...otpRes?.data, status: otpRes.status };
-          console.log("otpData", otpData);
+          const otpData = { ...otpRes?.data, name, status: otpRes.status };
+          //console.log("otpData", JSON.stringify(otpData));
           return otpData;
         } catch (error) {
-          //console.error(error);
+          ////console.error(error);
         }
         // if (!otp.match(/^[0-9]{6}$/)) return null;
         // if (!phone.match(/^[0-9]{10}$/)) return null;
-        // return { otpUserData: "success", status: 200 };
         return null;
       },
     }),
     // ...add more providers here
   ],
   callbacks: {
-    async signIn({ user, account }) {
-      // console.log("signIn: " + JSON.stringify(user));
-      //console.log("user", user, "account", account);
-      return !!user;
-    },
+    // async signIn({ user, account }) {
+    //   // console.log("signIn: " + JSON.stringify(user));
+    //   //console.log("user", user, "account", account);
+    //   return !!user ? user : null;
+    // },
     async jwt({ token, user, session, trigger }) {
-      let phone = user?.phone;
-      let parentId = null;
-      if (trigger === "update") {
-        phone = session?.phone;
-        parentId = session?.id;
-      }
-      //console.log("cred: " + JSON.stringify(user));
-      if (phone)
-        try {
-          const resP = await getParentsDataAPI(phone);
-          //console.log("resP: " + resP?.data);
-          token = {
-            ...token,
-            parentDetails: resP?.data,
-          };
-          parentId = resP?.data?.id;
-        } catch (err) {
-          //console.log("err: " + err);
-        }
-      if (parentId)
-        try {
-          const resC = await getChildrenDataAPI(parentId);
-          //console.log("resC: " + resC?.data);
-          token = {
-            ...token,
-            childrenDetails: resC?.data,
-          };
-        } catch (err) {
-          //console.log("err: " + err);
-        }
+      // console.log(
+      //   "user: " + JSON.stringify(user),
+      //   "session: " + JSON.stringify(session),
+      // );
+      // let phone = user?.phone;
+      // let parentId = null;
+      // if (trigger === "update") {
+      //   phone = session?.phone;
+      //   parentId = session?.id;
+      // }
+      // //console.log("cred: " + JSON.stringify(user));
+      // if (phone)
+      //   try {
+      //     const resP = await getParentsDataAPI(phone);
+      //     //console.log("resP: " + resP?.data);
+      //     token = {
+      //       ...token,
+      //       parentDetails: resP?.data,
+      //     };
+      //     parentId = resP?.data?.id;
+
+      //   } catch (err) {
+      //     console.log("err: " + err);
+      //   }
+      // if (parentId)
+      //   try {
+      //     const resC = await getChildrenDataAPI(parentId);
+      //     //console.log("resC: " + resC?.data);
+      //     token = {
+      //       ...token,
+      //       childrenDetails: resC?.data,
+      //     };
+      //   } catch (err) {
+      //     console.log("err: " + err);
+      //   }else{
+      if (!!user)
+        token = {
+          ...token,
+          userName: user?.userName,
+          phone: user?.phone,
+        };
+
+      // console.log("token: " + JSON.stringify(token));
       return token;
     },
     async session({ session, token, user }) {
-      if (token?.parentDetails)
+      if (token?.userName) {
         session = {
           ...session,
           user: {
             ...session.user,
-            parentDetails: token.parentDetails,
-          },
-        };
-      if (token?.childrenDetails) {
-        session = {
-          ...session,
-          user: {
-            ...session.user,
-            childrenDetails: token.childrenDetails,
+            phone: token?.phone,
+            userName: token?.userName,
           },
         };
       }
+      // if (token?.parentDetails)
+      //   session = {
+      //     ...session,
+      //     user: {
+      //       ...session.user,
+      //       parentDetails: token.parentDetails,
+      //     },
+      //   };
+      // if (token?.childrenDetails) {
+      //   session = {
+      //     ...session,
+      //     user: {
+      //       ...session.user,
+      //       childrenDetails: token.childrenDetails,
+      //     },
+      //   };
+      // }
       //console.log("session" + JSON.stringify(session));
       return session;
     },

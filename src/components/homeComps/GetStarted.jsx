@@ -1,6 +1,6 @@
 import React from "react";
-import FreeActivityBtn from "./FreeActivityBtn";
-import Stars from "./Stars";
+import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
+import Stars from "@/components/miniComps/Stars";
 const GetStarted = () => {
   return (
     <div className="relative mx-auto flex max-w-[320px] flex-col items-center gap-6 md:max-w-[572px]">

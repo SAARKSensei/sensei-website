@@ -1,29 +1,29 @@
 import React from "react";
-import monstar from "../../Images/monstar.jpg";
+import monstar from "@/Images/monstar.jpg";
 import Image from "next/image";
-import book from "../../Images/book.svg";
-import insideOut from "../../Images/InsideOut.jpg";
+import book from "@/Images/book.svg";
+import insideOut from "@/Images/InsideOut.jpg";
 const Bookm = () => {
   return (
-    <div className="flex flex-wrap md:flex-nowrap p-6 md:p-10 min-[1300px]:p-20 gap-4 sm:gap-10 lg:gap-20">
-      <div className=" flex flex-col gap-4 sm:gap-10 lg:gap-20">
-        <div className="flex-wrap min-[400px]:flex-nowrap  flex gap-5 font-medium text-lg font-Nunito">
+    <div className="flex flex-wrap gap-4 p-6 sm:gap-10 md:flex-nowrap md:p-10 lg:gap-20 min-[1300px]:p-20">
+      <div className="flex flex-col gap-4 sm:gap-10 lg:gap-20">
+        <div className="flex flex-wrap gap-5 font-Nunito text-lg font-medium min-[400px]:flex-nowrap">
           <Image
             src={monstar}
             alt="monstar"
             sizes="auto"
-            className="w-fit min-w-40 max-h-64 object-contain  grow md:grow-0"
+            className="max-h-64 w-fit min-w-40 grow object-contain md:grow-0"
           />
-          <div className="order-1 sm:order-none min-w-fit p-4 custome-box-shadow h-fit rounded-xl">
-            <p className=" flex gap-1 items-center">
+          <div className="custome-box-shadow order-1 h-fit min-w-fit rounded-xl p-4 sm:order-none">
+            <p className="flex items-center gap-1">
               {" "}
               <Image alt={book} src={book} sizes="auto" />
-              <span className="bg-gradient-to-r from-[#0764A7] to-[#2C3D68] text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-[#0764A7] to-[#2C3D68] bg-clip-text text-transparent">
                 Book Preference :-
               </span>
             </p>
-            <p className="  text-base text-center bg-gradient-to-l from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B] text-transparent bg-clip-text">
-              <span className="text-lg leading-none font-semibold ">
+            <p className="bg-gradient-to-l from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B] bg-clip-text text-center text-base text-transparent">
+              <span className="text-lg font-semibold leading-none">
                 The Color Monstar
               </span>
               <br />
@@ -31,23 +31,23 @@ const Bookm = () => {
             </p>
           </div>
         </div>
-        <label className="w-fit relative pb-1">
+        <label className="relative w-fit pb-1">
           <Image
             src={insideOut}
             alt="inside out"
             sizes="auto"
-            className=" rounded-3xl object-contain grow"
+            className="grow rounded-3xl object-contain"
           />
-          <span className="-bottom-4 left-[calc(50%-86px)] rounded-xl absolute border-2 border-solid border-white text-white p-2 bg-gradient-to-r from-[#0764A7] to-[#2C3D68]">
+          <span className="absolute -bottom-4 left-[calc(50%-86px)] rounded-xl border-2 border-solid border-white bg-gradient-to-r from-[#0764A7] to-[#2C3D68] p-2 text-white">
             {" "}
             Inside Out (Disney Pixar)
           </span>
         </label>
       </div>
-      <div className=" m-4 h-fit md:w-[45%] max-w-[500px] rounded-2xl bg-white p-5 text-black relative flex flex-col ">
-        <span className="rounded-2xl absolute z-[-1] -inset-4 bg-gradient-to-l from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B]" />
+      <div className="relative m-4 flex h-fit max-w-[500px] flex-col rounded-2xl bg-white p-5 text-black md:w-[45%]">
+        <span className="absolute -inset-4 z-[-1] rounded-2xl bg-gradient-to-l from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B]" />
         KEY MESSAGES
-        <ul className=" p-5 list-disc">
+        <ul className="list-disc p-5">
           <li>
             {" "}
             Understanding and expressing emotions are vital for healthy

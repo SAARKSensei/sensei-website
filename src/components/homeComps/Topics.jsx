@@ -1,5 +1,4 @@
 import React from "react";
-import Background from "./BackGround";
 import Image from "next/image";
 import wellBeing from "@/assets/wellBeing.svg?url";
 import awareness from "@/assets/awareness.svg?url";

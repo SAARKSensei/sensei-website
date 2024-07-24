@@ -8,7 +8,7 @@ import BurstStarWhite from "@/assets/burststarwhite.svg?url";
 import BurstPuckerPeach from "@/assets/burstpuckerpeach.svg?url";
 import BurstPuckerYellow from "@/assets/burstpuckeryellow.svg?url";
 import Ticked from "@/assets/tick.svg?url";
-
+import ClientLink from "@/components/miniComps/ClientLink";
 import SmallPhone from "@/assets/smallphone.svg?url";
 import BigPhones from "@/assets/bigphone.svg?url";
 
@@ -84,9 +84,12 @@ const OurModules = () => {
               </p>
             </div>
           </div>
-          <button className="button_text btn_lnrbg relative flex w-fit items-center justify-center rounded-full border-none bg-[#2C3D68] px-6 py-4 text-white">
-            Explore ABL Modules
-          </button>
+          <ClientLink
+            href="/Login"
+            className="button_text btn_lnrbg relative flex w-fit items-center justify-center rounded-full border-none bg-[#2C3D68] px-6 py-4 text-white"
+          >
+            Sign Up FREE Activity
+          </ClientLink>
         </div>
         <div className="mx-auto flex h-fit w-full sm:hidden">
           <Image
