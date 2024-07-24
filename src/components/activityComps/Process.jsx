@@ -1,10 +1,8 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import Image from "next/image";
 
-import Animatebg from "./Animatebg";
-import varrow from "@/Images/varroww.svg";
+import Animatebg from "@/components/Modules/Animatebg";
 
 const Process = () => {
   const menuRef = useRef(null);
@@ -41,28 +39,28 @@ const Process = () => {
 
   return (
     <Animatebg>
-      <div className="flex items-center justify-between font-Nunito text-white text-base">
-        <h1 className="font-Nunito text-lg min-[1300px]:text-3xl min-[1300px]:font-bold text-left">
+      <div className="flex items-center justify-between font-Nunito text-base text-white">
+        <h1 className="text-left font-Nunito text-lg min-[1300px]:text-3xl min-[1300px]:font-bold">
           PROCESS
         </h1>
       </div>
       <div
         ref={scrollref}
-        className=" scrollbar-hide scroll-smooth overflow-x-auto"
+        className="scrollbar-hide overflow-x-auto scroll-smooth"
       >
         <div
           ref={menuRef}
-          className="min-w-fit min-h-fit pb-4 my-4 scroll relative whitespace-nowrap gap-4 flex items-center justify-between font-Nunito text-white text-base"
+          className="scroll relative my-4 flex min-h-fit min-w-fit items-center justify-between gap-4 whitespace-nowrap pb-4 font-Nunito text-base text-white"
         >
-          <span className="absolute rounded-full right-0 left-0 bottom-2 h-1 bg-white"></span>
+          <span className="absolute bottom-2 left-0 right-0 h-1 rounded-full bg-white"></span>
           <span
             style={trans}
-            className=" min-w-10 absolute left-0 rounded-full bottom-2 h-1 white z-10 bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] transition-all duration-500"
+            className="white absolute bottom-2 left-0 z-10 h-1 min-w-10 rounded-full bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] transition-all duration-500"
           />
           <label
             onClick={handleMouseOver}
             htmlFor="Preparation"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               defaultChecked
@@ -75,7 +73,7 @@ const Process = () => {
               className="peer/1 appearance-none"
             />
             <svg
-              className="peer-checked/1:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/1:text-white peer-checked/1:border-0  text-gray-400 border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/1:border-0 peer-checked/1:bg-gradient-to-r peer-checked/1:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -87,17 +85,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Preparation
             </h1>
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="CreatetheScenario"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -109,7 +107,7 @@ const Process = () => {
               className="peer/2 appearance-none"
             />
             <svg
-              className="peer-checked/2:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/2:text-white peer-checked/2:border-0  text-gray-400 border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/2:border-0 peer-checked/2:bg-gradient-to-r peer-checked/2:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -121,17 +119,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Create the Scenario
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (3-5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="BrainstormSolutions"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -143,7 +141,7 @@ const Process = () => {
               className="peer/3 appearance-none"
             />
             <svg
-              className=" peer-checked/3:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/3:text-white peer-checked/3:border-0  text-gray-400  border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/3:border-0 peer-checked/3:bg-gradient-to-r peer-checked/3:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -155,17 +153,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Brainstorm Solutions
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="ConsideringConsequences"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -177,7 +175,7 @@ const Process = () => {
               className="peer/4 appearance-none"
             />
             <svg
-              className=" peer-checked/4:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/4:text-white peer-checked/4:border-0  text-gray-400 border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/4:border-0 peer-checked/4:bg-gradient-to-r peer-checked/4:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -189,17 +187,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Considering Consequences
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="MakingtheDecision"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -211,7 +209,7 @@ const Process = () => {
               className="peer/5 appearance-none"
             />
             <svg
-              className="peer-checked/5:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/5:text-white peer-checked/5:border-0  text-gray-400 border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/5:border-0 peer-checked/5:bg-gradient-to-r peer-checked/5:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -223,17 +221,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Making the Decision
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="ReflectionandDecision"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -245,7 +243,7 @@ const Process = () => {
               className="peer/6 appearance-none"
             />
             <svg
-              className="peer-checked/6:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/6:text-white peer-checked/6:border-0  text-gray-400 border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/6:border-0 peer-checked/6:bg-gradient-to-r peer-checked/6:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -257,17 +255,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Reflection and Decision
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="Wrapup"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -279,7 +277,7 @@ const Process = () => {
               className="peer/7 appearance-none"
             />
             <svg
-              className="peer-checked/7:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/7:text-white peer-checked/7:border-0  text-gray-400 border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/7:border-0 peer-checked/7:bg-gradient-to-r peer-checked/7:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -291,17 +289,17 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito font-medium leading-7 text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl font-medium leading-7 min-[1300px]:text-2xl min-[1300px]:font-bold">
               Wrap-up
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
           <label
             onClick={handleMouseOver}
             htmlFor="AdditionalTips"
-            className="min-w-fit menu__link flex items-center gap-1"
+            className="menu__link flex min-w-fit items-center gap-1"
           >
             <input
               name="process"
@@ -313,7 +311,7 @@ const Process = () => {
               className="peer/8 appearance-none"
             />
             <svg
-              className="peer-checked/8:bg-gradient-to-r from-[#F8BF3B] to-[#EF5F3D] peer-checked/8:text-white peer-checked/8:border-0  text-gray-400  border-2 max-w-[25px] max-h-[25px] p-[5px] border-gray-400 rounded-full"
+              className="max-h-[25px] max-w-[25px] rounded-full border-2 border-gray-400 from-[#F8BF3B] to-[#EF5F3D] p-[5px] text-gray-400 peer-checked/8:border-0 peer-checked/8:bg-gradient-to-r peer-checked/8:text-white"
               width="12"
               height="9"
               viewBox="0 0 12 9"
@@ -325,18 +323,18 @@ const Process = () => {
                 fill="currentColor"
               />
             </svg>
-            <h1 className="font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold text-left">
+            <h1 className="text-left font-Nunito text-xl min-[1300px]:text-2xl min-[1300px]:font-bold">
               Additional Tips
             </h1>{" "}
-            <span className="text-base font-normal font-Nunito">
+            <span className="font-Nunito text-base font-normal">
               (5 minutes)
             </span>
           </label>
         </div>
       </div>
-      <div className="font-Nunito text-lg md:text-2xl font-medium ">
+      <div className="font-Nunito text-lg font-medium md:text-2xl">
         {selectedOption === "Preparation" && (
-          <ul className="p-5 list-disc text-white ">
+          <ul className="list-disc p-5 text-white">
             <li>
               Begin by discussing emotions with the children. Ask them to name
               different emotions they know.
@@ -348,7 +346,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "CreatetheScenario" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <p>
               Together, write down a situation where this superhero faces a
               tough choice. Example:
@@ -384,7 +382,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "BrainstormSolutions" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <li>
               Explain, &quot;Let&apos;s help our superhero make the best
               choice!&quot;{" "}
@@ -404,7 +402,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "ConsideringConsequences" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <li>
               Discuss the potential outcomes of each choice in simple terms.
               Example: &quot;If Super Hero 1 asks their friend why they&apos;re
@@ -427,7 +425,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "MakingtheDecision" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <li>
               After considering all the options and their consequences, discuss
               what the superhero should do.
@@ -439,7 +437,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "ReflectionandDecision" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <li>
               Talk about how the superhero&apos;s decision reflects their values
               (e.g., bravery, honesty).
@@ -451,7 +449,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "Wrapup" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <li>Briefly summarize the key takeaways from the activity.</li>
             <li>
               Praise your child for their participation and thoughtful answers.
@@ -459,7 +457,7 @@ const Process = () => {
           </ul>
         )}
         {selectedOption === "AdditionalTips" && (
-          <ul className="p-5 list-disc text-white">
+          <ul className="list-disc p-5 text-white">
             <li>
               Act out the scenarios for younger children or use silly voices to
               make it more engaging.

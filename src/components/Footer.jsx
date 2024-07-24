@@ -4,10 +4,10 @@ import SenseiLogo from "@/assets/mainlogo.svg";
 import Link from "next/link";
 import minisaark from "@/assets/minisaark.svg?url";
 import Msme from "@/assets/msme.svg?url";
-import startIndia from "@/assets/startIndia.svg?url";
-import mail from "@/assets/mail.svg?url";
-import location from "@/assets/location.svg?url";
-import phone from "@/assets/phone.svg?url";
+import StartIndia from "@/assets/startIndia.svg";
+import Mail from "@/assets/mail.svg";
+import Location from "@/assets/location.svg";
+import Phone from "@/assets/phone.svg";
 import Stars from "@/assets/stars.svg?url";
 import { navLinks } from "@/utils/data";
 const Footer = () => {
@@ -16,31 +16,26 @@ const Footer = () => {
   return (
     <div className="">
       <div className="flex flex-col flex-wrap justify-center gap-4 rounded-[calc(4vw)] bg-grad_1 p-4 text-xs font-normal text-slate-200 sm:flex-row sm:flex-nowrap sm:gap-10 md:rounded-b-none md:text-base lg:gap-20">
-        <span className="flex items-center gap-2">
-          {" "}
-          <Image
-            className="min-h-10 w-max min-w-10 rounded-full bg-white p-2"
-            src={phone}
-            alt="phone"
-          />
+        <div className="flex items-center gap-2">
+          <div className="grid h-10 w-10 place-items-center rounded-full bg-white">
+            <Phone />
+          </div>
           96659 52556
-        </span>
-        <span className="flex items-center gap-2">
-          <span className="min-h-10 min-w-10 rounded-full bg-white p-2">
-            <Image className="mt-[2px]" alt="mail" src={mail} sizes="auto" />
-          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          {" "}
+          <div className="grid h-10 w-10 place-items-center rounded-full bg-white">
+            <Mail />
+          </div>
           connect@sensei.org.in
-        </span>
+        </div>
 
-        <span className="flex items-center gap-2">
-          <Image
-            className="max-h-10 w-max min-w-10 rounded-full bg-white p-2"
-            src={location}
-            alt="location"
-            sizes="auto"
-          />
+        <div className="flex items-center gap-2">
+          <div className="grid h-10 w-10 place-items-center rounded-full bg-white">
+            <Location />
+          </div>
           Pune, Maharastra
-        </span>
+        </div>
       </div>
       <div className="bg-gradient-to-t from-[#2C3D68] to-[#0764A7]">
         <div
@@ -72,9 +67,9 @@ const Footer = () => {
                 </h1>
               </div>
 
-              <div className="flex justify-center gap-4">
+              <div className="flex items-center justify-center gap-4">
                 <Image src={Msme} alt="msme" sizes="auto" />
-                <Image src={startIndia} alt="startIndia" sizes="auto" />
+                <StartIndia />
               </div>
             </div>
             <div className="-order-1 flex-grow-[.3] md:order-none">

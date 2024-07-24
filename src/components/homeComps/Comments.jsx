@@ -3,9 +3,9 @@ import incomma from "@/assets/incomma.svg?url";
 import Image from "next/image";
 import { comments } from "@/utils/data";
 import Carousel, { CarouselItemWraper } from "./Carousel";
-import FreeActivityBtn from "./FreeActivityBtn";
+import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
 import ABLTopology from "@/assets/ABLTopology-1.svg?url";
-import Stars from "./Stars";
+import Stars from "@/components/miniComps/Stars";
 const Comments = () => {
   return (
     <div

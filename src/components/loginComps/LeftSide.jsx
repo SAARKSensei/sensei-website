@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-import VideoPlay from "./VideoPlay.jsx";
+import VideoPlay from "@/components/miniComps/VideoPlay";
 
 import Doctor from "@/Images/dr.png";
 import Backgroud from "@/Images/background.svg?url";

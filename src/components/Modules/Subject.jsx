@@ -3,13 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import Activities from "./Activities";
-
 import MentalHealthPic from "@/Images/mentalhealthpic.svg?url";
 import SexEducationPic from "@/Images/sexeducationpic.svg?url";
 import MoralScience from "@/Images/moralsciencepic.svg?url";
-import CareerGuidance1 from "@/Images/careerguidance1.svg?url";
-import CareerGuidance2 from "@/Images/careerguidance2.svg?url";
 
 const Subject = ({
   subjectName,

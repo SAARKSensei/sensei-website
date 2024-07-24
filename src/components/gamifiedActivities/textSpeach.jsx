@@ -78,7 +78,7 @@ const TextReader = ({ text, role }) => {
           onPlaying={() => setPlay(true)}
           onTimeUpdate={(e) => {
             setTimer(e.target.currentTime);
-            console.log(e.target.currentTime);
+            //console.log(e.target.currentTime);
           }}
         >
           <source src={audio.audio} />

@@ -16,7 +16,7 @@ import { setCurrentUserData } from "@/Redux/slice/currentuserslice";
 
 import DeleteIcon from "@/Images/delete-icon.svg";
 // import AddChild from "@/Images/AddChild.svg";
-import Background from "@/components/BackGround.jsx";
+import Background from "@/components/miniComps/BackGround.jsx";
 
 const Page = () => {
   const [plans, setPlans] = useState();

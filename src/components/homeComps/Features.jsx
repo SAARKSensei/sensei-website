@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { features } from "@/utils/data";
-import Stars from "./Stars";
+import Stars from "@/components/miniComps/Stars";
 const Features = () => {
   return (
     <div className="container mx-auto flex flex-col items-center gap-10">

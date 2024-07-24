@@ -1,7 +1,7 @@
 import React from "react";
-import Contact from "../assets/contactimg.svg";
+import Contact from "@/assets/contactimg.svg";
 import Image from "next/image";
-import Stars from "./Stars";
+import Stars from "@/components/miniComps/Stars";
 const ContactUs = () => {
   return (
     <div className="flex w-full flex-wrap justify-center gap-10">

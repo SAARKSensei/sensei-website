@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
 
-// import PinModal from "../Modals/pinmodal.jsx";
+// import PinModal from "@/Modals/pinmodal.jsx";
 
 import Phoneicon from "@/Images/Phoneicon.png";
 import DownArrow from "@/Images/varroww.svg?url";

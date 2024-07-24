@@ -1,14 +1,19 @@
 import React from "react";
 import Image from "next/image";
 import linkedin from "@/assets/linkedin-solid.svg?url";
-import mission from "@/assets/mission.svg?url";
-import vision from "@/assets/vision.svg?url";
+import Mission from "@/assets/mission.svg";
+import Vision from "@/assets/vision.svg";
 import ABLTopology from "@/assets/ABLTopology-1.svg?url";
 import group from "@/assets/us/Group_40155.png";
 // import { team, psychologists } from "@/utils/data";
 import Link from "next/link";
-import Background from "@/components/BackGround";
-import CircleOfTrust from "@/components/CircleOfTrust";
+import Background from "@/components/miniComps/BackGround";
+import CircleOfTrust from "../../components/homeComps/CircleOfTrust";
+export const metadata = {
+  title: "About",
+  description:
+    "Our Passionate team of developers, designers & child experts craft engaging learning experiences for you & your child.",
+};
 const Page = async () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_SHEET_KEY; // Replace with your API key
   const spreadsheetId = "1L9zcehnh2JwbT2n0xf1-J1BzjkuBfpzdkEcXrIZRmpU"; // Replace with your spreadsheet ID
@@ -44,7 +49,7 @@ const Page = async () => {
       <h2 className="h4 mx-auto h-fit max-w-[90vw] uppercase text-secondary lg:col-start-2">
         SAARK Education Pvt. Ltd.
       </h2>
-      <Image src={group} alt="group" width={910} height={440} />
+      <Image src={group} alt="group" width={910} height={440} priority />
       <div className="flex gap-4 max-md:flex-wrap">
         <h1 className="h1">
           Our Passionate team of developers, designers & child experts craft
@@ -52,7 +57,7 @@ const Page = async () => {
         </h1>
         <div className="flex flex-col gap-4 text-grey_1">
           <div className="flex gap-2 max-sm:flex-wrap">
-            <Image className="m-4" src={vision} alt="vision" />
+            <Vision className="m-4 min-w-max" />
             <div>
               <h4 className="h4 h-fit max-w-[90vw] uppercase text-secondary">
                 Vision
@@ -68,7 +73,7 @@ const Page = async () => {
             </div>
           </div>
           <div className="flex gap-2 max-sm:flex-wrap">
-            <Image className="m-[22.5px]" src={mission} alt="mission" />
+            <Mission className="m-[22.5px] min-w-max" />
             <div>
               <h4 className="h4 h-fit max-w-[90vw] uppercase text-secondary">
                 Mission
@@ -139,8 +144,8 @@ export const Person = ({ person, index }) => {
           person?.img ||
           `https://drive.google.com/uc?export=view&id=${person[2].split("/")[5]}`
         }
-        alt={person.name}
-        className="saturate-0 transition-all group-hover:saturate-100"
+        alt="member"
+        className="h-auto w-full saturate-0 transition-all group-hover:saturate-100"
       />
       <div
         className={`absolute inset-0 flex justify-end rounded-[10px] bg-gradient-to-b align-bottom text-white hover:!via-transparent hover:!to-transparent ${index % 2 == 0 ? "from-primary/0 via-primary to-primary" : "from-secondary/0 via-secondary to-secondary"} flex flex-col from-40% via-85% p-6 opacity-100 transition-all duration-500 hover:opacity-30`}

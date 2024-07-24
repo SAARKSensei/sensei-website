@@ -1,14 +1,10 @@
 import { useState } from "react";
-import Image from "next/image";
 
-import ActivityCard from "./ActivityCard";
-
-import LeftScroll from "@/Images/leftScroll.svg?url";
-import RightScroll from "@/Images/rightScroll.svg?url";
 import Varroww from "@/assets/varroww.svg";
 import Lock from "@/assets/lock.svg";
 import { activityData } from "@/utils/data";
 import { useRouter } from "next/navigation";
+
 const Activities = () => {
   const [value, setValue] = useState("fruit");
   const router = useRouter();

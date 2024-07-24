@@ -1,13 +1,13 @@
 import React from "react";
 
-import EmotionNav from "@/components/freefunactivitycomps/EmotionNav";
-import Intro from "@/components/freefunactivitycomps/Intro";
+import EmotionNav from "@/components/activityComps/EmotionNav";
+import Intro from "@/components/activityComps/Intro";
 import Navbar from "@/components/Modules/Navbar";
-import Process from "@/components/freefunactivitycomps/Process";
-import BackToTop from "@/components/freefunactivitycomps/BackToTop";
-import Bookm from "@/components/freefunactivitycomps/bookm";
+import Process from "@/components/activityComps/Process";
+import BackToTop from "@/components/activityComps/BackToTop";
+import Bookm from "@/components/activityComps/bookm";
 import ActivityCard from "@/components/Modules/ActivityCard";
-import introbg from "../../Images/introbg.svg?url";
+import introbg from "@/Images/introbg.svg?url";
 
 import { gamifiedActivities, interactivieActivities } from "@/utils/data";
 export const Home = () => {

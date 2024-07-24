@@ -7,55 +7,19 @@ export default withAuth(
   function middleware(request) {
     const Path = request?.nextUrl?.pathname;
     const Token = request?.nextauth?.token;
-    //console.log("path= " + Path);
+    // console.log("path= " + Path + JSON.stringify(Token));
     if (!Token) return;
 
     if (
       Path === "/login" ||
       Path.startsWith("/otpverification") ||
-      (!Token?.parentDetails &&
-        !Path.startsWith("/dashboard") &&
+      (!Token &&
+        !Path.startsWith("/parentingsolutions") &&
         !Path.startsWith("/parentdetails"))
     )
-      return NextResponse.redirect(new URL(`/dashboard`, request.url));
+      return NextResponse.redirect(new URL(`/parentingsolutions`, request.url));
     if (Token?.parentDetails?.id && Path.startsWith("/parentdetails"))
       return NextResponse.redirect(new URL(`/familypage`, request.url));
-
-    // console.log(request.nextUrl.pathname);
-    // console.log(request.nextauth.token?.childrenDetails);
-    // if (
-    //   !request.nextauth.token?.childrenDetails ||
-    //   request.nextauth.token?.childrenDetails.length === 0
-    // ) {
-    //   if (request.nextUrl.pathname.startsWith("/childdetails")) return;
-    //   return NextResponse.redirect(new URL(`/childdetails`, request.url));
-    // }
-    // if (
-    //   request.nextUrl.pathname.startsWith("/childdetails") ||
-    //   request.nextUrl.pathname.startsWith("/parentdetails") ||
-    //   request.nextUrl.pathname.startsWith("/otpverification") ||
-    //   request.nextUrl.pathname === "/"
-    //   // ||
-    //   // (request.nextUrl.pathname.startsWith("/parent/") &&
-    //   //   `/parent/${request.nextauth.token.parentDetails?.name.replace(
-    //   //     /\s/g,
-    //   //     "_"
-    //   //   )}` !== request.nextUrl.pathname)
-    // )
-    //   return NextResponse.redirect(
-    //     new URL(
-    //       // `/parent/${request.nextauth.token.parentDetails?.name.replace(
-    //       //   /\s/g,
-    //       //   "_"
-    //       // )}`,
-    //       "/familypage",
-    //       request.url
-    //     )
-    //   );
-    // new URL(
-    //   `/child/dashboard/${request.nextauth.token.childrenDetails[0]?.name}`,
-    //   request.url
-    // )
   },
 
   {
@@ -75,15 +39,14 @@ export default withAuth(
 );
 
 export const config = {
-  // matcher: ["/hjbhj"],
   matcher: [
     "/login",
     "/parent",
-    "/child/dashboard",
     "/parentdetails",
     "/childdetails",
     "/otpverification",
     "/dashboard",
+    "/parentingsolutions",
     "/parent/:path*",
     "/familypage/:path*",
   ],

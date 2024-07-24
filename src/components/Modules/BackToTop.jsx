@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import { useEffect, useState } from "react";
-import UpArrow from "../../Images/uparrow.svg";
+import UpArrow from "@/Images/uparrow.svg";
 
 const BackToTop = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -22,8 +22,7 @@ const BackToTop = () => {
   }, []);
   return (
     <Image
-      className={`z-10 fixed  bottom-44 right-10  p-2 md:p-3 md:right-8 w-[32px] h-[32px]  md:w-[52px] md:h-[52px] rounded-[50%] bg-gray-100 bg-opacity-45 hover:bg-[#F8BF3B] items-center justify-center cursor-pointer 
-        ${scrolled ? "block" : "hidden"}        `}
+      className={`fixed bottom-44 right-10 z-10 h-[32px] w-[32px] cursor-pointer items-center justify-center rounded-[50%] bg-gray-100 bg-opacity-45 p-2 hover:bg-[#F8BF3B] md:right-8 md:h-[52px] md:w-[52px] md:p-3 ${scrolled ? "block" : "hidden"} `}
       src={UpArrow}
       alt="uparrow"
       onClick={() => {
