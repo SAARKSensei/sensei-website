@@ -2,8 +2,7 @@ import { cache } from "react";
 import axios from "axios";
 export const getTextToAudio = cache(async (text) => {
   const headers = {
-    Authorization:
-      "Bearer WW3c4VfPcQOsVPNcJe6sdp1kJ8YCD6nTUAHknECEIVZcm5z6HvPmF2",
+    Authorization: process.env.NEXT_PUBLIC_SPEECH,
   };
   const data = {
     Text: text, // Up to 500,000 characters

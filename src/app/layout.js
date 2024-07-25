@@ -2,6 +2,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import logo from "@/assets/Logo.svg?url";
+import { GoogleTagManager } from "@next/third-parties/google";
 // import { ToastContainer } from "react-toastify";
 import StoreProvider from "@/Redux/Provider";
 export const metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <>
       <html lang="en">
+        <GoogleTagManager gtmId={process.env.GTM_ID} />
         <body className={"flex min-h-screen flex-col justify-between"}>
           <StoreProvider>
             <Navbar />
