@@ -20,7 +20,7 @@ const HeroSection = () => {
         {/* <Background /> */}
         <div className="container mx-auto flex h-full w-full max-w-[90vw] justify-between gap-10 pb-10 pt-20 max-[900px]:flex-col">
           <div className="flex min-w-[40vw] flex-col gap-10">
-            <h1 className="h2 lg:h1 min-h-max max-w-[800px] leading-snug">
+            <h1 className="h1 lg:h1 min-h-max max-w-[800px] leading-snug">
               Life skills that empower your child in this digital world{" "}
               <span className="inline-block min-w-[200px] max-w-fit bg-grad_1 bg-clip-text text-transparent">
                 <TypingAni texts={Herotexts} delay={2000} speed={100} />

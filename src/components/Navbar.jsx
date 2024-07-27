@@ -42,9 +42,9 @@ const Navbar = () => {
   }, []);
   return (
     <>
-      <span className="block h-[75px] w-full" />
+      <span className="block h-[55px] w-full max-sm:h-[50px]" />
       <div
-        className={`${scrolled.curr >= 300 ? "fixed bg-secondary/80 " + (scrolled.prev > scrolled.curr ? "top-0 backdrop-blur-sm" : "-top-40 backdrop-blur-0") : "absolute"} tranmsition-all z-[100] flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 py-2 duration-500 md:px-10 lg:px-20`}
+        className={`${scrolled.curr >= 300 ? "fixed bg-secondary/80 " + (scrolled.prev > scrolled.curr ? "top-0 backdrop-blur-sm" : "-top-40 backdrop-blur-0") : "absolute"} tranmsition-all z-[100] flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 duration-500 md:px-10 lg:px-20`}
       >
         <Link href="/">
           <MainLogo className="h-[54px] w-[102px] text-white" />
@@ -130,7 +130,7 @@ const Navbar = () => {
         ) : (
           <Link
             href={"/login"}
-            className="button_text flex max-w-[258px] cursor-pointer items-center rounded-[50px] bg-grad_1 px-6 py-3 text-white max-md:ml-auto"
+            className="button_text flex max-w-[258px] cursor-pointer items-center rounded-[50px] bg-grad_1 px-3 py-1 text-white max-md:ml-auto md:px-6 md:py-3"
           >
             Login
           </Link>

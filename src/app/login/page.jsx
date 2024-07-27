@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setCurrentUserData } from "@/Redux/slice/currentuserslice";
 // import { toast } from "react-toastify";
-
+import Link from "next/link";
 import LeftSide from "@/components/loginComps/LeftSide";
 
 const page = () => {
@@ -108,13 +108,19 @@ const page = () => {
             )}
             <p className="hidden w-full pr-28 text-xs sm:block">
               By signing in, you agree to the{" "}
-              <span className="font-semibold">Terms of Service</span> and{" "}
-              <span className="font-semibold">Privacy Policy</span>. You also
-              agree that you have parental consent (if child). We use WhatsApp
-              for important updates
+              <Link href="/t&c" className="font-semibold">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy-policy" className="font-semibold">
+                Privacy Policy
+              </Link>
+              . You also agree that you have parental consent (if child). We use
+              WhatsApp for important updates
             </p>
             <p className="font-Nunito text-xs font-bold sm:hidden">
-              Terms of Service | Privacy Policy
+              <Link href="/t&c">Terms of Service</Link> |{" "}
+              <Link href="/privacy-policy">Privacy Policy</Link>
             </p>
           </div>
         </div>

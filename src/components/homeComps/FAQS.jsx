@@ -4,7 +4,7 @@ import { faqs } from "@/utils/data";
 import FreeActivityBtn from "@/components/activityComps/FreeActivityBtn";
 import Stars from "@/components/miniComps/Stars";
 const FAQS = () => {
-  const [checkedId, setCheckedId] = useState(-1);
+  const [checkedId, setCheckedId] = useState(1);
 
   return (
     <div className="container relative mx-auto flex max-w-[min(90vw,1000px)] flex-col items-center gap-11">
@@ -28,9 +28,9 @@ const FAQS = () => {
 };
 export const FAQ = ({ faq, checkedId, setCheckedId }) => {
   return (
-    <div className="flex h-fit gap-6 border-b-2 border-grey_2 p-5 align-middle has-[:checked]:rounded-xl has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10">
+    <div className="flex h-fit gap-6 border-b-2 border-grey_2 p-2 align-middle has-[:checked]:rounded-xl has-[:checked]:border-0 has-[:checked]:bg-[#FF8B13] has-[:checked]:bg-opacity-10 sm:p-5">
       <div className="flex w-full flex-col gap-4">
-        <div className="body_1 peer flex items-start gap-4">
+        <div className="body_1 peer flex items-start gap-2 md:gap-4">
           <div className="flex items-start gap-4">
             <p
               className={`body1_b ${
@@ -58,11 +58,10 @@ export const FAQ = ({ faq, checkedId, setCheckedId }) => {
           <label
             // onClick={() => setCheckedId(checkedId === faq.id ? -1 : faq.id)}
             htmlFor={`question${faq.id}`}
-            className="ml-auto rotate-45 cursor-pointer rounded-full bg-[#FF8B13] p-2 opacity-25 transition-transform peer-checked:rotate-0 peer-checked:opacity-100"
+            className="ml-auto rotate-45 cursor-pointer rounded-full bg-[#FF8B13] p-1 opacity-25 transition-transform peer-checked:rotate-0 peer-checked:opacity-100 md:p-2"
           >
             <svg
-              width="30"
-              height="30"
+              className="w-5 md:w-6"
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

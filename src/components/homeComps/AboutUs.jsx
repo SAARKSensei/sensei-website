@@ -20,7 +20,7 @@ const AboutUs = () => {
         <h2 className="h4 h-fit max-w-[90vw] uppercase text-secondary lg:col-start-2">
           About Us
         </h2>
-        <p className="para leading-10">
+        <p className="body_1">
           At Sensei, we are dedicated to revolutionizing education by blending
           activity-based learning (ABL) with essential life-skills, mental
           resilience, and strong ethical values. We&apos;re on a mission to

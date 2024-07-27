@@ -12,7 +12,7 @@ const Page = () => {
       style={{
         backgroundImage: `url(${ABLTopology.src})`,
       }}
-      className="container mx-auto flex flex-col gap-40 px-4 py-24"
+      className="container mx-auto flex max-w-[100vw] flex-col gap-40 overflow-hidden px-4 py-24"
     >
       <ContactUs />
       <CircleOfTrust />

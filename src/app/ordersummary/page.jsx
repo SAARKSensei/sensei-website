@@ -8,6 +8,7 @@ import { removeCurrentChild } from "@/Redux/slice/currentChildSlice";
 
 import Background from "@/components/miniComps/BackGround";
 import OrderCard from "@/components/OrderCard";
+import Link from "next/link";
 
 const Page = () => {
   const [paymentSuccesful, setPaymentSuccesful] = useState(false);
@@ -165,11 +166,13 @@ const Page = () => {
                         <p className="text-black opacity-50">
                           I agree to Sensei&apos;s
                         </p>{" "}
-                        <span className="text-[#f97316]">
+                        <Link href="/t&c" className="text-[#f97316]">
                           Terms & Conditions
-                        </span>{" "}
+                        </Link>{" "}
                         <span className="text-black opacity-50">and</span>{" "}
-                        <span className="text-[#f97316]">Privacy policy</span>
+                        <Link href="/privacy-policy" className="text-[#f97316]">
+                          Privacy policy
+                        </Link>
                       </div>
                     </div>
                     <button

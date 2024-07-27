@@ -79,7 +79,7 @@ const Psychologists = () => {
         <Stars />
         <div className="flex w-full flex-col gap-4">
           <p className="body_2 text-secondary">WHAT INDIAN PSYCHOLOGISTS SAY</p>
-          <p className="font-Nunito text-2xl font-bold !leading-[3.5rem] md:text-4xl lg:text-5xl">
+          <p className="font-Nunito text-2xl font-bold md:text-4xl lg:text-5xl lg:leading-[3.5rem]">
             Child with strong socio-emotional skills are better equipped to ⏱️{" "}
             <span className="italic text-primary">
               manage daily challenges,

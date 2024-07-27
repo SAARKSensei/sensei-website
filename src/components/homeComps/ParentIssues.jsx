@@ -18,7 +18,7 @@ const ParentIssues = () => {
         <h2 className="h4 h-fit max-w-[90vw] uppercase text-secondary lg:col-start-2">
           What Indian Parents Say
         </h2>
-        <div className="inline h-[8rem] w-fit gap-2 font-Nunito text-3xl font-bold leading-tight max-md:h-[4rem] max-[500px]:h-[6rem] sm:text-4xl md:text-[54px] md:leading-snug min-[1300px]:h-fit">
+        <div className="h1 inline h-[4rem] w-fit gap-2 max-[500px]:h-[4rem] min-[1300px]:h-fit">
           <span className="text-nowrap">My Child </span>
           <ReactTyped
             className="typewrite text-grad"
