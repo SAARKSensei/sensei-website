@@ -42,7 +42,7 @@ export default function sitemap() {
       lastModified: new Date(),
     },
     {
-      url: "https://www.sensei.org.in/t&c",
+      url: "https://www.sensei.org.in/t&amp;c",
       lastModified: new Date(),
     },
   ];
