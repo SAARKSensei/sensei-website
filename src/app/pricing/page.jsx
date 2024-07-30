@@ -116,14 +116,10 @@ const Plan = ({ plan, features }) => {
         >
           Includes
         </p>
-        {features.includes.map((s, index) => (
+        {plan.includes.map((s, index) => (
           <div key={index} className="flex items-center gap-2">
-            <Image src={plan.includes[s.id] ? right : cross} alt={"mark"} />
-            <p
-              className={`body_2 ${plan.includes[s.id] ? "" : "line-through"}`}
-            >
-              {s.name}
-            </p>
+            <Image src={right} alt={"mark"} />
+            <p className={`body_2`}>{s}</p>
           </div>
         ))}
       </div>

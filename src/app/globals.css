@@ -129,6 +129,7 @@ body {
     transform: translateX(-50%);
   }
 }
+
 .backgroud-color {
   background: linear-gradient(to top, #f8bf3b, #ef5f3d, #f5712c, #ff8b13);
 }

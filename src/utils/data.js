@@ -22,24 +22,6 @@ export const plans = {
           id: 3,
         },
       ],
-      includes: [
-        {
-          name: "For 5-10 years children",
-          id: 1,
-        },
-        {
-          name: "24 Interactive activities",
-          id: 2,
-        },
-        {
-          name: "12 Digital activities",
-          id: 3,
-        },
-        {
-          name: "E-learning materials",
-          id: 4,
-        },
-      ],
     },
     plans: [
       {
@@ -51,7 +33,12 @@ export const plans = {
         billed: "One Time Payment",
         subjects: { 1: true, 2: false, 3: false },
         duration: "3 Months",
-        includes: { 1: true, 2: true, 3: true, 4: true },
+        includes: [
+          "For 5-10 years children",
+          "24 Interactive activities",
+          "12 Digital activities",
+          "E-learning materials",
+        ],
         monthly: {
           curr_price: "₹249",
           price: "₹499",
@@ -66,7 +53,12 @@ export const plans = {
         billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: false },
         duration: "6 Months",
-        includes: { 1: true, 2: true, 3: true, 4: true },
+        includes: [
+          "For 5-10 years children",
+          "48 Interactive activities",
+          "24 Digital activities",
+          "E-learning materials",
+        ],
         tag: "Best Selling",
         monthly: {
           curr_price: "₹249",
@@ -82,8 +74,13 @@ export const plans = {
         billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: true },
         duration: "9 Months",
-        includes: { 1: true, 2: true, 3: true, 4: true },
         tag: "Recomended",
+        includes: [
+          "For 5-10 years children",
+          "72 Interactive activities",
+          "36 Digital activities",
+          "E-learning materials",
+        ],
         monthly: {
           curr_price: "₹249",
           price: "₹499",
@@ -107,32 +104,6 @@ export const plans = {
           id: 3,
         },
       ],
-      includes: [
-        {
-          name: "For 5-10 years children",
-          id: 1,
-        },
-        {
-          name: "72 Interactive activities",
-          id: 2,
-        },
-        {
-          name: "36 Digital activities",
-          id: 3,
-        },
-        {
-          name: "At your nearest location",
-          id: 4,
-        },
-        {
-          name: "Counsellor as facilitator",
-          id: 5,
-        },
-        {
-          name: "E-learning materials",
-          id: 6,
-        },
-      ],
     },
     plans: [
       {
@@ -143,7 +114,19 @@ export const plans = {
         billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: true },
         duration: "9 Months",
-        includes: { 1: true, 2: true, 3: true, 4: true, 5: true, 6: true },
+        includes: [
+          "For 5-10 years children",
+
+          "72 Interactive activities",
+
+          "36 Digital activities",
+
+          "At your nearest location",
+
+          "Counsellor as facilitator",
+
+          "E-learning materials",
+        ],
         monthly: {
           curr_price: "₹1999",
           price: "",
