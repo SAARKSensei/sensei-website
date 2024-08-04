@@ -384,7 +384,7 @@ export const navLinks = [
   },
   {
     title: "Blogs",
-    link: "/blogs/0",
+    link: "/blogs",
   },
 
   {

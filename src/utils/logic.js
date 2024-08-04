@@ -7,3 +7,9 @@ export const getRandomLightColor = () => {
   // Return the concatenated string as a hex color code
   return `#${r}${g}${b}`;
 };
+export const slug = (str) => {
+  return str
+    .toLowerCase()
+    .replace(/[^\w ]+/g, "")
+    .replace(/ +/g, "-");
+};

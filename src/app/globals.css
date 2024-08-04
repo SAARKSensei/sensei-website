@@ -313,3 +313,8 @@ body {
     stroke-dashoffset: 0px;
   }
 }
+.scrollbar {
+  scrollbar-width: 3px;
+  scrollbar-color: #ff8b13 transparent;
+  scroll-padding-left: 10px;
+}

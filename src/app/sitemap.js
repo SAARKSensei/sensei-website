@@ -1,4 +1,11 @@
-export default function sitemap() {
+import { blogs } from "@/utils/data";
+import { slug } from "@/utils/logic";
+export default async function sitemap() {
+  const Blogs = blogs.map((blog) => ({
+    url: `https://www.sensei.org.in/blogs/${slug(blog.title)}`,
+    lastModified: new Date(blog.date),
+  }));
+  console.log(Blogs);
   return [
     {
       url: "https://www.sensei.org.in",
@@ -24,19 +31,20 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: "https://www.sensei.org.in/blog/0",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://www.sensei.org.in/blog/1",
-      lastModified: new Date(),
-    },
-    {
-      url: "https://www.sensei.org.in/blog/2",
-      lastModified: new Date(),
-    },
 
+    {
+      url: "https://www.sensei.org.in/blogs",
+      lastModified: new Date(),
+    },
+    ...Blogs,
+    {
+      url: "https://www.sensei.org.in/privacy-policy",
+      lastModified: new Date(),
+    },
+    {
+      url: "https://www.sensei.org.in/t&amp;c",
+      lastModified: new Date(),
+    },
     {
       url: "https://www.sensei.org.in/privacy-policy",
       lastModified: new Date(),
