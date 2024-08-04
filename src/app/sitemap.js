@@ -1,11 +1,15 @@
-import { blogs } from "@/utils/data";
+import { blogs, subjects } from "@/utils/data";
 import { slug } from "@/utils/logic";
 export default async function sitemap() {
   const Blogs = blogs.map((blog) => ({
     url: `https://www.sensei.org.in/blogs/${slug(blog.title)}`,
     lastModified: new Date(blog.date),
   }));
-  console.log(Blogs);
+  const Subjects = subjects.map((subject) => ({
+    url: `https://www.sensei.org.in/subjects/${slug(subject.title)}`,
+    lastModified: new Date(),
+  }));
+  // console.log(Blogs);
   return [
     {
       url: "https://www.sensei.org.in",
@@ -37,6 +41,7 @@ export default async function sitemap() {
       lastModified: new Date(),
     },
     ...Blogs,
+    ...Subjects,
     {
       url: "https://www.sensei.org.in/privacy-policy",
       lastModified: new Date(),

@@ -18,6 +18,8 @@ import { navLinks } from "@/utils/data";
 import { useSession } from "next-auth/react";
 import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
+import { subjects } from "@/utils/data";
+import { slug } from "@/utils/logic";
 // import { useSelector } from "react-redux";
 const Navbar = () => {
   const pathname = usePathname();
@@ -49,9 +51,13 @@ const Navbar = () => {
         <Link href="/">
           <MainLogo className="h-[54px] w-[102px] text-white" />
         </Link>
-        <div className="group ml-4 max-md:order-2">
-          <Image src={navmenu} alt="navmenu" className="h-6 w-6 md:hidden" />
-          <div className="absolute right-1 hidden flex-col rounded-lg p-4 text-white group-hover:flex max-md:bg-secondary md:static md:flex md:flex-row md:gap-5 lg:gap-10">
+        <div className="group ml-4 max-[849px]:order-2">
+          <Image
+            src={navmenu}
+            alt="navmenu"
+            className="h-6 w-6 min-[850px]:hidden"
+          />
+          <div className="absolute right-1 hidden flex-col rounded-lg p-4 text-white group-hover:flex max-[850px]:bg-secondary min-[850px]:static min-[850px]:flex min-[850px]:flex-row min-[850px]:gap-5 lg:gap-10">
             {navLinks.map((link, index) => (
               <Link
                 key={index}
@@ -61,6 +67,24 @@ const Navbar = () => {
                 {link.title}
               </Link>
             ))}
+            <div className="group/sub relative">
+              <div
+                className={`${pathname.startsWith("/subjects") ? "text-primary" : ""} button_text cursor-pointer`}
+              >
+                Subjects
+              </div>
+              <div className="absolute -right-2 hidden flex-col whitespace-nowrap rounded-lg bg-secondary p-4 text-white group-hover/sub:flex md:gap-5 lg:gap-10">
+                {subjects.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={"/subjects/" + slug(link.title)}
+                    className={`${pathname.endsWith(slug(link.title)) ? "text-primary" : ""} button_text`}
+                  >
+                    {link.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
         {status === "authenticated" ? (
@@ -130,7 +154,7 @@ const Navbar = () => {
         ) : (
           <Link
             href={"/login"}
-            className="button_text flex max-w-[258px] cursor-pointer items-center rounded-[50px] bg-grad_1 px-3 py-1 text-white max-md:ml-auto md:px-6 md:py-3"
+            className="button_text flex max-w-[258px] cursor-pointer items-center rounded-[50px] bg-grad_1 px-3 py-1 text-white max-[850px]:ml-auto md:px-6 md:py-3"
           >
             Login
           </Link>
