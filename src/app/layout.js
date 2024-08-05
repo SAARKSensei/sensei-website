@@ -8,7 +8,8 @@ import StoreProvider from "@/Redux/Provider";
 export const metadata = {
   metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
   title: {
-    default: "Welcome to Sensei",
+    default:
+      "Life skills that empower your child in this digital world mentally, emotionally, ethically",
     template: "%s | Sensei",
   },
 

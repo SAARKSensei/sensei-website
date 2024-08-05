@@ -5,8 +5,8 @@ export default async function sitemap() {
     url: `https://www.sensei.org.in/blogs/${slug(blog.title)}`,
     lastModified: new Date(blog.date),
   }));
-  const Subjects = subjects.map((subject) => ({
-    url: `https://www.sensei.org.in/subjects/${slug(subject.title)}`,
+  const Subjects = subjects.map((s) => ({
+    url: `https://www.sensei.org.in/subjects/${slug(s?.slug || s?.title)}`,
     lastModified: new Date(),
   }));
   // console.log(Blogs);

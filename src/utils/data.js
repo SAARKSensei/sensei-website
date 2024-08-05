@@ -875,6 +875,7 @@ export const news = [
 export const subjects = [
   {
     title: "Mental Wellness",
+    slug: "mental health",
     description:
       "At Sensei, we believe a healthy mind is just as important as a sharp one.",
     concernsHeading:

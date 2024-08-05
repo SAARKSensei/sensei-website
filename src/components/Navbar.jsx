@@ -46,7 +46,7 @@ const Navbar = () => {
     <>
       <span className="block h-[55px] w-full max-sm:h-[50px]" />
       <div
-        className={`${scrolled.curr >= 300 ? "fixed bg-secondary/80 " + (scrolled.prev > scrolled.curr ? "top-0 backdrop-blur-sm" : "-top-40 backdrop-blur-0") : "absolute"} tranmsition-all z-[100] flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 duration-500 md:px-10 lg:px-20`}
+        className={`${scrolled.curr >= 300 ? "fixed bg-secondary/80 " + (scrolled.prev > scrolled.curr ? "top-0 backdrop-blur-sm" : "-top-40 backdrop-blur-0") : "absolute"} tranmsition-all z-[100] flex h-auto w-full items-center justify-between bg-[#2C3D68] px-5 duration-500 md:px-10 md:py-2 lg:px-20`}
       >
         <Link href="/">
           <MainLogo className="h-[54px] w-[102px] text-white" />
@@ -57,32 +57,35 @@ const Navbar = () => {
             alt="navmenu"
             className="h-6 w-6 min-[850px]:hidden"
           />
-          <div className="absolute right-1 hidden flex-col rounded-lg p-4 text-white group-hover:flex max-[850px]:bg-secondary min-[850px]:static min-[850px]:flex min-[850px]:flex-row min-[850px]:gap-5 lg:gap-10">
-            {navLinks.map((link, index) => (
-              <Link
-                key={index}
-                href={link.link}
-                className={`${pathname === link.link ? "text-primary" : ""} button_text`}
-              >
-                {link.title}
-              </Link>
-            ))}
-            <div className="group/sub relative">
-              <div
-                className={`${pathname.startsWith("/subjects") ? "text-primary" : ""} button_text cursor-pointer`}
-              >
-                Subjects
-              </div>
-              <div className="absolute -right-2 hidden flex-col whitespace-nowrap rounded-lg bg-secondary p-4 text-white group-hover/sub:flex md:gap-5 lg:gap-10">
-                {subjects.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={"/subjects/" + slug(link.title)}
-                    className={`${pathname.endsWith(slug(link.title)) ? "text-primary" : ""} button_text`}
-                  >
-                    {link.title}
-                  </Link>
-                ))}
+          <span className="absolute block" />
+          <div className="absolute right-1 -z-10 grid grid-rows-[0fr] transition-all group-hover:grid-rows-[1fr] min-[850px]:static">
+            <div className="flex flex-col gap-6 rounded-lg text-white max-[850px]:overflow-hidden max-[850px]:bg-secondary group-hover:max-[850px]:p-10 min-[850px]:flex-row min-[850px]:gap-5 lg:gap-10">
+              {navLinks.map((link, index) => (
+                <Link
+                  key={index}
+                  href={link.link}
+                  className={`${pathname === link.link ? "text-primary" : ""} button_text`}
+                >
+                  {link.title}
+                </Link>
+              ))}
+              <div className="group/sub relative">
+                <div
+                  className={`${pathname.startsWith("/subjects") ? "text-primary" : ""} button_text cursor-pointer`}
+                >
+                  Subjects
+                </div>
+                <div className="flex max-h-0 flex-col overflow-hidden whitespace-nowrap rounded-lg bg-secondary text-white transition-all group-hover/sub:max-h-fit group-hover/sub:p-4 md:gap-5 min-[850px]:absolute lg:gap-10">
+                  {subjects.map((link, index) => (
+                    <Link
+                      key={index}
+                      href={"/subjects/" + slug(link?.slug || link?.title)}
+                      className={`${pathname.endsWith(slug(link.title)) ? "text-primary" : ""} button_text`}
+                    >
+                      {link.title}
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

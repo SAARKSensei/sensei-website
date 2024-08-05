@@ -9,7 +9,7 @@ const page = () => {
       <h5 className="h4 underline-grad !text-grad relative w-full font-bold !text-transparent text-secondary">
         Blogs & News
       </h5>
-      <div className="flex gap-4 p-4 max-lg:overflow-y-scroll">
+      <div className="flex flex-wrap gap-4 p-4">
         {blogs.map((blog, index) => (
           <ClientLink href={`/blogs/${slug(blog.title)}`} key={index}>
             <Blog blog={blog} />

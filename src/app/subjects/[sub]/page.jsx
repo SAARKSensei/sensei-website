@@ -8,10 +8,12 @@ import Image from "next/image";
 import addchild from "@/Images/addchild.png";
 import { subjects } from "@/utils/data";
 import { slug } from "@/utils/logic";
+import { notFound } from "next/navigation";
 
 const Page = ({ params: { sub } }) => {
   const [checkedId, setCheckedId] = useState(0);
-  const subject = subjects.find((s) => slug(s.title) === sub);
+  const subject = subjects.find((s) => slug(s?.slug || s?.title) === sub);
+  if (!subject) return notFound();
 
   return (
     <div className="container mx-auto p-4 py-10 md:py-20">
@@ -30,14 +32,14 @@ const Page = ({ params: { sub } }) => {
           {subject.concerns.map((concern, index) => (
             <div
               key={index}
-              className={`flex flex-col gap-2 rounded-[10px] bg-white pb-4 shadow-cs`}
+              onClick={() => setCheckedId(index)}
+              className={`flex cursor-pointer flex-col gap-2 rounded-[10px] bg-white pb-4 shadow-cs`}
             >
               <div
                 className={`flex ${checkedId === index ? "text-primary" : "text-secondary"} items-start justify-between p-4 pb-0`}
               >
                 <h4 className="body_1">{concern.title}</h4>
                 <svg
-                  onClick={() => setCheckedId(checkedId === index ? -1 : index)}
                   className={`w-5 min-w-5 ${checkedId === index ? "rotate-0" : "rotate-45"} transition-all md:w-6 md:min-w-6`}
                   viewBox="0 0 20 20"
                   fill="none"
@@ -86,7 +88,7 @@ const Page = ({ params: { sub } }) => {
           src={addchild}
           alt="addchild"
           sizes="auto"
-          className="absolute -right-5 bottom-0 -z-[0] max-h-full max-w-[min(298px,50%)] object-contain"
+          className="absolute -right-5 bottom-0 -z-[0] max-h-[120%] max-w-[min(298px,50%)] object-contain"
         />
       </div>
     </div>
@@ -96,7 +98,7 @@ const Description = ({ className, concern }) => (
   <div
     className={
       className +
-      " scrollbar h5_b flex max-h-[658px] max-w-[540px] flex-col gap-2 overflow-y-scroll rounded-[10px] bg-secondary p-4 text-primary sm:max-h-[408px] sm:w-1/2"
+      " scrollbar h5 flex max-h-[658px] max-w-[540px] flex-col gap-2 overflow-y-scroll rounded-[10px] bg-secondary p-5 text-primary sm:max-h-[408px] sm:w-1/2 lg:p-10"
     }
   >
     <p>{concern?.description}</p>
