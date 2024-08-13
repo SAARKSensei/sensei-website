@@ -1,11 +1,21 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Rafiki from "@/assets/rafiki.svg";
 import User from "@/assets/user.svg";
 import MainLogo from "@/assets/mainlogo.svg";
-const Loading = ({ action, loading }) => {
+const Loading = ({ action, activity }) => {
+  console.log("activity", activity);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      action();
+    }, 7000);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [action]);
   return (
-    <div className="relative flex min-h-[90vh] flex-col justify-evenly">
+    <div className="relative flex min-h-[90vh] flex-col justify-evenly gap-5">
       <div className="center-x relative h-[150px] w-[150px]">
         <MainLogo className="center-x absolute top-2 z-10 h-20 w-20 text-secondary" />
         <User className="center-y relative mx-auto h-[100px] min-w-[100px] rounded-full border-2 border-primary bg-white pt-5 text-secondary" />
@@ -31,7 +41,7 @@ const Loading = ({ action, loading }) => {
             cy="100"
             stroke="url(#paint0_linear_7083_33769)"
             stroke-width="20px"
-            stroke-linecap="round"
+            strokeLinecap="round"
             stroke-dashoffset="565.48px"
             fill="transparent"
             stroke-dasharray="565.48px"
@@ -54,18 +64,16 @@ const Loading = ({ action, loading }) => {
         </svg>
       </div>
       <div className="mx-auto flex flex-col justify-center gap-2">
-        <h3 className="h3 text-grad mx-auto font-bold">
-          Nurturing Self-Esteem
-        </h3>
+        <h3 className="h3 text-grad mx-auto font-bold">{activity.name}</h3>
         <p className="body-3 mx-auto text-secondary">
-          Age Group: 5-10 years old
+          Age Group: {activity?.ageGroup || "5-10"} years old
         </p>
       </div>
       <div className="mx-auto flex flex-col justify-center gap-4">
-        <h2 className="h4 mx-auto h-fit max-w-[90vw] uppercase text-secondary underline underline-offset-8">
-          Learning objectives
+        <h2 className="h4 uunderline mx-auto h-fit max-w-[min(90vw,500px)] text-center uppercase text-secondary underline-offset-8">
+          {activity?.outComes}
         </h2>
-        <h2 className="h4 mx-auto h-fit max-w-[90vw] whitespace-nowrap text-center font-semibold">
+        {/* <h2 className="h4 mx-auto h-fit max-w-[90vw] whitespace-nowrap text-center font-semibold">
           Identifying Emotions
           <br />
           Expressing Emotions
@@ -73,15 +81,15 @@ const Loading = ({ action, loading }) => {
           Parent-Child Bonding
           <br />
           Building Emotional Intelligence
-        </h2>
+        </h2> */}
       </div>
-      <button
+      {/* <button
         onClick={action}
         disabled={loading}
         className="h5_b mx-auto w-[min(90vw,300px)] rounded-lg border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary disabled:opacity-50"
       >
         Let&apos;s Start
-      </button>
+      </button> */}
       <Rafiki className="absolute bottom-0 left-0 -z-10" />
     </div>
   );

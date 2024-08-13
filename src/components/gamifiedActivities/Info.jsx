@@ -4,7 +4,7 @@ import BookRef from "@/assets/bookRef.svg";
 import VideoRef from "@/assets/videoRef.svg";
 import PlayButton from "@/assets/playButton.svg";
 import Cross from "@/assets/cross.svg";
-const Info = ({ action }) => {
+const Info = ({ action, activity }) => {
   return (
     <>
       <span className="fixed inset-y-0 left-0 top-0 block w-screen bg-black/20 backdrop-blur-sm" />
@@ -14,10 +14,7 @@ const Info = ({ action }) => {
           <h6 className="body3_b text-secondary">Introduction</h6>
         </div>
         <span className="block h-1 w-40 rounded-full bg-primary shadow-cs shadow-primary" />
-        <p className="body_4 text-black">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <p className="body_4 text-black">{activity?.intro}</p>
         <div className="flex items-center gap-5">
           <BookRef className="h-9 w-9 rounded-full bg-[#3AA176] px-2 shadow-cs shadow-[#3AA176]" />
           <h6 className="body3_b text-secondary">Book Reference</h6>

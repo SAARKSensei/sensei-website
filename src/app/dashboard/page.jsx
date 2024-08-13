@@ -10,11 +10,35 @@ import Subject from "@/components/Modules/Subject";
 // import CounsellorCard from "@/components/CounsellorCard";
 import Background1 from "@/components/miniComps/BackGround.jsx";
 import Activities from "@/components/Modules/Activities";
-import { subjectData, counsellorData } from "@/utils/data";
-
+import axios from "axios";
 const UserDashboard = () => {
-  const [activities, setActivities] = useState(subjectData[0]);
+  const [modules, setModules] = useState([]);
+
+  const [subjectData, setSubjectData] = useState([]);
   const currentUserData = useSelector((state) => state?.currentUser?.data);
+  const fetchSubjectData = async () => {
+    const res = await axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}subjects`)
+      .catch((err) => console.log(err));
+    console.log(res?.data);
+    if (res?.data) {
+      setSubjectData(res.data);
+      selectmodule(res?.data[0]?.subjectId);
+    }
+  };
+  const selectmodule = async (id) => {
+    const res = await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}modules/filter?subjectRef=${id}`,
+      )
+      .catch((err) => console.log(err));
+    console.log(res?.data);
+    if (res?.data) setModules(res.data);
+  };
+
+  useEffect(() => {
+    fetchSubjectData();
+  }, []);
 
   return (
     <div className="hh-screen container relative mx-auto flex w-fit flex-col items-center gap-10 from-gray-200 to-white p-4 py-10 sm:py-20">
@@ -51,36 +75,21 @@ const UserDashboard = () => {
         </div>
       </div>
       <div className="mx-auto flex flex-wrap justify-center gap-10 lg:justify-start">
-        <div className="flex flex-col">
-          <h4 className="h4 text-left uppercase text-black"> Subjects</h4>
-          <div className="flex max-w-[90vw] gap-5 overflow-x-scroll lg:flex-col">
-            {subjectData.map((item, i) => (
-              <Subject
-                key={i}
-                subjectName={item?.subjectName}
-                percentage={item?.percentage}
-                innerSubjectDivColor={item?.innerSubjectDivColor}
-                innerBarColor={item?.innerBarColor}
-                action={() => setActivities(item)}
-              />
-            ))}
-          </div>
-        </div>
-        {activities && (
-          <div>
-            <h4 className="h4 pb-4 text-left uppercase text-black">
-              {" "}
-              Activities
-            </h4>
-
-            <div
-              style={{ backgroundColor: activities.innerSubjectDivColor }}
-              className={`animate-fade-in flex h-[500px] w-[min(632px,90vw)] overflow-y-auto rounded-[10px] p-4 pt-10`}
-            >
-              <Activities />
+        {!!subjectData?.length && (
+          <div className="flex flex-col">
+            <h4 className="h4 text-left uppercase text-black"> Subjects</h4>
+            <div className="flex max-w-[90vw] gap-5 overflow-x-scroll lg:flex-col">
+              {subjectData.map((item, i) => (
+                <Subject
+                  key={i}
+                  subject={item}
+                  action={() => selectmodule(item?.subjectId)}
+                />
+              ))}
             </div>
           </div>
         )}
+        {modules && !!modules?.length && <Activities modules={modules} />}
       </div>
     </div>
   );

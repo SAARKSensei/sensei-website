@@ -525,8 +525,33 @@ export const blogs = [
       },
       {
         title: "Practical Tips for Encouraging Open Conversations",
-        description:
-          "- Lead by Example: Share your own feelings and emotions openly. - Create a Safe Space: Ensure children feel comfortable expressing themselves without fear of criticism. - Active Listening: Pay attention and validate their feelings without immediately offering solutions. - Use Age-Appropriate Language:  Your approach should be based on your child's age and maturity level. - Regular Check-Ins: Schedule time for family discussions about feelings or establish daily routines where feelings can naturally be shared.",
+
+        subpoints: [
+          {
+            title: "Lead by Example",
+            description: "Share your own feelings and emotions openly.",
+          },
+          {
+            title: "Create a Safe Space",
+            description:
+              "Ensure children feel comfortable expressing themselves without fear of criticism.",
+          },
+          {
+            title: "Active Listening",
+            description:
+              "Pay attention and validate their feelings without immediately offering solutions.",
+          },
+          {
+            title: "Use Age-Appropriate Language",
+            description:
+              "Your approach should be based on your child's age and maturity level.",
+          },
+          {
+            title: "Regular Check-Ins",
+            description:
+              "Schedule time for family discussions about feelings or establish daily routines where feelings can naturally be shared.",
+          },
+        ],
       },
     ],
     conclusion:
@@ -610,6 +635,91 @@ export const blogs = [
     ],
     conclusion:
       "Creating a safe and supportive environment for teens involves active listening, encouraging open communication, supporting individual needs, promoting positive interactions, and being a role model. By fostering these elements, you help teens navigate their emotional journey with confidence and resilience. Remember, the teenage years are a crucial time for emotional development, and your support can make a significant difference in their growth and well-being.",
+  },
+  {
+    title:
+      "Are “Life Skills” really the Building Blocks of a Successful Future?",
+    image:
+      "https://drive.google.com/uc?export=view&id=1XqBtFJSjbYy7oj_WSkLEVxF8-E5mxWzt",
+    description:
+      "In today’s rapidly evolving world, academic excellence alone is no longer sufficient to equip our children for the challenges and opportunities that lie ahead. Core life skills, the essential tools for navigating life, have emerged as the cornerstone of holistic child development. These skills empower children to think critically, solve problems, communicate effectively, collaborate seamlessly, unleash their creativity, and understand their emotions. In the Indian context, where a rich cultural heritage intertwines with the demands of a modernizing nation, nurturing these skills is paramount.",
+    date: "April 12, 2024",
+    duration: "5 min read",
+    blogger: "Sensei",
+    points: [
+      {
+        title: "The Significance of Core Life Skills in India",
+        description:
+          "India, a land of diversity and potential, is undergoing a transformative phase. To harness its full potential, we need citizens who are not just academically proficient but also equipped with life skills. These skills are essential for fostering a skilled workforce, driving innovation, and building a harmonious society. They align perfectly with the vision of India’s National Education Policy (NEP 2020), which emphasizes holistic development.",
+      },
+      {
+        title: "The Four Pillars of Core Life Skills",
+        subpoints: [
+          {
+            title: "Cognitive Skills",
+            description:
+              "These skills empower children to think critically, analyze information, solve problems creatively, and innovate. They are the foundation for academic success and lifelong learning.",
+          },
+          {
+            title: "Interpersonal Skills",
+            description:
+              "Effective communication, collaboration, empathy, and leadership are vital for building strong relationships and working effectively in teams. These skills are essential for personal and professional success.",
+          },
+          {
+            title: "Emotional Skills",
+            description:
+              "Self-awareness, self-regulation, social awareness, and relationship management form the bedrock of emotional intelligence. These skills help children understand and manage their emotions, build resilience, and foster positive relationships.",
+          },
+          {
+            title: "Physical Skills",
+            description:
+              "A healthy body contributes to a healthy mind. Physical skills, including fitness, coordination, and motor skills, are essential for overall well-being and confidence.",
+          },
+        ],
+      },
+      {
+        title: "The Role of Parents in Nurturing Life Skills",
+        description:
+          "Parents are the first and most influential teachers in a child's life. By creating a supportive environment, setting a positive example, and engaging in open communication, parents can significantly contribute to their child's life skills development. We at Sensei nurture a healthy bond between parents and their children through activity based learning modules.",
+      },
+      {
+        title: "The Current State of Life Skills Education in India",
+        description:
+          "While there has been growing recognition of the importance of life skills, the Indian education system primarily focuses on academic achievement. There is a pressing need to integrate life skills into the curriculum and create a holistic learning environment. Read the NEP guidelines here.",
+      },
+      {
+        title: "Challenges and Recommendations",
+        description:
+          "Several challenges hinder the effective development of life skills in India, including limited awareness, lack of trained teachers, and inadequate infrastructure. To overcome these challenges, we need a multi-faceted approach involving policymakers, educators, parents, and the community.",
+        subpoints: [
+          {
+            title: "Policy Recommendations",
+            description:
+              "Incorporate life skills education into the national curriculum, provide teacher training, and allocate adequate resources.",
+          },
+          {
+            title: "School Initiatives",
+            description:
+              "Develop life skills-based programs, create experiential learning opportunities, and foster partnerships with parents and the community.",
+          },
+          {
+            title: "Parental Involvement",
+            description:
+              "Encourage parents to participate in their child's education, provide guidance on life skills development, and create supportive home environments.",
+          },
+          {
+            title: "Community Support",
+            description:
+              "Establish community centers for life skills development, organize workshops and seminars, and promote the importance of life skills.",
+          },
+        ],
+      },
+      {
+        title: "Conclusion",
+        description:
+          "Investing in core life skills is an investment in the future of our children and our nation. By nurturing these skills, we empower children to become confident, resilient, and compassionate individuals who can contribute meaningfully to society. Let us work together to create a generation equipped with the knowledge, skills, and values to thrive in the 21st century. Sensei, India's first ABL platform focused on life skills development, is committed to partnering with parents in this journey. Our programs, designed by RCI-approved clinical psychologists, offer a comprehensive approach to nurturing core life skills. Join us in shaping a brighter future for our children. Learn how you can start your journey with Sensei by writing to us on whatsapp.",
+      },
+    ],
   },
 ];
 export const searches = [
