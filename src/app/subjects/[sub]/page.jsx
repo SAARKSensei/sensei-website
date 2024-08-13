@@ -38,7 +38,7 @@ const Page = ({ params: { sub } }) => {
               <div
                 className={`flex ${checkedId === index ? "text-primary" : "text-secondary"} items-start justify-between p-4 pb-0`}
               >
-                <h4 className="body_1">{concern.title}</h4>
+                <h4 className="body_1 md:text-xl">{concern.title}</h4>
                 <svg
                   className={`w-5 min-w-5 ${checkedId === index ? "rotate-0" : "rotate-45"} transition-all md:w-6 md:min-w-6`}
                   viewBox="0 0 20 20"

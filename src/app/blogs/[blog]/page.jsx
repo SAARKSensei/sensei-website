@@ -85,6 +85,21 @@ const Page = ({ params: { blog } }) => {
                 <li key={index} className="flex flex-col gap-2 text-secondary">
                   <h2 className="h3 font-bold">{content.title}</h2>
                   <p className="body_2">{content.description}</p>
+                  {content?.subpoints && (
+                    <ul className="flex flex-col gap-2">
+                      {content?.subpoints.map((subpoint, index) => (
+                        <li key={index} className="">
+                          <p className="body_2 text-secondary">
+                            <span className="h5 font-bold text-secondary">
+                              {subpoint.title}
+                              {" : "}
+                            </span>
+                            {subpoint.description}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ol>
