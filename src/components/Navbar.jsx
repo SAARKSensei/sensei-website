@@ -15,7 +15,7 @@ import Lock from "@/assets/lock1.svg?url";
 import { usePathname } from "next/navigation";
 import navmenu from "@/assets/navmenu.svg?url";
 import { navLinks } from "@/utils/data";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { subjects } from "@/utils/data";
@@ -23,7 +23,8 @@ import { slug } from "@/utils/logic";
 // import { useSelector } from "react-redux";
 const Navbar = () => {
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
+  let status = "authenticated";
   const [scrolled, setScrolled] = useState({ prev: 0, curr: 0 });
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -75,12 +76,12 @@ const Navbar = () => {
                 >
                   Subjects
                 </div>
-                <div className="flex max-h-0 flex-col overflow-hidden whitespace-nowrap rounded-lg bg-secondary text-white transition-all group-hover/sub:max-h-fit group-hover/sub:p-4 md:gap-5 min-[850px]:absolute lg:gap-10">
+                <div className="flex max-h-0 flex-col gap-4 overflow-hidden whitespace-nowrap rounded-lg bg-secondary text-white transition-all group-hover/sub:max-h-fit group-hover/sub:p-4 min-[850px]:absolute">
                   {subjects.map((link, index) => (
                     <Link
                       key={index}
                       href={"/subjects/" + slug(link?.slug || link?.title)}
-                      className={`${pathname.endsWith(slug(link.title)) ? "text-primary" : ""} button_text`}
+                      className={`${pathname.endsWith(slug(link?.slug || link?.title)) ? "text-primary" : ""} button_text`}
                     >
                       {link.title}
                     </Link>

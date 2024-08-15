@@ -40,14 +40,15 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    "/login",
-    "/parent",
-    "/parentdetails",
-    "/childdetails",
-    "/otpverification",
-    "/dashboard",
-    "/parentingsolutions",
-    "/parent/:path*",
-    "/familypage/:path*",
+    "/dsfsdfsd",
+    // "/login",
+    // "/parent",
+    // "/parentdetails",
+    // "/childdetails",
+    // "/otpverification",
+    // // "/dashboard",
+    // "/parentingsolutions",
+    // "/parent/:path*",
+    // "/familypage/:path*",
   ],
 };

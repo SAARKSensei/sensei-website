@@ -9,6 +9,7 @@ import send from "@/assets/send.svg?url";
 import ClientLink from "@/components/miniComps/ClientLink";
 import Blog from "@/components/miniComps/Blog";
 import { slug } from "@/utils/logic";
+import { Bigplayer } from "@/components/miniComps/VideoPlay";
 
 const findBlog = (blog) => {
   return blogs.find((b) => slug(b.title) === blog);
@@ -85,6 +86,22 @@ const Page = ({ params: { blog } }) => {
                 <li key={index} className="flex flex-col gap-2 text-secondary">
                   <h2 className="h3 font-bold">{content.title}</h2>
                   <p className="body_2">{content.description}</p>
+                  {content?.video && <Bigplayer url={content.video} />}
+                  {content?.subpoints && (
+                    <ul className="flex flex-col gap-2">
+                      {content?.subpoints.map((subpoint, index) => (
+                        <li key={index} className="">
+                          <p className="body_2 text-secondary">
+                            <span className="h5 font-bold text-secondary">
+                              {subpoint.title}
+                              {" : "}
+                            </span>
+                            {subpoint.description}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ol>

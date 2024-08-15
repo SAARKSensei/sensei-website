@@ -3,71 +3,27 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import MentalHealthPic from "@/Images/mentalhealthpic.svg?url";
-import SexEducationPic from "@/Images/sexeducationpic.svg?url";
-import MoralScience from "@/Images/moralsciencepic.svg?url";
+import { getSubColour } from "@/utils/logic";
 
-const Subject = ({
-  subjectName,
-  percentage,
-  innerSubjectDivColor,
-  innerBarColor,
-  action,
-}) => {
+const Subject = ({ subject, action }) => {
   const [show, setShow] = useState(false);
+  let subjectName = subject?.subjectName;
 
+  const colours = getSubColour(subjectName);
   const colorforinnerSubjectDiv = {
-    background: innerSubjectDivColor,
+    background: colours.innerSubjectDivColor,
   };
-
   const sizeAndColorForInnerBar = {
-    background: innerBarColor,
-    width: percentage,
+    background: colours.innerBarColor,
+    width: `${subject?.progress}%`,
   };
-
-  let specificSubjectPicture;
-  // {
-  //   subjectName: "Emotional Wellness",
-  //   percentage: "54%",
-  //   innerSubjectDivColor: "#CEE2E5",
-  //   innerBarColor: "#89DAE5",
-  // },
-  // {
-  //   subjectName: "Self And Social Awareness",
-  //   percentage: "36%",
-  //   innerSubjectDivColor: "#FFD9B2",
-  //   innerBarColor: "#FF8B13",
-  // },
-  // {
-  //   subjectName: "Moral Guidence",
-  //   percentage: "71%",
-  //   innerSubjectDivColor: "#FCEECA",
-  //   innerBarColor: "#FCD97D",
-  // },
-  switch (subjectName) {
-    case "Emotional Wellness":
-      specificSubjectPicture = MentalHealthPic;
-      break;
-    case "Self And Social Awareness":
-      specificSubjectPicture = SexEducationPic;
-      break;
-    case "Moral Guidence":
-      specificSubjectPicture = MoralScience;
-      break;
-    // case "Career Guidance":
-    //   specificSubjectPicture = [CareerGuidance1, CareerGuidance2];
-    //   break;
-    default:
-      break;
-  }
-
   return (
     <>
       <div
         onClick={action}
         className="relative flex h-[153px] w-[min(353px,90vw)] flex-shrink-0 items-end"
       >
-        {specificSubjectPicture.length === 2 ? (
+        {/* {specificSubjectPicture?.length === 2 ? (
           <>
             <Image
               sizes="auto"
@@ -82,21 +38,21 @@ const Subject = ({
               alt={subjectName}
             />
           </>
-        ) : (
-          <Image
-            sizes="auto"
-            className="absolute right-[41px] top-0"
-            src={specificSubjectPicture}
-            alt={subjectName}
-          />
-        )}
+        ) : ( */}
+        <Image
+          sizes="auto"
+          className="absolute right-[41px] top-0"
+          src={colours.specificSubjectPicture}
+          alt={"sub image"}
+        />
+        {/* )} */}
         <div
           className="flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4"
           style={colorforinnerSubjectDiv}
           onClick={() => setShow(!show)}
         >
           <p className="font-Quicksand text-3xl font-normal leading-6 tracking-tighter text-[#2C3D68]">
-            {percentage}
+            {subject?.progress}%
           </p>
           <p className="font-Quicksand text-lg font-medium tracking-tighter text-[#333]">
             {subjectName}

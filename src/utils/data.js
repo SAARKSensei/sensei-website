@@ -4,7 +4,8 @@ import securePlatform from "@/assets/SecurePlatform.svg?url";
 import ageAppropriate from "@/assets/ageAppropriate.svg?url";
 import focusLearning from "@/assets/FocusOnLearning.svg?url";
 import personalizedInsight from "@/assets/personalizedInsight.svg?url";
-
+import Selfawareness from "@/assets/selfawareness.svg?url";
+import Mentalwellness from "@/assets/mental.svg?url";
 export const plans = {
   Family: {
     features: {
@@ -525,8 +526,33 @@ export const blogs = [
       },
       {
         title: "Practical Tips for Encouraging Open Conversations",
-        description:
-          "- Lead by Example: Share your own feelings and emotions openly. - Create a Safe Space: Ensure children feel comfortable expressing themselves without fear of criticism. - Active Listening: Pay attention and validate their feelings without immediately offering solutions. - Use Age-Appropriate Language:  Your approach should be based on your child's age and maturity level. - Regular Check-Ins: Schedule time for family discussions about feelings or establish daily routines where feelings can naturally be shared.",
+
+        subpoints: [
+          {
+            title: "Lead by Example",
+            description: "Share your own feelings and emotions openly.",
+          },
+          {
+            title: "Create a Safe Space",
+            description:
+              "Ensure children feel comfortable expressing themselves without fear of criticism.",
+          },
+          {
+            title: "Active Listening",
+            description:
+              "Pay attention and validate their feelings without immediately offering solutions.",
+          },
+          {
+            title: "Use Age-Appropriate Language",
+            description:
+              "Your approach should be based on your child's age and maturity level.",
+          },
+          {
+            title: "Regular Check-Ins",
+            description:
+              "Schedule time for family discussions about feelings or establish daily routines where feelings can naturally be shared.",
+          },
+        ],
       },
     ],
     conclusion:
@@ -610,6 +636,92 @@ export const blogs = [
     ],
     conclusion:
       "Creating a safe and supportive environment for teens involves active listening, encouraging open communication, supporting individual needs, promoting positive interactions, and being a role model. By fostering these elements, you help teens navigate their emotional journey with confidence and resilience. Remember, the teenage years are a crucial time for emotional development, and your support can make a significant difference in their growth and well-being.",
+  },
+  {
+    title:
+      "Are “Life Skills” really the Building Blocks of a Successful Future?",
+    image:
+      "https://drive.google.com/uc?export=view&id=1OZiSA8NSjdlY5_1KYrC8PlihsNog3KYk",
+    description:
+      "In today’s rapidly evolving world, academic excellence alone is no longer sufficient to equip our children for the challenges and opportunities that lie ahead. Core life skills, the essential tools for navigating life, have emerged as the cornerstone of holistic child development. These skills empower children to think critically, solve problems, communicate effectively, collaborate seamlessly, unleash their creativity, and understand their emotions. In the Indian context, where a rich cultural heritage intertwines with the demands of a modernizing nation, nurturing these skills is paramount.",
+    date: "April 12, 2024",
+    duration: "5 min read",
+    blogger: "Sensei",
+    points: [
+      {
+        title: "The Significance of Core Life Skills in India",
+        description:
+          "India, a land of diversity and potential, is undergoing a transformative phase. To harness its full potential, we need citizens who are not just academically proficient but also equipped with life skills. These skills are essential for fostering a skilled workforce, driving innovation, and building a harmonious society. They align perfectly with the vision of India’s National Education Policy (NEP 2020), which emphasizes holistic development.",
+      },
+      {
+        title: "The Four Pillars of Core Life Skills",
+        video: "https://www.youtube.com/embed/X-wyKMy_1Fc",
+        subpoints: [
+          {
+            title: "Cognitive Skills",
+            description:
+              "These skills empower children to think critically, analyze information, solve problems creatively, and innovate. They are the foundation for academic success and lifelong learning.",
+          },
+          {
+            title: "Interpersonal Skills",
+            description:
+              "Effective communication, collaboration, empathy, and leadership are vital for building strong relationships and working effectively in teams. These skills are essential for personal and professional success.",
+          },
+          {
+            title: "Emotional Skills",
+            description:
+              "Self-awareness, self-regulation, social awareness, and relationship management form the bedrock of emotional intelligence. These skills help children understand and manage their emotions, build resilience, and foster positive relationships.",
+          },
+          {
+            title: "Physical Skills",
+            description:
+              "A healthy body contributes to a healthy mind. Physical skills, including fitness, coordination, and motor skills, are essential for overall well-being and confidence.",
+          },
+        ],
+      },
+      {
+        title: "The Role of Parents in Nurturing Life Skills",
+        description:
+          "Parents are the first and most influential teachers in a child's life. By creating a supportive environment, setting a positive example, and engaging in open communication, parents can significantly contribute to their child's life skills development. We at Sensei nurture a healthy bond between parents and their children through activity based learning modules.",
+      },
+      {
+        title: "The Current State of Life Skills Education in India",
+        description:
+          "While there has been growing recognition of the importance of life skills, the Indian education system primarily focuses on academic achievement. There is a pressing need to integrate life skills into the curriculum and create a holistic learning environment. Read the NEP guidelines here.",
+      },
+      {
+        title: "Challenges and Recommendations",
+        description:
+          "Several challenges hinder the effective development of life skills in India, including limited awareness, lack of trained teachers, and inadequate infrastructure. To overcome these challenges, we need a multi-faceted approach involving policymakers, educators, parents, and the community.",
+        subpoints: [
+          {
+            title: "Policy Recommendations",
+            description:
+              "Incorporate life skills education into the national curriculum, provide teacher training, and allocate adequate resources.",
+          },
+          {
+            title: "School Initiatives",
+            description:
+              "Develop life skills-based programs, create experiential learning opportunities, and foster partnerships with parents and the community.",
+          },
+          {
+            title: "Parental Involvement",
+            description:
+              "Encourage parents to participate in their child's education, provide guidance on life skills development, and create supportive home environments.",
+          },
+          {
+            title: "Community Support",
+            description:
+              "Establish community centers for life skills development, organize workshops and seminars, and promote the importance of life skills.",
+          },
+        ],
+      },
+      {
+        title: "Conclusion",
+        description:
+          "Investing in core life skills is an investment in the future of our children and our nation. By nurturing these skills, we empower children to become confident, resilient, and compassionate individuals who can contribute meaningfully to society. Let us work together to create a generation equipped with the knowledge, skills, and values to thrive in the 21st century. Sensei, India's first ABL platform focused on life skills development, is committed to partnering with parents in this journey. Our programs, designed by RCI-approved clinical psychologists, offer a comprehensive approach to nurturing core life skills. Join us in shaping a brighter future for our children. Learn how you can start your journey with Sensei by writing to us on whatsapp.",
+      },
+    ],
   },
 ];
 export const searches = [
@@ -875,6 +987,7 @@ export const news = [
 export const subjects = [
   {
     title: "Mental Wellness",
+    image: Mentalwellness,
     slug: "mental health",
     description:
       "At Sensei, we believe a healthy mind is just as important as a sharp one.",
@@ -885,53 +998,61 @@ export const subjects = [
         title: "Anxiety",
         description:
           "Anxiety is a natural feeling that helps us stay alert to danger. But when it becomes excessive and interferes with daily life, it can be a problem. This is especially true for children and young adults. Studies suggest anxiety impacts nearly 1 in 5 adults and over 6% of children and adolescents. Despite its prevalence, many people with anxiety don't receive proper help.",
-        symptoms: [
+        subdevision: [
           {
-            title: "Constant worries",
-            description:
-              "May it be about anything, from schoolwork to social situations.",
+            title: "Symptoms of Anxiety",
+            subpoints: [
+              {
+                title: "Constant worries",
+                description:
+                  "May it be about anything, from schoolwork to social situations.",
+              },
+              {
+                title: "Physical reactions",
+                description:
+                  "This may include headaches, stomachaches, a racing heart, sweating, and trouble sleeping.",
+              },
+              {
+                title: "Trouble in focusing",
+                description:
+                  "Anxiety can make it hard to concentrate on school or other activities.",
+              },
+              {
+                title: "Increase in irritability",
+                description:
+                  "Children and young adults with anxiety may be easily frustrated or upset.",
+              },
+              {
+                title: "Avoidance of that one trigger",
+                description:
+                  "They may avoid situations that cause anxiety, like social events or presentations.",
+              },
+            ],
           },
           {
-            title: "Physical reactions",
-            description:
-              "This may include headaches, stomachaches, a racing heart, sweating, and trouble sleeping.",
-          },
-          {
-            title: "Trouble in focusing",
-            description:
-              "Anxiety can make it hard to concentrate on school or other activities.",
-          },
-          {
-            title: "Increase in irritability",
-            description:
-              "Children and young adults with anxiety may be easily frustrated or upset.",
-          },
-          {
-            title: "Avoidance of that one trigger",
-            description:
-              "They may avoid situations that cause anxiety, like social events or presentations.",
-          },
-        ],
-        preventions: [
-          {
-            description:
-              "Regular sleep, balanced meals, and exercise can all help manage stress and anxiety.",
-          },
-          {
-            description:
-              "Deep breathing exercises, mindfulness meditation, and yoga can calm the mind and body.",
-          },
-          {
-            description:
-              "Encourage your child to talk openly about their worries and fears.",
-          },
-          {
-            description:
-              "Help your child develop positive self-talk to challenge negative thoughts and build confidence.",
-          },
-          {
-            description:
-              "If anxiety is severe or interferes with daily life, a qualified mental health professional can provide support.",
+            title: "Preventive Measures for Anxiety",
+            subpoints: [
+              {
+                description:
+                  "Regular sleep, balanced meals, and exercise can all help manage stress and anxiety.",
+              },
+              {
+                description:
+                  "Deep breathing exercises, mindfulness meditation, and yoga can calm the mind and body.",
+              },
+              {
+                description:
+                  "Encourage your child to talk openly about their worries and fears.",
+              },
+              {
+                description:
+                  "Help your child develop positive self-talk to challenge negative thoughts and build confidence.",
+              },
+              {
+                description:
+                  "If anxiety is severe or interferes with daily life, a qualified mental health professional can provide support.",
+              },
+            ],
           },
         ],
       },
@@ -941,50 +1062,59 @@ export const subjects = [
         description:
           "Depression goes beyond temporary sadness. It's a long-lasting condition marked by persistent low mood, a lack of interest in things you used to enjoy, and difficulty managing daily tasks. It can impact your mood, energy levels, sleep, appetite, and focus.The National Mental Health Survey (2015-16) suggests nearly 15% of Indian adults require intervention for mental health issues, with depression being a major concern. One in 20 Indians experiences depression, and it can strike at any stage of life, including childhood and adolescence. Depression can lead to academic difficulties, strained relationships, and even suicide. It's the leading cause of disability worldwide.",
 
-        symptoms: [
+        subdevision: [
           {
-            title: "Persistent Low Mood",
-            description: "Feeling down and hopeless most of the day.",
+            title: "Symptoms for Depression",
+            subpoints: [
+              {
+                title: "Persistent Low Mood",
+                description: "Feeling down and hopeless most of the day.",
+              },
+              {
+                title: "Loss of Interest",
+                description:
+                  "No longer finding joy in activities you once loved.",
+              },
+              {
+                title: "Changes in Appetite",
+                description:
+                  "Significant weight loss or gain due to altered eating habits.",
+              },
+              {
+                title: "Sleep Disruptions",
+                description: "Difficulty sleeping or sleeping excessively.",
+              },
+              {
+                title: "Feelings of Worthlessness or Guilt",
+                description:
+                  "Excessive self-criticism and negative thoughts about yourself.",
+              },
+            ],
           },
           {
-            title: "Loss of Interest",
-            description: "No longer finding joy in activities you once loved.",
-          },
-          {
-            title: "Changes in Appetite",
-            description:
-              "Significant weight loss or gain due to altered eating habits.",
-          },
-          {
-            title: "Sleep Disruptions",
-            description: "Difficulty sleeping or sleeping excessively.",
-          },
-          {
-            title: "Feelings of Worthlessness or Guilt",
-            description:
-              "Excessive self-criticism and negative thoughts about yourself.",
-          },
-        ],
-        preventions: [
-          {
-            description:
-              "Eat nutritious meals, exercise regularly, and prioritize quality sleep.",
-          },
-          {
-            description:
-              "Connect with loved ones and build a strong social support system.",
-          },
-          {
-            description:
-              "Techniques like yoga, meditation, and deep breathing can help manage stress.",
-          },
-          {
-            description:
-              "Learn healthy ways to deal with challenges and negative emotions.",
-          },
-          {
-            description:
-              "If you're struggling, don't hesitate to reach out to a mental health professional.",
+            title: "Preventive Measures for Depression",
+            subpoints: [
+              {
+                description:
+                  "Eat nutritious meals, exercise regularly, and prioritize quality sleep.",
+              },
+              {
+                description:
+                  "Connect with loved ones and build a strong social support system.",
+              },
+              {
+                description:
+                  "Techniques like yoga, meditation, and deep breathing can help manage stress.",
+              },
+              {
+                description:
+                  "Learn healthy ways to deal with challenges and negative emotions.",
+              },
+              {
+                description:
+                  "If you're struggling, don't hesitate to reach out to a mental health professional.",
+              },
+            ],
           },
         ],
       },
@@ -992,449 +1122,815 @@ export const subjects = [
         title: "Attention-Deficit/Hyperactivity Disorder (ADHD)",
         description:
           "Attention-Deficit/Hyperactivity Disorder (ADHD) is a common neurodevelopmental condition affecting a significant portion of children in India. It impacts focus, attention, impulsivity, and hyperactivity. Children with ADHD might face challenges in school, at home, and with social interactions.Studies conducted in India suggest an ADHD prevalence rate ranging from 2% to 29%, indicating a substantial number of children could be impacted. Early diagnosis and management of ADHD can significantly improve a child's academic performance, social skills, and self-esteem. Increased awareness can significantly reduce the stigma surrounding ADHD and encourage parents to seek help.",
-        symptoms: [
+        subdevision: [
           {
-            title: "Inattentiveness",
-            description:
-              "Easily distracted, forgetting things often, difficulty completing tasks.",
+            title: "Symptoms of ADHD",
+            subpoints: [
+              {
+                title: "Inattentiveness",
+                description:
+                  "Easily distracted, forgetting things often, difficulty completing tasks.",
+              },
+              {
+                title: "Hyperactivity",
+                description:
+                  "Fidgets or squirms excessively, difficulty staying seated, seems to be constantly 'on the go.'",
+              },
+              {
+                title: "Impulsivity",
+                description:
+                  "Acts without thinking, blurts out answers before questions are finished, has difficulty taking turns.",
+              },
+              {
+                title: "Disorganization",
+                description:
+                  "Difficulty keeping things organized, loses belongings frequently.",
+              },
+              {
+                title: "Difficulty following instructions",
+                description:
+                  "Has trouble following through on instructions or completing tasks.",
+              },
+            ],
           },
           {
-            title: "Hyperactivity",
-            description:
-              "Fidgets or squirms excessively, difficulty staying seated, seems to be constantly 'on the go.'",
+            title: "Preventive Measures for ADHD",
+            subpoints: [
+              {
+                description:
+                  "Regular exercise, a balanced diet, and adequate sleep can enhance focus and overall well-being.",
+              },
+              {
+                description:
+                  "Create consistent routines for meals, bedtime, and playtime to provide predictability.",
+              },
+              {
+                title: "Positive reinforcement",
+                description:
+                  "Reward desired behaviors and offer constructive feedback for unwanted ones.",
+              },
+              {
+                description:
+                  "Teach organizational skills like using planners, keeping a tidy workspace, and developing time management habits.",
+              },
+              {
+                description:
+                  "Techniques like deep breathing and relaxation exercises can help manage stress, which can worsen ADHD symptoms.",
+              },
+            ],
           },
           {
-            title: "Impulsivity",
+            title: "Conclusion",
             description:
-              "Acts without thinking, blurts out answers before questions are finished, has difficulty taking turns.",
-          },
-          {
-            title: "Disorganization",
-            description:
-              "Difficulty keeping things organized, loses belongings frequently.",
-          },
-          {
-            title: "Difficulty following instructions",
-            description:
-              "Has trouble following through on instructions or completing tasks.",
+              "Remember, there's no proven method to prevent ADHD entirely. However, specific strategies can help manage symptoms and improve a child's overall well-being.",
           },
         ],
-        preventions: [
-          {
-            description:
-              "Regular exercise, a balanced diet, and adequate sleep can enhance focus and overall well-being.",
-          },
-          {
-            description:
-              "Create consistent routines for meals, bedtime, and playtime to provide predictability.",
-          },
-          {
-            title: "Positive reinforcement",
-            description:
-              "Reward desired behaviors and offer constructive feedback for unwanted ones.",
-          },
-          {
-            description:
-              "Teach organizational skills like using planners, keeping a tidy workspace, and developing time management habits.",
-          },
-          {
-            description:
-              "Techniques like deep breathing and relaxation exercises can help manage stress, which can worsen ADHD symptoms.",
-          },
-        ],
-        conclusion:
-          "Remember, there's no proven method to prevent ADHD entirely. However, specific strategies can help manage symptoms and improve a child's overall well-being.",
       },
 
       {
         title: "Post-traumatic Stress Disorder (PTSD)",
         description:
           "Post-traumatic stress disorder (PTSD) is a mental health condition that can develop after experiencing a terrifying event. This could be a natural disaster, serious accident, violent assault, or war/terrorism. While some initial emotional and physical reactions are normal, PTSD symptoms can linger and significantly disrupt daily life.India faces a reality of natural disasters like floods, earthquakes, and cyclones. These events, along with violence and personal attacks, can leave a lasting impact on individuals. A study following survivors of a powerful cyclone in Orissa found a high prevalence of PTSD, highlighting its impact after natural disasters.",
-        symptoms: [
+
+        subdevision: [
           {
-            title: "Intrusive thoughts and memories",
-            description:
-              "Flashbacks, nightmares, and distressing thoughts about the traumatic event.",
+            title: "Symptoms for PTSD",
+            subpoints: [
+              {
+                title: "Intrusive thoughts and memories",
+                description:
+                  "Flashbacks, nightmares, and distressing thoughts about the traumatic event.",
+              },
+              {
+                title: "Avoidance",
+                description:
+                  "Staying away from places, people, or situations that trigger memories of the trauma.",
+              },
+              {
+                title: "Negative thoughts and feelings",
+                description: "Feeling hopeless, detached, or angry.",
+              },
+              {
+                title: "Hyperarousal",
+                description:
+                  "Feeling constantly on edge, easily startled, or having trouble sleeping.",
+              },
+              {
+                title: "Physical symptoms",
+                description:
+                  "Headaches, stomachaches, chest pain, or difficulty sleeping.",
+              },
+            ],
           },
           {
-            title: "Avoidance",
-            description:
-              "Staying away from places, people, or situations that trigger memories of the trauma.",
+            title: "Preventive Measures for PTSD",
+            subpoints: [
+              {
+                description:
+                  "Talking to friends, family, or a therapist about the traumatic experience can be very helpful.",
+              },
+              {
+                description:
+                  "Exercise, relaxation techniques (like deep breathing or meditation), and spending time in nature can help manage stress.",
+              },
+              {
+                description:
+                  "Therapists can provide support and guidance through treatments like cognitive behavioral therapy (CBT).",
+              },
+              {
+                description:
+                  "Developing healthy coping skills and a positive outlook can help manage challenges.",
+              },
+              {
+                description:
+                  "Programs to educate communities about mental health after disasters can improve overall well-being.",
+              },
+            ],
           },
           {
-            title: "Negative thoughts and feelings",
-            description: "Feeling hopeless, detached, or angry.",
-          },
-          {
-            title: "Hyperarousal",
+            title: "Conclusion",
             description:
-              "Feeling constantly on edge, easily startled, or having trouble sleeping.",
-          },
-          {
-            title: "Physical symptoms",
-            description:
-              "Headaches, stomachaches, chest pain, or difficulty sleeping.",
+              "Remember, while there's no guaranteed way to prevent PTSD, certain practices might help.",
           },
         ],
-        preventions: [
-          {
-            description:
-              "Talking to friends, family, or a therapist about the traumatic experience can be very helpful.",
-          },
-          {
-            description:
-              "Exercise, relaxation techniques (like deep breathing or meditation), and spending time in nature can help manage stress.",
-          },
-          {
-            description:
-              "Therapists can provide support and guidance through treatments like cognitive behavioral therapy (CBT).",
-          },
-          {
-            description:
-              "Developing healthy coping skills and a positive outlook can help manage challenges.",
-          },
-          {
-            description:
-              "Programs to educate communities about mental health after disasters can improve overall well-being.",
-          },
-          {
-            description:
-              "Explore how Sensei empowers families [Click Here] //Redirect to B2C Page",
-          },
-        ],
-        conclusion:
-          "Remember, while there's no guaranteed way to prevent PTSD, certain practices might help.",
       },
       {
         title: "Obsessive-Compulsive Disorder (OCD)",
         description:
           "Have you ever felt the urge to wash your hands repeatedly, even though they're clean? Or maybe you constantly check if the door is locked, even after seeing it bolted shut? If so, you might be familiar with OCD (Obsessive-Compulsive Disorder). It's a common mental health condition that causes unwanted thoughts (obsessions) and repetitive behaviors (compulsions) that feel difficult to resist.Studies suggest OCD affects around 0.6% to 0.76% of the Indian population. That's a significant number of people who might be struggling silently. Recognizing OCD is crucial because it can significantly impact daily life, causing anxiety and distress.",
-        symptoms: [
+
+        subdevision: [
           {
-            title: "Intrusive Thoughts",
-            description:
-              "Unwanted and disturbing thoughts that feel difficult to control. (e.g., thoughts of harming yourself or others)",
+            title: "Symptoms of OCD",
+            subpoints: [
+              {
+                title: "Intrusive Thoughts",
+                description:
+                  "Unwanted and disturbing thoughts that feel difficult to control. (e.g., thoughts of harming yourself or others)",
+              },
+              {
+                title: "Repetitive Behaviors (Compulsions)",
+                description:
+                  "Actions you feel driven to repeat to reduce anxiety caused by obsessions. (e.g., excessive washing, checking things repeatedly)",
+              },
+              {
+                title: "Need for Order and Symmetry",
+                description:
+                  "A strong urge to have things arranged in a specific way.",
+              },
+              {
+                title: "Fear of Germs and Contamination",
+                description:
+                  "Excessive worry about germs and getting sick, leading to frequent cleaning.",
+              },
+              {
+                title: "Unwanted Thoughts of Violence or Aggression",
+                description:
+                  "Intrusive thoughts of harming yourself or others, even though you wouldn't actually do it.",
+              },
+            ],
           },
           {
-            title: "Repetitive Behaviors (Compulsions)",
-            description:
-              "Actions you feel driven to repeat to reduce anxiety caused by obsessions. (e.g., excessive washing, checking things repeatedly)",
+            title: "Preventive Measures for OCD",
+            subpoints: [
+              {
+                description:
+                  "Maintain a regular sleep schedule, eat nutritious food, and exercise regularly. These promote overall well-being and can reduce anxiety.",
+              },
+              {
+                description:
+                  "Practice deep breathing exercises, yoga, or meditation to manage stress and intrusive thoughts.",
+              },
+              {
+                description:
+                  "Excessive screen time can worsen anxiety and obsessive thoughts. Encourage breaks and other activities.",
+              },
+              {
+                description:
+                  "Talk openly about your thoughts and feelings with a trusted friend, family member, or therapist.",
+              },
+              {
+                description:
+                  "Develop coping mechanisms to deal with everyday challenges in a healthy way.",
+              },
+            ],
           },
           {
-            title: "Need for Order and Symmetry",
+            title: "Conclusion",
             description:
-              "A strong urge to have things arranged in a specific way.",
-          },
-          {
-            title: "Fear of Germs and Contamination",
-            description:
-              "Excessive worry about germs and getting sick, leading to frequent cleaning.",
-          },
-          {
-            title: "Unwanted Thoughts of Violence or Aggression",
-            description:
-              "Intrusive thoughts of harming yourself or others, even though you wouldn't actually do it.",
+              "Remember, while there's no guaranteed way to prevent OCD, certain practices might help",
           },
         ],
-        preventions: [
-          {
-            description:
-              "Maintain a regular sleep schedule, eat nutritious food, and exercise regularly. These promote overall well-being and can reduce anxiety.",
-          },
-          {
-            description:
-              "Practice deep breathing exercises, yoga, or meditation to manage stress and intrusive thoughts.",
-          },
-          {
-            description:
-              "Excessive screen time can worsen anxiety and obsessive thoughts. Encourage breaks and other activities.",
-          },
-          {
-            description:
-              "Talk openly about your thoughts and feelings with a trusted friend, family member, or therapist.",
-          },
-          {
-            description:
-              "Develop coping mechanisms to deal with everyday challenges in a healthy way.",
-          },
-        ],
-        conclusion:
-          "Remember, while there's no guaranteed way to prevent OCD, certain practices might help",
       },
       {
         title: "Oppositional Defiant Disorder (ODD)",
         description:
           "Is your child constantly arguing, defying rules, and throwing tantrums? These actions could be signs of Oppositional Defiant Disorder (ODD), a behavioral condition affecting many children in India. ODD is a mental health condition where children exhibit negative, defiant, and disobedient behavior towards authority figures like parents and teachers. They often struggle with managing emotions, controlling impulses, and following instructions.Studies suggest that around 7.73% of primary school children in India might be affected by ODD, with the prevalence being similar for both boys and girls. Identifying and addressing ODD early can prevent future problems for the child.",
-        symptoms: [
+        subdevision: [
           {
-            title: "Frequent Arguments with Adults",
-            description:
-              "Constantly questioning rules, talking back disrespectfully, or deliberately doing the opposite of what's asked.",
+            title: "Symptoms of ODD",
+            subpoints: [
+              {
+                title: "Frequent Arguments with Adults",
+                description:
+                  "Constantly questioning rules, talking back disrespectfully, or deliberately doing the opposite of what's asked.",
+              },
+              {
+                title: "Refusal to Comply with Requests or Rules",
+                description:
+                  "Actively resisting instructions, even for simple tasks, leading to power struggles.",
+              },
+              {
+                title: "Angry Outbursts and Temper Tantrums",
+                description:
+                  "Intense outbursts triggered by minor frustrations, like yelling, screaming, or throwing things.",
+              },
+              {
+                title: "Blaming Others for Mistakes",
+                description:
+                  "Struggling to take responsibility for actions and readily shifting blame to others.",
+              },
+              {
+                title: "Easily Annoyed and Touchy with Others",
+                description:
+                  "Constantly on edge, easily irritated by minor inconveniences or teasing from peers.",
+              },
+            ],
           },
           {
-            title: "Refusal to Comply with Requests or Rules",
-            description:
-              "Actively resisting instructions, even for simple tasks, leading to power struggles.",
+            title: "Preventive Measures for ODD",
+            subpoints: [
+              {
+                description:
+                  "Focus on praising good behavior, setting clear and consistent expectations, and avoiding harsh punishments.",
+              },
+              {
+                description:
+                  "Teach your child to express their emotions and needs effectively by having open and honest conversations.",
+              },
+              {
+                description:
+                  "Help your child learn healthy ways to manage anger and frustration through relaxation exercises, deep breathing, and other coping mechanisms.",
+              },
+              {
+                description:
+                  "Encourage interaction with other children through play and group activities to foster empathy and cooperation.",
+              },
+              {
+                description:
+                  "Provide opportunities for your child to succeed and celebrate their achievements to build confidence and self-worth.",
+              },
+            ],
           },
           {
-            title: "Angry Outbursts and Temper Tantrums",
+            title: "Conduct Disorder (CD)",
             description:
-              "Intense outbursts triggered by minor frustrations, like yelling, screaming, or throwing things.",
+              "Conduct disorder (CD) is a serious behavioral issue affecting children and teenagers. It involves a repeated pattern of actions that violate others' rights or societal norms.Studies indicate a significant number of Indian schoolchildren, roughly 5.48%, exhibit signs of CD. Boys are more commonly diagnosed. Early identification and intervention are crucial to prevent long-term negative impacts on a child's social, academic, and personal well-being.",
+            subdevision: [
+              {
+                title: "Symptoms of CD",
+                subpoints: [
+                  {
+                    title: "Aggression",
+                    description:
+                      "Physical violence towards people or animals, bullying, or threats of violence.",
+                  },
+                  {
+                    title: "Property Damage",
+                    description:
+                      "Deliberately damaging or destroying belongings of others.",
+                  },
+                  {
+                    title: "Deception",
+                    description: "Frequent lying, stealing, or conning others.",
+                  },
+                  {
+                    title: "Rule-Breaking",
+                    description:
+                      "Repeatedly disobeying rules at home, school, or in the community.",
+                  },
+                  {
+                    title: "Lack of Remorse",
+                    description:
+                      "Not feeling bad or showing guilt after hurting someone or breaking rules.",
+                  },
+                ],
+              },
+              {
+                title: "Preventive Measures for CD",
+                subpoints: [
+                  {
+                    description:
+                      "Techniques like consistent discipline, clear communication, and positive reinforcement can promote good behavior.",
+                  },
+                  {
+                    description:
+                      "Creating a nurturing and supportive family environment is vital.",
+                  },
+
+                  {
+                    description:
+                      "Helping children develop healthy ways to interact with others and express their emotions.",
+                  },
+                  {
+                    description:
+                      "Addressing behavioral problems early on can prevent escalation.",
+                  },
+                  {
+                    description:
+                      "Schools and communities can offer programs that promote social-emotional learning and positive peer interaction.",
+                  },
+                  {
+                    description:
+                      "Explore how Sensei empowers families [Click Here] //Redirect to B2C Page",
+                  },
+                ],
+              },
+            ],
           },
           {
-            title: "Blaming Others for Mistakes",
+            title: "Tourette Syndrome",
             description:
-              "Struggling to take responsibility for actions and readily shifting blame to others.",
-          },
-          {
-            title: "Easily Annoyed and Touchy with Others",
-            description:
-              "Constantly on edge, easily irritated by minor inconveniences or teasing from peers.",
-          },
-        ],
-        preventions: [
-          {
-            description:
-              "Focus on praising good behavior, setting clear and consistent expectations, and avoiding harsh punishments.",
-          },
-          {
-            description:
-              "Teach your child to express their emotions and needs effectively by having open and honest conversations.",
-          },
-          {
-            description:
-              "Help your child learn healthy ways to manage anger and frustration through relaxation exercises, deep breathing, and other coping mechanisms.",
-          },
-          {
-            description:
-              "Encourage interaction with other children through play and group activities to foster empathy and cooperation.",
-          },
-          {
-            description:
-              "Provide opportunities for your child to succeed and celebrate their achievements to build confidence and self-worth.",
-          },
-        ],
-      },
-      {
-        title: "Conduct Disorder (CD)",
-        description:
-          "Conduct disorder (CD) is a serious behavioral issue affecting children and teenagers. It involves a repeated pattern of actions that violate others' rights or societal norms.Studies indicate a significant number of Indian schoolchildren, roughly 5.48%, exhibit signs of CD. Boys are more commonly diagnosed. Early identification and intervention are crucial to prevent long-term negative impacts on a child's social, academic, and personal well-being.",
-        symptoms: [
-          {
-            title: "Aggression",
-            description:
-              "Physical violence towards people or animals, bullying, or threats of violence.",
-          },
-          {
-            title: "Property Damage",
-            description:
-              "Deliberately damaging or destroying belongings of others.",
-          },
-          {
-            title: "Deception",
-            description: "Frequent lying, stealing, or conning others.",
-          },
-          {
-            title: "Rule-Breaking",
-            description:
-              "Repeatedly disobeying rules at home, school, or in the community.",
-          },
-          {
-            title: "Lack of Remorse",
-            description:
-              "Not feeling bad or showing guilt after hurting someone or breaking rules.",
-          },
-        ],
-        preventions: [
-          {
-            description:
-              "Techniques like consistent discipline, clear communication, and positive reinforcement can promote good behavior.",
-          },
-          {
-            description:
-              "Creating a nurturing and supportive family environment is vital.",
+              "Tourette Syndrome (TS) is a neurological disorder characterized by involuntary, repetitive movements or sounds called tics. It's crucial to raise awareness about TS in India, as it can be misdiagnosed or misunderstood.Studies suggest TS affects between 0.4% and 3.8% of children and adolescents (ages 5-18) in India. Males are diagnosed more frequently than females, with a ratio of around 3-4 to 1.",
+            subdevision: [
+              {
+                title: "Symptoms of Tourette Syndrome",
+                subpoints: [
+                  {
+                    title: "Motor Tics",
+                    description:
+                      "Involuntary movements like blinking, head jerking, or facial grimacing.",
+                  },
+                  {
+                    title: "Vocal Tics",
+                    description:
+                      "Uncontrolled sounds such as grunting, sniffing, or repeating words or phrases.",
+                  },
+                  {
+                    title: "Urge to Tic",
+                    description:
+                      "A feeling of tension or discomfort before a tic, which can be temporarily relieved by performing the tic.",
+                  },
+                  {
+                    title: "Variability",
+                    description:
+                      "Tics can change in frequency, intensity, and location over time.",
+                  },
+                  {
+                    title: "Onset",
+                    description:
+                      "Symptoms usually appear between ages 4 and 13.",
+                  },
+                ],
+              },
+              {
+                title: "Preventive Measures for Tourette Syndrome",
+                subpoints: [
+                  {
+                    description:
+                      "Habit Reversal Therapy teaches individuals to recognize the urge to tic and replace it with a more controlled response.",
+                  },
+                  {
+                    description:
+                      "Deep breathing and progressive muscle relaxation can help manage stress, which can worsen tics.",
+                  },
+                  {
+                    description:
+                      "Cognitive Behavioral Therapy (CBT) can help identify and change negative thoughts or behaviors that make tics worse.",
+                  },
+                  {
+                    description:
+                      "Having understanding parents, teachers, and friends can make a significant difference for someone with TS.",
+                  },
+                  {
+                    description:
+                      "In some cases, medication can be helpful to reduce the severity of tics.",
+                  },
+                ],
+              },
+              {
+                title: "Conclusion",
+                description:
+                  "Remember, while there's no proven prevention for TS, here are some strategies that can help manage symptoms",
+              },
+            ],
           },
 
           {
+            title: "Panic Disorders",
+
             description:
-              "Helping children develop healthy ways to interact with others and express their emotions.",
+              "Panic disorder is a common mental health condition affecting millions of Indians. It's characterized by recurrent and unexpected panic attacks, which are sudden surges of intense fear or discomfort that peak within minutes. These attacks can be debilitating and significantly impact daily life.Studies suggest around 2.7% of the population experiences panic disorder, with a significant portion facing severe symptoms.",
+            subdevision: [
+              {
+                title: "Symptoms of Panic Disorders",
+                subpoints: [
+                  {
+                    title: "Rapid Heart Rate",
+                    description: "Palpitations, pounding chest, racing pulse.",
+                  },
+                  {
+                    title: "Shortness of Breath",
+                    description:
+                      "Feeling of smothering, chest tightness, rapid breathing (hyperventilation).",
+                  },
+                  {
+                    title: "Sweating",
+                    description:
+                      "Chills, hot flashes, dizziness, lightheadedness, dry mouth, nausea, stomach cramps.",
+                  },
+                  {
+                    title: "Numbness or Tingling Sensations",
+                    description:
+                      "Trembling or shaking, feeling detached from reality (derealization), fear of losing control or going crazy (depersonalization).",
+                  },
+                  {
+                    title: "Intrusive Thoughts",
+                    description:
+                      "Impending doom, fear of dying, feeling like you can't escape the situation.",
+                  },
+                  {
+                    title: "Intense Fear",
+                    description:
+                      "Overwhelming anxiety, terror, a sense of unreality or detachment from oneself or surroundings.",
+                  },
+                ],
+              },
+              {
+                title: "Preventive Measures for Panic Disorders",
+                subpoints: [
+                  {
+                    description:
+                      "Practice relaxation techniques like yoga, meditation, or deep breathing exercises.",
+                  },
+                  {
+                    description:
+                      "Aim for moderate physical activity most days of the week.",
+                  },
+                  {
+                    description:
+                      "Establish a consistent sleep schedule and prioritize restful nights.",
+                  },
+                  {
+                    description:
+                      "Nourish your body with nutritious foods to maintain overall well-being.",
+                  },
+                  { description: "Excessive use can worsen anxiety symptoms." },
+                ],
+              },
+            ],
           },
           {
+            title: "Eating Disorders",
             description:
-              "Addressing behavioral problems early on can prevent escalation.",
+              "Eating disorders are serious mental health conditions that disrupt your relationship with food and body image. They lead to unhealthy eating habits that can significantly harm your physical and emotional well-being.Studies in India suggest that 2-3% of the population might be affected by eating disorders, with a higher rate among young women. Many people in India may not recognize the signs and symptoms, leading to delayed diagnosis and treatment. Westernization, social media influence, and pressure to conform to specific beauty standards can increase the risk of developing eating disorders.",
+            subdevision: [
+              {
+                title: "Symptoms of Eating Disorders",
+                subpoints: [
+                  {
+                    title: "Unhealthy Food Habits",
+                    description:
+                      "Severe food restriction, purging behaviors after eating, or uncontrollable binge eating.",
+                  },
+                  {
+                    title: "Obsessive Focus on Weight and Body Image",
+                    description:
+                      "Constant preoccupation with weight or body shape, even at a healthy weight.",
+                  },
+                  {
+                    title: "Denial of Hunger or Fullness Cues",
+                    description:
+                      "Ignoring physical sensations of hunger or fullness.",
+                  },
+                  {
+                    title: "Changes in Mood and Behavior",
+                    description:
+                      "Anxiety, depression, irritability, social withdrawal, difficulty concentrating.",
+                  },
+                  {
+                    title: "Physical Health Problems",
+                    description:
+                      "Fatigue, weakness, hair loss, irregular periods, and other health complications.",
+                  },
+                ],
+              },
+              {
+                title: "Preventive Measures for Eating Disorders",
+                subpoints: [
+                  {
+                    description:
+                      "Encourage healthy body image and self-acceptance, focusing on overall well-being and inner strength.",
+                  },
+                  {
+                    description:
+                      "Eat regular meals and snacks throughout the day, focusing on a balanced diet that includes all food groups.",
+                  },
+                  {
+                    description:
+                      "Be mindful of time spent on social media, which can negatively influence body image.",
+                  },
+                  {
+                    description:
+                      "Create a safe space for open communication about food, body image, and mental health concerns.",
+                  },
+                  {
+                    description:
+                      "If you suspect an eating disorder, consult a qualified mental health professional who specializes in eating disorders.",
+                  },
+                ],
+              },
+            ],
           },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Self & Social Awareness",
+    image: Selfawareness,
+    slug: "self & social awareness",
+    description: "Need for Self & Social Awareness in India",
+    concernsHeading:
+      "There's a growing concern about emotional immaturity in India, potentially linked to a lack of self-awareness. This can manifest in children as frequent and intense tantrums, excessive neediness like separation anxiety or constant reassurance seeking, and difficulty regulating emotions leading to outbursts or blaming others.",
+    concerns: [
+      {
+        title: "Temper Tantrums",
+        subdevision: [
           {
-            description:
-              "Schools and communities can offer programs that promote social-emotional learning and positive peer interaction.",
-          },
-          {
-            description:
-              "Explore how Sensei empowers families [Click Here] //Redirect to B2C Page",
+            subpoints: [
+              {
+                title: "Frequency and Intensity",
+                description:
+                  "A concerning trend emerged from a 2019 study by the National Institute of Mental Health and Neurosciences (NIMHANS). They found that 17.5% of children in India aged 2-7 years exhibited disruptive behavior disorders, which can manifest as frequent tantrums. These tantrums may involve screaming, crying, hitting, or throwing things, often exceeding what's developmentally appropriate for their age.",
+              },
+              {
+                title: "Triggers",
+                description:
+                  "Pay attention to the situations that trigger these outbursts. Are they frustration-based, like not getting what they want, as reported in many child development resources? Are they attention-seeking, demanding immediate focus, or a response to perceived injustice?",
+              },
+              {
+                title: "Difficulty Calming Down",
+                description:
+                  "Emotionally mature children can be soothed with reassurance or distraction. Immature children might struggle to self-regulate, needing significant external support to calm down. Research from the Journal of Child Psychology and Psychiatry highlights this challenge.",
+              },
+            ],
           },
         ],
       },
       {
-        title: "Tourette Syndrome",
-        description:
-          "Tourette Syndrome (TS) is a neurological disorder characterized by involuntary, repetitive movements or sounds called tics. It's crucial to raise awareness about TS in India, as it can be misdiagnosed or misunderstood.Studies suggest TS affects between 0.4% and 3.8% of children and adolescents (ages 5-18) in India. Males are diagnosed more frequently than females, with a ratio of around 3-4 to 1.",
-        symptoms: [
+        title: "Excessive Neediness",
+        subdevision: [
           {
-            title: "Motor Tics",
-            description:
-              "Involuntary movements like blinking, head jerking, or facial grimacing.",
-          },
-          {
-            title: "Vocal Tics",
-            description:
-              "Uncontrolled sounds such as grunting, sniffing, or repeating words or phrases.",
-          },
-          {
-            title: "Urge to Tic",
-            description:
-              "A feeling of tension or discomfort before a tic, which can be temporarily relieved by performing the tic.",
-          },
-          {
-            title: "Variability",
-            description:
-              "Tics can change in frequency, intensity, and location over time.",
-          },
-          {
-            title: "Onset",
-            description: "Symptoms usually appear between ages 4 and 13.",
+            subpoints: [
+              {
+                title: "Clinging and Separation Anxiety",
+                description:
+                  "Children who are overly reliant on caregivers and experience intense anxiety when separated might be exhibiting excessive neediness. This can manifest as difficulty attending school, participating in social activities, or sleeping alone, as the Anxiety and Depression Association of America (ADAA) confirms.",
+              },
+              {
+                title: "Low Self-Esteem",
+                description:
+                  "Underlying low self-esteem can fuel neediness. Children might constantly seek approval or validation, struggling to believe in their own abilities. Studies by the University of California, Los Angeles support this connection.",
+              },
+              {
+                title: "Difficulty with Self-Care",
+                description:
+                  "Age-appropriate tasks like getting dressed, using the bathroom, or doing homework might be met with resistance or require constant reminders. This can be a sign of an overreliance on others, as mentioned in research published in the Journal of Developmental and Behavioral Pediatrics.",
+              },
+            ],
           },
         ],
-        preventions: [
+      },
+      {
+        title: "Inability to Regulate Emotions",
+        subdevision: [
           {
-            description:
-              "Habit Reversal Therapy teaches individuals to recognize the urge to tic and replace it with a more controlled response.",
-          },
-          {
-            description:
-              "Deep breathing and progressive muscle relaxation can help manage stress, which can worsen tics.",
-          },
-          {
-            description:
-              "Cognitive Behavioral Therapy (CBT) can help identify and change negative thoughts or behaviors that make tics worse.",
-          },
-          {
-            description:
-              "Having understanding parents, teachers, and friends can make a significant difference for someone with TS.",
-          },
-          {
-            description:
-              "In some cases, medication can be helpful to reduce the severity of tics.",
+            subpoints: [
+              {
+                title: "Emotional Lability",
+                description:
+                  "Rapid mood swings with little provocation are a hallmark of emotional dysregulation. Children might shift quickly from joy to anger, sadness, or fear. The National Alliance on Mental Illness (NAMI) describes this as a common symptom.",
+              },
+              {
+                title: "Poor Impulse Control",
+                description:
+                  "Difficulty managing impulses can lead to aggressive behavior, risky choices, or blurting out hurtful words. This can have negative consequences in social interactions, according to studies by the Centers for Disease Control and Prevention (CDC).",
+              },
+
+              {
+                title: "Emotional Blaming",
+                description:
+                  "Inability to take responsibility for their emotions can manifest in blaming others for their feelings or actions. This hinders personal growth and healthy relationships, as highlighted in research published in the Journal of Personality and Social Psychology.",
+              },
+            ],
           },
         ],
-        conclusion:
-          "Remember, while there's no proven prevention for TS, here are some strategies that can help manage symptoms",
       },
 
       {
-        title: "Panic Disorders",
-
-        description:
-          "Panic disorder is a common mental health condition affecting millions of Indians. It's characterized by recurrent and unexpected panic attacks, which are sudden surges of intense fear or discomfort that peak within minutes. These attacks can be debilitating and significantly impact daily life.Studies suggest around 2.7% of the population experiences panic disorder, with a significant portion facing severe symptoms.",
-        symptoms: [
+        title: "Poor Hygiene",
+        subdevision: [
           {
-            title: "Rapid Heart Rate",
-            description: "Palpitations, pounding chest, racing pulse.",
+            subpoints: [
+              {
+                title: "Etiquette and Public Spaces",
+                description:
+                  "Basic hygiene practices like maintaining cleanliness, using appropriate restrooms, and refraining from spitting in public are essential for social courtesy.",
+              },
+              {
+                title: "Body Odor and Personal Care",
+                description:
+                  "Lack of self-awareness regarding body odor or neglecting basic grooming habits can make others feel uncomfortable.",
+              },
+            ],
           },
-          {
-            title: "Shortness of Breath",
-            description:
-              "Feeling of smothering, chest tightness, rapid breathing (hyperventilation).",
-          },
-          {
-            title: "Sweating",
-            description:
-              "Chills, hot flashes, dizziness, lightheadedness, dry mouth, nausea, stomach cramps.",
-          },
-          {
-            title: "Numbness or Tingling Sensations",
-            description:
-              "Trembling or shaking, feeling detached from reality (derealization), fear of losing control or going crazy (depersonalization).",
-          },
-          {
-            title: "Intrusive Thoughts",
-            description:
-              "Impending doom, fear of dying, feeling like you can't escape the situation.",
-          },
-          {
-            title: "Intense Fear",
-            description:
-              "Overwhelming anxiety, terror, a sense of unreality or detachment from oneself or surroundings.",
-          },
-        ],
-        preventions: [
-          {
-            description:
-              "Practice relaxation techniques like yoga, meditation, or deep breathing exercises.",
-          },
-          {
-            description:
-              "Aim for moderate physical activity most days of the week.",
-          },
-          {
-            description:
-              "Establish a consistent sleep schedule and prioritize restful nights.",
-          },
-          {
-            description:
-              "Nourish your body with nutritious foods to maintain overall well-being.",
-          },
-          { description: "Excessive use can worsen anxiety symptoms." },
         ],
       },
       {
-        title: "Eating Disorders",
-        description:
-          "Eating disorders are serious mental health conditions that disrupt your relationship with food and body image. They lead to unhealthy eating habits that can significantly harm your physical and emotional well-being.Studies in India suggest that 2-3% of the population might be affected by eating disorders, with a higher rate among young women. Many people in India may not recognize the signs and symptoms, leading to delayed diagnosis and treatment. Westernization, social media influence, and pressure to conform to specific beauty standards can increase the risk of developing eating disorders.",
-        symptoms: [
+        title: "Tactless Comments",
+        subdevision: [
           {
-            title: "Unhealthy Food Habits",
-            description:
-              "Severe food restriction, purging behaviors after eating, or uncontrollable binge eating.",
-          },
-          {
-            title: "Obsessive Focus on Weight and Body Image",
-            description:
-              "Constant preoccupation with weight or body shape, even at a healthy weight.",
-          },
-          {
-            title: "Denial of Hunger or Fullness Cues",
-            description: "Ignoring physical sensations of hunger or fullness.",
-          },
-          {
-            title: "Changes in Mood and Behavior",
-            description:
-              "Anxiety, depression, irritability, social withdrawal, difficulty concentrating.",
-          },
-          {
-            title: "Physical Health Problems",
-            description:
-              "Fatigue, weakness, hair loss, irregular periods, and other health complications.",
+            subpoints: [
+              {
+                title: "Directness vs. Politeness",
+                description:
+                  "Indian culture often values indirect communication and politeness. Someone lacking self-awareness might make blunt or critical comments without considering the potential impact on the other person's feelings.",
+              },
+              {
+                title: "Humor and Cultural Sensitivity",
+                description:
+                  "Humor is subjective and what one person finds funny might offend another. Jokes that rely on stereotypes, prejudices, or touch on sensitive topics like religion or caste can be hurtful if not delivered with self-awareness and cultural sensitivity.",
+              },
+              {
+                title: "Oversharing Personal Information",
+                description:
+                  "Oversharing personal details about oneself or others in public settings can be seen as inappropriate.",
+              },
+            ],
           },
         ],
-        preventions: [
+      },
+      {
+        title: "Inappropriate Behavior",
+        subdevision: [
           {
-            description:
-              "Encourage healthy body image and self-acceptance, focusing on overall well-being and inner strength.",
+            subpoints: [
+              {
+                title: "Personal Space",
+                description:
+                  "Concepts of personal space can vary across cultures. In India, personal space tends to be closer than in Western cultures. However, invading someone's personal space unnecessarily can be perceived as rude or aggressive.",
+              },
+              {
+                title: "Volume and Noise Levels",
+                description:
+                  "India can be a noisy country, but there are times and places for loud behavior. Talking loudly on the phone in a quiet restaurant or playing loud music in public areas displays a lack of awareness of others' needs for peace and quiet.",
+              },
+              {
+                title: "Public Displays of Affection (PDA)",
+                description:
+                  "While attitudes are slowly changing, India remains largely conservative. Public displays of affection beyond holding hands are generally frowned upon, especially between unmarried couples. A 2019 survey by YouGov found that a significant majority (72%) of Indians disapprove of kissing in public [YouGov: Public perception of PDA in India]. Lack of self-awareness regarding this social norm can lead to discomfort for others.",
+              },
+            ],
           },
+        ],
+      },
+      {
+        title: "Misunderstandings",
+        subdevision: [
           {
-            description:
-              "Eat regular meals and snacks throughout the day, focusing on a balanced diet that includes all food groups.",
+            subpoints: [
+              {
+                title: "Non-Verbal Communication",
+                description:
+                  "India's diverse cultural landscape means non-verbal cues like gestures, facial expressions, and personal space vary greatly. A simple head nod might signify agreement in one region but disrespect in another, leading to misunderstandings.",
+              },
+              {
+                title: "Generational Gaps",
+                description:
+                  "The rapid pace of social change in India creates a disconnect between generations. A 2021 survey by LocalCircles found that 62% of Indian parents felt a communication gap with their children regarding technology use. This highlights the challenges of adapting communication styles across generations.",
+              },
+              {
+                title: "Language Barriers",
+                description:
+                  "With 22 official languages and countless dialects, effective communication can be a challenge. A 2018 report by the Ministry of Human Resource Development (MHRD) revealed that language proficiency remains a major hurdle in educational attainment in India, particularly for students from diverse linguistic backgrounds.",
+              },
+            ],
           },
+        ],
+      },
+      {
+        title: "Bullying",
+        subdevision: [
           {
-            description:
-              "Be mindful of time spent on social media, which can negatively influence body image.",
+            subpoints: [
+              {
+                title: "Cyberbullying",
+                description:
+                  "India has a rapidly growing internet population, and cyberbullying is on the rise. A 2020 study by the National Crime Records Bureau (NCRB) of India found that cyberbullying complaints increased by over 100% between 2019 and 2020. Limited online social awareness can make it difficult for students to recognize or report cyberbullying, leading to emotional distress and isolation.",
+              },
+              {
+                title: "Homophobic and Transphobic Bullying",
+                description:
+                  "LGBTQ+ youth in India face significant social stigma. A 2019 survey by the International Lesbian, Gay, Bisexual, Trans and Intersex Association (ILGA) found that 73% of LGBTQ+ youth in India have experienced bullying or violence. A lack of awareness and acceptance can lead to bullying based on sexual orientation and gender identity.",
+              },
+              {
+                title: "Power Imbalances",
+                description:
+                  "Bullying often thrives on power imbalances. Students from lower socioeconomic backgrounds or with disabilities might be targeted by their peers due to a lack of social awareness about inclusivity and respect. A 2021 report by the National Commission for Protection of Child Rights (NCPCR) found that 36% of bullying complaints in India involved children with disabilities.",
+              },
+            ],
           },
+        ],
+      },
+      {
+        title: "Social Exclusion",
+        subdevision: [
           {
-            description:
-              "Create a safe space for open communication about food, body image, and mental health concerns.",
+            subpoints: [
+              {
+                title: "Regionalism",
+                description:
+                  "Regional pride can sometimes morph into prejudice against people from other parts of the country. This can lead to social exclusion and limit opportunities for collaboration and exchange. A 2019 study by the Centre for Policy Research found that regional tensions can hinder economic development and social harmony in India.",
+              },
+              {
+                title: "Disabilities",
+                description:
+                  "A lack of awareness about disabilities can lead to the social exclusion of children and adults with special needs. Creating inclusive environments requires promoting empathy and understanding of diverse abilities. The Census of India 2011 reported that over 2.68 crore (26.8 million) individuals in India have disabilities.",
+              },
+            ],
           },
+        ],
+      },
+      {
+        title: "Shyness & Awkwardness",
+        subdevision: [
           {
-            description:
-              "If you suspect an eating disorder, consult a qualified mental health professional who specializes in eating disorders.",
+            subpoints: [
+              {
+                title: "Fear of Judgment",
+                description:
+                  "In a society that places high value on social approval, the fear of being judged harshly can be paralyzing. A 2021 survey by TeamLease Services, an Indian staffing company, found that over 60% of young professionals aged 18-25 reported feeling anxious about networking events due to a fear of being judged.",
+              },
+              {
+                title: "Social Comparison Trap",
+                description:
+                  "Constantly comparing oneself to others on social media or in real life can exacerbate feelings of inadequacy and awkwardness. A 2020 study by the Indian Council of Medical Research (ICMR) found that over 35% of teenagers surveyed reported experiencing symptoms of social anxiety due to social media comparisons.",
+              },
+              {
+                title: "Lack of Confidence in Social Skills",
+                description:
+                  "Without experience and practice, navigating social situations can feel overwhelming. This lack of confidence can manifest as shyness and awkward silences. A longitudinal study by the National Institute of Mental Health and Neurosciences (NIMHANS) found that children with limited opportunities for social interaction were twice as likely to develop social anxiety in their teenage years.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Difficulty Initiating Conversation",
+        subdevision: [
+          {
+            subpoints: [
+              {
+                title: "Limited Exposure to Diverse Groups",
+                description:
+                  "Social circles that are homogenous can limit exposure to different communication styles and social cues. This can make it difficult to initiate conversations with people from outside one's comfort zone. A 2019 report by the Centre for Policy Research (CPR) highlighted the increasing social segregation in Indian cities, which can limit opportunities for young people to interact with diverse groups.",
+              },
+              {
+                title: "Cultural Inhibitions",
+                description:
+                  "Traditional gender roles and social hierarchies in India can create inhibitions, especially for young people, when it comes to initiating conversations with elders or people of authority. A 2020 survey by Pratham Education Foundation, an Indian NGO, revealed that over 40% of rural girls felt uncomfortable initiating conversations with male teachers due to cultural norms.",
+              },
+              {
+                title: "Conversation Starters Arsenal is Empty",
+                description:
+                  "Not having a repertoire of conversation starters or topics to discuss can make initiating conversations feel daunting. This can lead to missed opportunities to connect with others. A study by IIM Calcutta published in the Journal of Marketing Research found that individuals with a larger repertoire of conversation starters were perceived as more approachable and engaging by others.",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Misreading Social Cues",
+        subdevision: [
+          {
+            subpoints: [
+              {
+                title: "Non-verbal Communication Nuances",
+                description:
+                  "Indians often rely on subtle nonverbal cues like head nods, averted gazes, or indirect speech. Difficulty reading these cues can lead to misunderstandings and awkward interactions. A 2018 cross-cultural study published in the Journal of Personality and Social Psychology found that participants from individualistic cultures were more likely to misinterpret nonverbal cues from collectivistic cultures like India.",
+              },
+              {
+                title: "Humor Misinterpreted",
+                description:
+                  "Sarcasm and playful teasing can be common in some Indian social circles, but can be misinterpreted by someone with low social awareness, leading to offense or confusion. A study by the Indian Institute of Management Bangalore (IIMB) found that understanding and appreciating humor is a key aspect of social intelligence, and misinterpreting humor can damage social relationships.",
+              },
+              {
+                title: "Overlooking Body Language",
+                description:
+                  "Failing to pick up on body language cues like crossed arms, fidgeting, or lack of eye contact can hinder one's ability to gauge the other person's interest or comfort level in the conversation. A study by the Tata Institute of Social Sciences (TISS) found that training individuals to identify body language cues can significantly improve their social interaction skills.",
+              },
+            ],
           },
         ],
       },
