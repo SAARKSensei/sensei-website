@@ -86,10 +86,7 @@ const Page = ({ params: { blog } }) => {
                 <li key={index} className="flex flex-col gap-2 text-secondary">
                   <h2 className="h3 font-bold">{content.title}</h2>
                   <p className="body_2">{content.description}</p>
-<<<<<<< HEAD
                   {content?.video && <Bigplayer url={content.video} />}
-=======
->>>>>>> ce4602606ab7972a88e17f19953cb2b145920953
                   {content?.subpoints && (
                     <ul className="flex flex-col gap-2">
                       {content?.subpoints.map((subpoint, index) => (
