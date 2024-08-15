@@ -641,7 +641,7 @@ export const blogs = [
     title:
       "Are “Life Skills” really the Building Blocks of a Successful Future?",
     image:
-      "https://drive.google.com/uc?export=view&id=1XqBtFJSjbYy7oj_WSkLEVxF8-E5mxWzt",
+      "https://drive.google.com/uc?export=view&id=1OZiSA8NSjdlY5_1KYrC8PlihsNog3KYk",
     description:
       "In today’s rapidly evolving world, academic excellence alone is no longer sufficient to equip our children for the challenges and opportunities that lie ahead. Core life skills, the essential tools for navigating life, have emerged as the cornerstone of holistic child development. These skills empower children to think critically, solve problems, communicate effectively, collaborate seamlessly, unleash their creativity, and understand their emotions. In the Indian context, where a rich cultural heritage intertwines with the demands of a modernizing nation, nurturing these skills is paramount.",
     date: "April 12, 2024",
@@ -655,6 +655,7 @@ export const blogs = [
       },
       {
         title: "The Four Pillars of Core Life Skills",
+        video: "https://www.youtube.com/embed/X-wyKMy_1Fc",
         subpoints: [
           {
             title: "Cognitive Skills",
