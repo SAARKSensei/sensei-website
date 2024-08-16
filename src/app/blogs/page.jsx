@@ -6,7 +6,7 @@ import { slug } from "@/utils/logic";
 const page = () => {
   return (
     <div className="container mx-auto flex flex-wrap gap-4 p-4 py-20">
-      <h5 className="h4 underline-grad !text-grad relative w-full font-bold !text-transparent text-secondary">
+      <h5 className="h5_b underline-grad relative w-full text-[#333333]">
         Blogs & News
       </h5>
       <div className="flex flex-wrap gap-4 p-4">
