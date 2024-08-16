@@ -1649,7 +1649,6 @@ export const subjects = [
   {
     title: "Self & Social Awareness",
     image: Selfawareness,
-    slug: "self & social awareness",
     description: "Need for Self & Social Awareness in India",
     concernsHeading:
       "There's a growing concern about emotional immaturity in India, potentially linked to a lack of self-awareness. This can manifest in children as frequent and intense tantrums, excessive neediness like separation anxiety or constant reassurance seeking, and difficulty regulating emotions leading to outbursts or blaming others.",

@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import logo from "@/assets/Logo.svg?url";
 import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 // import { ToastContainer } from "react-toastify";
 import StoreProvider from "@/Redux/Provider";
 export const metadata = {
@@ -29,6 +31,8 @@ export default function RootLayout({ children }) {
           <StoreProvider>
             <Navbar />
             {children}
+            <Analytics />
+            <SpeedInsights />
             <Footer />
           </StoreProvider>
         </body>

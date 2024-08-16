@@ -44,7 +44,7 @@ const Page = ({ params: { blog } }) => {
     <div className="container mx-auto flex flex-col gap-4 p-4 py-20">
       <div className="flex items-center gap-2 text-primary">
         {/* <Image src={arrow} alt="arrow" /> */}
-        <h5 className="h5_b">Blogs & News</h5>
+        <h5 className="h5_b text-[#333333]">Blogs & News</h5>
       </div>
 
       <div className="flex flex-col gap-10">
@@ -112,11 +112,14 @@ const Page = ({ params: { blog } }) => {
               Related Blogs
             </h5>
             <div className="flex gap-4 p-4 max-lg:overflow-scroll lg:flex-col">
-              {blogs.map((blog, index) => (
-                <ClientLink href={`/blogs/${slug(blog.title)}`} key={index}>
-                  <Blog blog={blog} />
-                </ClientLink>
-              ))}
+              {blogs.map(
+                (blog, index) =>
+                  cBlog.title !== blog.title && (
+                    <ClientLink href={`/blogs/${slug(blog.title)}`} key={index}>
+                      <Blog blog={blog} />
+                    </ClientLink>
+                  ),
+              )}
             </div>
           </div>
         </div>
