@@ -57,6 +57,7 @@ export const FAQ = ({ faq, checkedId, setCheckedId }) => {
           />
           <label
             // onClick={() => setCheckedId(checkedId === faq.id ? -1 : faq.id)}
+            alt="expand"
             htmlFor={`question${faq.id}`}
             className="ml-auto rotate-45 cursor-pointer rounded-full bg-[#FF8B13] p-1 opacity-25 transition-transform peer-checked:rotate-0 peer-checked:opacity-100 md:p-2"
           >
