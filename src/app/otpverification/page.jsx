@@ -19,7 +19,7 @@ const Page = () => {
   // const parentData = useSelector((state) => state?.parents?.data);
   const currentUserData = useSelector((state) => state?.currentUser?.data);
   const router = useRouter();
-  let [countDown, setCountDown] = useState(120);
+  let [countDown, setCountDown] = useState(60);
   const [loading, setLoading] = useState(false);
   //Getting phone nuomber from search params
   const searchParams = useSearchParams();
@@ -75,13 +75,13 @@ const Page = () => {
   };
   const otpResend = async () => {
     try {
-      const otpRes = await axios.get(`/otp/${currentUserData?.phoneNumber}`);
-      setOrderId(otpRes?.data?.orderId);
+      const otpRes = await axios.post(`/otp/resend`, { dtCode: orderId });
+      // setOrderId(otpRes?.data?.orderId);
       //console.log(otpRes);
-      setCountDown(120);
+      setCountDown(60);
     } catch (error) {
       // toast.warn("Enter correct number");
-      alert(error?.response?.data || "Enter correct number");
+      alert(error?.response?.data || "Please wait for for 1 min");
       console.error(error);
     }
   };
@@ -91,13 +91,7 @@ const Page = () => {
     const finalOtp = otpInputs.reduce((acc, input) => {
       return acc + input.current.value;
     }, "");
-    ////console.log("otp", finalOtp);
-    // console.log("sign", {
-    //   phone: currentUserData?.phoneNumber,
-    //   name: currentUserData?.name,
-    //   otp: finalOtp,
-    //   orderId: currentUserData?.orderId,
-    // });
+
     const res = await signIn("credentials", {
       phone: currentUserData?.phoneNumber,
       name: currentUserData?.name,
@@ -169,7 +163,7 @@ const Page = () => {
             <h6 className="text-3xl font-semibold">{currentUserData?.name}</h6>
             <h6 className="text-xs sm:mt-3">Enter the OTP received to</h6>
             <h1 className="mt-3 text-3xl font-semibold">
-              +91 {currentUserData?.phoneNumber}
+              +{currentUserData?.phoneNumber}
             </h1>
             <p className="mx-auto mt-2.5 w-[300px] text-xs sm:mx-0">
               A 6 digit OTP will be sent via SMS to verify your mobile number.
