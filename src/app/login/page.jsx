@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setCurrentUserData } from "@/Redux/slice/currentuserslice";
@@ -14,17 +15,36 @@ const page = () => {
   const [phoneNum, setPhoneNum] = useState("");
   const [parentName, setParentName] = useState("");
   const [login, setLogin] = useState(false);
-  const [orderId, setOrderid] = useState("");
+  const [orderId, setOrderid] = useState(uuid());
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const router = useRouter();
+
   const handleClick = async () => {
+    //phonenum validation using regex
+    dispatch(
+      setCurrentUserData({
+        phoneNumber: phoneNum,
+        name: parentName,
+        parentId: "",
+        orderId: orderId,
+      }),
+    );
+
     try {
-      const otpRes = await axios.get(`/otp/${phoneNum}`);
-      const status = otpRes.status;
-      //console.log(otpRes);
-      setOrderid(otpRes?.data?.orderId);
+      const otpRes = await axios.post(`/otp/send`, {
+        dtCode: orderId,
+        phoneNumber: phoneNum,
+        //"email": "yashpratapsingh125@gmail.com",
+        //"orderId": "ABC1235",
+        otpTTL: 60,
+        otpLength: 6,
+        // "channel": "WHATSAPP/SMS/EMAIL"
+      });
+      // const status = otpRes;
+      // console.log(otpRes);
+      // setOrderid(otpRes?.data?.orderId);
       router.push("/otpverification");
     } catch (error) {
       // toast.warn("Enter correct number");
@@ -35,19 +55,15 @@ const page = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (phoneNum.length === 10) {
+  const handleChange = (pn) => {
+    const phoneNumRegex = /^[0-9]\d{9}$/;
+    if (phoneNumRegex.test(pn)) {
+      setPhoneNum(91 + pn);
       setLogin(true);
+    } else {
+      setLogin(false);
     }
-    dispatch(
-      setCurrentUserData({
-        phoneNumber: phoneNum,
-        name: parentName,
-        parentId: "",
-        orderId: orderId,
-      }),
-    );
-  }, [phoneNum, dispatch, parentName, orderId]);
+  };
 
   return (
     <div className="h-screen w-screen">
@@ -90,7 +106,7 @@ const page = () => {
                 <input
                   type="tel"
                   maxLength={10}
-                  onChange={(e) => setPhoneNum(e.target.value)}
+                  onChange={(e) => handleChange(e.target.value)}
                   className="w-full outline-none"
                 />
               </div>

@@ -15,7 +15,7 @@ import Lock from "@/assets/lock1.svg?url";
 import { usePathname } from "next/navigation";
 import navmenu from "@/assets/navmenu.svg?url";
 import { navLinks } from "@/utils/data";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { current } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { subjects } from "@/utils/data";
@@ -23,8 +23,8 @@ import { slug } from "@/utils/logic";
 // import { useSelector } from "react-redux";
 const Navbar = () => {
   const pathname = usePathname();
-  // const { data: session, status } = useSession();
-  let status = "authenticated";
+  const { data: session, status } = useSession();
+  // let status = "authenticated";
   const [scrolled, setScrolled] = useState({ prev: 0, curr: 0 });
   useEffect(() => {
     if (typeof window === "undefined") return;
