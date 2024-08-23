@@ -9,31 +9,27 @@ import Subject from "@/components/Modules/Subject";
 // import Navbar3 from "@/components/Navbar3";
 // import CounsellorCard from "@/components/CounsellorCard";
 import Background1 from "@/components/miniComps/BackGround.jsx";
+import { getSubColour } from "@/utils/logic";
 import Activities from "@/components/Modules/Activities";
 import axios from "axios";
 const UserDashboard = () => {
   const [modules, setModules] = useState([]);
-
+  const [colours, setColours] = useState({});
+  const [sunbjectId, setSubjectId] = useState(0);
   const [subjectData, setSubjectData] = useState([]);
   const currentUserData = useSelector((state) => state?.currentUser?.data);
   const fetchSubjectData = async () => {
-    const res = await axios
-      .get(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}subjects`)
-      .catch((err) => console.log(err));
+    const res = await axios.get(`/subjects`).catch((err) => console.log(err));
     console.log(res?.data);
     if (res?.data) {
       setSubjectData(res.data);
-      selectmodule(res?.data[0]?.subjectId);
+      setModules(res?.data[0]?.modules);
+      setColours(getSubColour(res?.data[0]?.subject?.subjectName));
     }
   };
-  const selectmodule = async (id) => {
-    const res = await axios
-      .get(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}modules/filter?subjectRef=${id}`,
-      )
-      .catch((err) => console.log(err));
-    console.log(res?.data);
-    if (res?.data) setModules(res.data);
+  const selectmodule = async (sid) => {
+    setSubjectId(sid);
+    setModules(subjectData[sid]?.modules);
   };
 
   useEffect(() => {
@@ -43,7 +39,6 @@ const UserDashboard = () => {
   return (
     <div className="hh-screen container relative mx-auto flex w-fit flex-col items-center gap-10 from-gray-200 to-white p-4 py-10 sm:py-20">
       <Background1 />
-
       <div className="flex flex-wrap justify-center gap-5 md:gap-10">
         <div className="flex flex-col items-start gap-1 py-4">
           <p className="h4 text-grey_1">Hello!</p>
@@ -83,13 +78,16 @@ const UserDashboard = () => {
                 <Subject
                   key={i}
                   subject={item}
-                  action={() => selectmodule(item?.subjectId)}
+                  selected={i === sunbjectId}
+                  action={() => selectmodule(i)}
                 />
               ))}
             </div>
           </div>
         )}
-        {modules && !!modules?.length && <Activities modules={modules} />}
+        {modules && !!modules?.length && (
+          <Activities colours={colours} modules={modules} />
+        )}
       </div>
     </div>
   );

@@ -12,73 +12,154 @@ import Reward from "@/assets/reward.svg";
 import Info from "@/components/gamifiedActivities/Info";
 import GetStarted from "@/components/activityComps/GetStarted";
 import Materials from "@/components/activityComps/Materials";
-const Page = () => {
-  const [status, setStatus] = useState(false);
+import axios from "axios";
+import next from "next";
+
+import Feedback from "@/components/activityComps/Feedback";
+const Page = ({ params: { id } }) => {
+  const [status, setStatus] = useState(null);
   const [state, setState] = useState(0);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [currQuestion, setcurrQuestion] = useState(0);
+  const [digitalActivity, setDigitalActivity] = useState([]);
+  const nextquestion = () => {
+    if (!status) {
+      setStatus(null);
+      return;
+    }
+    if (currQuestion !== digitalActivity?.questions?.length - 1) {
+      setcurrQuestion((pre) => pre + 1);
+    } else {
+      setState((pre) => pre + 1);
+    }
+    setStatus(null);
+  };
+  useEffect(() => {
+    const fetchquestionData = async () => {
+      const res = await axios
+        .get(`/digital-activities/${id}`)
+        .catch((err) => console.log(err));
+      if (res?.data) {
+        console.log(res?.data);
+        setDigitalActivity(res?.data);
+      }
+    };
+    fetchquestionData();
+  }, []);
 
   switch (state) {
     case 0:
-      return <Loading action={() => setState((pre) => pre + 1)} />;
-    // case 1:
-    //   return <GetStarted action={() => setState((pre) => pre + 1)} />;
+      return (
+        <Loading
+          activity={{
+            outComes: digitalActivity?.keyOutcomes,
+            name: digitalActivity?.digitalActivityName,
+            ageGroup: "5-7 years",
+          }}
+          action={() => setState((pre) => pre + 1)}
+        />
+      );
+
+    case 2:
+      return <Feedback />;
     case 1:
-      return <Materials action={() => setState((pre) => pre + 1)} />;
-    default:
       return (
         <>
           <div
             style={{ backgroundImage: `url(${Activitybg.src})` }}
-            className="container relative mx-auto mb-5 flex h-fit max-h-[min(calc(100vh-60px),1000px)] max-w-[1000px] flex-col gap-8 p-5"
+            className="container relative mx-auto my-10 mb-5 flex h-fit max-h-[min(calc(100vh-60px),1000px)] max-w-[1000px] flex-col gap-8 p-5"
           >
-            {infoOpen && <Info action={() => setInfoOpen((pre) => !pre)} />}
+            {infoOpen && (
+              <Info
+                activity={{
+                  intro: digitalActivity?.intro,
+                }}
+                action={() => setInfoOpen((pre) => !pre)}
+              />
+            )}
             <div className="flex items-center justify-center gap-4">
               <Image src={cross} alt="cross" />
               <div className="flex w-full gap-1 p-2 sm:gap-2">
-                {[1, 2, 3, 4].map((_, index) => (
+                {Array.from({
+                  length: digitalActivity?.questions?.length || 0,
+                }).map((_, index) => (
                   <div
                     className="relative -z-[1] block h-2 w-1/4 rounded-full bg-grey_1"
                     key={index}
                   >
-                    <span className="absolute z-[0] h-2 w-full rounded-full bg-primary" />
+                    {index <= currQuestion && (
+                      <span className="absolute z-[0] h-2 w-full rounded-full bg-primary" />
+                    )}
                   </div>
                 ))}
               </div>
-              <h5 className="h5 text-secondary">1/4</h5>
+              <h5 className="h5 text-secondary">
+                {currQuestion + 1 + "/" + digitalActivity?.questions?.length}
+              </h5>
             </div>
             <div>
               <div className="flex justify-between">
-                <h5 className="body1_b text-grad">Sibling Superhero</h5>
+                <h5 className="body1_b text-grad">
+                  {digitalActivity?.digitalActivityName}
+                </h5>
                 <Infosvg
                   onClick={() => setInfoOpen((pre) => !pre)}
                   className="cursor-pointer"
                 />
               </div>
-              <p className="body_2 text-secondary">1. The Toy Tug-of-War</p>
+              <p className="body_2 text-secondary">
+                {digitalActivity?.questions[currQuestion]?.questionNumber +
+                  ". " +
+                  digitalActivity?.questions[currQuestion]?.questionName}{" "}
+              </p>
             </div>
-            <div className="flex flex-col gap-5 overflow-y-scroll">
+            <Image
+              src={`https://drive.google.com/uc?export=view&id=${digitalActivity?.questions[currQuestion]?.questionImage[2].split("/")[5]}`}
+              alt={digitalActivity?.questions[currQuestion]?.questionName}
+            />
+
+            <div className="flex flex-col items-center gap-5 p-2">
               <TextReader
-                text={
-                  "Let's enter the Compliment Cavern! Here, we'll find magical gems filled with compliments for your child."
+                key={
+                  digitalActivity?.questions[currQuestion]?.questionNumber +
+                  "sensei"
                 }
+                text={digitalActivity?.questions[currQuestion]?.senseiQuestion}
                 role={"Child"}
               />
-              <TextReader
-                text={
-                  "1. Hide 5 to 10 pieces of paper with positive affirmations written on them (e.g., You're a great artist!, You're so kind to your friends!) around the room. 2. The child searches for the gems (affirmation papers) while you give encouraging hints. 3. Once all the gems are found, read the affirmations together and discuss what makes them true."
-                }
-                role={"Parent"}
-              />
-              <button
-                onClick={() => setStatus((pre) => !pre)}
-                className="button-action-outline min-w-max"
-              >
-                Snatch It!
-              </button>{" "}
-              {status && (
-                <Popup status={false} action={() => setStatus((pre) => !pre)} />
+              {[
+                digitalActivity?.questions[currQuestion]?.option1,
+                digitalActivity?.questions[currQuestion]?.option2,
+                digitalActivity?.questions[currQuestion]?.option3,
+              ].map((option, index) => (
+                <button
+                  onClick={() =>
+                    setStatus(
+                      digitalActivity?.questions[currQuestion]?.senseiAnswer ===
+                        option,
+                    )
+                  }
+                  key={index}
+                  className="button-action-outline"
+                >
+                  {option}
+                </button>
+              ))}{" "}
+              {status !== null && (
+                <Popup
+                  messege={{
+                    wrong:
+                      digitalActivity?.questions[currQuestion]
+                        ?.incorrectAnswerDescription,
+                    right:
+                      digitalActivity?.questions[currQuestion]
+                        ?.correctAnswerDescription,
+                  }}
+                  status={status}
+                  action={() => nextquestion()}
+                />
               )}
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <Reward className="h-8 w-8 rounded-full bg-secondary text-white" />
 
                 <h5 className="h5_b text-secondary">Reward</h5>
@@ -90,11 +171,16 @@ const Page = () => {
                 </div>
                 <Star className="ml-auto h-[54px] w-[54px]" />
                 <span className="h5_b">x 1</span>
-              </div>
+              </div> */}
             </div>
-            <button className="h5_b mx-auto w-[min(90vw,300px)] rounded-lg border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary">
-              Continue
-            </button>
+            {/* <button
+              onClick={() => nextquestion()}
+              className="h5_b mx-auto w-[min(90vw,300px)] rounded-lg border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary"
+            >
+              {currQuestion !== digitalActivity?.questions?.length - 1
+                ? "Continue"
+                : "Finish"}
+            </button> */}
           </div>
         </>
       );

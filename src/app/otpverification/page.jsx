@@ -75,7 +75,7 @@ const Page = () => {
   };
   const otpResend = async () => {
     try {
-      const otpRes = await axios.post(`/otp/resend`, { dtCode: orderId });
+      const otpRes = await axios.post(`/v1/otp/resend`, { dtCode: orderId });
       // setOrderId(otpRes?.data?.orderId);
       //console.log(otpRes);
       setCountDown(60);

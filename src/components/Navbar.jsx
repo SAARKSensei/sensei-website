@@ -9,7 +9,7 @@ import MainLogo from "@/assets/mainlogo.svg";
 import User from "@/assets/user.svg";
 import Bell from "@/assets/bell.svg?url";
 import Logout from "@/assets/logoutnavbar.svg?url";
-import Useraccount from "@/assets/useraccount.svg?url";
+import Useraccount from "@/assets/useraccount.svg";
 import Family from "@/assets/family1.svg?url";
 import Lock from "@/assets/lock1.svg?url";
 import { usePathname } from "next/navigation";
@@ -112,7 +112,7 @@ const Navbar = () => {
                   className="m-4 h-4 -rotate-90 cursor-pointer text-primary transition-all group-hover:rotate-90"
                   // onClick={toggleDropdown}
                 />
-                <div className="absolute -right-4 top-10 z-[100] hidden w-max flex-col rounded-xl bg-[#26355A] p-2 group-hover:flex md:px-4 md:py-3">
+                <div className="absolute -right-4 top-10 z-[100] hidden w-max flex-col gap-6 rounded-xl bg-[#26355A] p-2 group-hover:flex md:px-4 md:py-3">
                   {/* <div
                 className="flex h-[64px] w-full items-center gap-5"
                 // onClick={() => setPinModal(true)}
@@ -140,7 +140,15 @@ const Navbar = () => {
                 <Image src={Lock} alt="Lock" />
                 <h1 className="text-lg text-white">PIN Lock</h1>
               </div> */}
-
+                  <Link
+                    href={"/dashboard"}
+                    className="flex w-full cursor-pointer items-center gap-5"
+                  >
+                    <Useraccount />
+                    <h1 className="cursor-pointer text-lg text-white">
+                      Dashboard
+                    </h1>
+                  </Link>
                   <div
                     onClick={() => signOut()}
                     className="flex w-full cursor-pointer items-center gap-5"

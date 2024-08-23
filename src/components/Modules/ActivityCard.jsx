@@ -7,12 +7,12 @@ import SelfIdentity from "@/Images/selfIdentity.jpeg";
 import StrengthsAndChallenges from "@/Images/strengthsAndChallenges.jpeg";
 import StrengthsAndChallenges2 from "@/Images/strengthsAndChallenges2.jpeg";
 import MyBodyAndEmotions from "@/Images/myBodyAndEmotions.jpeg";
-
+import Link from "next/link";
 import MyFavouriteThings from "@/Images/myFavouriteThings.jpeg";
 import MyProudMomentsAndRest from "@/Images/myProudMoments.jpeg";
 import { useRouter } from "next/navigation";
 const ActivityCard = ({ activity }) => {
-  console.log("activity", activity);
+  // console.log("activity", activity);
   let specificTopicPicture;
   const router = useRouter();
   switch (activity.unit) {
@@ -46,22 +46,18 @@ const ActivityCard = ({ activity }) => {
   const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 
   return (
-    <div
-      onClick={() =>
-        router.push(
-          `${
-            activity?.interactiveActivityId
-              ? "/interactive/" + activity?.interactiveActivityId
-              : "/digital/" + activity?.digitalActivityId
-          }`,
-        )
+    <Link
+      href={
+        activity?.interactiveActivityId
+          ? "/interactive/" + activity?.interactiveActivityId
+          : "/digital/" + activity?.digitalActivityId
       }
-      className=""
+      className="min-w-[276px] max-w-[276px]"
     >
       <div className="relative">
         <span
           style={{ backgroundColor: randomColor }}
-          className={`block h-[169px] w-[276px] rounded-[10px]`}
+          className={`block h-[169px] rounded-[10px]`}
         />
         {/* <Image
           src={specificTopicPicture}
@@ -152,7 +148,7 @@ const ActivityCard = ({ activity }) => {
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
