@@ -33,7 +33,7 @@ const page = () => {
     );
 
     try {
-      const otpRes = await axios.post(`/otp/send`, {
+      const otpRes = await axios.post(`/v1/otp/send`, {
         dtCode: orderId,
         phoneNumber: phoneNum,
         //"email": "yashpratapsingh125@gmail.com",

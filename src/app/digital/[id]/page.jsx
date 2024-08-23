@@ -113,6 +113,11 @@ const Page = ({ params: { id } }) => {
                   digitalActivity?.questions[currQuestion]?.questionName}{" "}
               </p>
             </div>
+            <Image
+              src={`https://drive.google.com/uc?export=view&id=${digitalActivity?.questions[currQuestion]?.questionImage[2].split("/")[5]}`}
+              alt={digitalActivity?.questions[currQuestion]?.questionName}
+            />
+
             <div className="flex flex-col items-center gap-5 p-2">
               <TextReader
                 key={
