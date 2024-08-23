@@ -15,7 +15,7 @@ const Loading = ({ action, activity }) => {
     };
   }, [action]);
   return (
-    <div className="relative flex min-h-[90vh] flex-col justify-evenly gap-5">
+    <div className="relative my-10 flex h-full min-h-[90vh] flex-col justify-evenly gap-5">
       <div className="center-x relative h-[150px] w-[150px]">
         <MainLogo className="center-x absolute top-2 z-10 h-20 w-20 text-secondary" />
         <User className="center-y relative mx-auto h-[100px] min-w-[100px] rounded-full border-2 border-primary bg-white pt-5 text-secondary" />

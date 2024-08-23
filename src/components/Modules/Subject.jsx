@@ -5,7 +5,9 @@ import { useState } from "react";
 
 import { getSubColour } from "@/utils/logic";
 
-const Subject = ({ subject, action }) => {
+const Subject = ({ subject, action, selected }) => {
+  console.log("subject", selected);
+
   const [show, setShow] = useState(false);
   let subjectName = subject?.subjectName;
 
@@ -21,7 +23,7 @@ const Subject = ({ subject, action }) => {
     <>
       <div
         onClick={action}
-        className="relative flex h-[153px] w-[min(353px,90vw)] flex-shrink-0 items-end"
+        className={`relative flex h-[153px] w-[min(353px,90vw)] flex-shrink-0 items-end`}
       >
         {/* {specificSubjectPicture?.length === 2 ? (
           <>
@@ -41,13 +43,13 @@ const Subject = ({ subject, action }) => {
         ) : ( */}
         <Image
           sizes="auto"
-          className="absolute right-[41px] top-0"
+          className="absolute right-[41px] top-0 z-10"
           src={colours.specificSubjectPicture}
           alt={"sub image"}
         />
         {/* )} */}
         <div
-          className="flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4"
+          className={`${selected ? "drop-shadow-lg" : " "} flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4`}
           style={colorforinnerSubjectDiv}
           onClick={() => setShow(!show)}
         >
