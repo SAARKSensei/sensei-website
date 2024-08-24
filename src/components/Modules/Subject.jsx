@@ -6,7 +6,7 @@ import { useState } from "react";
 import { getSubColour } from "@/utils/logic";
 
 const Subject = ({ subject, action, selected }) => {
-  console.log("subject", selected);
+  // console.log("subject", selected);
 
   const [show, setShow] = useState(false);
   let subjectName = subject?.subjectName;
@@ -23,11 +23,11 @@ const Subject = ({ subject, action, selected }) => {
     <>
       <div
         onClick={action}
-        className={`relative flex h-[153px] w-[min(353px,90vw)] flex-shrink-0 items-end`}
+        className={`relative flex h-[153px] min-w-[253px] flex-shrink-0 items-end sm:max-w-[min(400px,100vw)]`}
       >
         {/* {specificSubjectPicture?.length === 2 ? (
           <>
-            <Image
+    w        <Image
               sizes="auto"
               className="absolute right-[41px] top-0"
               src={specificSubjectPicture[0]}

@@ -35,7 +35,7 @@ const Page = ({ params: { id } }) => {
         .get(`/interactive-activities/${id}`)
         .catch((err) => console.log(err));
       if (res?.data) {
-        console.log(res?.data);
+        // console.log(res?.data);
         setInteractiveActivity(res?.data);
       }
     };
@@ -114,6 +114,10 @@ const Page = ({ params: { id } }) => {
                   interactiveActivity?.processes[currProcess]?.processName}{" "}
               </p>
             </div>
+            {/* <Image
+              src={`https://drive.google.com/uc?export=view&id=${interactiveActivity?.processes[currProcess]?.questionImage[2].split("/")[5]}`}
+              alt={interactiveActivity?.processes[currProcess]?.questionName}
+            /> */}
             <div className="flex flex-col gap-5 overflow-y-scroll">
               <TextReader
                 key={

@@ -104,7 +104,7 @@ const Page = () => {
     //console.log(res);
 
     const status = res?.status;
-    if (status === 200) router.push("/parentingsolutions");
+    if (status === 200) router.push("/dashboard");
     else {
       alert("Please enter the correct OTP");
     }

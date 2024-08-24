@@ -313,8 +313,26 @@ body {
     stroke-dashoffset: 0px;
   }
 }
-.scrollbar {
-  scrollbar-width: 3px;
-  scrollbar-color: #ff8b13 transparent;
-  scroll-padding-left: 10px;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(248, 191, 59, 1) 0%,
+    rgba(255, 139, 19, 1) 35%,
+    rgba(239, 95, 61, 1) 100%
+  );
+  border: 0px solid #00d0ff5e;
 }

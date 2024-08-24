@@ -12,7 +12,7 @@ const Materials = ({ action, materials }) => {
           Be ready with the following materials{" "}
         </p>
         <ul className="flex list-inside list-disc flex-col gap-2">
-          {materials.split(",").map((material, index) => (
+          {materials?.split(",").map((material, index) => (
             <li
               key={index}
               className="body-2 max-w-[min(90vw,500px)] text-black"
