@@ -5,11 +5,11 @@ import Rafiki from "@/assets/rafiki.svg";
 import User from "@/assets/user.svg";
 import MainLogo from "@/assets/mainlogo.svg";
 const Loading = ({ action, activity }) => {
-  console.log("activity", activity);
+  // console.log("activity", activity);
   useEffect(() => {
     const timeout = setTimeout(() => {
       action();
-    }, 7000);
+    }, 10000);
     return () => {
       clearTimeout(timeout);
     };
@@ -70,7 +70,7 @@ const Loading = ({ action, activity }) => {
         </p>
       </div>
       <div className="mx-auto flex flex-col justify-center gap-4">
-        <h2 className="h4 uunderline mx-auto h-fit max-w-[min(90vw,500px)] text-center uppercase text-secondary underline-offset-8">
+        <h2 className="h4 uunderline uuppercase mx-auto h-fit max-w-[min(90vw,500px)] text-center text-secondary underline-offset-8">
           {activity?.outComes}
         </h2>
         {/* <h2 className="h4 mx-auto h-fit max-w-[90vw] whitespace-nowrap text-center font-semibold">

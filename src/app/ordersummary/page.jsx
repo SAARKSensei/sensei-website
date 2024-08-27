@@ -26,7 +26,7 @@ const Page = () => {
   const paymentHandler = async (e) => {
     e.preventDefault();
 
-    const amount = currentChildData?.planPrice / 100;
+    const amount = currentChildData?.planPrice * 100;
     const currency = "INR";
     // console.log(
     //   process.env.NEXT_PUBLIC_RAZORPAY_KEY,
@@ -43,23 +43,25 @@ const Page = () => {
       image: "",
       order_id: currentUserData?.orderId,
       handler: async function (response) {
-        // const createChildRes = await axios.post(
-        //   `/create/child/${currentUserData?.orderId}`,
-        //   currentChildData,
-        // );
-        console.log(response);
-        // if (createChildRes?.id) {
-        setPaymentFailed(false);
-        setPaymentSuccesful(true);
-        // }
+        console.log(currentChildData);
 
-        if (paymentSuccesful) {
-          setTimeout(() => {
-            removeCurrentChild();
-            router.push(`/dashboard`);
-          }, 3000);
-          clearTimeout();
+        const createChildRes = await axios.post(
+          `/child-users`,
+          currentChildData,
+        );
+        console.log(createChildRes);
+        if (createChildRes?.id) {
+          setPaymentFailed(false);
+          setPaymentSuccesful(true);
         }
+
+        // setPaymentFailed(false);
+        // setPaymentSuccesful(true);
+        setTimeout(() => {
+          removeCurrentChild();
+          router.push(`/dashboard`);
+        }, 3000);
+        clearTimeout();
       },
       prefill: {
         name: "Sensei",
@@ -90,54 +92,53 @@ const Page = () => {
         src="https://checkout.razorpay.com/v1/checkout.js"
       />
 
-      <div className="h-screen w-screen items-center sm:flex">
+      <div className="relative h-full">
         <Background />
         {/* Main div */}
-        <div className="mx-auto mt-[calc(20vw)] flex w-[353px] flex-col items-center justify-center gap-4 sm:mt-0 sm:w-[1200px]">
-          <div className="flex w-full flex-col items-center justify-between gap-6 lg:items-start lg:gap-0 xl:flex-row">
-            <div className="w-full sm:w-[648px]">
-              {/* Title and order number */}
-              <div className="mt-9 flex w-full items-center justify-between sm:mt-0 sm:w-[648px]">
-                <h1 className="font-Nunito text-2xl font-bold text-[#2C3D68] sm:text-[32px]">
-                  Order Summary
-                </h1>
-                <p className="font-Nunito text-base font-semibold text-[#2C3D68]">
-                  1 item
-                </p>
-              </div>
-              {/* orders div */}
-              <div className="mt-4 flex w-full flex-col items-center justify-center gap-5">
-                <OrderCard childData={currentChildData} />
-              </div>
+        <div className="container mx-auto my-10 flex flex-col items-center justify-center gap-10 p-4 md:my-20 lg:flex-row">
+          <div className="w-full sm:max-w-[550px]">
+            {/* Title and order number */}
+            <div className="mt-9 flex w-full items-center justify-between sm:mt-0">
+              <h1 className="font-Nunito text-2xl font-bold text-[#2C3D68] sm:text-[32px]">
+                Order Summary
+              </h1>
+              <p className="font-Nunito text-base font-semibold text-[#2C3D68]">
+                1 item
+              </p>
             </div>
-            {/* Referal div */}
-            <div className="flex w-full flex-col items-center gap-2 md:w-[432px]">
-              <div className="mt-10 flex h-max w-full flex-col items-end justify-between bg-white p-8 shadow-lg sm:mt-0">
-                <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-6">
-                  <div className="flex w-full flex-col gap-3">
-                    <div className="flex w-full items-center justify-between text-[#2C3D68]">
-                      <h1 className="font-Nunito text-lg font-semibold">
-                        Subscription
-                      </h1>
-                      <h1 className="font-Nunito text-xl font-bold">
-                        ₹{currentChildData?.planPrice / 100}
-                      </h1>
-                    </div>
-                    {/* <div className="w-full flex items-center justify-between text-[#f97316] border-b-2	border-[#f97316]">
+            {/* orders div */}
+            <div className="mt-4 flex w-full flex-col items-center justify-center gap-5">
+              <OrderCard childData={currentChildData} />
+            </div>
+          </div>
+          {/* Referal div */}
+          <div className="flex w-full flex-col items-center gap-2 md:max-w-[500px]">
+            <div className="mt-10 flex h-max w-full flex-col items-end justify-between rounded-[20px] bg-white p-8 shadow-lg sm:mt-0">
+              <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-6">
+                <div className="flex w-full flex-col gap-3">
+                  <div className="flex w-full items-center justify-between text-[#2C3D68]">
+                    <h1 className="font-Nunito text-lg font-semibold">
+                      Subscription
+                    </h1>
+                    <h1 className="font-Nunito text-xl font-bold">
+                      ₹{currentChildData?.planPrice}
+                    </h1>
+                  </div>
+                  {/* <div className="w-full flex items-center justify-between text-[#f97316] border-b-2	border-[#f97316]">
                       <h1 className="font-Nunito font-semibold text-lg">
                         Referral dis.
                       </h1>
                       <h1 className="font-Nunito font-bold text-xl">₹0</h1>
                     </div> */}
-                    <div className="flex w-full items-center justify-between text-[#2C3D68]">
-                      <h1 className="font-Nunito text-lg font-bold">Total</h1>
-                      <h1 className="font-Nunito text-2xl font-extrabold">
-                        ₹{currentChildData?.planPrice / 100}
-                      </h1>
-                    </div>
+                  <div className="flex w-full items-center justify-between text-[#2C3D68]">
+                    <h1 className="font-Nunito text-lg font-bold">Total</h1>
+                    <h1 className="font-Nunito text-2xl font-extrabold">
+                      ₹{currentChildData?.planPrice}
+                    </h1>
                   </div>
-                  <div className="flex w-full flex-col justify-center gap-8">
-                    {/* <div className="w-full flex flex-col justify-center">
+                </div>
+                <div className="flex w-full flex-col justify-center gap-8">
+                  {/* <div className="w-full flex flex-col justify-center">
                       <h1 className="font-Nunito text-xl items-start text-[#2C3D68] font-bold mb-6">
                         Have a Referral code?
                       </h1>
@@ -155,49 +156,48 @@ const Page = () => {
                         </button>
                       </div>
                     </div> */}
-                    <div className="flex w-full flex-row justify-center gap-4">
-                      <input
-                        type="checkbox"
-                        name="terms"
-                        className="h-7 w-7"
-                        onClick={() => setChecked(!checked)}
-                      />
-                      <div className="font-PlusJakartaSans flex flex-wrap gap-2 text-sm font-medium leading-6 tracking-normal md:text-lg">
-                        <p className="text-black opacity-50">
-                          I agree to Sensei&apos;s
-                        </p>{" "}
-                        <Link href="/t&c" className="text-[#f97316]">
-                          Terms & Conditions
-                        </Link>{" "}
-                        <span className="text-black opacity-50">and</span>{" "}
-                        <Link href="/privacy-policy" className="text-[#f97316]">
-                          Privacy policy
-                        </Link>
-                      </div>
+                  <div className="flex w-full flex-row justify-center gap-4">
+                    <input
+                      type="checkbox"
+                      name="terms"
+                      className="h-7 w-7"
+                      onClick={() => setChecked(!checked)}
+                    />
+                    <div className="font-PlusJakartaSans flex flex-wrap gap-2 text-sm font-medium leading-6 tracking-normal md:text-lg">
+                      <p className="text-black opacity-50">
+                        I agree to Sensei&apos;s
+                      </p>{" "}
+                      <Link href="/t&c" className="text-[#f97316]">
+                        Terms & Conditions
+                      </Link>{" "}
+                      <span className="text-black opacity-50">and</span>{" "}
+                      <Link href="/privacy-policy" className="text-[#f97316]">
+                        Privacy policy
+                      </Link>
                     </div>
-                    <button
-                      onClick={paymentHandler}
-                      type="Submit"
-                      disabled={!checked}
-                      className="backgroud-button flex w-full items-center justify-center rounded-full px-6 py-2 font-Nunito text-lg font-extrabold text-white disabled:opacity-50"
-                    >
-                      Proceed to Payment
-                    </button>
                   </div>
+                  <button
+                    onClick={paymentHandler}
+                    type="Submit"
+                    disabled={!checked}
+                    className="backgroud-button flex w-full items-center justify-center rounded-full px-6 py-2 font-Nunito text-lg font-extrabold text-white disabled:opacity-50"
+                  >
+                    Proceed to Payment
+                  </button>
                 </div>
               </div>
-              {paymentSuccesful && (
-                <div className="mt-10 font-Nunito text-2xl font-extrabold text-green-300">
-                  Payment Successful
-                </div>
-              )}
-              {paymentFailed && (
-                <div className="mt-10 font-Nunito text-2xl font-extrabold text-red-600">
-                  Payment Failed.
-                  {/* {response.error.reason}. {response.error.description} */}
-                </div>
-              )}
             </div>
+            {paymentSuccesful && (
+              <div className="mt-10 font-Nunito text-2xl font-extrabold text-green-300">
+                Payment Successful
+              </div>
+            )}
+            {paymentFailed && (
+              <div className="mt-10 font-Nunito text-2xl font-extrabold text-red-600">
+                Payment Failed.
+                {/* {response.error.reason}. {response.error.description} */}
+              </div>
+            )}
           </div>
         </div>
       </div>

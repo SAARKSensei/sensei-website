@@ -12,15 +12,16 @@ import Background1 from "@/components/miniComps/BackGround.jsx";
 import { getSubColour } from "@/utils/logic";
 import Activities from "@/components/Modules/Activities";
 import axios from "axios";
+
 const UserDashboard = () => {
   const [modules, setModules] = useState([]);
   const [colours, setColours] = useState({});
-  const [sunbjectId, setSubjectId] = useState(0);
+  const [subjectId, setSubjectId] = useState(0);
   const [subjectData, setSubjectData] = useState([]);
   const currentUserData = useSelector((state) => state?.currentUser?.data);
   const fetchSubjectData = async () => {
     const res = await axios.get(`/subjects`).catch((err) => console.log(err));
-    console.log(res?.data);
+    // console.log(res?.data);
     if (res?.data) {
       setSubjectData(res.data);
       setModules(res?.data[0]?.modules);
@@ -69,25 +70,38 @@ const UserDashboard = () => {
           />
         </div>
       </div>
-      <div className="mx-auto flex flex-wrap justify-center gap-10 lg:justify-start">
+      <div className="flex w-full gap-10">
         {!!subjectData?.length && (
-          <div className="flex flex-col">
-            <h4 className="h4 text-left uppercase text-black"> Subjects</h4>
-            <div className="flex max-w-[90vw] gap-5 overflow-x-scroll lg:flex-col">
+          <div className="flex grow flex-col">
+            <h4 className="h4 px-4 text-left uppercase text-black">
+              {" "}
+              Subjects
+            </h4>
+            <div className="scrollbar flex w-full flex-col gap-5 px-4 sm:h-[500px] sm:overflow-y-auto">
               {subjectData.map((item, i) => (
-                <Subject
-                  key={i}
-                  subject={item}
-                  selected={i === sunbjectId}
-                  action={() => selectmodule(i)}
-                />
+                <React.Fragment key={i}>
+                  <Subject
+                    subject={item}
+                    selected={i === subjectId}
+                    action={() => selectmodule(i)}
+                  />
+                  {i === subjectId && (
+                    <Activities
+                      hidden={"sm:hidden mb-10"}
+                      colours={colours}
+                      modules={modules}
+                    />
+                  )}
+                </React.Fragment>
               ))}
             </div>
           </div>
         )}
-        {modules && !!modules?.length && (
-          <Activities colours={colours} modules={modules} />
-        )}
+        <Activities
+          hidden={"max-sm:hidden"}
+          colours={colours}
+          modules={modules}
+        />
       </div>
     </div>
   );

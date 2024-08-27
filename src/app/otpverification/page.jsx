@@ -98,14 +98,17 @@ const Page = () => {
       otp: finalOtp,
       orderId: orderId,
       callbackUrl: callbackUrl,
-      redirect: false,
+      redirect: true,
     });
 
     //console.log(res);
 
     const status = res?.status;
-    if (status === 200) router.push("/parentingsolutions");
-    else {
+    if (status === 200) {
+      dispatch(fetchChildrenRequest({ phone: currentUserData?.phoneNumber }));
+
+      router.push("/dashboard");
+    } else {
       alert("Please enter the correct OTP");
     }
     setLoading(false);

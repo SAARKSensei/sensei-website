@@ -16,6 +16,7 @@ import axios from "axios";
 import next from "next";
 
 import Feedback from "@/components/activityComps/Feedback";
+import Print from "@/components/miniComps/Print";
 const Page = ({ params: { id } }) => {
   const [status, setStatus] = useState(null);
   const [state, setState] = useState(0);
@@ -40,7 +41,7 @@ const Page = ({ params: { id } }) => {
         .get(`/digital-activities/${id}`)
         .catch((err) => console.log(err));
       if (res?.data) {
-        console.log(res?.data);
+        // console.log(res?.data);
         setDigitalActivity(res?.data);
       }
     };
@@ -113,11 +114,16 @@ const Page = ({ params: { id } }) => {
                   digitalActivity?.questions[currQuestion]?.questionName}{" "}
               </p>
             </div>
-            <Image
-              src={`https://drive.google.com/uc?export=view&id=${digitalActivity?.questions[currQuestion]?.questionImage[2].split("/")[5]}`}
-              alt={digitalActivity?.questions[currQuestion]?.questionName}
-            />
 
+            <Image
+              src={`https://drive.google.com/uc?export=view&id=${digitalActivity?.questions[currQuestion]?.questionImage.split("/")[5]}`}
+              alt={digitalActivity?.questions[currQuestion]?.questionName}
+              objectFit="cover"
+              sizes="100%"
+              width={500}
+              height={500}
+              className="mx-auto"
+            />
             <div className="flex flex-col items-center gap-5 p-2">
               <TextReader
                 key={

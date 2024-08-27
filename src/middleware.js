@@ -47,6 +47,7 @@ export const config = {
     "/childdetails",
     "/otpverification",
     "/dashboard",
+    "/child-details",
     "/parentingsolutions",
     // "/parent/:path*",
     // "/familypage/:path*",
