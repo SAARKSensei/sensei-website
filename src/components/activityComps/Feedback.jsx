@@ -4,8 +4,10 @@ import FeedbackTopStars from "@/assets/feedbackTopStars.svg";
 import Feedbackstar from "@/assets/feedbackStar.svg";
 import Emptystar from "@/assets/emptystar.svg";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const Feedback = ({ Id }) => {
+const Feedback = () => {
+  const Router = useRouter();
   const [star, setStar] = useState(0);
   return (
     <div className="relative flex min-h-[90vh] flex-col items-center justify-evenly">
@@ -32,12 +34,12 @@ const Feedback = ({ Id }) => {
         className="body_2 h-[min(20vh,200px)] w-[min(90vw,500px)] rounded-[20px] p-5 shadow-cs focus:outline-none"
         placeholder="Please drop your feedback here..."
       />
-      <Link
-        href={`/funactivity/${Id}`}
+      <div
+        onClick={() => Router.back()}
         className="h5_b mx-auto w-[min(90vw,300px)] rounded-[16px] border-b-4 border-[#C96D0E] bg-grad_1 px-6 py-2 text-center text-white disabled:opacity-50"
       >
         Submit
-      </Link>
+      </div>
     </div>
   );
 };

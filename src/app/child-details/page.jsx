@@ -19,7 +19,8 @@ import DeleteIcon from "@/Images/delete-icon.svg";
 import Background from "@/components/miniComps/BackGround.jsx";
 
 const Page = () => {
-  const [plans, setPlans] = useState();
+  const [plans, setPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(0);
   const [error, setError] = useState("");
 
   const { data: session, status, update } = useSession();
@@ -34,34 +35,39 @@ const Page = () => {
 
   const getPlans = async () => {
     try {
-      const response = await axios.get("/plan");
-      setPlans(response?.data[0]); //change later after multiple plans have been added
+      const response = await axios.get("/pricing-plans");
+      if (response?.data) setPlans(response.data); //change later after multiple plans have been added
     } catch (error) {
       if (error) setError(error.message);
     }
   };
 
   useEffect(() => {
+    console.log(currentUserData);
+
     getPlans();
   }, []);
 
-  const createPaymentorder = async () => {
+  const createPaymentorder = async (data) => {
     let status;
     try {
-      const res = await axios.post("/payment/create/order", {
-        phoneNumber: currentUserData?.phoneNumber,
-        planId: plans?.id,
+      const res = await axios.post("/payments/create", {
+        // phoneNumber: currentUserData?.phoneNumber,
+        // planId: plans?.id,
+        amount: data?.planPrice,
+        currency: "INR",
+        // "receipt": "rcptid_11",
+        // "paymentCapture": "1"
       });
       const orderDetails = res?.data;
+      console.log("orderDetails", orderDetails);
+
       dispatch(
         setCurrentUserData({
-          phoneNumber: currentUserData?.phoneNumber,
-          name: parentData?.userName,
-          parentId: parentData?.id,
-          orderId: orderDetails?.id,
+          orderId: orderDetails?.razorpayOrderId,
         }),
       );
-      if (orderDetails?.status === "created") {
+      if (orderDetails?.status === "CREATED") {
         router.push("/ordersummary");
       }
     } catch (error) {
@@ -74,7 +80,7 @@ const Page = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = {
-      parentUserId: session?.user?.parentDetails?.id,
+      parentId: session?.user?.parentDetails?.id || 12345,
       childName: formData.get("childName"),
       schoolId: formData.get("schoolName"),
       dateOfBirth: formData.get("date"),
@@ -82,14 +88,17 @@ const Page = () => {
         formData.get("visitingCounsellor") === "on" ? true : false,
       anyMedicalHistory: formData.get("medicalHistory") === "on" ? true : false,
       medicalHistoryDescription: null,
-      bloodGroup: "",
+      bloodGroup: "B+",
+      ageGroup: "05-10",
+      activePlanId: "plan-001",
+      phoneNumber: currentUserData?.phoneNumber,
       grade: formData.get("grade"),
-      planPrice: plans?.price,
+      planPrice: formData.get("plan"),
     };
 
     document.forms["childForm"].reset();
     dispatch(setCurrentChild(data));
-    createPaymentorder();
+    createPaymentorder(data);
   };
 
   // const postChildData = async () => {
@@ -154,6 +163,7 @@ const Page = () => {
                     type="text"
                     id="childName"
                     name="childName"
+                    defaultValue={currentUserData?.name}
                     // value={child.childName}
                     // onChange={(e) => handleChange("childName", e.target.value)}
                     placeholder="Enter full name"
@@ -229,7 +239,11 @@ const Page = () => {
                     <option value="" disabled hidden>
                       Select
                     </option>
-                    <option value={plans?.price}>{plans?.name}</option>
+                    {plans?.map((plan) => (
+                      <option key={plan.id} value={plan?.price}>
+                        {plan?.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="mt-2 flex h-[88px] flex-col gap-2 sm:mt-0 sm:w-[230px] sm:gap-4">

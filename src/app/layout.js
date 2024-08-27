@@ -24,9 +24,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <>
-      <html lang="en">
+      <html lang="en scrollbar-hide">
         <GoogleTagManager gtmId={process.env.GTM_ID} />
-        <body className={"flex min-h-screen flex-col justify-between"}>
+        <body
+          className={
+            "scrollbar-hide flex min-h-screen flex-col justify-between"
+          }
+        >
           <GoogleAnalytics gaId={process.env.GA_ID} />
           <StoreProvider>
             <Navbar />

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 // import axios from "axios";
-const Print = ({ data, Id }) => {
+const Print = ({ data }) => {
   //   const getParentsDataAPI = async () => {
   //     const digitalActivities = await axios
   //       .get(

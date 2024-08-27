@@ -25,7 +25,7 @@ export const getSubColour = (subjectName) => {
         innerSubjectDivColor: "#CEE2E5",
         innerBarColor: "#89DAE5",
       };
-    case "Self and Social Awareness":
+    case "Self and Social-Awareness":
       return {
         specificSubjectPicture: SexEducationPic,
         percentage: "36%",

@@ -3,7 +3,7 @@ import wrong from "@/assets/wrong.svg?url";
 import right from "@/assets/right.svg?url";
 import Image from "next/image";
 
-const Popup = ({ status, action }) => {
+const Popup = ({ messege, status, action }) => {
   return (
     <div className="absolute -inset-10 backdrop-blur-[2px]">
       <div
@@ -13,11 +13,7 @@ const Popup = ({ status, action }) => {
           <Image src={status ? right : wrong} alt="status" />
           <h5 className="body1_b">{status ? "Nice !" : "Let's do again"}</h5>
         </div>
-        <p className="body_3">
-          {status
-            ? "Awesome job, Sibling Superhero! Let's move on to your next mission!"
-            : "Sibling Superheroes never use force or mean tricks."}
-        </p>
+        <p className="body_3">{!status ? messege.wrong : messege.right}</p>
 
         <button
           onClick={action}

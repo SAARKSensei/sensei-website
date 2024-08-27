@@ -21,9 +21,9 @@ const Page = ({ params: { id } }) => {
   const [state, setState] = useState(0);
   const [infoOpen, setInfoOpen] = useState(false);
   const [currProcess, setCurrProcess] = useState(0);
-  const [processs, setProcesss] = useState([]);
+  const [interactiveActivity, setInteractiveActivity] = useState([]);
   const nextProcess = () => {
-    if (currProcess !== processs?.length - 1) {
+    if (currProcess !== interactiveActivity?.processes?.length - 1) {
       setCurrProcess((pre) => pre + 1);
     } else {
       setState((pre) => pre + 1);
@@ -32,13 +32,11 @@ const Page = ({ params: { id } }) => {
   useEffect(() => {
     const fetchProcessData = async () => {
       const res = await axios
-        .get(
-          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}process/filter?interactiveActivityRef=${id}`,
-        )
+        .get(`/interactive-activities/${id}`)
         .catch((err) => console.log(err));
       if (res?.data) {
-        console.log(res?.data);
-        setProcesss(res.data);
+        // console.log(res?.data);
+        setInteractiveActivity(res?.data);
       }
     };
     fetchProcessData();
@@ -49,12 +47,9 @@ const Page = ({ params: { id } }) => {
       return (
         <Loading
           activity={{
-            outComes: processs[currProcess]?.interactiveActivity?.keyOutcomes,
-            name: processs[currProcess]?.interactiveActivity
-              ?.interactiveActivityName,
-            ageGroup:
-              processs[currProcess]?.interactiveActivity?.activity?.subModule
-                ?.module?.subject?.ageGroup,
+            outComes: interactiveActivity?.keyOutcomes,
+            name: interactiveActivity?.interactiveActivityName,
+            ageGroup: "5-7 years",
           }}
           action={() => setState((pre) => pre + 1)}
         />
@@ -62,20 +57,12 @@ const Page = ({ params: { id } }) => {
     case 1:
       return (
         <Materials
-          materials={
-            processs[currProcess]?.interactiveActivity?.materialsRequired
-          }
+          materials={interactiveActivity?.materialsRequired}
           action={() => setState((pre) => pre + 1)}
         />
       );
     case 3:
-      return (
-        <Feedback
-          Id={
-            processs[0]?.interactiveActivity?.activity?.subModule?.subModuleId
-          }
-        />
-      );
+      return <Feedback />;
     case 2:
       return (
         <>
@@ -86,7 +73,7 @@ const Page = ({ params: { id } }) => {
             {infoOpen && (
               <Info
                 activity={{
-                  intro: processs[currProcess]?.interactiveActivity?.intro,
+                  intro: interactiveActivity?.intro,
                 }}
                 action={() => setInfoOpen((pre) => !pre)}
               />
@@ -94,30 +81,27 @@ const Page = ({ params: { id } }) => {
             <div className="flex items-center justify-center gap-4">
               <Image src={cross} alt="cross" />
               <div className="flex w-full gap-1 p-2 sm:gap-2">
-                {Array.from({ length: processs?.length || 0 }).map(
-                  (_, index) => (
-                    <div
-                      className="relative -z-[1] block h-2 w-1/4 rounded-full bg-grey_1"
-                      key={index}
-                    >
-                      {index <= currProcess && (
-                        <span className="absolute z-[0] h-2 w-full rounded-full bg-primary" />
-                      )}
-                    </div>
-                  ),
-                )}
+                {Array.from({
+                  length: interactiveActivity?.processes?.length || 0,
+                }).map((_, index) => (
+                  <div
+                    className="relative -z-[1] block h-2 w-1/4 rounded-full bg-grey_1"
+                    key={index}
+                  >
+                    {index <= currProcess && (
+                      <span className="absolute z-[0] h-2 w-full rounded-full bg-primary" />
+                    )}
+                  </div>
+                ))}
               </div>
               <h5 className="h5 text-secondary">
-                {currProcess + 1 + "/" + processs?.length}
+                {currProcess + 1 + "/" + interactiveActivity?.processes?.length}
               </h5>
             </div>
             <div>
               <div className="flex justify-between">
                 <h5 className="body1_b text-grad">
-                  {
-                    processs[currProcess]?.interactiveActivity
-                      ?.interactiveActivityName
-                  }
+                  {interactiveActivity?.interactiveActivityName}
                 </h5>
                 <Infosvg
                   onClick={() => setInfoOpen((pre) => !pre)}
@@ -125,20 +109,36 @@ const Page = ({ params: { id } }) => {
                 />
               </div>
               <p className="body_2 text-secondary">
-                {processs[currProcess]?.processNumber +
+                {interactiveActivity?.processes[currProcess]?.processNumber +
                   ". " +
-                  processs[currProcess]?.processName}{" "}
+                  interactiveActivity?.processes[currProcess]?.processName}{" "}
               </p>
             </div>
+            <Image
+              src={`https://drive.google.com/uc?export=view&id=${interactiveActivity?.processes[currProcess]?.image.split("/")[5]}`}
+              alt={interactiveActivity?.processes[currProcess]?.processName}
+              objectFit="cover"
+              sizes="100%"
+              width={500}
+              height={500}
+              className="mx-auto"
+            />
             <div className="flex flex-col gap-5 overflow-y-scroll">
               <TextReader
-                key={processs[currProcess]?.processNumber + "sensei"}
-                text={processs[currProcess]?.senseiMessage}
+                key={
+                  interactiveActivity?.processes[currProcess]?.processNumber +
+                  "sensei"
+                }
+                text={
+                  interactiveActivity?.processes[currProcess]?.senseiMessage
+                }
                 role={"Child"}
               />
               <TextReader
-                key={processs[currProcess]?.processNumber}
-                text={processs[currProcess]?.parentMessage}
+                key={interactiveActivity?.processes[currProcess]?.processNumber}
+                text={
+                  interactiveActivity?.processes[currProcess]?.parentMessage
+                }
                 role={"Parent"}
               />
               {/* <button
@@ -169,7 +169,9 @@ const Page = ({ params: { id } }) => {
               onClick={() => nextProcess()}
               className="h5_b mx-auto w-[min(90vw,300px)] rounded-lg border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary"
             >
-              {currProcess !== processs?.length - 1 ? "Continue" : "Finish"}
+              {currProcess !== interactiveActivity?.processes?.length - 1
+                ? "Continue"
+                : "Finish"}
             </button>
           </div>
         </>

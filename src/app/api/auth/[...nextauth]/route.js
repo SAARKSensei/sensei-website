@@ -23,15 +23,16 @@ export const authOptions = {
         //console.log("credentials", credentials);
         try {
           const otpRes = await axios.post(
-            "https://sensei-app-c8da1e59e645.herokuapp.com/sensei/api/v1/authenticate",
+            "https://sensei-app-c8da1e59e645.herokuapp.com/api/v1/otp/verify",
             {
-              userName: name,
-              phone: phone,
-              otp: otp,
-              orderId: orderId,
+              dtCode: orderId,
+              otpCode: otp,
+              phoneNumber: phone,
+              // "email": "your-email@example.com"
             },
           );
-          const otpData = { ...otpRes?.data, name, status: otpRes.status };
+          const otpData = { unsername: name, phone };
+
           //console.log("otpData", JSON.stringify(otpData));
           return otpData;
         } catch (error) {

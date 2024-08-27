@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setCurrentUserData } from "@/Redux/slice/currentuserslice";
@@ -14,31 +15,15 @@ const page = () => {
   const [phoneNum, setPhoneNum] = useState("");
   const [parentName, setParentName] = useState("");
   const [login, setLogin] = useState(false);
-  const [orderId, setOrderid] = useState("");
+  const [orderId, setOrderid] = useState(uuid());
+  const dispatch = useDispatch();
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const router = useRouter();
+
   const handleClick = async () => {
-    try {
-      const otpRes = await axios.get(`/otp/${phoneNum}`);
-      const status = otpRes.status;
-      //console.log(otpRes);
-      setOrderid(otpRes?.data?.orderId);
-      router.push("/otpverification");
-    } catch (error) {
-      // toast.warn("Enter correct number");
-      alert(error?.response?.data || "Enter correct number");
-      console.error(error);
-    }
-  };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (phoneNum.length === 10) {
-      setLogin(true);
-    }
+    //phonenum validation using regex
     dispatch(
       setCurrentUserData({
         phoneNumber: phoneNum,
@@ -47,7 +32,38 @@ const page = () => {
         orderId: orderId,
       }),
     );
-  }, [phoneNum, dispatch, parentName, orderId]);
+
+    try {
+      const otpRes = await axios.post(`/v1/otp/send`, {
+        dtCode: orderId,
+        phoneNumber: phoneNum,
+        name: parentName,
+        //"email": "yashpratapsingh125@gmail.com",
+        //"orderId": "ABC1235",
+        otpTTL: 60,
+        otpLength: 6,
+        // "channel": "WHATSAPP/SMS/EMAIL"
+      });
+      // const status = otpRes;
+      // console.log(otpRes);
+      // setOrderid(otpRes?.data?.orderId);
+      router.push("/otpverification?callbackUrl=" + callbackUrl);
+    } catch (error) {
+      // toast.warn("Enter correct number");
+      alert(error?.response?.data || "Enter correct number");
+      console.error(error);
+    }
+  };
+
+  const handleChange = (pn) => {
+    const phoneNumRegex = /^[0-9]\d{9}$/;
+    if (phoneNumRegex.test(pn)) {
+      setPhoneNum(91 + pn);
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  };
 
   return (
     <div className="h-screen w-screen">
@@ -90,7 +106,7 @@ const page = () => {
                 <input
                   type="tel"
                   maxLength={10}
-                  onChange={(e) => setPhoneNum(e.target.value)}
+                  onChange={(e) => handleChange(e.target.value)}
                   className="w-full outline-none"
                 />
               </div>

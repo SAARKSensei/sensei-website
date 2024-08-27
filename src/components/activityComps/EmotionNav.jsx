@@ -11,14 +11,14 @@ const EmotionNav = ({ name }) => {
             <Varrow />
             <span className="relative right-3 top-[10.2px] h-[3px] w-8 rounded-full bg-primary sm:w-10" />
           </Link>
-          <span className="body3_b"> Module Name</span>
+          {/* <span className="body3_b"> Module Name</span> */}
           {/* <Image src={varrow} alt="down arrow" className="max-w-2 -rotate-90" />
           <span className=" border-l border-solid border-[#2C3D68] h-[25px] " />
           <span className="bg-gradient-to-t from-[#0764A7] to-[#2C3D68] text-transparent bg-clip-text">
             Session 1
           </span>
           <Image src={varrow} alt="down arrow" className="max-w-2 -rotate-90" /> */}
-          <span className="hidden h-[25px] border-l border-solid border-[#2C3D68] sm:block" />
+          {/* <span className="hidden h-[25px] border-l border-solid border-[#2C3D68] sm:block" /> */}
           <h1 className="body_1 w-fit text-primary">{name} </h1>
         </div>
         {/* <h1 className="text-left font-Nunito text-xl text-[#FF8B13] min-[1300px]:text-2xl min-[1300px]:font-bold">

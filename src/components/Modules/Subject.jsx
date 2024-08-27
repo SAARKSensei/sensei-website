@@ -5,7 +5,9 @@ import { useState } from "react";
 
 import { getSubColour } from "@/utils/logic";
 
-const Subject = ({ subject, action }) => {
+const Subject = ({ subject, action, selected }) => {
+  // console.log("subject", selected);
+
   const [show, setShow] = useState(false);
   let subjectName = subject?.subjectName;
 
@@ -21,11 +23,11 @@ const Subject = ({ subject, action }) => {
     <>
       <div
         onClick={action}
-        className="relative flex h-[153px] w-[min(353px,90vw)] flex-shrink-0 items-end"
+        className={`relative flex h-[153px] min-w-[253px] flex-shrink-0 items-end sm:max-w-[min(400px,100vw)]`}
       >
         {/* {specificSubjectPicture?.length === 2 ? (
           <>
-            <Image
+    w        <Image
               sizes="auto"
               className="absolute right-[41px] top-0"
               src={specificSubjectPicture[0]}
@@ -41,30 +43,36 @@ const Subject = ({ subject, action }) => {
         ) : ( */}
         <Image
           sizes="auto"
-          className="absolute right-[41px] top-0"
+          className="absolute right-[41px] top-0 z-10"
           src={colours.specificSubjectPicture}
           alt={"sub image"}
         />
         {/* )} */}
         <div
-          className="flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4"
+          className={`${selected ? "drop-shadow-lg" : " "} flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4`}
           style={colorforinnerSubjectDiv}
           onClick={() => setShow(!show)}
         >
-          <p className="font-Quicksand text-3xl font-normal leading-6 tracking-tighter text-[#2C3D68]">
+          {/* <p className="font-Quicksand text-3xl font-normal leading-6 tracking-tighter text-[#2C3D68]">
             {subject?.progress}%
-          </p>
-          <p className="font-Quicksand text-lg font-medium tracking-tighter text-[#333]">
+          </p> */}
+          <p className="font-Quicksand my-auto text-lg font-bold tracking-tighter text-[#333]">
             {subjectName}
           </p>
-          <div className="h-4 w-full flex-shrink-0">
+          <p className="font-Quicksand text-md my-auto font-normal tracking-tighter text-[#333]">
+            Interactive Activity : 24
+          </p>
+          <p className="font-Quicksand text-md my-auto font-normal tracking-tighter text-[#333]">
+            Gamified Activity : 12
+          </p>
+          {/* <div className="h-4 w-full flex-shrink-0">
             <div className="h-4 w-full flex-shrink-0 rounded-[18px] bg-white">
               <div
                 className="h-4 rounded-[18px]"
                 style={sizeAndColorForInnerBar}
               ></div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* {show && (
