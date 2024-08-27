@@ -100,7 +100,6 @@ const Page = () => {
     dispatch(setCurrentChild(data));
     createPaymentorder(data);
   };
-
   // const postChildData = async () => {
   //   try {
   //     const data = {
