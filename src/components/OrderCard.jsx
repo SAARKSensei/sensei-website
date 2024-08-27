@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import { removeCurrentChild } from "@/Redux/slice/currentChildSlice";
 import { useRouter } from "next/navigation";
 
 import Book from "@/Images/books.svg?url";
@@ -36,8 +35,8 @@ const OrderCard = ({ childData }) => {
 
   const deleteCurrentChild = (e) => {
     e.preventDefault();
-    removeCurrentChild();
-    router.push("/childdetails");
+    // removeCurrentChild();
+    router.push("/child-details");
   };
 
   if (deleteChild) {
@@ -96,7 +95,7 @@ const OrderCard = ({ childData }) => {
             </div>
             <div className="flex flex-col items-center">
               <h4 className="font-Nunito text-base font-bold text-[#2C3D68] sm:text-2xl">
-                ₹{childData?.planPrice / 100}
+                ₹{childData?.planPrice}
               </h4>
             </div>
           </div>

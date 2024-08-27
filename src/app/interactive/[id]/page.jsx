@@ -114,10 +114,15 @@ const Page = ({ params: { id } }) => {
                   interactiveActivity?.processes[currProcess]?.processName}{" "}
               </p>
             </div>
-            {/* <Image
-              src={`https://drive.google.com/uc?export=view&id=${interactiveActivity?.processes[currProcess]?.questionImage[2].split("/")[5]}`}
-              alt={interactiveActivity?.processes[currProcess]?.questionName}
-            /> */}
+            <Image
+              src={`https://drive.google.com/uc?export=view&id=${interactiveActivity?.processes[currProcess]?.image.split("/")[5]}`}
+              alt={interactiveActivity?.processes[currProcess]?.processName}
+              objectFit="cover"
+              sizes="100%"
+              width={500}
+              height={500}
+              className="mx-auto"
+            />
             <div className="flex flex-col gap-5 overflow-y-scroll">
               <TextReader
                 key={

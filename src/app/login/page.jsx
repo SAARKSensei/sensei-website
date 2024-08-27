@@ -16,6 +16,7 @@ const page = () => {
   const [parentName, setParentName] = useState("");
   const [login, setLogin] = useState(false);
   const [orderId, setOrderid] = useState(uuid());
+  const dispatch = useDispatch();
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
@@ -36,6 +37,7 @@ const page = () => {
       const otpRes = await axios.post(`/v1/otp/send`, {
         dtCode: orderId,
         phoneNumber: phoneNum,
+        name: parentName,
         //"email": "yashpratapsingh125@gmail.com",
         //"orderId": "ABC1235",
         otpTTL: 60,
@@ -45,15 +47,13 @@ const page = () => {
       // const status = otpRes;
       // console.log(otpRes);
       // setOrderid(otpRes?.data?.orderId);
-      router.push("/otpverification");
+      router.push("/otpverification?callbackUrl=" + callbackUrl);
     } catch (error) {
       // toast.warn("Enter correct number");
       alert(error?.response?.data || "Enter correct number");
       console.error(error);
     }
   };
-
-  const dispatch = useDispatch();
 
   const handleChange = (pn) => {
     const phoneNumRegex = /^[0-9]\d{9}$/;
