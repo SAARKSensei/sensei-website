@@ -17,7 +17,7 @@ export const Home = async ({ params: { Id } }) => {
     .then((res) => res.json())
     .catch((err) => null);
 
-  //console.log(InteractivieActivities?.data);
+  console.log(activities);
   return (
     <div
       style={{

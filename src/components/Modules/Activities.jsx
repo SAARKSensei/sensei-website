@@ -22,27 +22,35 @@ const Activities = ({ modules, hidden, colours }) => {
   };
 
   return (
-    <div className={hidden + " grow"}>
+    <div className={hidden + " sm:grow"}>
       <h4 className={`h4 pb-4 text-left uppercase text-black`}> Modules</h4>
       <div
         style={{ backgroundColor: colours?.innerSubjectDivColor }}
-        className={`animate-fade-in flex h-[500px] overflow-y-auto rounded-[10px] p-4 pt-10 max-sm:h-[min(100%,500px)] sm:w-[min(632px,100%)]`}
+        className={`animate-fade-in flex rounded-[10px] sm:w-[min(632px,100%)]`}
       >
         {modules && !!modules?.length ? (
-          <ol className="body1_b flex w-full cursor-pointer list-decimal flex-col gap-4 rounded-2xl">
+          <ol className="body1_b flex h-[500px] w-full cursor-pointer list-decimal flex-col gap-4 overflow-y-auto p-4">
             {modules.map((module, index) => (
               <div
-                onClick={() => getSubModules(index === moduleId ? null : index)}
                 key={index}
                 className={`${!module?.free ? "text-primary" : "text-grey_2"} flex flex-col gap-5`}
               >
-                <div className="flex w-full items-center gap-2 rounded-2xl bg-white px-4">
-                  {module?.free && <Lock />}
+                <button
+                  onClick={() =>
+                    getSubModules(index === moduleId ? null : index)
+                  }
+                  className={`flex w-full items-center gap-2 rounded-2xl bg-white px-4 text-primary disabled:text-grey_2`}
+                  disabled={index > 0}
+                >
+                  {index > 0 && <Lock />}
                   <li className={`ml-8 py-4 pr-2`}>{module.moduleName}</li>
-                  <Varroww
-                    className={`ml-auto mr-4 w-4 transition-all ${index === moduleId ? "rotate-90" : "rotate-180"}`}
-                  />
-                </div>
+                  {index === 0 && (
+                    <Varroww
+                      className={`ml-auto mr-4 w-2 transition-all sm:w-4 ${index === moduleId ? "rotate-90" : "rotate-180"}`}
+                    />
+                  )}
+                </button>
+
                 {index === moduleId && (
                   <ol className="flex list-decimal flex-col items-end justify-end gap-5">
                     <Print data={module?.subModules} />

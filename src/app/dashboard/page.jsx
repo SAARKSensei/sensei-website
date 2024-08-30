@@ -87,7 +87,7 @@ const UserDashboard = () => {
                   />
                   {i === subjectId && (
                     <Activities
-                      hidden={"sm:hidden mb-10"}
+                      hidden={"sm:hidden "}
                       colours={colours}
                       modules={modules}
                     />

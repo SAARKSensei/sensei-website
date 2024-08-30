@@ -43,7 +43,7 @@ const Page = () => {
   };
 
   useEffect(() => {
-    console.log(currentUserData);
+    // console.log(currentUserData);
 
     getPlans();
   }, []);
@@ -60,7 +60,7 @@ const Page = () => {
         // "paymentCapture": "1"
       });
       const orderDetails = res?.data;
-      console.log("orderDetails", orderDetails);
+      // console.log("orderDetails", orderDetails);
 
       dispatch(
         setCurrentUserData({
