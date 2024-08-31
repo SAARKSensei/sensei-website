@@ -59,10 +59,16 @@ const TextReader = ({ text, role }) => {
       </div>
       <div className="max-w-full text-wrap text-grey_1">
         {text.split(" ").map((segment, index) => (
+          //check if it is number. like segment make a condition for it
+
           <span
             key={index}
             className={`${timer == 0 || (audio.hasOwnProperty("timestamps") && audio.timestamps[index] && audio.timestamps[index].start <= timer) ? "text-primary" : "text-primary/35"}`}
           >
+            {index > 0 &&
+              segment.length > 1 &&
+              segment[segment.length - 1] == "." &&
+              !isNaN(segment[0]) && <br />}
             {segment.length > 1 &&
               index > 1 &&
               segment[segment.length - 1] == "." &&

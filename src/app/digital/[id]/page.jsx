@@ -68,7 +68,7 @@ const Page = ({ params: { id } }) => {
         <>
           <div
             style={{ backgroundImage: `url(${Activitybg.src})` }}
-            className="container relative mx-auto my-10 mb-5 flex h-fit max-h-[min(calc(100vh-60px),1000px)] max-w-[1000px] flex-col gap-8 p-5"
+            className="container relative mx-auto my-10 mb-5 flex h-fit max-w-[1000px] flex-col gap-8 p-5"
           >
             {infoOpen && (
               <Info

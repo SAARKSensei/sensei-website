@@ -43,13 +43,13 @@ const Page = () => {
       image: "",
       order_id: currentUserData?.orderId,
       handler: async function (response) {
-        console.log(currentChildData);
+        // console.log(currentChildData);
 
         const createChildRes = await axios.post(
           `/child-users`,
           currentChildData,
         );
-        console.log(createChildRes);
+        // console.log(createChildRes);
         if (createChildRes?.id) {
           setPaymentFailed(false);
           setPaymentSuccesful(true);

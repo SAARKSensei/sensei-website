@@ -992,7 +992,7 @@ export const subjects = [
     description:
       "At Sensei, we believe a healthy mind is just as important as a sharp one.",
     concernsHeading:
-      "Let's explore prevalent mental health concerns impacting countless Indians.",
+      "Mental health is a state of well-being that allows us to navigate life's challenges, realize our potential, and contribute positively to our communities. It's the ability to cope, learn, and thrive. Let's explore prevalent mental health concerns impacting countless Indians.",
     concerns: [
       {
         title: "Anxiety",
