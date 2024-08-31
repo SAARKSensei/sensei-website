@@ -5,6 +5,8 @@ import Lock from "@/assets/lock.svg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Print from "../miniComps/Print";
+import Free from "@/assets/free.gif";
+import Image from "next/image";
 
 const Activities = ({ modules, hidden, colours }) => {
   // console.log(modules);
@@ -39,15 +41,28 @@ const Activities = ({ modules, hidden, colours }) => {
                   onClick={() =>
                     getSubModules(index === moduleId ? null : index)
                   }
-                  className={`flex w-full items-center gap-2 rounded-2xl bg-white px-4 text-primary disabled:text-grey_2`}
+                  className={`flex w-full items-center rounded-2xl bg-white px-4 text-primary disabled:text-grey_2 md:gap-2`}
                   disabled={index > 0}
                 >
-                  {index > 0 && <Lock />}
-                  <li className={`ml-8 py-4 pr-2`}>{module.moduleName}</li>
+                  {index > 0 && (
+                    <Lock className="mr-2 min-w-10 max-w-10 max-sm:min-w-7 max-sm:max-w-7" />
+                  )}
+                  <li className={`ml-4 py-4 pr-2 md:ml-8`}>
+                    {module.moduleName}
+                  </li>
                   {index === 0 && (
-                    <Varroww
-                      className={`ml-auto mr-4 w-2 transition-all sm:w-4 ${index === moduleId ? "rotate-90" : "rotate-180"}`}
-                    />
+                    <>
+                      <Image
+                        src={Free}
+                        alt="free"
+                        width={40}
+                        height={40}
+                        className="mx-auto"
+                      />
+                      <Varroww
+                        className={`mr-1 w-2 transition-all sm:w-4 md:mr-4 ${index === moduleId ? "rotate-90" : "rotate-180"}`}
+                      />
+                    </>
                   )}
                 </button>
 
