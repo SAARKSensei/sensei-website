@@ -17,7 +17,7 @@ export const Home = async ({ params: { Id } }) => {
     .then((res) => res.json())
     .catch((err) => null);
 
-  console.log(activities);
+  // console.log(activities);
   return (
     <div
       style={{
@@ -26,7 +26,7 @@ export const Home = async ({ params: { Id } }) => {
       }}
       className="container mx-auto mb-20 flex flex-wrap justify-between gap-5 p-4"
     >
-      <Print data={activities} />
+      {/* <Print data={activities} /> */}
       {/* <Print data={interactivieActivities} /> */}
       <EmotionNav name={activities?.subModuleName} />
       <div className="flex w-full flex-col gap-10">
