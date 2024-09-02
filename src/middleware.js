@@ -14,10 +14,10 @@ export default withAuth(
       Path === "/login" ||
       Path.startsWith("/otpverification") ||
       (!Token &&
-        !Path.startsWith("/parentingsolutions") &&
+        !Path.startsWith("/dashboard") &&
         !Path.startsWith("/parentdetails"))
     )
-      return NextResponse.redirect(new URL(`/parentingsolutions`, request.url));
+      return NextResponse.redirect(new URL(`/dashboard`, request.url));
     if (Token?.parentDetails?.id && Path.startsWith("/parentdetails"))
       return NextResponse.redirect(new URL(`/familypage`, request.url));
   },
@@ -48,7 +48,7 @@ export const config = {
     "/otpverification",
     "/dashboard",
     "/child-details",
-    "/parentingsolutions",
+    // "/parentingsolutions",
     // "/parent/:path*",
     // "/familypage/:path*",
   ],

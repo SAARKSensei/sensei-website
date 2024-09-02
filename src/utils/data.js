@@ -110,8 +110,8 @@ export const plans = {
       {
         name: "Starting @",
         description: "",
-        curr_price: "₹14,999",
-        price: "₹17,991",
+        curr_price: "₹8,999",
+        price: "₹14,999",
         billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: true },
         duration: "9 Months",

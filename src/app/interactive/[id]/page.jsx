@@ -14,14 +14,16 @@ import GetStarted from "@/components/activityComps/GetStarted";
 import Materials from "@/components/activityComps/Materials";
 import axios from "axios";
 import next from "next";
-
+import { notFound, useRouter } from "next/navigation";
 import Feedback from "@/components/activityComps/Feedback";
+
 const Page = ({ params: { id } }) => {
-  const [status, setStatus] = useState(false);
+  const Router = useRouter();
+  // const [status, setStatus] = useState(false);
   const [state, setState] = useState(0);
   const [infoOpen, setInfoOpen] = useState(false);
   const [currProcess, setCurrProcess] = useState(0);
-  const [interactiveActivity, setInteractiveActivity] = useState([]);
+  const [interactiveActivity, setInteractiveActivity] = useState(null);
   const nextProcess = () => {
     if (currProcess !== interactiveActivity?.processes?.length - 1) {
       setCurrProcess((pre) => pre + 1);
@@ -34,8 +36,10 @@ const Page = ({ params: { id } }) => {
       const res = await axios
         .get(`/interactive-activities/${id}`)
         .catch((err) => console.log(err));
+      // console.log(res);
+
       if (res?.data) {
-        // console.log(res?.data);
+        // console.log("interactive : " + res?.data);
         setInteractiveActivity(res?.data);
       }
     };
@@ -55,7 +59,9 @@ const Page = ({ params: { id } }) => {
         />
       );
     case 1:
-      return (
+      return !interactiveActivity ? (
+        notFound()
+      ) : (
         <Materials
           materials={interactiveActivity?.materialsRequired}
           action={() => setState((pre) => pre + 1)}
@@ -79,7 +85,7 @@ const Page = ({ params: { id } }) => {
               />
             )}
             <div className="flex items-center justify-center gap-4">
-              <Image src={cross} alt="cross" />
+              <Image src={cross} onClick={() => Router.back()} alt="cross" />
               <div className="flex w-full gap-1 p-2 sm:gap-2">
                 {Array.from({
                   length: interactiveActivity?.processes?.length || 0,

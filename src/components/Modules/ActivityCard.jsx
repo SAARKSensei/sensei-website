@@ -55,15 +55,20 @@ const ActivityCard = ({ activity }) => {
       className="min-w-[276px] max-w-[276px]"
     >
       <div className="relative">
-        <span
-          style={{ backgroundColor: randomColor }}
-          className={`block h-[169px] rounded-[10px]`}
-        />
-        {/* <Image
-          src={specificTopicPicture}
-          alt="specificTopicPicture"
-          className="block h-[169px] min-w-[276px] rounded-[10px] object-cover"
-        /> */}
+        {!activity?.image.split("/")[5] ? (
+          <span
+            style={{ backgroundColor: randomColor }}
+            className={`block h-[169px] rounded-[10px]`}
+          />
+        ) : (
+          <Image
+            src={`https://drive.google.com/uc?export=view&id=${activity?.image.split("/")[5]}`}
+            alt="specificTopicPicture"
+            width={300}
+            height={169}
+            className="block h-[169px] min-w-[276px] rounded-[10px] object-cover"
+          />
+        )}
         <div className="absolute right-2 top-2 z-0">
           <svg
             width="41"

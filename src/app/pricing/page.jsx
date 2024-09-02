@@ -6,6 +6,7 @@ import right from "@/assets/tick.svg?url";
 import cross from "@/assets/cross1.svg?url";
 import Stars from "@/components/miniComps/Stars";
 import ABLTopology from "@/assets/ABLTopology-1.svg?url";
+import Link from "next/link";
 
 const Page = () => {
   const [plan, setPlan] = useState("Family");
@@ -45,7 +46,9 @@ const Page = () => {
       </div>
       <div className="flex flex-wrap items-center justify-center gap-4">
         {plans[plan]?.plans?.map((p, index) => (
-          <Plan key={index} plan={p} features={plans[plan].features} />
+          <Link key={index} href={"/child-details"}>
+            <Plan plan={p} features={plans[plan].features} />
+          </Link>
         ))}
       </div>
     </div>

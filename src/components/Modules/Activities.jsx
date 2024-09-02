@@ -35,19 +35,19 @@ const Activities = ({ modules, hidden, colours }) => {
             {modules.map((module, index) => (
               <div
                 key={index}
-                className={`${!module?.free ? "text-primary" : "text-grey_2"} flex flex-col gap-5`}
+                className={`${!module?.free ? "text-primary" : "text-grey_2"} flex flex-col gap-2`}
               >
                 <button
                   onClick={() =>
                     getSubModules(index === moduleId ? null : index)
                   }
-                  className={`flex w-full items-center rounded-2xl bg-white px-4 text-primary disabled:text-grey_2 md:gap-2`}
+                  className={`flex w-full items-center rounded-2xl bg-white px-4 py-2 text-primary disabled:text-grey_2 md:gap-2`}
                   disabled={index > 0}
                 >
                   {index > 0 && (
                     <Lock className="mr-2 min-w-10 max-w-10 max-sm:min-w-7 max-sm:max-w-7" />
                   )}
-                  <li className={`ml-4 py-4 pr-2 md:ml-8`}>
+                  <li className="list-inside pr-2 text-left">
                     {module.moduleName}
                   </li>
                   {index === 0 && (
@@ -68,7 +68,7 @@ const Activities = ({ modules, hidden, colours }) => {
 
                 {index === moduleId && (
                   <ol className="flex list-decimal flex-col items-end justify-end gap-5">
-                    <Print data={module?.subModules} />
+                    {/* <Print data={module?.subModules} /> */}
                     {module?.subModules?.map((subModule, index) => (
                       <Link
                         href={`/funactivity/${subModule.subModuleId}`}
