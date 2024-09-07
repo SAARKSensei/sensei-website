@@ -66,20 +66,25 @@ const page = () => {
   };
 
   return (
-    <div className="h-screen w-screen">
-      <div className="flex flex-col sm:flex-row">
-        <div className="hidden w-1/2 sm:flex">
+    <div className="w-screen">
+      <div className="flex flex-col sm:flex-row sm:gap-20">
+        <div className="my-auto flex h-full w-[70%] items-center max-sm:order-1 max-sm:mb-10 sm:w-1/2">
           <LeftSide />
         </div>
-        <div className="absolute bottom-[450px] left-7 flex flex-col sm:hidden">
+        {/* <div className="flex flex-col sm:hidden">
           <p className="font-Nunito text-[33px] font-bold">Welcome</p>
           <p className="font-Nunito text-base font-normal">
             Sign in to continue
           </p>
-        </div>
-        <div className="absolute bottom-0 left-0 flex h-max w-full flex-col justify-end rounded-3xl bg-[#FFEFDE] px-7 py-11 sm:relative sm:h-screen sm:w-1/2 sm:justify-center sm:bg-[#FFF]">
-          <div className="flex w-full flex-col items-center gap-4 sm:ml-24 sm:h-[298px] sm:w-[382px] sm:items-start">
-            <div className="flex w-full flex-col items-center gap-4 sm:w-[335px] sm:items-start sm:justify-start">
+        </div> */}
+        <div className="flex h-max w-full flex-col justify-end p-4 sm:relative sm:h-screen sm:w-1/2 sm:justify-center">
+          <p className="h3 font-semibold text-primary max-sm:py-11">
+            Login now and get started with the fun & easy-to-use interactive &
+            gamified activities at{" "}
+            <span className="text-secondary">₹ 99/-</span>
+          </p>
+          <div className="flex w-full flex-col gap-4 rounded-3xl py-11 sm:items-start">
+            <div className="flex w-full flex-col gap-4 sm:w-[335px] sm:items-start sm:justify-start">
               <label
                 htmlFor="name"
                 className="font-Nunito text-base font-normal"
@@ -110,7 +115,7 @@ const page = () => {
                   className="w-full outline-none"
                 />
               </div>
-              <p className="mx-7 font-Nunito text-xs font-light sm:mx-0 sm:w-[276px]">
+              <p className="font-Nunito text-xs font-light sm:mx-0 sm:w-[276px]">
                 A 6 digit OTP will be sent via SMS to verify your mobile number.
               </p>
             </div>
@@ -122,7 +127,7 @@ const page = () => {
                 Login
               </button>
             )}
-            <p className="hidden w-full pr-28 text-xs sm:block">
+            <p className="w-full max-w-[276px] text-xs">
               By signing in, you agree to the{" "}
               <Link href="/t&c" className="font-semibold">
                 Terms of Service
@@ -134,10 +139,10 @@ const page = () => {
               . You also agree that you have parental consent (if child). We use
               WhatsApp for important updates
             </p>
-            <p className="font-Nunito text-xs font-bold sm:hidden">
+            {/* <p className="font-Nunito text-xs font-bold sm:hidden">
               <Link href="/t&c">Terms of Service</Link> |{" "}
               <Link href="/privacy-policy">Privacy Policy</Link>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
