@@ -10,6 +10,8 @@ import { setCurrentUserData } from "@/Redux/slice/currentuserslice";
 // import { toast } from "react-toastify";
 import Link from "next/link";
 import LeftSide from "@/components/loginComps/LeftSide";
+import Backgroud from "@/Images/background.svg?url";
+import Image from "next/image";
 
 const page = () => {
   const [phoneNum, setPhoneNum] = useState("");
@@ -66,9 +68,14 @@ const page = () => {
   };
 
   return (
-    <div className="w-screen">
-      <div className="flex flex-col sm:flex-row sm:gap-20">
-        <div className="my-auto flex h-full w-[70%] items-center max-sm:order-1 max-sm:mb-10 sm:w-1/2">
+    <div className="h-full w-screen">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:gap-20">
+        <div className="flex h-full w-[70%] items-center max-sm:order-1 max-sm:mb-10 sm:w-1/2">
+          <Image
+            src={Backgroud}
+            alt="background served with static path of image folder in src directory"
+            className="absolute z-[-10] h-full w-full sm:w-1/2"
+          />
           <LeftSide />
         </div>
         {/* <div className="flex flex-col sm:hidden">
@@ -78,7 +85,7 @@ const page = () => {
           </p>
         </div> */}
         <div className="flex h-max w-full flex-col justify-end p-4 sm:relative sm:h-screen sm:w-1/2 sm:justify-center">
-          <p className="h3 font-semibold text-primary max-sm:py-11">
+          <p className="h3 font-semibold text-primary max-sm:pt-10">
             Login now and get started with the fun & easy-to-use interactive &
             gamified activities at{" "}
             <span className="text-secondary">₹ 99/-</span>

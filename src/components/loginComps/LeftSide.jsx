@@ -4,17 +4,11 @@ import Image from "next/image";
 import VideoPlay from "@/components/miniComps/VideoPlay";
 
 import Doctor from "@/Images/dr.png";
-import Backgroud from "@/Images/background.svg?url";
 
 const LeftSide = () => {
   return (
-    <div className="relative z-[-10] w-full">
-      <Image
-        src={Backgroud}
-        alt="background served with static path of image folder in src directory"
-        className="absolute h-screen w-screen"
-      />
-      <div className="static flex h-full w-full items-center justify-center">
+    <div className="my-auto h-full w-full">
+      <div className="relative flex h-full w-full items-center justify-center">
         <VideoPlay />
         <div className="backgroud-color absolute left-[70%] top-[50%] z-20 h-fit w-40 lg:w-52">
           <h5 className="h4 px-3 pt-2 font-bold text-white md:px-6 md:pt-4">
