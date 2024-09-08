@@ -7,6 +7,7 @@ import cross from "@/assets/cross1.svg?url";
 import Stars from "@/components/miniComps/Stars";
 import ABLTopology from "@/assets/ABLTopology-1.svg?url";
 import Link from "next/link";
+import Plan99 from "@/components/miniComps/Plan99";
 
 const Page = () => {
   const [plan, setPlan] = useState("Family");
@@ -27,11 +28,11 @@ const Page = () => {
           {" "}
           Get the <span className="text-primary">Results</span> You Deserve
         </h1>
-        {/* <p className="body_1 max-w-[600px] text-center">
-          Lorem ipsum dolor sit amet consectetur. Proin nunc sodales netus
-          pharetra lacus. Massa fringilla urna risus eleifend viverra ac quam
-          euismod in. Diam tincidunt.
-        </p> */}
+        <p className="body_1 max-w-[600px] text-center">
+          We offer a variety of plans to suit your family&apos;s needs, all
+          designed to equip your child with essential life skills for success.
+        </p>
+        <Plan99 />
       </div>
       <div className="flex w-fit gap-2 rounded-full shadow-cs shadow-orange-100">
         {["Family", "Society"].map((p, index) => (

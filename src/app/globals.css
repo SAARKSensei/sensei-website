@@ -246,14 +246,22 @@ body {
   position: absolute;
   left: -22px;
   top: 0px;
-  width: 10px;
-  border: 16px solid;
+  border: 17px solid;
   border-left-color: transparent;
+}
+.pack:before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 0px;
+  border: 10px solid black;
+  border-left-color: transparent;
+  border-top-color: transparent;
 }
 @media screen and (max-width: 768px) {
   .ribbon:before {
     width: 0px;
-    border: 12px solid;
+    border: 12.5px solid;
   }
 }
 .underline-grad::after {
@@ -313,6 +321,21 @@ body {
     stroke-dashoffset: 0px;
   }
 }
+.glow {
+  animation: glow 2s infinite;
+}
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0px 0px 5px #f8bf3b);
+  }
+  50% {
+    filter: drop-shadow(0px 0px 30px #f8bf3b);
+  }
+  100% {
+    filter: drop-shadow(0px 0px 5px #f8bf3b);
+  }
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

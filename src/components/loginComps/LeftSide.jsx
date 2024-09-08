@@ -4,12 +4,15 @@ import Image from "next/image";
 import VideoPlay from "@/components/miniComps/VideoPlay";
 
 import Doctor from "@/Images/dr.png";
+// import loginvideo from "/videos/login.mp4";
+// import { Muxplayer } from "@/components/miniComps/VideoPlay";
 
 const LeftSide = () => {
   return (
-    <div className="my-auto h-full w-full">
-      <div className="relative flex h-full w-full items-center justify-center">
+    <div className="m-auto h-full w-full">
+      <div className="relative mx-auto flex h-full w-full max-w-[400px] items-center justify-center">
         <VideoPlay />
+        {/* <Muxplayer url={loginvideo} /> */}
         <div className="backgroud-color absolute left-[70%] top-[50%] z-20 h-fit w-40 lg:w-52">
           <h5 className="h4 px-3 pt-2 font-bold text-white md:px-6 md:pt-4">
             The world is evolving and so are learning methods.
