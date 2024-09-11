@@ -38,10 +38,10 @@ const Page = ({ params: { sub } }) => {
             <div
               key={index}
               onClick={() => setCheckedId(index)}
-              className={`flex cursor-pointer flex-col rounded-[10px] bg-white pb-4 shadow-cs`}
+              className={`flex cursor-pointer flex-col rounded-[10px] bg-secondary pb-4 shadow-cs`}
             >
               <div
-                className={`flex ${checkedId === index ? "text-primary" : "text-secondary"} items-end justify-between gap-2 p-4 pb-0`}
+                className={`flex ${checkedId === index ? "text-primary" : "text-white"} items-end justify-between gap-2 p-4 pb-0`}
               >
                 <h4 className="body_1 md:text-xl">{concern.title}</h4>
                 <svg
@@ -87,7 +87,7 @@ const Page = ({ params: { sub } }) => {
           href={"/child-details"}
           className="mr-auto flex h-fit w-fit cursor-pointer items-center rounded-[40px] bg-white p-2 px-4 font-Nunito text-base font-bold text-black md:px-8 md:py-6 md:text-xl"
         >
-          Enroll Your Child{" "}
+          Enroll at Rs. 99{" "}
         </Link>
         <Image
           src={addchild}
@@ -105,7 +105,7 @@ const Description = ({ className, concern }) => {
     <div
       className={
         className +
-        " scrollbar h5 flex max-h-[658px] grow flex-col gap-3 overflow-y-scroll rounded-[10px] bg-secondary p-5 text-primary sm:max-h-[408px] sm:w-1/2 lg:p-10"
+        " scrollbar h5 flex max-h-[658px] grow flex-col gap-3 overflow-y-scroll rounded-[10px] bg-white p-5 text-primary shadow-cs sm:max-h-[408px] sm:w-1/2 lg:p-10"
       }
     >
       {/* <p>{concern?.title}</p> */}

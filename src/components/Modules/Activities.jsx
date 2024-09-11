@@ -9,7 +9,7 @@ import Free from "@/assets/free.gif";
 import Image from "next/image";
 
 const Activities = ({ modules, hidden, colours }) => {
-  // console.log(modules);
+  console.log(modules);
 
   const [moduleId, setModuleId] = useState(null);
 
@@ -35,22 +35,32 @@ const Activities = ({ modules, hidden, colours }) => {
             {modules.map((module, index) => (
               <div
                 key={index}
-                className={`${!module?.free ? "text-primary" : "text-grey_2"} flex flex-col gap-2`}
+                className={`${
+                  module?.moduleId === "2c90c92e91b3466a0191b347c9820000"
+                    ? "text-primary"
+                    : "text-grey_2"
+                } flex flex-col gap-2`}
               >
                 <button
                   onClick={() =>
-                    getSubModules(index === moduleId ? null : index)
+                    getSubModules(
+                      module?.moduleId !== "2c90c92e91b3466a0191b347c9820000"
+                        ? null
+                        : index,
+                    )
                   }
                   className={`flex w-full items-center rounded-2xl bg-white px-4 py-2 text-primary disabled:text-grey_2 md:gap-2`}
-                  disabled={index > 0}
+                  disabled={
+                    module?.moduleId !== "2c90c92e91b3466a0191b347c9820000"
+                  }
                 >
-                  {index > 0 && (
+                  {module?.moduleId !== "2c90c92e91b3466a0191b347c9820000" && (
                     <Lock className="mr-2 min-w-10 max-w-10 max-sm:min-w-7 max-sm:max-w-7" />
                   )}
                   <li className="list-inside pr-2 text-left">
                     {module.moduleName}
                   </li>
-                  {index === 0 && (
+                  {module?.moduleId === "2c90c92e91b3466a0191b347c9820000" && (
                     <>
                       <Image
                         src={Free}

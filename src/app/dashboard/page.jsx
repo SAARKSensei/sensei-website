@@ -60,7 +60,7 @@ const UserDashboard = () => {
             href={"/child-details"}
             className="mr-auto flex h-fit w-fit cursor-pointer items-center rounded-[40px] bg-white p-2 px-4 font-Nunito text-base font-bold text-black md:px-8 md:py-6 md:text-xl"
           >
-            Enroll Your Child{" "}
+            Enroll at Rs.99{" "}
           </Link>
           <Image
             src={addchild}

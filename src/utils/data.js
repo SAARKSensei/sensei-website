@@ -986,9 +986,9 @@ export const news = [
 ];
 export const subjects = [
   {
-    title: "Mental Wellness",
+    title: "Emotional Wellness",
     image: Mentalwellness,
-    slug: "mental health",
+    slug: "emotional-wellness",
     description:
       "At Sensei, we believe a healthy mind is just as important as a sharp one.",
     concernsHeading:

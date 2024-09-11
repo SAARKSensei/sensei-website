@@ -18,21 +18,20 @@ export const slug = (str) => {
 };
 export const getSubColour = (subjectName) => {
   switch (subjectName) {
-    case "Mental Wellness":
+    case "Emotional Well-Being":
       return {
         specificSubjectPicture: MentalHealthPic,
         percentage: "54%",
         innerSubjectDivColor: "#CEE2E5",
         innerBarColor: "#89DAE5",
       };
-    case "Self and Social-Awareness":
+    case "Self and Social Awareness":
       return {
         specificSubjectPicture: SexEducationPic,
         percentage: "36%",
         innerSubjectDivColor: "#FFD9B2",
         innerBarColor: "#FF8B13",
       };
-
     case "Moral Guidance and Ethics":
       return {
         specificSubjectPicture: MoralScience,

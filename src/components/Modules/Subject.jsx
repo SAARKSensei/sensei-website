@@ -23,7 +23,7 @@ const Subject = ({ subject, action, selected }) => {
     <>
       <div
         onClick={action}
-        className={`relative flex h-[153px] min-w-[253px] flex-shrink-0 items-end sm:max-w-[min(400px,100vw)]`}
+        className={`relative flex h-[153px] min-w-[303px] flex-shrink-0 items-end md:max-w-[min(400px,100vw)]`}
       >
         {/* {specificSubjectPicture?.length === 2 ? (
           <>
@@ -43,7 +43,7 @@ const Subject = ({ subject, action, selected }) => {
         ) : ( */}
         <Image
           sizes="auto"
-          className="absolute right-[41px] top-0 z-10"
+          className="absolute right-[10px] top-0 z-10 md:right-[31px]"
           src={colours.specificSubjectPicture}
           alt={"sub image"}
         />

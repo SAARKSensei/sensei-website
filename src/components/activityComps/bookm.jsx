@@ -28,13 +28,13 @@ const Bookm = () => {
   // };
 
   return (
-    <div className="flex flex-col gap-10 py-6 md:py-10 items-center">
-      <div className="w-full flex flex-wrap md:flex-nowrap p-6 md:p-10 min-[1300px]:p-20 gap-4 sm:gap-10 lg:gap-20">
-        <div className="w-full md:w-1/2 flex flex-col gap-5">
-          <h2 className="text-black text-lg font-bold tracking-normal font-Nunito">
+    <div className="flex flex-col items-center gap-10 py-6 md:py-10">
+      <div className="flex w-full flex-wrap gap-4 p-6 sm:gap-10 md:flex-nowrap md:p-10 lg:gap-20 min-[1300px]:p-20">
+        <div className="flex w-full flex-col gap-5 md:w-1/2">
+          <h2 className="font-Nunito text-lg font-bold tracking-normal text-black">
             BOOK REFERENCE
           </h2>
-          <div className="flex-wrap min-[400px]:flex-nowrap flex gap-5 font-medium text-lg font-Nunito">
+          <div className="flex flex-wrap gap-5 font-Nunito text-lg font-medium min-[400px]:flex-nowrap">
             <Link
               target="_blank"
               href={
@@ -45,49 +45,49 @@ const Bookm = () => {
                 src={Kami}
                 alt="monster"
                 sizes="auto"
-                className="w-fit max-h-44 object-contain grow md:grow-0 rounded-3xl"
+                className="max-h-44 w-fit grow rounded-3xl object-contain md:grow-0"
               />
             </Link>
-            <div className="flex flex-col gap-4 order-1 sm:order-none max-w-fit h-fit">
-              <p className="text-2xl tracking-normal font-Nunito font-bold text-[#FF8B13] leading-7">
+            <div className="order-1 flex h-fit max-w-fit flex-col gap-4 sm:order-none">
+              <p className="font-Nunito text-2xl font-bold leading-7 tracking-normal text-[#FF8B13]">
                 Kami Koala Makes A Decision
               </p>
-              <p className="text-[#2C3D68] font-Nunito font-bold text-base">
+              <p className="font-Nunito text-base font-bold text-[#2C3D68]">
                 by Marvin R. Goldfried & Linda B. Shapiro
               </p>
             </div>
           </div>
-          <p className="text-base font-Nunito font-normal tracking-normal">
+          <p className="font-Nunito text-base font-normal tracking-normal">
             This book offers practical strategies to help parents guide children
             through decision-making processes, focusing on communication and
             building children&apos;s confidence.
           </p>
-          <h2 className="text-black text-lg font-bold tracking-normal font-Nunito">
+          <h2 className="font-Nunito text-lg font-bold tracking-normal text-black">
             Video Referance
           </h2>
           <div className="w-fit">
             <Link
               target="_blank"
               href={"https://www.youtube.com/watch?v=TcUX6eNT2j4"}
-              className=" block w-fit relative"
+              className="relative block w-fit"
             >
               <Image
                 src={SuccedFailing}
                 alt="succed failing"
                 sizes="auto"
-                className="rounded-3xl object-contain grow"
+                className="grow rounded-3xl object-contain"
               />
               <Image
                 src={PlayButton}
                 alt="playbutton"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
               />
             </Link>
-            <div className="w-full flex flex-col gap-2 mt-2">
-              <p className="text-[#FF8B13] text-2xl font-Nunito font-bold leading-7 tracking-normal">
+            <div className="mt-2 flex w-full flex-col gap-2">
+              <p className="font-Nunito text-2xl font-bold leading-7 tracking-normal text-[#FF8B13]">
                 Crash Course Kids - Making Good Decisions
               </p>
-              <p className="text-base font-Nunito font-normal tracking-normal">
+              <p className="font-Nunito text-base font-normal tracking-normal">
                 This informative video from Crash Course Kids uses animation to
                 explain the decision-making process, considering different
                 factors and potential consequences.
@@ -95,12 +95,12 @@ const Bookm = () => {
             </div>
           </div>
         </div>
-        <div className="m-4 h-fit md:w-1/2 max-w-[500px] rounded-2xl bg-white p-5 text-black relative flex flex-col gap-2.5">
-          <span className="rounded-2xl absolute z-[-1] -inset-4 bg-gradient-to-l from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B]" />
-          <p className="text-lg font-Nunito font-bold tracking-normal">
+        <div className="relative m-4 flex h-fit max-w-[500px] flex-col gap-2.5 rounded-2xl bg-white p-5 text-black md:w-1/2">
+          <span className="absolute -inset-4 z-[-1] rounded-2xl bg-gradient-to-l from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B]" />
+          <p className="font-Nunito text-lg font-bold tracking-normal">
             KEY MESSAGES
           </p>
-          <ul className="list-disc px-5 text-2xl font-medium font-Nunito">
+          <ul className="list-disc px-5 font-Nunito text-2xl font-medium">
             <li>
               Improved Decision-Making Skills: By considering consequences and
               brainstorming solutions, kids learn to approach choices
@@ -129,7 +129,7 @@ const Bookm = () => {
       {/* <Link
         href={"/childdetails"}
         className="w-fit px-8 py-4 rounded-[40px] grad-bg-2 text-center text-white text-lg font-extrabold font-Nunito">
-        Enroll Your Child
+        Enroll at Rs. 99
       </Link> */}
     </div>
   );
