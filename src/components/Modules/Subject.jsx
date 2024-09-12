@@ -49,8 +49,7 @@ const Subject = ({ subject, action, selected }) => {
         />
         {/* )} */}
         <div
-          className={`${selected ? "drop-shadow-lg" : " "} flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4`}
-          style={colorforinnerSubjectDiv}
+          className={`${selected ? "drop-shadow-lg" : " "} ${colours.innerSubjectDivColor} flex h-[120px] w-full cursor-pointer flex-col items-start gap-1.5 rounded-lg px-[10px] py-4`}
           onClick={() => setShow(!show)}
         >
           {/* <p className="font-Quicksand text-3xl font-normal leading-6 tracking-tighter text-[#2C3D68]">
