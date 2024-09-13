@@ -28,9 +28,13 @@ const UserDashboard = () => {
       setColours(getSubColour(res?.data[0]?.subject?.subjectName));
     }
   };
-  const selectmodule = async (sid) => {
+  const selectmodule = (sid) => {
     setSubjectId(sid);
     setModules(subjectData[sid]?.modules);
+    const col = getSubColour(subjectData[sid]?.subjectName);
+    console.log("col", subjectData[sid]?.subjectId, col);
+
+    setColours(col);
   };
 
   useEffect(() => {

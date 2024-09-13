@@ -10,6 +10,7 @@ import Image from "next/image";
 
 const Activities = ({ modules, hidden, colours }) => {
   const [moduleId, setModuleId] = useState(null);
+  console.log(colours);
 
   // const [submodules, setSubmodules] = useState([]);
   const router = useRouter();
@@ -25,7 +26,8 @@ const Activities = ({ modules, hidden, colours }) => {
     <div className={hidden + " sm:grow"}>
       <h4 className={`h4 pb-4 text-left uppercase text-black`}> Modules</h4>
       <div
-        className={`${colours?.innerSubjectDivColor} animate-fade-in flex rounded-[10px] sm:w-[min(632px,100%)]`}
+        style={{ background: colours?.innerSubjectDivColor }}
+        className={`animate-fade-in flex rounded-[10px] sm:w-[min(632px,100%)]`}
       >
         {modules && !!modules?.length ? (
           <ol className="body1_b flex h-[500px] w-full cursor-pointer list-decimal flex-col gap-4 overflow-y-auto p-4">

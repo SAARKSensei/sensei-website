@@ -23,36 +23,36 @@ export const getSubColour = (subjectName) => {
       return {
         specificSubjectPicture: MentalHealthPic,
         percentage: "54%",
-        innerSubjectDivColor: "bg-[#CEE2E5]",
-        innerBarColor: "bg-[#89DAE5]",
+        innerSubjectDivColor: "#CEE2E5",
+        innerBarColor: "#89DAE5",
       };
     case "Self and Social Awareness":
       return {
         specificSubjectPicture: SexEducationPic,
         percentage: "36%",
-        innerSubjectDivColor: " bg-[#FFD9B2] ",
+        innerSubjectDivColor: " #FFD9B2 ",
         innerBarColor: "",
       };
     case "Moral Guidance and Ethics":
       return {
         specificSubjectPicture: MoralScience,
         percentage: "71%",
-        innerSubjectDivColor: "bg-[#FCEECA]",
-        innerBarColor: "bg-[#FCD97D]",
+        innerSubjectDivColor: "#FCEECA",
+        innerBarColor: "#FCD97D",
       };
     case "1-Month Trial @Rs.99":
       return {
         specificSubjectPicture: TrialPack,
         innerSubjectDivColor:
-          " bg-gradient-to-r from-[#EF5F3D] via-[#F97A23] to-[#F8BF3B] ",
-        innerBarColor: "bg-[#FF8B13]",
+          "linear-gradient(to left , #F8BF3B 0%, #FF8B13 31%,#EF5F3D 100%)",
+        innerBarColor: "#FF8B13",
       };
     default:
       return {
         specificSubjectPicture: MentalHealthPic,
         percentage: "54%",
-        innerSubjectDivColor: " bg-[#CEE2E5] ",
-        innerBarColor: "bg-[#89DAE5]",
+        innerSubjectDivColor: " #CEE2E5 ",
+        innerBarColor: "#89DAE5",
       };
   }
 };
