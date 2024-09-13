@@ -127,7 +127,7 @@ const Page = ({ params: { id } }) => {
               objectFit="cover"
               sizes="100%"
               width={500}
-              height={500}
+              height={200}
               className="mx-auto"
             />
             <div className="flex flex-col items-center gap-5 p-2">

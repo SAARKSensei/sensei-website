@@ -31,6 +31,11 @@ const Page = ({ params: { id } }) => {
       setState((pre) => pre + 1);
     }
   };
+  const prevProcess = () => {
+    if (currProcess !== 0) {
+      setCurrProcess((pre) => pre - 1);
+    }
+  };
   useEffect(() => {
     const fetchProcessData = async () => {
       const res = await axios
@@ -126,7 +131,7 @@ const Page = ({ params: { id } }) => {
               objectFit="cover"
               sizes="100%"
               width={500}
-              height={500}
+              height={200}
               className="mx-auto"
             />
             <div className="flex flex-col gap-5 overflow-y-scroll">
@@ -171,14 +176,24 @@ const Page = ({ params: { id } }) => {
               </div>
               */}
             </div>
-            <button
-              onClick={() => nextProcess()}
-              className="h5_b mx-auto w-[min(90vw,300px)] rounded-lg border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary"
-            >
-              {currProcess !== interactiveActivity?.processes?.length - 1
-                ? "Continue"
-                : "Finish"}
-            </button>
+            <div className="flex justify-center gap-4">
+              {currProcess !== 0 && (
+                <button
+                  onClick={() => prevProcess()}
+                  className="h5_b w-[min(90vw,200px)] rounded-[15px] border-b-4 border-gray-400 bg-gray-300 px-6 py-2 text-secondary"
+                >
+                  Back
+                </button>
+              )}
+              <button
+                onClick={() => nextProcess()}
+                className="h5_b w-[min(90vw,200px)] rounded-[15px] border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary"
+              >
+                {currProcess !== interactiveActivity?.processes?.length - 1
+                  ? "Next"
+                  : "Finish"}
+              </button>
+            </div>
           </div>
         </>
       );
