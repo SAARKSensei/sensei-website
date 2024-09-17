@@ -14,15 +14,17 @@ import GetStarted from "@/components/activityComps/GetStarted";
 import Materials from "@/components/activityComps/Materials";
 import axios from "axios";
 import next from "next";
-
 import Feedback from "@/components/activityComps/Feedback";
 import Print from "@/components/miniComps/Print";
+import { notFound, useRouter } from "next/navigation";
+
 const Page = ({ params: { id } }) => {
+  const Router = useRouter();
   const [status, setStatus] = useState(null);
   const [state, setState] = useState(0);
   const [infoOpen, setInfoOpen] = useState(false);
   const [currQuestion, setcurrQuestion] = useState(0);
-  const [digitalActivity, setDigitalActivity] = useState([]);
+  const [digitalActivity, setDigitalActivity] = useState(null);
   const nextquestion = () => {
     if (!status) {
       setStatus(null);
@@ -40,6 +42,8 @@ const Page = ({ params: { id } }) => {
       const res = await axios
         .get(`/digital-activities/${id}`)
         .catch((err) => console.log(err));
+      // console.log("digital: " + res);
+
       if (res?.data) {
         // console.log(res?.data);
         setDigitalActivity(res?.data);
@@ -64,7 +68,9 @@ const Page = ({ params: { id } }) => {
     case 2:
       return <Feedback />;
     case 1:
-      return (
+      return !digitalActivity ? (
+        notFound()
+      ) : (
         <>
           <div
             style={{ backgroundImage: `url(${Activitybg.src})` }}
@@ -79,7 +85,7 @@ const Page = ({ params: { id } }) => {
               />
             )}
             <div className="flex items-center justify-center gap-4">
-              <Image src={cross} alt="cross" />
+              <Image src={cross} onClick={() => Router.back()} alt="cross" />
               <div className="flex w-full gap-1 p-2 sm:gap-2">
                 {Array.from({
                   length: digitalActivity?.questions?.length || 0,
@@ -121,7 +127,7 @@ const Page = ({ params: { id } }) => {
               objectFit="cover"
               sizes="100%"
               width={500}
-              height={500}
+              height={200}
               className="mx-auto"
             />
             <div className="flex flex-col items-center gap-5 p-2">

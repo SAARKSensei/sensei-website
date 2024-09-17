@@ -110,8 +110,8 @@ export const plans = {
       {
         name: "Starting @",
         description: "",
-        curr_price: "₹14,999",
-        price: "₹17,991",
+        curr_price: "₹8,999",
+        price: "₹14,999",
         billed: "One Time Payment",
         subjects: { 1: true, 2: true, 3: true },
         duration: "9 Months",
@@ -986,9 +986,9 @@ export const news = [
 ];
 export const subjects = [
   {
-    title: "Mental Wellness",
+    title: "Emotional Wellness",
     image: Mentalwellness,
-    slug: "mental health",
+    slug: "emotional-wellness",
     description:
       "At Sensei, we believe a healthy mind is just as important as a sharp one.",
     concernsHeading:

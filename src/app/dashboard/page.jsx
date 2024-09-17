@@ -28,9 +28,13 @@ const UserDashboard = () => {
       setColours(getSubColour(res?.data[0]?.subject?.subjectName));
     }
   };
-  const selectmodule = async (sid) => {
+  const selectmodule = (sid) => {
     setSubjectId(sid);
     setModules(subjectData[sid]?.modules);
+    const col = getSubColour(subjectData[sid]?.subjectName);
+    console.log("col", subjectData[sid]?.subjectId, col);
+
+    setColours(col);
   };
 
   useEffect(() => {
@@ -60,7 +64,7 @@ const UserDashboard = () => {
             href={"/child-details"}
             className="mr-auto flex h-fit w-fit cursor-pointer items-center rounded-[40px] bg-white p-2 px-4 font-Nunito text-base font-bold text-black md:px-8 md:py-6 md:text-xl"
           >
-            Enroll Your Child{" "}
+            Enroll at Rs.99{" "}
           </Link>
           <Image
             src={addchild}

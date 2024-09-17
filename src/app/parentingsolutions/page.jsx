@@ -221,7 +221,7 @@ const Page = () => {
             href={"/childdetails"}
             className="w-fit relative z-10 mx-4 h-[42px] md:mx-10 p-4 py-6 md:p-8 flex items-center rounded-[40px] bg-white text-black text-base md:text-xl font-Nunito font-bold cursor-pointer"
           >
-            Enroll your child
+            Enroll at Rs. 99
           </Link> */}
           <Link
             href={"/survey"}
