@@ -12,7 +12,7 @@ const Subject = ({ subject, action, selected }) => {
   let subjectName = subject?.subjectName;
   let Int = 24;
   let Gam = 12;
-  if (subject?.subjectId === "2c92a70291d9309a0191dbcb6bff0039") {
+  if (subject?.subjectId === "2c93b8d691fe7631019200ddf3f30037") {
     Int = 8;
     Gam = 4;
   }

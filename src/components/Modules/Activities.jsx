@@ -10,7 +10,8 @@ import Image from "next/image";
 
 const Activities = ({ modules, hidden, colours }) => {
   const [moduleId, setModuleId] = useState(null);
-  console.log(colours);
+  // console.log(colours);
+  // console.log(modules);
 
   // const [submodules, setSubmodules] = useState([]);
   const router = useRouter();
@@ -35,31 +36,27 @@ const Activities = ({ modules, hidden, colours }) => {
               <div
                 key={index}
                 className={`${
-                  module?.moduleId === "2c90c92e91b3466a0191b347c9820000"
+                  module?.moduleId === "2c93b8d691fe76310191fe7aa4d80001"
                     ? "text-primary"
                     : "text-grey_2"
                 } flex flex-col gap-2`}
               >
                 <button
                   onClick={() =>
-                    getSubModules(
-                      module?.moduleId !== "2c90c92e91b3466a0191b347c9820000"
-                        ? null
-                        : index,
-                    )
+                    getSubModules(moduleId === index ? null : index)
                   }
                   className={`flex w-full items-center rounded-2xl bg-white px-4 py-2 text-primary disabled:text-grey_2 md:gap-2`}
                   disabled={
-                    module?.moduleId !== "2c90c92e91b3466a0191b347c9820000"
+                    module?.moduleId !== "2c93b8d691fe76310191fe7aa4d80001"
                   }
                 >
-                  {module?.moduleId !== "2c90c92e91b3466a0191b347c9820000" && (
+                  {module?.moduleId !== "2c93b8d691fe76310191fe7aa4d80001" && (
                     <Lock className="mr-2 min-w-10 max-w-10 max-sm:min-w-7 max-sm:max-w-7" />
                   )}
                   <li className="list-inside pr-2 text-left">
                     {module.moduleName}
                   </li>
-                  {module?.moduleId === "2c90c92e91b3466a0191b347c9820000" && (
+                  {module?.moduleId === "2c93b8d691fe76310191fe7aa4d80001" && (
                     <>
                       <Image
                         src={Free}

@@ -32,7 +32,7 @@ const UserDashboard = () => {
     setSubjectId(sid);
     setModules(subjectData[sid]?.modules);
     const col = getSubColour(subjectData[sid]?.subjectName);
-    console.log("col", subjectData[sid]?.subjectId, col);
+    // console.log("col", subjectData[sid]?.subjectId, col);
 
     setColours(col);
   };
