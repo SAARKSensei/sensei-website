@@ -51,7 +51,7 @@ const Page = () => {
   const createPaymentorder = async (data) => {
     let status;
     try {
-      const res = await axios.post("/payments/create", {
+      const res = await axios.post("/payments/create-order", {
         // phoneNumber: currentUserData?.phoneNumber,
         // planId: plans?.id,
         amount: data?.planPrice,
@@ -60,14 +60,14 @@ const Page = () => {
         // "paymentCapture": "1"
       });
       const orderDetails = res?.data;
-      // console.log("orderDetails", orderDetails);
+      console.log("orderDetails", orderDetails);
 
       dispatch(
         setCurrentUserData({
           orderId: orderDetails?.razorpayOrderId,
         }),
       );
-      if (orderDetails?.status === "CREATED") {
+      if (orderDetails?.razorpayOrderId) {
         router.push("/ordersummary");
       }
     } catch (error) {

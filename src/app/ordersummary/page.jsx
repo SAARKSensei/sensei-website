@@ -19,7 +19,7 @@ const Page = () => {
   const currentChildData = useSelector((state) => state?.currentChild?.data);
   const currentUserData = useSelector((state) => state?.currentUser?.data);
 
-  // console.log(currentChildData)
+  // console.log(currentChildData, currentUserData);
 
   const router = useRouter();
 
