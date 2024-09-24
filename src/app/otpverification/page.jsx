@@ -101,15 +101,13 @@ const Page = () => {
       redirect: true,
     });
 
-    //console.log(res);
+    console.log(res);
 
     const status = res?.status;
     if (status === 200) {
       dispatch(fetchChildrenRequest({ phone: currentUserData?.phoneNumber }));
 
       router.push("/dashboard");
-    } else {
-      alert("Please enter the correct OTP");
     }
     setLoading(false);
     // console.log(res, session, status);
@@ -211,7 +209,7 @@ const Page = () => {
             <button
               disabled={loading}
               className="backgroud-button mt-5 h-10 w-28 self-center rounded-full px-5 py-2 text-white disabled:opacity-50 sm:self-start"
-              onClick={detailsHandler}
+              onClick={() => detailsHandler()}
             >
               Continue
             </button>
