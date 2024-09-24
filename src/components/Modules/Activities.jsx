@@ -90,6 +90,7 @@ const Activities = ({ modules, hidden, colours }) => {
                       <Link
                         href={`/funactivity/${subModule.subModuleId}`}
                         key={index}
+                        onClick={(e) => e.stopPropagation()}
                         className="flex w-[80%] min-w-max items-center justify-between gap-2 rounded-2xl bg-white p-4 pl-12"
                       >
                         <li className="pr-2 text-primary">
