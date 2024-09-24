@@ -10,6 +10,7 @@ import Image from "next/image";
 
 const Activities = ({ modules, hidden, colours }) => {
   const [moduleId, setModuleId] = useState(null);
+  const [selectedModule, setSelectedModule] = useState(null)
   console.log(colours);
 
   // const [submodules, setSubmodules] = useState([]);
@@ -22,6 +23,13 @@ const Activities = ({ modules, hidden, colours }) => {
     // if (id) setSubmodules(modules[id]?.subModules);
   };
 
+  const toggle = (i) => {
+    if (selectedModule === i) {
+      return setSelectedModule(null)
+    }
+    setSelectedModule(i)
+  }
+
   return (
     <div className={hidden + " sm:grow"}>
       <h4 className={`h4 pb-4 text-left uppercase text-black`}> Modules</h4>
@@ -30,36 +38,36 @@ const Activities = ({ modules, hidden, colours }) => {
         className={`animate-fade-in flex rounded-[10px] sm:w-[min(632px,100%)]`}
       >
         {modules && !!modules?.length ? (
-          <ol className="body1_b flex h-[500px] w-full cursor-pointer list-decimal flex-col gap-4 overflow-y-auto p-4">
+          <ol className="body1_b flex h-[500px] w-full list-decimal flex-col gap-4 overflow-y-auto p-4 no-scrollbar">
             {modules.map((module, index) => (
               <div
                 key={index}
-                className={`${
-                  module?.moduleId === "2c90c92e91b3466a0191b347c9820000"
-                    ? "text-primary"
-                    : "text-grey_2"
-                } flex flex-col gap-2`}
+                className={`${module?.moduleId === "2c914d4292147b910192147d64e50001"
+                  ? "text-primary"
+                  : "text-grey_2"
+                  } flex flex-col gap-2`}
+                onClick={() => toggle(index)}
               >
                 <button
                   onClick={() =>
                     getSubModules(
-                      module?.moduleId !== "2c90c92e91b3466a0191b347c9820000"
+                      module?.moduleId !== "2c914d4292147b910192147d64e50001"
                         ? null
                         : index,
                     )
                   }
                   className={`flex w-full items-center rounded-2xl bg-white px-4 py-2 text-primary disabled:text-grey_2 md:gap-2`}
                   disabled={
-                    module?.moduleId !== "2c90c92e91b3466a0191b347c9820000"
+                    module?.moduleId !== "2c914d4292147b910192147d64e50001"
                   }
                 >
-                  {module?.moduleId !== "2c90c92e91b3466a0191b347c9820000" && (
+                  {module?.moduleId !== "2c914d4292147b910192147d64e50001" && (
                     <Lock className="mr-2 min-w-10 max-w-10 max-sm:min-w-7 max-sm:max-w-7" />
                   )}
                   <li className="list-inside pr-2 text-left">
                     {module.moduleName}
                   </li>
-                  {module?.moduleId === "2c90c92e91b3466a0191b347c9820000" && (
+                  {module?.moduleId === "2c914d4292147b910192147d64e50001" && (
                     <>
                       <Image
                         src={Free}
@@ -69,13 +77,13 @@ const Activities = ({ modules, hidden, colours }) => {
                         className="mx-auto"
                       />
                       <Varroww
-                        className={`mr-1 w-2 transition-all sm:w-4 md:mr-4 ${index === moduleId ? "rotate-90" : "rotate-180"}`}
+                        className={`mr-1 w-2 transition-all sm:w-4 md:mr-4 ${selectedModule === index ? "rotate-90" : "rotate-180"}`}
                       />
                     </>
                   )}
                 </button>
 
-                {index === moduleId && (
+                {selectedModule === index && (
                   <ol className="flex list-decimal flex-col items-end justify-end gap-5">
                     {/* <Print data={module?.subModules} /> */}
                     {module?.subModules?.map((subModule, index) => (

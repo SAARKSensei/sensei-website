@@ -110,7 +110,7 @@ const Navbar = () => {
               <div className="group absolute left-7 flex align-middle">
                 <DownArrow
                   className="m-4 h-4 -rotate-90 cursor-pointer text-primary transition-all group-hover:rotate-90"
-                  // onClick={toggleDropdown}
+                // onClick={toggleDropdown}
                 />
                 <div className="absolute -right-4 top-10 z-[100] hidden w-max flex-col gap-6 rounded-xl bg-[#26355A] p-2 group-hover:flex md:px-4 md:py-3">
                   {/* <div
