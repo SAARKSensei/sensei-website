@@ -61,7 +61,7 @@ const Page = () => {
       }
     };
     const getChannelIds = (videos) => {
-      const channelIds = videos
+      const channelIds = videos && videos
         .map((item) => item?.snippet?.channelId)
         .join(",");
       return channelIds;
@@ -119,7 +119,7 @@ const Page = () => {
     const channelDetails = await getChannelData(Ids);
 
     // console.log("cd", channelDetails);
-    const vd = await videos.map((video, index) => {
+    const vd = await videos?.map((video, index) => {
       return {
         ...video,
         snippet: {
@@ -247,11 +247,10 @@ const Page = () => {
               <div
                 key={index}
                 onClick={() => handleTagSelect(tag)}
-                className={`border-2 ${
-                  searchQuery.includes(tag)
-                    ? "bg-[#FF8B13] text-white"
-                    : "border-[#2C3D68] text-[#2C3D68]"
-                } cursor-pointer rounded-[18px] px-3 py-2.5 font-Nunito text-base font-semibold`}
+                className={`border-2 ${searchQuery.includes(tag)
+                  ? "bg-[#FF8B13] text-white"
+                  : "border-[#2C3D68] text-[#2C3D68]"
+                  } cursor-pointer rounded-[18px] px-3 py-2.5 font-Nunito text-base font-semibold`}
               >
                 {tag}
               </div>
