@@ -49,7 +49,8 @@ export const config = {
     "/dashboard",
     "/child-details",
     // "/parentingsolutions",
-    // "/parent/:path*",
-    // "/familypage/:path*",
+    "/funactivity/:path*",
+    "/interactive/:path*",
+    "/digital/:path*",
   ],
 };
