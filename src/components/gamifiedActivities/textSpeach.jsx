@@ -67,7 +67,7 @@ const TextReader = ({ text, role }) => {
           >
             {index > 0 &&
               segment.length > 1 &&
-              segment[segment.length - 1] == "." &&
+              (segment[segment.length - 1] == "." || segment[1] == ".") &&
               !isNaN(segment[0]) && <br />}
             {segment.length > 1 &&
               index > 1 &&

@@ -85,7 +85,7 @@ const OurModules = () => {
             </div>
           </div>
           <ClientLink
-            href="/login"
+            href="/dashboard"
             className="button_text btn_lnrbg relative flex w-fit items-center justify-center rounded-full border-none bg-[#2C3D68] px-6 py-4 text-white"
           >
             Sign Up FREE Activity
