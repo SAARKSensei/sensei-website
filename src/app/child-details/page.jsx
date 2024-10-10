@@ -19,9 +19,22 @@ import DeleteIcon from "@/Images/delete-icon.svg";
 import Background from "@/components/miniComps/BackGround.jsx";
 
 const Page = () => {
+
   const [plans, setPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [error, setError] = useState("");
+
+  const [childFormDetails, setChildFormDetails] = useState({
+    childName: "",
+    grade: "",
+    schoolId: "",
+    dateOfBirth: "",
+    activePlanId: "",
+    visitingCounsellor: false,
+    anyMedicalHistory: false,
+  })
+
+  const [planPrice, setPlanPrice] = useState("");
 
   const { data: session, status, update } = useSession();
 
@@ -43,88 +56,95 @@ const Page = () => {
   };
 
   useEffect(() => {
-    // console.log(currentUserData);
-
     getPlans();
   }, []);
+
+  useEffect(() => {
+    setPlanPrice(plans.filter(item => item.id === childFormDetails.activePlanId)[0]?.price)
+  }, [childFormDetails.activePlanId, plans])
+
+  const handleChange = (e) => {
+    const { name, checked, value, type } = e.target;
+    setChildFormDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  }
 
   const createPaymentorder = async (data) => {
     let status;
     try {
-      const res = await axios.post("/payments/create", {
-        // phoneNumber: currentUserData?.phoneNumber,
-        // planId: plans?.id,
-        amount: data?.planPrice,
+      const res = await axios.post("/payments/create-order", {
+        amount: data.planPrice,
         currency: "INR",
-        // "receipt": "rcptid_11",
-        // "paymentCapture": "1"
+        receipt: `${data.childName + " " + plans.filter(item => item.price === data.planPrice)[0].name}`,
       });
+      status = res?.status;
       const orderDetails = res?.data;
-      // console.log("orderDetails", orderDetails);
 
       dispatch(
         setCurrentUserData({
           orderId: orderDetails?.razorpayOrderId,
+          parentId: parentData?.id,
         }),
       );
-      if (orderDetails?.status === "CREATED") {
+      if (orderDetails?.id) {
+        postChildData(data)
+        dispatch(setCurrentChild(data));
+        setChildFormDetails({})
         router.push("/ordersummary");
       }
     } catch (error) {
       alert("Something went wrong");
     }
-    return status;
   };
 
   const saveData = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
     const data = {
-      parentId: session?.user?.parentDetails?.id || 12345,
-      childName: formData.get("childName"),
-      schoolId: formData.get("schoolName"),
-      dateOfBirth: formData.get("date"),
-      visitingCounsellor:
-        formData.get("visitingCounsellor") === "on" ? true : false,
-      anyMedicalHistory: formData.get("medicalHistory") === "on" ? true : false,
+      parentId: parentData?.id,
+      childName: childFormDetails.childName,
+      schoolId: childFormDetails.schoolId,
+      dateOfBirth: childFormDetails.dateOfBirth,
+      visitingCounsellor: childFormDetails.visitingCounsellor,
+      anyMedicalHistory: childFormDetails.anyMedicalHistory,
       medicalHistoryDescription: null,
       bloodGroup: "B+",
       ageGroup: "05-10",
-      activePlanId: "plan-001",
-      phoneNumber: currentUserData?.phoneNumber,
-      grade: formData.get("grade"),
-      planPrice: formData.get("plan"),
+      activePlanId: childFormDetails.activePlanId,
+      phoneNumber: parentData?.phone,
+      grade: childFormDetails.grade,
+      planPrice: planPrice,
     };
-
-    document.forms["childForm"].reset();
-    dispatch(setCurrentChild(data));
     createPaymentorder(data);
   };
-  // const postChildData = async () => {
-  //   try {
-  //     const data = {
-  //       parentUserId: session?.user?.parentDetails?.id,
-  //       childName: child.childName,
-  //       schoolId: child.schoolName,
-  //       dateOfBirth: child.date,
-  //       visitingCounsellor: visitingCounsellor,
-  //       anyMedicalHistory: medicalHistory,
-  //       medicalHistoryDescription: null,
-  //       bloodGroup: "B+",
-  //       grade: child.grade,
-  //     };
-  //     // console.log("data to be sent", data);
-  //     const res = await axios.post(
-  //       `https://sensei-app-c8da1e59e645.herokuapp.com/sensei/api/v1/create/child`,
-  //       data
-  //     );
-  //     console.log("result", res);
-  //     return res;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return error;
-  //   }
-  // };
+
+  const postChildData = async (childData) => {
+    try {
+      const data = {
+        parentId: parentData?.id,
+        childName: childData.childName,
+        schoolId: childData.schoolId,
+        grade: childData.grade,
+        dateOfBirth: childData.dateOfBirth,
+        visitingCounsellor: childData.visitingCounsellor,
+        anyMedicalHistory: childData.anyMedicalHistory,
+        bloodGroup: childData?.bloodGroup,
+        ageGroup: childData?.ageGroup,
+        activePlanId: childData.activePlanId,
+        phoneNumber: Number(childData?.phoneNumber),
+      };
+      const res = await axios.post(
+        `/child-users`,
+        data
+      );
+      console.log("result", res);
+      return res;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
 
   return (
     <div className="h-fit w-screen">
@@ -163,8 +183,8 @@ const Page = () => {
                     id="childName"
                     name="childName"
                     defaultValue={currentUserData?.name}
-                    // value={child.childName}
-                    // onChange={(e) => handleChange("childName", e.target.value)}
+                    value={childFormDetails.childName}
+                    onChange={handleChange}
                     placeholder="Enter full name"
                     className="rounded-md px-6 py-3 outline-none sm:border-2"
                   />
@@ -177,8 +197,8 @@ const Page = () => {
                     required
                     id="grade"
                     name="grade"
-                    // value={child.grade}
-                    // onChange={(e) => handleChange("grade", e.target.value)}
+                    value={childFormDetails.grade}
+                    onChange={handleChange}
                     className="block h-[46px] w-full rounded-md bg-white px-6 py-2 outline-none sm:border-2"
                   >
                     <option value="" disabled hidden>
@@ -202,9 +222,9 @@ const Page = () => {
                     required
                     type="text"
                     id="schoolName"
-                    name="schoolName"
-                    // value={child.schoolName}
-                    // onChange={(e) => handleChange("schoolName", e.target.value)}
+                    name="schoolId"
+                    value={childFormDetails.schoolId}
+                    onChange={handleChange}
                     placeholder="Enter full name"
                     className="rounded-md px-6 py-3 outline-none sm:border-2"
                   />
@@ -217,9 +237,9 @@ const Page = () => {
                     required
                     type="date"
                     id="date"
-                    name="date"
-                    // value={child.date}
-                    // onChange={(e) => handleChange("date", e.target.value)}
+                    name="dateOfBirth"
+                    value={childFormDetails.dateOfBirth}
+                    onChange={handleChange}
                     className="rounded-md px-5 py-2 outline-none sm:border-2"
                   />
                 </div>
@@ -230,16 +250,16 @@ const Page = () => {
                   <select
                     required
                     id="plan"
-                    name="plan"
-                    // value={child.plan}
-                    // onChange={(e) => handleChange("plan", e.target.value)}
+                    name="activePlanId"
+                    value={childFormDetails.activePlanId}
+                    onChange={handleChange}
                     className="mt-2 block rounded-md bg-white px-6 py-2 outline-none sm:w-[272px] sm:border-2"
                   >
                     <option value="" disabled hidden>
                       Select
                     </option>
                     {plans?.map((plan) => (
-                      <option key={plan.id} value={plan?.price}>
+                      <option key={plan.id} value={plan?.id}>
                         {plan?.name}
                       </option>
                     ))}
@@ -250,11 +270,13 @@ const Page = () => {
                     <h4 className="text-sm">Visiting any counsellor:</h4>
                     <label
                       className="switch mb-2"
-                      // onChange={(e) =>
-                      //   handleChange("visitingCounsellor", e.target.value)
-                      // }
                     >
-                      <input type="checkbox" name="visitingCounsellor" />
+                      <input
+                        type="checkbox"
+                        checked={childFormDetails.visitingCounsellor}
+                        onChange={handleChange}
+                        name="visitingCounsellor"
+                      />
                       <span className="slider round"></span>
                     </label>
                   </div>
@@ -262,11 +284,13 @@ const Page = () => {
                     <h4 className="text-sm">Any Medical History</h4>
                     <label
                       className="switch"
-                      // onChange={(e) =>
-                      //   handleChange("medicalHistory", e.target.value)
-                      // }
                     >
-                      <input type="checkbox" name="medicalHistory" />
+                      <input
+                        type="checkbox"
+                        checked={childFormDetails.anyMedicalHistory}
+                        onChange={handleChange}
+                        name="anyMedicalHistory"
+                      />
                       <span className="slider round"></span>
                     </label>
                   </div>
