@@ -21,7 +21,7 @@ const UserDashboard = () => {
   const currentUserData = useSelector((state) => state?.currentUser?.data);
   const fetchSubjectData = async () => {
     const res = await axios.get(`/subjects`).catch((err) => console.log(err));
-    // console.log(res?.data);
+    console.log(res?.data);
     if (res?.data) {
       setSubjectData(res.data);
       setModules(res?.data[0]?.modules);
@@ -32,7 +32,7 @@ const UserDashboard = () => {
     setSubjectId(sid);
     setModules(subjectData[sid]?.modules);
     const col = getSubColour(subjectData[sid]?.subjectName);
-    // console.log("col", subjectData[sid]?.subjectId, col);
+    console.log("col", subjectData[sid]?.subjectId, col);
 
     setColours(col);
   };

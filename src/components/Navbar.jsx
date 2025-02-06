@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import { subjects } from "@/utils/data";
 import { slug } from "@/utils/logic";
 // import { useSelector } from "react-redux";
+
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session, status } = useSession();

@@ -9,43 +9,43 @@ import Free from "@/assets/free.gif";
 import Image from "next/image";
 
 const Activities = ({ modules, hidden, colours }) => {
+  
   const [moduleId, setModuleId] = useState(null);
-  const [selectedModule, setSelectedModule] = useState(null)
-  console.log(colours);
-
-  // const [submodules, setSubmodules] = useState([]);
+  const [selectedModule, setSelectedModule] = useState(null);
   const router = useRouter();
 
-  const getSubModules = (id) => {
-    setModuleId(id);
-    // console.log(modules[id]?.subModules);
+  useEffect(() => {
+    // Reset selectedModule and moduleId when modules change
+    setSelectedModule(null);
+    setModuleId(null);
+  }, [modules]);
 
-    // if (id) setSubmodules(modules[id]?.subModules);
+  const getSubModules = (id) => {
+    setSelectedModule(id);
+    setModuleId(id);
   };
 
   const toggle = (i) => {
-    if (selectedModule === i) {
-      return setSelectedModule(null)
-    }
-    setSelectedModule(i)
-  }
+    setSelectedModule(selectedModule === i ? null : i);
+  };
 
   return (
     <div className={hidden + " sm:grow"}>
-      <h4 className={`h4 pb-4 text-left uppercase text-black`}> Modules</h4>
+      <h4 className="h4 pb-4 text-left uppercase text-black">Modules</h4>
       <div
         style={{ background: colours?.innerSubjectDivColor }}
-        className={`animate-fade-in flex rounded-[10px] sm:w-[min(632px,100%)]`}
+        className="animate-fade-in flex rounded-[10px] sm:w-[min(632px,100%)]"
       >
-        {modules && !!modules?.length ? (
+        {modules && modules.length ? (
           <ol className="body1_b flex h-[500px] w-full list-decimal flex-col gap-4 overflow-y-auto p-4 no-scrollbar">
             {modules.map((module, index) => (
               <div
                 key={index}
-                className={`${module?.moduleId === "2c914d4292147b910192147d64e50001"
-                  ? "text-primary"
-                  : "text-grey_2"
-                  } flex flex-col gap-2`}
+                className={`${
+                  module?.moduleId === "2c914d4292147b910192147d64e50001"
+                    ? "text-primary"
+                    : "text-grey_2"
+                } flex flex-col gap-2`}
                 onClick={() => toggle(index)}
               >
                 <button
@@ -53,10 +53,10 @@ const Activities = ({ modules, hidden, colours }) => {
                     getSubModules(
                       module?.moduleId !== "2c914d4292147b910192147d64e50001"
                         ? null
-                        : index,
+                        : index
                     )
                   }
-                  className={`flex w-full items-center rounded-2xl bg-white px-4 py-2 text-primary disabled:text-grey_2 md:gap-2`}
+                  className="flex w-full items-center rounded-2xl bg-white px-4 py-2 text-primary disabled:text-grey_2 md:gap-2"
                   disabled={
                     module?.moduleId !== "2c914d4292147b910192147d64e50001"
                   }
@@ -77,7 +77,9 @@ const Activities = ({ modules, hidden, colours }) => {
                         className="mx-auto"
                       />
                       <Varroww
-                        className={`mr-1 w-2 transition-all sm:w-4 md:mr-4 ${selectedModule === index ? "rotate-90" : "rotate-180"}`}
+                        className={`mr-1 w-2 transition-all sm:w-4 md:mr-4 ${
+                          selectedModule === index ? "rotate-90" : "rotate-180"
+                        }`}
                       />
                     </>
                   )}
@@ -85,11 +87,10 @@ const Activities = ({ modules, hidden, colours }) => {
 
                 {selectedModule === index && (
                   <ol className="flex list-decimal flex-col items-end justify-end gap-5">
-                    {/* <Print data={module?.subModules} /> */}
-                    {module?.subModules?.map((subModule, index) => (
+                    {module?.subModules?.map((subModule, subIndex) => (
                       <Link
                         href={`/funactivity/${subModule.subModuleId}`}
-                        key={index}
+                        key={subIndex}
                         onClick={(e) => e.stopPropagation()}
                         className="flex w-[80%] min-w-max items-center justify-between gap-2 rounded-2xl bg-white p-4 pl-12"
                       >

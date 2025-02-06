@@ -21,7 +21,7 @@ const page = () => {
   const dispatch = useDispatch();
 
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl = "/dashboard";
   const router = useRouter();
 
   const handleClick = async () => {

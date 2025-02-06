@@ -24,7 +24,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   //Getting phone nuomber from search params
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = "/";
   const [orderId, setOrderId] = useState(currentUserData?.orderId);
   const parentData = useSelector((state) => state?.parentsData?.data)
 
