@@ -44,7 +44,7 @@ const HeroSection = () => {
       </div>
       <div className="relative mx-auto h-64 w-full max-w-full overflow-hidden rounded-[20px] bg-slate-700 sm:h-80 md:h-96 lg:h-96 lg:max-w-[634px]">
         <iframe
-          src="https://www.youtube.com/embed/IDGiY6r2HOw?autoplay=1&rel=0"
+          src="https://www.youtube.com/embed/b2WREJyyow8?autoplay=1&rel=0"
           className="absolute left-0 top-0 h-full w-full"
           allow="autoplay"
           allowFullScreen
