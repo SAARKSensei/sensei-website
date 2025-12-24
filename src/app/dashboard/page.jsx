@@ -80,75 +80,152 @@ const getColor = (i) => {
 
 
  
+  // const fetchSubjectData = async () => {
+  //   setLoading(true);
+  //   setError(null);
+
+  //   try {
+  //     if (status === "loading") return;
+  //     if (status === "unauthenticated") throw new Error("User not authenticated");
+
+  //     const email = session?.user?.email;
+  //     if (!email) throw new Error("No email found in session");
+
+  //     console.log("Fetching subject data for:", email);
+
+  //     let hasUserData = false;
+  //     try {
+  //       const res = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
+  //       );
+  //       console.log("User data response:", res.data);
+
+  //       if (res.data?.pricingPlan) {
+  //         if (res.data.pricingPlan.name === "No active plan found for this user.") {
+  //           setPlan("Upgrade Now!");
+  //         } else {
+  //           setPlan(res.data.pricingPlan.name);
+  //         }
+  //       }
+
+  //       if (res.data.childName) {
+  //         setChildName(res.data.childName);
+  //       } else {
+  //         setChildName(session?.user?.name || "User");
+  //       }
+
+  //       if (res?.data?.pricingPlan?.subjects && res.data.pricingPlan.subjects.length > 0) {
+  //         console.log("Setting user-specific subjects:", res.data.pricingPlan.subjects);
+  //         setSubjectData(res.data.pricingPlan.subjects);
+  //         setCustomUserData(true);
+  //         setLocked(false);
+  //         setModules(res.data.pricingPlan.subjects[0]?.modules || []);
+  //         setColours(getSubColour(res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""));
+  //         hasUserData = true;
+  //       }
+  //     } catch (userDataError) {
+  //       console.error("Error fetching user-specific data:", userDataError);
+  //     }
+
+  //     if (!hasUserData) {
+  //       try {
+  //         const res = await axios.get(SUBJECTS_API);
+  //         console.log("Subjects response:", res?.data);
+  //         if (res?.data && res.data.length > 0) {
+  //           setSubjectData(res.data);
+  //           setLocked(true);
+  //           setModules(res.data[0]?.modules || []);
+  //           setColours(getSubColour(res.data[0]?.subjectName || ""));
+  //         }
+  //       } catch (generalSubjectsError) {
+  //         console.error("Error fetching subjects:", generalSubjectsError);
+  //         throw new Error("Failed to fetch any subject data");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error in fetchSubjectData:", error);
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const fetchSubjectData = async () => {
-    setLoading(true);
-    setError(null);
+  setLoading(true);
+  setError(null);
+
+  try {
+    if (status === "loading") return;
+    if (status === "unauthenticated") throw new Error("User not authenticated");
+
+    const email = session?.user?.email;
+    if (!email) throw new Error("No email found in session");
+
+    console.log("Fetching pricing plan for:", email);
 
     try {
-      if (status === "loading") return;
-      if (status === "unauthenticated") throw new Error("User not authenticated");
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
+      );
 
-      const email = session?.user?.email;
-      if (!email) throw new Error("No email found in session");
+      console.log("Pricing plan response:", res.data);
 
-      console.log("Fetching subject data for:", email);
-
-      let hasUserData = false;
-      try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
-        );
-        console.log("User data response:", res.data);
-
-        if (res.data?.pricingPlan) {
-          if (res.data.pricingPlan.name === "No active plan found for this user.") {
-            setPlan("Upgrade Now!");
-          } else {
-            setPlan(res.data.pricingPlan.name);
-          }
-        }
-
-        if (res.data.childName) {
-          setChildName(res.data.childName);
+      if (res.data?.pricingPlan?.name) {
+        if (res.data.pricingPlan.name === "No active plan found for this user.") {
+          setPlan("Upgrade Now!");
         } else {
-          setChildName(session?.user?.name || "User");
-        }
-
-        if (res?.data?.pricingPlan?.subjects && res.data.pricingPlan.subjects.length > 0) {
-          console.log("Setting user-specific subjects:", res.data.pricingPlan.subjects);
-          setSubjectData(res.data.pricingPlan.subjects);
-          setCustomUserData(true);
-          setLocked(false);
-          setModules(res.data.pricingPlan.subjects[0]?.modules || []);
-          setColours(getSubColour(res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""));
-          hasUserData = true;
-        }
-      } catch (userDataError) {
-        console.error("Error fetching user-specific data:", userDataError);
-      }
-
-      if (!hasUserData) {
-        try {
-          const res = await axios.get(SUBJECTS_API);
-          console.log("Subjects response:", res?.data);
-          if (res?.data && res.data.length > 0) {
-            setSubjectData(res.data);
-            setLocked(true);
-            setModules(res.data[0]?.modules || []);
-            setColours(getSubColour(res.data[0]?.subjectName || ""));
-          }
-        } catch (generalSubjectsError) {
-          console.error("Error fetching subjects:", generalSubjectsError);
-          throw new Error("Failed to fetch any subject data");
+          setPlan(res.data.pricingPlan.name);
         }
       }
-    } catch (error) {
-      console.error("Error in fetchSubjectData:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
+
+      if (res.data?.childName) {
+        setChildName(res.data.childName);
+      } else {
+        setChildName(session?.user?.name || "User");
+      }
+
+      if (res.data?.pricingPlan?.subjects?.length > 0) {
+        setSubjectData(res.data.pricingPlan.subjects);
+        setCustomUserData(true);
+        setLocked(false);
+        setModules(res.data.pricingPlan.subjects[0]?.modules || []);
+        setColours(
+          getSubColour(
+            res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""
+          )
+        );
+        return; // User has an active plan → stop here
+      }
+    } catch (err) {
+      // 403 = user has no active plan → NOT an error
+      if (err.response?.status !== 403) {
+        throw err;
+      }
+      console.log("User has no active plan — loading free subjects");
     }
-  };
+
+    // Load free / default subjects
+    const res = await axios.get(SUBJECTS_API);
+
+    if (res?.data?.length > 0) {
+      setSubjectData(res.data);
+      setLocked(true);
+      setCustomUserData(false);
+      setPlan("Upgrade Now!");
+      setModules(res.data[0]?.modules || []);
+      setColours(getSubColour(res.data[0]?.subjectName || ""));
+    } else {
+      throw new Error("No default subjects found");
+    }
+
+  } catch (error) {
+    console.error("Dashboard load failed:", error);
+    setError("Unable to load your dashboard. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchSubjectData();
