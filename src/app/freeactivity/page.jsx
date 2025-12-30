@@ -13,7 +13,7 @@ export const Home = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `/submodules/ff80818195387c6d019538830e99002f`,
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/submodules/ff80818195387c6d0195387d8ce80002`,
           );
           setactivities(response.data);
           console.log(response.data);

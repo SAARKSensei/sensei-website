@@ -71,7 +71,7 @@ const router = useRouter();
     [normalize("Self and Social Awareness")]: (socialImg && socialImg.src) || socialImg,
     [normalize("Moral Guidance and Ethics")]: (ethicsImg && ethicsImg.src) || ethicsImg,
   };
-  const colors = ["#4AA6FF", "#EC5F3D", "#F0ABA4", "#4B926F"];
+  const colors = ["#4AA6FF",  "#F0ABA4", "#4B926F","#EC5F3D"];
 
 const getColor = (i) => {
   return colors[i % colors.length];
