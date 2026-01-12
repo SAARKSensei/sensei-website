@@ -25,18 +25,7 @@ const Page = ({ params: { sub } }) => {
   const closeModal = () => {
     setModalContent(null);
   };
- useEffect(() => {
-  const mythFact = {
-    id: "self-social-awareness-1",
-    text: "Talking about emotions is for the weak.",
-    answer: "myth",
-  };
-
-  localStorage.setItem(
-    "myth-fact-data-self-social-awareness",
-    JSON.stringify(mythFact)
-  );
-}, []);
+ 
 const mythFactQuestions = [
   { text: "Talking about emotions is for the weak.", answer: "myth" },
   { text: "Communicating feelings makes you stronger as you can manage what you understand.", answer: "fact" },
