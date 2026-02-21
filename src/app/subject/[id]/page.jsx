@@ -172,7 +172,7 @@ export default function SubjectPage() {
       </h1>
 
       <Link href="/child-details" 
-            className="bg-white text-black font-Nunito font-semibold rounded-[40px] px-6 py-3 text-[16px] shadow-md w-fit">
+            className="bg-white text-black font-Nunito font-bold rounded-[40px] px-6 py-3 text-[20px] shadow-md w-fit">
         Enroll Your Child
       </Link>
 

@@ -8,9 +8,9 @@ import Image from "next/image";
 import Lock from "@/assets/in-Use/lock.svg?url"; // ✅ your lock icon
 
 // Arrow Icon
-const ArrowSvg = ({ className }) => (
+const ArrowSvg = ({ className, isOpen }) => (
   <svg
-    className={className}
+    className={`${className} transition-transform duration-300 ${isOpen ? 'rotate-90' : ''}`}
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -117,17 +117,21 @@ export default function Activities({
                     </div>
 
                     {/* RIGHT SIDE – ARROW OR LOCK ICON */}
-                    <div className="flex-shrink-0 ml-4">
-                      {isDisabled ? (
-                        <Image
-                          src={Lock}
-                          alt="Locked"
-                          className="w-5 h-5 opacity-60"
-                        />
-                      ) : (
-                        <ArrowSvg className={`w-8 h-8 ${arrowColor}`} />
-                      )}
-                    </div>
+                    {/* RIGHT SIDE – ARROW OR LOCK ICON */}
+<div className="flex-shrink-0 ml-4">
+  {isDisabled ? (
+    <Image
+      src={Lock}
+      alt="Locked"
+      className="w-5 h-5 opacity-60"
+    />
+  ) : (
+    <ArrowSvg 
+      className={`w-8 h-8 ${arrowColor}`}
+      isOpen={isOpen}
+    />
+  )}
+</div>
                   </button>
 
                   {/* SUBMODULES */}

@@ -1,55 +1,252 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Subject from "@/components/Modules/Subject";
-import Background1 from "@/components/miniComps/BackGround.jsx";
-import { getSubColour } from "@/utils/logic";
-import Activities from "@/components/Modules/Activities";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import Footer from "@/components/Footer";
-import { ArrowLeft } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Btopology from "@/assets/in-Use/BTopology.svg?url";
-import TRTopology from "@/assets/in-Use/TRTopology.svg?url";
-import CStar from "@/assets/in-Use/CStar.svg?url";
-import LStar from "@/assets/in-Use/LStar.svg?url";
-import BLStar from "@/assets/in-Use/BLStar.svg?url";
-import emotionalImg from "@/assets/in-Use/emotionalimg.svg?url";
-import trialImg from "@/assets/in-Use/trialimg.svg?url";
-import socialImg from "@/assets/in-Use/socialimg.svg?url";
-import ethicsImg from "@/assets/in-Use/ethicsimg.svg?url";
-import Person1 from "@/assets/people/person1.svg?url";
-import Person2 from "@/assets/people/person2.svg?url";
-import Person3 from "@/assets/people/person3.svg?url";
-import Person4 from "@/assets/people/person4.svg?url";
- 
+import axios from "axios";
+import Image from "next/image";
+import nodataimage from "@/assets/in-Use/nodataimg.svg?url";
+import {
+  Home, BookOpen, FileText, User,
+  ArrowRight, Heart, ChevronRight, Clock,
+} from "lucide-react";
+import SubjectView from "@/components/SubjectView"; // ← inline subject view (no page nav)
 
+const DASHBOARD_ENABLED = true;
 
+// ─── Card background gradients (per-subject cycling) ────────────────────────
+const CARD_GRADIENTS = [
+  "from-[#B8D4F5] to-[#D4E8FF]",
+  "from-[#F5C6C6] to-[#FFE4D6]",
+  "from-[#C6E8D0] to-[#D4F5E0]",
+  "from-[#F5E6B8] to-[#FFF3CC]",
+  "from-[#E8C6F5] to-[#F3D4FF]",
+];
+const CARD_NAME_COLORS = [
+  "text-[#2C7BB5]",
+  "text-[#E8734A]",
+  "text-[#2C9E5A]",
+  "text-[#B5880E]",
+  "text-[#8B4FB5]",
+];
+
+// ─── Maintenance Page ────────────────────────────────────────────────────────
+const MaintenancePage = () => (
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
+    <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+      <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <span className="text-4xl">🔧</span>
+      </div>
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">Under Maintenance</h1>
+      <p className="text-gray-600 mb-6">
+        Were currently upgrading our system to serve you better. Please check back soon!
+      </p>
+      <div className="text-sm text-gray-500">Expected completion: Soon</div>
+    </div>
+  </div>
+);
+
+// ─── No Subjects Placeholder ─────────────────────────────────────────────────
+const NoSubjectsFound = () => (
+  <div className="flex flex-col items-center pt-10 pb-4 gap-7 ml-8">
+    <div className="flex flex-col items-center gap-3 w-[249px]">
+      <h2 className="text-[#FF8B13] text-lg font-extrabold text-center uppercase leading-6 tracking-wide">
+        No subjects found
+      </h2>
+      <p className="text-[#999999] text-sm font-bold text-center leading-5">
+        Enroll to a subject to start, still facing issue mail to connect@sensei.org.in
+      </p>
+    </div>
+    <Image src={nodataimage} alt="No subjects found" width={249} height={163} className="object-contain" />
+  </div>
+);
+
+// ─── Subject Card (Figma carousel style) ────────────────────────────────────
+const SubjectCard = ({ subject, onClick, index = 0 }) => {
+  const {
+    name                  = "Subject Name",
+    thumbnail             = "",
+    interactiveActivities = 0,
+    gamifiedActivities    = 0,
+    coins                 = 0,
+  } = subject;
+
+  const gradientClass  = CARD_GRADIENTS[index % CARD_GRADIENTS.length];
+  const nameColorClass = CARD_NAME_COLORS[index % CARD_NAME_COLORS.length];
+
+  return (
+    <div
+      onClick={onClick}
+      className="flex-shrink-0 w-[270px] min-h-[385px] bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer border border-gray-100"
+    >
+      {/* Illustration area */}
+      <div className={`relative h-[220px] bg-gradient-to-br ${gradientClass} flex items-center justify-center overflow-hidden`}>
+        {thumbnail ? (
+          <Image src={thumbnail} alt={name} fill className="object-cover" />
+        ) : (
+          <div className="w-28 h-28 rounded-full bg-white/40 flex items-center justify-center">
+            <span className="text-5xl">📚</span>
+          </div>
+        )}
+        <button
+          onClick={(e) => e.stopPropagation()}
+          className="absolute bottom-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-sm hover:scale-110 transition-transform"
+        >
+          <Heart className="w-4 h-4 text-pink-400" />
+        </button>
+      </div>
+
+      {/* Info */}
+      <div className="px-4 pt-3 pb-4">
+        <h3 className={`text-[15px] font-bold leading-tight mb-2 line-clamp-2 ${nameColorClass}`}>
+          {name}
+        </h3>
+        <div className="text-[12px] text-gray-600 mb-0.5">
+          <span className="font-medium">Interactive Activity : </span>
+          <span className="font-bold text-[#FF8B13]">{interactiveActivities}+</span>
+        </div>
+        <div className="text-[12px] text-gray-600 mb-3">
+          <span className="font-medium">Gamified Activity : </span>
+          <span className="font-bold text-[#FF8B13]">{gamifiedActivities}+</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="flex -space-x-2">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white"
+                style={{ background: "linear-gradient(135deg, #F8BF3B, #FF8B13)" }}
+              >
+                ✦
+              </div>
+            ))}
+          </div>
+          <span className="text-[11px] font-bold text-gray-500 ml-1">+{coins}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── Recent Activity Item — exact Figma measurements ────────────────────────
+// Card: 318×122px, padding 16px, gap 12px, white bg, shadow, radius 8px
+// Thumbnail: 112×69px, radius 8px
+// Text area: 162px wide, gap 4px
+// Duration row: height 20px, gap 4px — clock icon 20×20 white bg radius 3px orange border
+// Title: Nunito 700 16px lh22 tracking -0.02em capitalize #333333
+// Subtitle: Nunito 400 12px lh18 tracking -0.02em #333333
+const RecentItem = ({ activity }) => {
+  const {
+    thumbnail = "",
+    duration  = "15 Mins.",
+    title     = "Activity Title",
+    subtitle  = "",
+  } = activity;
+
+  return (
+    <div
+      className="flex flex-row items-center rounded-lg bg-white cursor-pointer hover:shadow-md transition-shadow"
+      style={{
+        padding: "16px",
+        gap: "12px",
+        boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
+        borderRadius: "8px",
+        width: "318px",
+        minHeight: "122px",
+      }}
+    >
+      {/* Thumbnail — 112 × 69 px */}
+      <div
+        className="flex-shrink-0 bg-gradient-to-br from-blue-100 to-pink-100 relative overflow-hidden"
+        style={{ width: "112px", height: "69px", borderRadius: "8px" }}
+      >
+        {thumbnail ? (
+          <Image src={thumbnail} alt={title} fill className="object-cover" />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-2xl">🎭</div>
+        )}
+      </div>
+
+      {/* Text area — flex-grow, gap 4px */}
+      <div className="flex flex-col items-start flex-1 min-w-0" style={{ gap: "4px" }}>
+
+        {/* Duration row — height 20px, gap 4px */}
+        <div className="flex flex-row items-center" style={{ gap: "4px", height: "20px" }}>
+          {/* Clock icon container — 20×20, white bg, radius 3px */}
+          <div
+            className="flex items-center justify-center flex-shrink-0"
+            style={{
+              width: "20px",
+              height: "20px",
+              background: "#FFFFFF",
+              borderRadius: "3px",
+              padding: "1.125px",
+            }}
+          >
+            {/* Clock SVG with orange border as per Figma */}
+            <Clock
+              className="flex-shrink-0"
+              style={{ width: "14px", height: "14px", color: "#FF8B13" }}
+              strokeWidth={1.5}
+            />
+          </div>
+          {/* Duration text — Nunito 600 14px #333333 tracking -0.02em */}
+          <span
+            style={{
+              fontFamily: "Nunito, sans-serif",
+              fontWeight: 600,
+              fontSize: "14px",
+              lineHeight: "14px",
+              letterSpacing: "-0.02em",
+              color: "#333333",
+            }}
+          >
+            {duration}
+          </span>
+        </div>
+
+        {/* Activity name — Nunito 700 16px lh22 tracking -0.02em capitalize #333333 */}
+        <p
+          className="line-clamp-2"
+          style={{
+            fontFamily: "Nunito, sans-serif",
+            fontWeight: 700,
+            fontSize: "16px",
+            lineHeight: "22px",
+            letterSpacing: "-0.02em",
+            textTransform: "capitalize",
+            color: "#333333",
+            width: "162px",
+          }}
+        >
+          {title}
+        </p>
+
+        {/* Subtitle — Nunito 400 12px lh18 tracking -0.02em #333333 */}
+        {subtitle && (
+          <span
+            className="line-clamp-1"
+            style={{
+              fontFamily: "Nunito, sans-serif",
+              fontWeight: 400,
+              fontSize: "12px",
+              lineHeight: "18px",
+              letterSpacing: "-0.02em",
+              color: "#333333",
+            }}
+          >
+            {subtitle}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ─── Main Dashboard ───────────────────────────────────────────────────────────
 const UserDashboard = () => {
   const { data: session, status } = useSession();
-  const [modules, setModules] = useState([]);
-  const [colours, setColours] = useState({});
-  const [locked, setLocked] = useState(true);
-  const [subjectId, setSubjectId] = useState(0);
-  const [subjectData, setSubjectData] = useState([]);
-  const [customUserData, setCustomUserData] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [plan, setPlan] = useState("");
-  const [childName, setChildName] = useState("");
-
-  const [surveyDataNeedAttention, setSurveyDataNeedAttention] = useState([]);
-  const [surveyDataStrong, setSurveyDataStrong] = useState([]);
-  // add this with your other useState declarations
-const [surveyDataDeveloping, setSurveyDataDeveloping] = useState([]);
-const router = useRouter();
-
-
-
-  const SUBJECTS_API = process.env.NEXT_PUBLIC_API_SUBJECTS;
+  const router = useRouter();
+  const carouselRef = useRef(null);
 
   const selectModule = (sid) => {
     setSubjectId(sid);
@@ -80,687 +277,433 @@ const getColor = (i) => {
 
 
  
-  // const fetchSubjectData = async () => {
-  //   setLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     if (status === "loading") return;
-  //     if (status === "unauthenticated") throw new Error("User not authenticated");
-
-  //     const email = session?.user?.email;
-  //     if (!email) throw new Error("No email found in session");
-
-  //     console.log("Fetching subject data for:", email);
-
-  //     let hasUserData = false;
-  //     try {
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
-  //       );
-  //       console.log("User data response:", res.data);
-
-  //       if (res.data?.pricingPlan) {
-  //         if (res.data.pricingPlan.name === "No active plan found for this user.") {
-  //           setPlan("Upgrade Now!");
-  //         } else {
-  //           setPlan(res.data.pricingPlan.name);
-  //         }
-  //       }
-
-  //       if (res.data.childName) {
-  //         setChildName(res.data.childName);
-  //       } else {
-  //         setChildName(session?.user?.name || "User");
-  //       }
-
-  //       if (res?.data?.pricingPlan?.subjects && res.data.pricingPlan.subjects.length > 0) {
-  //         console.log("Setting user-specific subjects:", res.data.pricingPlan.subjects);
-  //         setSubjectData(res.data.pricingPlan.subjects);
-  //         setCustomUserData(true);
-  //         setLocked(false);
-  //         setModules(res.data.pricingPlan.subjects[0]?.modules || []);
-  //         setColours(getSubColour(res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""));
-  //         hasUserData = true;
-  //       }
-  //     } catch (userDataError) {
-  //       console.error("Error fetching user-specific data:", userDataError);
-  //     }
-
-  //     if (!hasUserData) {
-  //       try {
-  //         const res = await axios.get(SUBJECTS_API);
-  //         console.log("Subjects response:", res?.data);
-  //         if (res?.data && res.data.length > 0) {
-  //           setSubjectData(res.data);
-  //           setLocked(true);
-  //           setModules(res.data[0]?.modules || []);
-  //           setColours(getSubColour(res.data[0]?.subjectName || ""));
-  //         }
-  //       } catch (generalSubjectsError) {
-  //         console.error("Error fetching subjects:", generalSubjectsError);
-  //         throw new Error("Failed to fetch any subject data");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error in fetchSubjectData:", error);
-  //     setError(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const fetchSubjectData = async () => {
-  setLoading(true);
-  setError(null);
-
-  try {
-    if (status === "loading") return;
-    if (status === "unauthenticated") throw new Error("User not authenticated");
-
-    const email = session?.user?.email;
-    if (!email) throw new Error("No email found in session");
-
-    console.log("Fetching pricing plan for:", email);
+    setLoading(true);
+    setError(null);
 
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
-      );
+      if (status === "loading") return;
+      if (status === "unauthenticated") throw new Error("User not authenticated");
 
-      console.log("Pricing plan response:", res.data);
+      const email = session?.user?.email;
+      if (!email) throw new Error("No email found in session");
 
-      if (res.data?.pricingPlan?.name) {
-        if (res.data.pricingPlan.name === "No active plan found for this user.") {
-          setPlan("Upgrade Now!");
+      console.log("Fetching subject data for:", email);
+
+      let hasUserData = false;
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
+        );
+        console.log("User data response:", res.data);
+
+        if (res.data?.pricingPlan) {
+          if (res.data.pricingPlan.name === "No active plan found for this user.") {
+            setPlan("Upgrade Now!");
+          } else {
+            setPlan(res.data.pricingPlan.name);
+          }
+        }
+
+        if (res.data.childName) {
+          setChildName(res.data.childName);
         } else {
-          setPlan(res.data.pricingPlan.name);
+          setChildName(session?.user?.name || "User");
+        }
+
+        if (res?.data?.pricingPlan?.subjects && res.data.pricingPlan.subjects.length > 0) {
+          console.log("Setting user-specific subjects:", res.data.pricingPlan.subjects);
+          setSubjectData(res.data.pricingPlan.subjects);
+          setCustomUserData(true);
+          setLocked(false);
+          setModules(res.data.pricingPlan.subjects[0]?.modules || []);
+          setColours(getSubColour(res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""));
+          hasUserData = true;
+        }
+      } catch (userDataError) {
+        console.error("Error fetching user-specific data:", userDataError);
+      }
+
+      if (!hasUserData) {
+        try {
+          const res = await axios.get(SUBJECTS_API);
+          console.log("Subjects response:", res?.data);
+          if (res?.data && res.data.length > 0) {
+            setSubjectData(res.data);
+            setLocked(true);
+            setModules(res.data[0]?.modules || []);
+            setColours(getSubColour(res.data[0]?.subjectName || ""));
+          }
+        } catch (generalSubjectsError) {
+          console.error("Error fetching subjects:", generalSubjectsError);
+          throw new Error("Failed to fetch any subject data");
         }
       }
-
-      if (res.data?.childName) {
-        setChildName(res.data.childName);
-      } else {
-        setChildName(session?.user?.name || "User");
-      }
-
-      if (res.data?.pricingPlan?.subjects?.length > 0) {
-        setSubjectData(res.data.pricingPlan.subjects);
-        setCustomUserData(true);
-        setLocked(false);
-        setModules(res.data.pricingPlan.subjects[0]?.modules || []);
-        setColours(
-          getSubColour(
-            res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""
-          )
-        );
-        return; // User has an active plan → stop here
-      }
-    } catch (err) {
-      // 403 = user has no active plan → NOT an error
-      if (err.response?.status !== 403) {
-        throw err;
-      }
-      console.log("User has no active plan — loading free subjects");
+    } catch (error) {
+      console.error("Error in fetchSubjectData:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // Load free / default subjects
-    const res = await axios.get(SUBJECTS_API);
+    fetchSubjects();
 
-    if (res?.data?.length > 0) {
-      setSubjectData(res.data);
-      setLocked(true);
-      setCustomUserData(false);
-      setPlan("Upgrade Now!");
-      setModules(res.data[0]?.modules || []);
-      setColours(getSubColour(res.data[0]?.subjectName || ""));
-    } else {
-      throw new Error("No default subjects found");
-    }
+    const storedStrong = localStorage.getItem("SenseiStrongSkills");
+    const storedNeeds  = localStorage.getItem("SenseiNeedAttentionSkills");
+    if (storedStrong) setStrongSkills(JSON.parse(storedStrong));
+    if (storedNeeds)  setNeedAttentionSkills(JSON.parse(storedNeeds));
 
-  } catch (error) {
-    console.error("Dashboard load failed:", error);
-    setError("Unable to load your dashboard. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+    // Fetch recent activities from API (only real user data — no placeholders)
+    const fetchRecentActivities = async () => {
+      setRecentLoading(true);
+      try {
+        const email = session?.user?.email;
+        if (email) {
+          const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/recent-activities?email=${email}`
+          );
+          const activities = res.data?.activities || res.data || [];
+          setRecentActivities(Array.isArray(activities) ? activities : []);
+        }
+      } catch (err) {
+        console.error("Error fetching recent activities:", err);
+        // Fallback: try localStorage
+        const storedRecent = localStorage.getItem("SenseiRecentActivities");
+        if (storedRecent) {
+          try { setRecentActivities(JSON.parse(storedRecent)); } catch {}
+        }
+      } finally {
+        setRecentLoading(false);
+      }
+    };
 
-
-  useEffect(() => {
-    fetchSubjectData();
+    fetchRecentActivities();
   }, [status, session]);
 
-  useEffect(() => {
-    const surveyDataNeedAttention = localStorage.getItem("SenseiNeedAttentionSkills");
-    const surveyDataStrong = localStorage.getItem("SenseiStrongSkills");
-    if (surveyDataNeedAttention) {
-      setSurveyDataNeedAttention(JSON.parse(surveyDataNeedAttention));
+  // ── Subject navigation ─────────────────────────────────────────────────────
+  const handleSubjectClick = (subject) => {
+    // Store in localStorage as before (for backwards compatibility)
+    if (subject.modules) localStorage.setItem("modules", JSON.stringify(subject.modules));
+    if (subject.colors)  localStorage.setItem("colors",  JSON.stringify(subject.colors));
+    if (subject.locked)  localStorage.setItem("locked",  JSON.stringify(subject.locked));
+    // ← Switch to inline subject view instead of navigating to a new page
+    setSelectedSubject(subject);
+  };
+
+  // ── Carousel scroll ────────────────────────────────────────────────────────
+  const scrollCarousel = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: 290, behavior: "smooth" });
     }
-    if (surveyDataStrong) {
-      setSurveyDataStrong(JSON.parse(surveyDataStrong));
-    }
-  }, []);
-  useEffect(() => {
-  const strong = localStorage.getItem("SenseiStrongSkills");
-  const need = localStorage.getItem("SenseiNeedAttentionSkills");
-  const dev = localStorage.getItem("SenseiDevelopingSkills"); // new key
+  };
 
-  if (strong) setSurveyDataStrong(JSON.parse(strong));
-  if (need) setSurveyDataNeedAttention(JSON.parse(need));
-  if (dev) setSurveyDataDeveloping(JSON.parse(dev));
-}, []);
+  // ── Filter logic ───────────────────────────────────────────────────────────
+  const filteredSubjects =
+    activeFilter === "All"
+      ? subjectData
+      : subjectData.filter(() => true);
 
-
+  // ── Guards ─────────────────────────────────────────────────────────────────
+  if (!DASHBOARD_ENABLED) return <MaintenancePage />;
   if (status === "loading" || loading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="text-xl">Loading...</div>
-      </div>
-    );
-  }
-
-  if (status === "unauthenticated" || error) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="text-xl text-red-500">
-          {error || "Please sign in to access this page"}
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-600 font-semibold">Loading…</p>
         </div>
       </div>
     );
   }
 
-    return (
-    <>
-      <div
-        className="relative flex flex-col items-center w-full min-h-screen py-10  bg-[#FFFBF0]"
-       
-      >
-         <Image
-  src={CStar}
-  alt="star"
-  width={40}
-  height={40}
-  className="absolute left-[590px] top-[150px]"
-/>
- <Image
-  src={LStar}
-  alt="star"
-  width={25}
-  height={25}
-  className="absolute right-[220px] top-[130px]"
-/>
- <Image
-  src={BLStar}
-  alt="star"
-  width={50}
-  height={50}
-  className="absolute left-[100px] bottom-[190px]"
-/>
-        
-         <img
-    src={TRTopology.src}
-    alt="bg"
-    className="absolute top-10 right-20 w-[1000px] opacity-100 pointer-events-none select-none"
-  />
-   <img
-    src={Btopology.src}
-    alt="bg"
-    className="absolute bottom-[-300px] right-30 w-[900px] opacity-150 pointer-events-none select-none"
-  />
-        
-        
-         <button
-          onClick={() => router.back()}
-          className="absolute top-[100px] left-[60px] flex items-center gap-2 text-[#FF8B13] hover:text-[#e1760c] transition-colors"
-        >
-          <ArrowLeft size={22} strokeWidth={2.5} />
-          <span className="font-semibold text-[20px] font-Nunito leading-[28px]">Back</span>
-        </button>
+  const hasSubjects = subjectData.length > 0;
+  const hasRecentActivities = recentActivities.length > 0;
 
+  // ── Render ─────────────────────────────────────────────────────────────────
+  return (
+    <div className="min-h-screen bg-white">
 
-        {/* Greeting Section */}
-        <div className="w-full max-w-[1200px] px-6 mb-8 flex flex-wrap  mt-20 md:mt-28 justify-between items-start gap-5">
-          <div className="flex flex-col items-start gap-1">
-            <p className="h4 text-grey_1">Hello!</p>
-            <Link href="/familypage" className="no-underline">
-              <p className="h3 font-bold font-Nunito capitalize text-[#2C3D68]">
-                {childName || session?.user?.name || "User"}
-              </p>
-            </Link>
-            <p className="body-1 text-grey_1">
-              Let&apos;s start your journey to a brighter future.
-            </p>
-            <div className="inline-flex items-center gap-4 mt-2">
-              <div className="font-['Nunito'] text-2xl font-semibold text-[#2C3D68]">
-                {plan}
+      {/* ── Spacer (navbar removed, component handles it globally) ─────────── */}
+      <div style={{ height: "72px" }} />
+
+      {/* ── Page Body ──────────────────────────────────────────────────────── */}
+      <div className="relative flex gap-6 px-6 py-6">
+
+        {/* ── Left Sidebar ───────────────────────────────────────────────── */}
+        <div className="w-20 flex-shrink-0 bg-[#2C3D68] h-[724px] flex flex-col items-center py-4 rounded-2xl">
+          <div className="flex flex-col gap-12 mt-2">
+            {[
+              { key: "home",  Icon: Home,     sw: 3 },
+              { key: "book",  Icon: BookOpen, sw: 3 },
+              { key: "chart", Icon: FileText, sw: 3 },
+            ].map(({ key, Icon, sw }) => (
+              <button
+                key={key}
+                onClick={() => { setActiveNav(key); setSelectedSubject(null); }}
+                className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all ${
+                  activeNav === key ? "bg-white" : "hover:bg-white/10"
+                }`}
+              >
+                <Icon
+                  className={`w-8 h-8 ${activeNav === key ? "text-[#FF8B13]" : "text-[#FFFAF0]"}`}
+                  strokeWidth={sw}
+                />
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => { setActiveNav("user"); setSelectedSubject(null); }}
+            className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all mt-auto mb-2 ${
+              activeNav === "user" ? "bg-white" : "hover:bg-white/10"
+            }`}
+          >
+            <User
+              className={`w-8 h-8 ${activeNav === "user" ? "text-[#FF8B13]" : "text-[#FFFAF0]"}`}
+              strokeWidth={3.5}
+            />
+          </button>
+        </div>
+
+        {/* ════════════════════════════════════════════════════════════════════
+            HOME PAGE
+        ════════════════════════════════════════════════════════════════════ */}
+        {activeNav === "home" && (
+          <>
+            {/* Center — leaves space for life-skills panel */}
+            <div className="flex-1 pr-[430px]">
+              <div className="mb-8">
+                <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8">Hello!</p>
+                {/* FIX 1: Use childName (from API) instead of userName (from session) */}
+                <h1 className="text-[36px] font-semibold bg-gradient-to-r from-[#F8BF3B] via-[#FF8B13] to-[#EF5F3D] bg-clip-text text-transparent tracking-tight leading-[44px]">
+                  {childName || "User"}
+                </h1>
+                <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
+                  Lets start your journey to a brighter future
+                </p>
               </div>
-              {plan !== "Upgrade Now!" && (
-                <div className="inline-flex items-center gap-2 rounded-lg bg-green-100 px-2 py-[3px]">
-                  <div className="w-3 h-3 bg-[#3AA176] rounded-full" />
-                  <span className="text-sm font-medium text-green-500">
-                    Active
-                  </span>
+              <NoSubjectsFound />
+            </div>
+
+            {/* Life Skills Panel */}
+            <div className="absolute top-6 right-16 w-[350px] bg-[#FFF7F1] p-4 rounded-2xl flex flex-col gap-8">
+              <h2 className="text-black text-2xl font-extrabold leading-8">
+                Life-skills your child shows:
+              </h2>
+              <div className="flex gap-6">
+                <div className="flex-1 flex flex-col gap-2">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <div className="w-4 h-4 rounded-full bg-[#389F78] flex-shrink-0" />
+                    <span className="text-[#666666] font-bold text-base">Strong</span>
+                  </div>
+                  <div className="text-[#333333] font-bold text-[18px] leading-[25px]">
+                    {strongSkills.length > 0
+                      ? strongSkills.map((s, i) => <div key={i}>{s}</div>)
+                      : <><div>Communication</div><div>Self-awareness</div><div>Problem Solving</div></>}
+                  </div>
                 </div>
+                <div className="flex-1 flex flex-col gap-2">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <div className="w-4 h-4 rounded-full bg-[#EC5F3D] flex-shrink-0" />
+                    <span className="text-[#666666] font-bold text-base">Need Attention</span>
+                  </div>
+                  <div className="text-[#333333] font-bold text-[18px] leading-[25px]">
+                    {needAttentionSkills.length > 0
+                      ? needAttentionSkills.map((s, i) => <div key={i}>{s}</div>)
+                      : <><div>Creativity</div><div>Empathy</div><div>Stress</div><div>Management</div><div>Interpersonal</div><div>Relationships</div></>}
+                  </div>
+                </div>
+              </div>
+              <button className="w-full h-14 bg-[#2C3D68] text-white px-4 rounded-lg flex items-center justify-center gap-2 font-bold text-base hover:bg-[#1f2d4d] transition-all">
+                <span>View Full Report</span>
+                <ArrowRight className="w-6 h-6" strokeWidth={2} />
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* ════════════════════════════════════════════════════════════════════
+            BOOK PAGE
+        ════════════════════════════════════════════════════════════════════ */}
+        {activeNav === "book" && (
+          <div className="flex-1 min-w-0">
+
+            {/* ── SUBJECT VIEW MODE — renders when a card is clicked ── */}
+            {selectedSubject ? (
+              <SubjectView
+                subject={selectedSubject}
+                onBack={() => setSelectedSubject(null)}
+              />
+            ) : (
+
+            /* ── CAROUSEL MODE — default book page ── */
+            <div className="flex gap-6">
+
+            {/* Subjects Carousel */}
+            <div className="flex-1 min-w-0 max-w-[720px] ml-6">
+              <div className="mb-6">
+                <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8">Hello!</p>
+                {/* FIX 1: Use childName here too */}
+                <h1 className="text-[36px] font-semibold bg-gradient-to-r from-[#F8BF3B] via-[#FF8B13] to-[#EF5F3D] bg-clip-text text-transparent tracking-tight leading-[44px]">
+                  {childName || "User"}
+                </h1>
+                <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
+                  Lets start your journey to a brighter future
+                </p>
+              </div>
+
+              {hasSubjects ? (
+                <div className="flex items-center">
+                  {/* FIX 3: Replaced <style jsx> with inline style object — works without styled-jsx */}
+                  <div
+                    ref={carouselRef}
+                    className="flex gap-5 overflow-x-auto pb-4 scroll-smooth w-[570px]"
+                    style={{
+                      scrollbarWidth: "none",
+                      msOverflowStyle: "none",
+                      WebkitOverflowScrolling: "touch",
+                    }}
+                  >
+                    {filteredSubjects.map((subject, i) => (
+                      <SubjectCard
+                        key={subject.id || i}
+                        subject={subject}
+                        index={i}
+                        onClick={() => handleSubjectClick(subject)}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={scrollCarousel}
+                    className="flex-shrink-0 -ml-[31px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]"
+                  >
+                    <ChevronRight className="w-7 h-7 text-[#FF8B13]" strokeWidth={4} />
+                  </button>
+                </div>
+              ) : (
+                <NoSubjectsFound />
               )}
             </div>
-          </div>
 
-          {/* Hero Section */}
-          <div className="  flex flex-col items-end gap-2 rounded-2xl bg-[#EDF2FA] p-6 shadow-md w-[524px]"
-           >
-              
-            <div className="flex justify-between w-full ">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-4">
-                  <p className="text-[24px] font-Nunito font-extrabold text-[#2C3D68]">
-                    Trial Plan
-                  </p>
-                  <div className="flex items-center gap-1 rounded-lg bg-[#D9F9E6] px-2 py-[3px]">
-                    <div className="w-2 h-2 rounded-full bg-[#3AA176]" />
-                    <p className="text-[14px] font-Nunito font-medium text-[#3AA176]">
-                      Active
-                    </p>
-                  </div>
-                </div>
-                <p className="italic text-[16px] font-Nunito font-bold text-[#999]">
-                  Everyday counts! Keep practicing. Just 2hrs/week.
-                </p>
-                <p className="text-[16px] font-Nunito font-bold text-[#666]">
-                  Valid:{" "}
-                  <span className="text-[#FF8B13] font-bold">
-                    21 DAYS LEFT
-                  </span>
-                </p>
-              </div>
-              <div className="flex items-start gap-1">
-                <p className="text-[24px] font-bold text-[#2C3D68]">₹</p>
-                <p className="text-[48px] font-extrabold text-[#2C3D68]">99</p>
-                <p className="text-[16px] font-Nunito font-bold text-[#999]">/month</p>
-              </div>
-            </div>
-            <Link href="/child-details">
-            <button className="mt-4 flex items-center font-Nunito justify-center gap-[10px] rounded-2xl bg-white px-[22px] py-[14px] text-[18px] font-extrabold text-[#FF8B13] shadow-sm">
-              Upgrade Plan
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="#FF8B13"
-                strokeWidth={3}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-            </Link>
-          </div>
-        </div>
-
-        {/* Personalized Report */}
-        <div className="w-full flex justify-start mt-50">
-        <div className="w-full max-w-[500px]  bg-[#FFF7F1]/80 backdrop-blur-sm rounded-2xl p-6 mb-10 shadow-sm ml-[250px] ">
-           <h2
-      className="absolute"
-      style={{
-        left: "25px",
-        top: "-20px",
-        fontFamily: "Nunito",
-        fontStyle: "normal",
-        fontWeight: 700,
-        fontSize: "24px",
-        lineHeight: "33px",
-        textTransform: "uppercase",
-        color: "#FF8B13",
-      }}
-    >
-      Personalized Report
-    </h2>
-          <h2 className="font-extrabold font-Nunito text-[24px] text-black mb-4">
-            Life-skills your child shows:
-          </h2>
-
-          {/* Legend */}
-          <div className="flex items-center gap-6 mb-4">
-            <div className="flex items-center gap-1">
-              <div className="w-[18px] h-[18px] bg-[#389F78] rounded-full" />
-              <span className="font-bold font-Nunito text-[#666]">Strong</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-[18px] h-[18px] bg-[#F4BC37] rounded-full" />
-              <span className="font-bold font-Nunito text-[#666]">Developing</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-[18px] h-[18px] bg-[#EC5F3D] rounded-full" />
-              <span className="font-bold font-Nunito text-[#666]">Need Attention</span>
-            </div>
-          </div>
-          <div className="flex flex-row items-end gap-6 flex-wrap">
-    {/* Strong Skills */}
-    <div className="flex flex-row items-center gap-2 w-[155px] h-[96px]">
-      <div className="w-2 h-[96px] bg-[#389F78] rounded-[16px]"></div>
-      <div className="text-[#333333] font-Nunito font-bold text-[17px] leading-[32px]">
-        Communication<br />
-        Self-awareness<br />
-        Problem Solving
-      </div>
-    </div>
-
-    {/* Developing Skills */}
-    <div className="flex flex-row items-center gap-2 w-[201px] h-[96px] hidden">
-      <div className="w-2 h-[96px] bg-[#F4BC37] rounded-[16px]"></div>
-      <div className="text-[#333333] font-Nunito font-bold text-[17px] leading-[32px]">
-        Decision Making<br />
-        Critical Thinking<br />
-        Coping with Emotions
-      </div>
-    </div>
-
-    {/* Need Attention Skills */}
-    <div className="flex flex-row items-center gap-2 w-[247px] h-[128px]">
-      <div className="w-2 h-[128px] bg-[#EC5F3D] rounded-[16px]"></div>
-      <div className="text-[#333333] font-Nunito font-bold text-[17px] leading-[32px]">
-        Creativity<br />
-        Empathy<br />
-        Stress Management<br />
-        Interpersonal Relationships
-      </div>
-    </div>
-  </div>
-          
-
-          {/* Skill Lists */}
-          <div className="flex flex-col md:flex-row gap-6 w-full">
-            {surveyDataStrong?.length > 0 && (
-              <div className="flex gap-2">
-                <div className="w-[8px] bg-[#389F78] rounded-full" />
-                <div className="font-bold text-[18px] text-[#333]">
-                  {surveyDataStrong.join(" • ")}
-                </div>
-              </div>
-            )}
-
-            {surveyDataDeveloping?.length > 0 && (
-              <div className="flex gap-2">
-                <div className="w-[8px] bg-[#F4BC37] rounded-full" />
-                <div className="font-bold text-[18px] text-[#333]">
-                  {surveyDataDeveloping.join(" • ")}
-                </div>
-              </div>
-            )}
-
-            {surveyDataNeedAttention?.length > 0 && (
-              <div className="flex gap-2">
-                <div className="w-[8px] bg-[#EC5F3D] rounded-full" />
-                <div className="font-bold text-[18px] text-[#333]">
-                  {surveyDataNeedAttention.join(" • ")}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        </div>
-        
-       
-
-          
-         {/* Subjects Section */}
- {/* Subjects Section */}
-<div className="w-full max-w-[1200px] px-6 mx-auto relative z-10 py-8">
-  <h4 className="text-[20px] font-bold text-[#FF8B13] uppercase mb-6 font-Nunito">
-    Subjects
-  </h4>
-
-  {subjectData && subjectData.length > 0 ? (
-    <div className="relative w-full min-h-[520px]">
-      {/* Left Scroll Button */}
-     
-<button
-  onClick={() =>
-    document
-      .getElementById("subjectScroll")
-      .scrollBy({ left: -400, behavior: "smooth" })
-  }
-  className="absolute right-[-80px] top-1/2 -translate-y-1/2 w-[62px] h-[62px] rounded-full z-10 flex items-center justify-center"
-  style={{
-    background: 'rgba(255, 141, 40, 0.25)',
-  }}
->
-  <svg
-    width="25"
-    height="13"
-    viewBox="0 0 25 13"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="-rotate-90"
-  >
-    <path
-      d="M2 2L12.5 11L23 2"
-      stroke="#FF8B13"
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-</button>
-
-      {/* Subject Cards */}
-      <div
-        id="subjectScroll"
-        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-2 py-4"
-      >
-        {subjectData.map((item, i) => (
-          <React.Fragment key={i}>
+            {/* ── Recent Activity Panel — exact Figma specs ──────────────
+                Panel: 350×560px, padding 16px, gap 15px, #FFF7F1, shadow, radius 16px
+                "Recent" header: Nunito 600 20px #666666 tracking -0.02em
+                Filter buttons: h-40px, Nunito 700 14px, radius 8px
+            ────────────────────────────────────────────────────────── */}
             <div
-            onClick={() => {
-  const subjectId = item.subjectId || item.subject?.subjectId || "";
-  const modulesForThisSubject = item.modules || [];
-
-  try {
-    localStorage.setItem(
-      `subject_modules_${subjectId}`,
-      JSON.stringify(modulesForThisSubject)
-    );
-    // store lock & custom flag so Subject page can behave the same
-    localStorage.setItem(`subject_locked_${subjectId}`, JSON.stringify(locked));
-    localStorage.setItem(`subject_custom_${subjectId}`, JSON.stringify(customUserData));
-  } catch (e) {
-    console.warn("Failed to store modules in localStorage", e);
-  }
-
-  router.push(
-    `/subject/${subjectId}?name=${encodeURIComponent(item.subjectName)}`
-  );
-}}
-
-
- // 👈 this triggers module update
-              className="flex-shrink-0 w-[348px] h-[480px] rounded-[16px] shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg"
-  style={{
-    transform: i === subjectId ? 'scale(1.02)' : 'scale(1)',
-  }}
+              className="flex-shrink-0 flex flex-col items-start"
+              style={{
+                width: "350px",
+                height: "560px",
+                padding: "16px",
+                gap: "15px",
+                background: "#FFF7F1",
+                boxShadow: "0px 2px 5px rgba(0,0,0,0.12)",
+                borderRadius: "16px",
+                marginLeft: "24px",
+                marginTop: "122px",
+              }}
             >
-               
-              {/* Top Gradient */}
-               <div
-    key={i}
-    className="flex flex-col justify-center items-center p-5 gap-3 h-[230px] rounded-t-[20px] rounded-b-[20px]"
-    style={{
-      backgroundColor: getColor(i),
-    }}
-  >
-               <img
-  src={
-    subjectImages[
-      normalize(item?.subject?.subjectName || item.subjectName || "")
-    ] 
-  }
-  alt={item.subject?.subjectName || item.subjectName}
-  className="w-[380px] h-[220px] object-contain drop-shadow-lg"
-/>
+              {/* "Recent" label — Nunito 600 20px #666666 tracking -0.02em */}
+              <h3
+                style={{
+                  fontFamily: "Nunito, sans-serif",
+                  fontWeight: 600,
+                  fontSize: "20px",
+                  lineHeight: "24px",
+                  letterSpacing: "-0.02em",
+                  color: "#666666",
+                  margin: 0,
+                }}
+              >
+                Recent
+              </h3>
 
-
-               
+              {/* Filter row — gap 8px, height 40px, full width */}
+              <div className="flex flex-row w-full" style={{ gap: "8px", height: "40px" }}>
+                {["All", "Complete", "Pending"].map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setActiveFilter(f)}
+                    className="flex-1 flex items-center justify-center transition-all"
+                    style={{
+                      height: "40px",
+                      padding: "8px",
+                      borderRadius: "8px",
+                      fontFamily: "Nunito, sans-serif",
+                      fontWeight: 700,
+                      fontSize: "14px",
+                      lineHeight: "24px",
+                      background: activeFilter === f ? "#2C3D68" : "#FFFFFF",
+                      color: activeFilter === f ? "#FFFFFF" : "#2C3D68",
+                      border: activeFilter === f ? "none" : "1px solid #2C3D68",
+                    }}
+                  >
+                    {f}
+                  </button>
+                ))}
               </div>
 
-              {/* Bottom Info */}
-              <div className="flex flex-col p-5 h-[229px] justify-between pb-6">
-                <div>
-                  <div className="flex items-center gap-2 text-[#333333] mb-2">
-                    <div className="flex justify-center items-center w-[20px] h-[20px] bg-white border border-[#FF8B13] rounded">
-                      🎂
-                    </div>
-                    <p className="text-[14px] font-semibold">5–7 Years</p>
-                  </div>
-
-                  <p className="text-[24px] font-black text-[#2C3D68] font-Nunito leading-[33px] mb-2 whitespace-nowrap overflow-hidden text-ellipsis">
-                    {item.subject?.subjectName ||
-                      item.subjectName ||
-                      "Subject Name"}
-                  </p>
-
-                  <div className="flex flex-wrap gap-3 text-[16px]  font-Nunito font-bold text-[#666]">
-                    <p>
-                      Interactive Activity:{" "}
-                      <span className="text-[#FF8B13]">120+</span>
-                    </p>
-                    <p>
-                      Gamified Activity:{" "}
-                      <span className="text-[#FF8B13]">12+</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="w-full mt-3">
-                  <div className="w-full h-[7px] bg-[#F2F2F2] rounded-full">
+              {/* Activity list — scrollable, only real user activities */}
+              <div
+                className="flex flex-col w-full overflow-y-auto flex-1"
+                style={{ gap: "15px", scrollbarWidth: "thin" }}
+              >
+                {recentLoading ? (
+                  /* Loading skeleton */
+                  [...Array(3)].map((_, i) => (
                     <div
-                      className="h-[7px] bg-[#F58720] rounded-full"
-                      style={{ width: "45%" }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-between mt-1 text-[12px] font-bold text-[#999]">
-                    <p>45% Completed</p>
-                    <p>2/6 Modules</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mt-3 mb-4">
-                 <div className="flex items-center gap-2">
-  <div className="flex items-center -space-x-2">
-    <Image 
-      className="w-[30px] h-[30px] rounded-full border-2 border-white" 
-      src={Person1} 
-      width={30} 
-      height={30} 
-      alt="avatar" 
-    />
-    <Image 
-      className="w-[30px] h-[30px] rounded-full border-2 border-white" 
-      src={Person2} 
-      width={30} 
-      height={30} 
-      alt="avatar" 
-    />
-    <Image 
-      className="w-[30px] h-[30px] rounded-full border-2 border-white" 
-      src={Person3} 
-      width={30} 
-      height={30} 
-      alt="avatar" 
-    />
-    <Image 
-      className="w-[30px] h-[30px] rounded-full border-2 border-white" 
-      src={Person4} 
-      width={30} 
-      height={30} 
-      alt="avatar" 
-    />
-  </div>
-  <p className="text-[12px] font-bold text-[#666]">
-    654+
-  </p>
-</div>
-                  <div className="flex justify-center items-center w-[32px] h-[32px] border  rounded-lg">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="#FF8B13"
-                      className="w-5 h-5"
+                      key={i}
+                      className="animate-pulse"
+                      style={{
+                        width: "318px",
+                        height: "122px",
+                        background: "#e5e7eb",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  ))
+                ) : hasRecentActivities ? (
+                  recentActivities.map((activity, i) => (
+                    <RecentItem key={i} activity={activity} />
+                  ))
+                ) : (
+                  /* Empty state — no placeholder data, only real activity */
+                  <div className="flex flex-col items-center justify-center flex-1 gap-3">
+                    <div className="text-4xl">📋</div>
+                    <p
+                      style={{
+                        fontFamily: "Nunito, sans-serif",
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        color: "#999999",
+                        textAlign: "center",
+                        lineHeight: "20px",
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 8.25c0-2.485-2.013-4.5-4.5-4.5S12 5.765 12 8.25c0-2.485-2.013-4.5-4.5-4.5S3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                      />
-                    </svg>
+                      No recent activities yet.{"\n"}Start a subject to see your progress here!
+                    </p>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
-            {/* 👇 This shows Activities below selected subject */}
-            
-          </React.Fragment>
-        ))}
+            </div>
+            )}
+          </div>
+        )}
+
+        {/* Other nav views */}
+        {activeNav !== "home" && activeNav !== "book" && (
+          <div className="flex-1 flex items-center justify-center py-20">
+            <p className="text-gray-400 text-lg">Coming soon…</p>
+          </div>
+        )}
+
       </div>
-
-      {/* Right Scroll Button */}
-      {/* Right Scroll Button */}
-<button
-  onClick={() =>
-    document
-      .getElementById("subjectScroll")
-      .scrollBy({ left: 400, behavior: "smooth" })
-  }
-  className="absolute left-[-80px] top-1/2 -translate-y-1/2 w-[62px] h-[62px] rounded-full z-10 flex items-center justify-center"
-  style={{
-    background: 'rgba(255, 139, 19, 0.25)',
-  }}
->
-  <svg
-    width="25"
-    height="13"
-    viewBox="0 0 25 13"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="rotate-90"
-  >
-    <path
-      d="M2 2L12.5 11L23 2"
-      stroke="#FF8B13"
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-</button>
     </div>
-  ) : (
-    <div className="flex w-full justify-center py-10">
-      <p className="text-lg">No subjects available</p>
-    </div>
-  )}
-
-  {/* 👇 Desktop version of Activities */}
-  
-</div>
-
-</div>
-
-
-
-        
-        <Footer />
-      
-    </>
   );
 };
 
-export default UserDashboard; 
+export default UserDashboard;

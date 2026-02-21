@@ -22,6 +22,7 @@
 //     setModalContent(concern);
 //   };
 
+<<<<<<< HEAD
 //   const closeModal = () => {
 //     setModalContent(null);
 //   };
@@ -40,6 +41,15 @@
 // const mythFactQuestions = [
 //   { text: "Talking about emotions is for the weak.", answer: "myth" },
 //   { text: "Communicating feelings makes you stronger as you can manage what you understand.", answer: "fact" },
+=======
+  const closeModal = () => {
+    setModalContent(null);
+  };
+ 
+const mythFactQuestions = [
+  { text: "Talking about emotions is for the weak.", answer: "myth" },
+  { text: "Communicating feelings makes you stronger as you can manage what you understand.", answer: "fact" },
+>>>>>>> kunal
 
 //   { text: "SEL is for children in school only.", answer: "myth" },
 //   { text: "Adults need SEL too. Ever met a boss who cannot control his temper? Exactly.", answer: "fact" },
