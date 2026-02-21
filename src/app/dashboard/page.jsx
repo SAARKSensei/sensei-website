@@ -12,6 +12,8 @@ import {
 import SubjectView from "@/components/SubjectView"; // ← inline subject view (no page nav)
 
 const DASHBOARD_ENABLED = true;
+const BASE_URL = "https://api.sensei.org.in";
+
 
 // ─── Card background gradients (per-subject cycling) ────────────────────────
 const CARD_GRADIENTS = [
@@ -286,7 +288,7 @@ const UserDashboard = () => {
         // First API: Fetch pricing plan and user-specific data
         try {
           const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
+            `${BASE_URL}/parent-users/getPricingPlan?email=${email}`
           );
           console.log("User pricing plan response:", res.data);
 
@@ -316,7 +318,7 @@ const UserDashboard = () => {
         if (!hasUserData) {
           try {
             const response = await axios.get(
-              process.env.NEXT_PUBLIC_API_SUBJECTS || "/api/subjects"
+              `${BASE_URL}/api/subjects`
             );
             setSubjectData(response.data || []);
             setCustomUserData(false);
@@ -347,7 +349,7 @@ const UserDashboard = () => {
         const email = session?.user?.email;
         if (email) {
           const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/recent-activities?email=${email}`
+           `${BASE_URL}/recent-activities?email=${email}`
           );
           const activities = res.data?.activities || res.data || [];
           setRecentActivities(Array.isArray(activities) ? activities : []);
