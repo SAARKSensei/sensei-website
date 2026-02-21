@@ -38,7 +38,7 @@ const MaintenancePage = () => (
       </div>
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Under Maintenance</h1>
       <p className="text-gray-600 mb-6">
-        We're currently upgrading our system to serve you better. Please check back soon!
+        We&apos;re currently upgrading our system to serve you better. Please check back soon!
       </p>
       <div className="text-sm text-gray-500">Expected completion: Soon</div>
     </div>
@@ -465,7 +465,7 @@ const UserDashboard = () => {
                   {childName || "User"}
                 </h1>
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
-                  Let's start your journey to a brighter future
+                 Let&apos;s start your journey to a brighter future
                 </p>
               </div>
               <NoSubjectsFound />
@@ -534,7 +534,7 @@ const UserDashboard = () => {
                   {childName || "User"}
                 </h1>
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
-                  Let's start your journey to a brighter future
+                  Let&apos;s start your journey to a brighter future
                 </p>
               </div>
 

@@ -50,7 +50,7 @@ const Page = ({ params: { id } }) => {
       }
     };
     fetchquestionData();
-  }, []);
+  }, [id]);
 
   switch (state) {
     case 0:
