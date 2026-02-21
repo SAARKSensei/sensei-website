@@ -38,7 +38,7 @@ const MaintenancePage = () => (
       </div>
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Under Maintenance</h1>
       <p className="text-gray-600 mb-6">
-        Were currently upgrading our system to serve you better. Please check back soon!
+        We're currently upgrading our system to serve you better. Please check back soon!
       </p>
       <div className="text-sm text-gray-500">Expected completion: Soon</div>
     </div>
@@ -248,140 +248,124 @@ const UserDashboard = () => {
   const router = useRouter();
   const carouselRef = useRef(null);
 
-  const selectModule = (sid) => {
-    setSubjectId(sid);
-    setModules(subjectData[sid]?.modules || []);
-    const col = getSubColour(
-      subjectData[sid]?.subject?.subjectName ||
-        subjectData[sid]?.subjectName ||
-        ""
-    );
-    setColours(col);
-  };
-   const normalize = (str) =>
-    (str || "").toString().toLowerCase().replace(/[^a-z0-9]+/g, "");
+  const [subjectData, setSubjectData]             = useState([]);
+  const [recentActivities, setRecentActivities]   = useState([]);
+  const [recentLoading, setRecentLoading]         = useState(true);
+  const [loading, setLoading]                     = useState(true);
+  const [selectedSubject, setSelectedSubject]     = useState(null);   // ← inline subject mode
+  const [activeNav, setActiveNav]                 = useState("home");
+  const [activeFilter, setActiveFilter]           = useState("All");
+  const [strongSkills, setStrongSkills]           = useState([]);
+  const [needAttentionSkills, setNeedAttentionSkills] = useState([]);
+  const [plan, setPlan]                           = useState("");
+  // FIX 1: childName state — now actually used in greeting + navbar
+  const [childName, setChildName]                 = useState("");
+  const [customUserData, setCustomUserData]       = useState(false);
 
-  // Ensure we store string URLs in the map (use .src when the import becomes an object)
-  const subjectImages = {
-    [normalize("Emotional Well-Being")]: (emotionalImg && emotionalImg.src) || emotionalImg,
-    [normalize("1-Month Trial @Rs.99")]: (trialImg && trialImg.src) || trialImg,
-    [normalize("Self and Social Awareness")]: (socialImg && socialImg.src) || socialImg,
-    [normalize("Moral Guidance and Ethics")]: (ethicsImg && ethicsImg.src) || ethicsImg,
-  };
-  const colors = ["#4AA6FF", "#EC5F3D", "#F0ABA4", "#4B926F"];
+  // ── Auth guard ─────────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (status === "unauthenticated") router.push("/login");
+  }, [status, router]);
 
-const getColor = (i) => {
-  return colors[i % colors.length];
-};
+  // ── Data fetching ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (status !== "authenticated") return;
 
-
-
- 
-  const fetchSubjectData = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      if (status === "loading") return;
-      if (status === "unauthenticated") throw new Error("User not authenticated");
-
-      const email = session?.user?.email;
-      if (!email) throw new Error("No email found in session");
-
-      console.log("Fetching subject data for:", email);
-
-      let hasUserData = false;
+    const fetchSubjects = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
-        );
-        console.log("User data response:", res.data);
-
-        if (res.data?.pricingPlan) {
-          if (res.data.pricingPlan.name === "No active plan found for this user.") {
-            setPlan("Upgrade Now!");
-          } else {
-            setPlan(res.data.pricingPlan.name);
-          }
+        const email = session?.user?.email;
+        if (!email) {
+          console.error("No email found in session");
+          setLoading(false);
+          return;
         }
 
-        if (res.data.childName) {
-          setChildName(res.data.childName);
-        } else {
+        console.log("Fetching data for:", email);
+        let hasUserData = false;
+
+        // First API: Fetch pricing plan and user-specific data
+        try {
+          const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/parent-users/getPricingPlan?email=${email}`
+          );
+          console.log("User pricing plan response:", res.data);
+
+          if (res.data?.pricingPlan) {
+            setPlan(
+              res.data.pricingPlan.name === "No active plan found for this user."
+                ? "Upgrade Now!"
+                : res.data.pricingPlan.name
+            );
+          }
+
+          // Set child name from API — falls back to session name
+          setChildName(res.data?.childName || session?.user?.name || "User");
+
+          if (res?.data?.pricingPlan?.subjects?.length > 0) {
+            setSubjectData(res.data.pricingPlan.subjects);
+            setCustomUserData(true);
+            hasUserData = true;
+          }
+        } catch (userDataError) {
+          console.error("Error fetching pricing plan:", userDataError);
+          // Still set a name from session as fallback
           setChildName(session?.user?.name || "User");
         }
 
-        if (res?.data?.pricingPlan?.subjects && res.data.pricingPlan.subjects.length > 0) {
-          console.log("Setting user-specific subjects:", res.data.pricingPlan.subjects);
-          setSubjectData(res.data.pricingPlan.subjects);
-          setCustomUserData(true);
-          setLocked(false);
-          setModules(res.data.pricingPlan.subjects[0]?.modules || []);
-          setColours(getSubColour(res.data.pricingPlan.subjects[0]?.subject?.subjectName || ""));
-          hasUserData = true;
-        }
-      } catch (userDataError) {
-        console.error("Error fetching user-specific data:", userDataError);
-      }
-
-      if (!hasUserData) {
-        try {
-          const res = await axios.get(SUBJECTS_API);
-          console.log("Subjects response:", res?.data);
-          if (res?.data && res.data.length > 0) {
-            setSubjectData(res.data);
-            setLocked(true);
-            setModules(res.data[0]?.modules || []);
-            setColours(getSubColour(res.data[0]?.subjectName || ""));
+        // Second API: Fetch general subjects if no user-specific data
+        if (!hasUserData) {
+          try {
+            const response = await axios.get(
+              process.env.NEXT_PUBLIC_API_SUBJECTS || "/api/subjects"
+            );
+            setSubjectData(response.data || []);
+            setCustomUserData(false);
+          } catch (err) {
+            console.error("Error fetching subjects:", err);
+            setSubjectData([]);
           }
-        } catch (generalSubjectsError) {
-          console.error("Error fetching subjects:", generalSubjectsError);
-          throw new Error("Failed to fetch any subject data");
         }
+      } catch (error) {
+        console.error("Error in fetchSubjects:", error);
+        setSubjectData([]);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error in fetchSubjectData:", error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-    useEffect(() => {
-  fetchSubjects();
+    fetchSubjects();
 
-  const storedStrong = localStorage.getItem("SenseiStrongSkills");
-  const storedNeeds = localStorage.getItem("SenseiNeedAttentionSkills");
+    const storedStrong = localStorage.getItem("SenseiStrongSkills");
+    const storedNeeds  = localStorage.getItem("SenseiNeedAttentionSkills");
+    if (storedStrong) setStrongSkills(JSON.parse(storedStrong));
+    if (storedNeeds)  setNeedAttentionSkills(JSON.parse(storedNeeds));
 
-  if (storedStrong) setStrongSkills(JSON.parse(storedStrong));
-  if (storedNeeds) setNeedAttentionSkills(JSON.parse(storedNeeds));
-
-  const fetchRecentActivities = async () => {
-    setRecentLoading(true);
-    try {
-      const email = session?.user?.email;
-      if (email) {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/recent-activities?email=${email}`
-        );
-        const activities = res.data?.activities || res.data || [];
-        setRecentActivities(Array.isArray(activities) ? activities : []);
+    // Fetch recent activities from API (only real user data — no placeholders)
+    const fetchRecentActivities = async () => {
+      setRecentLoading(true);
+      try {
+        const email = session?.user?.email;
+        if (email) {
+          const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/recent-activities?email=${email}`
+          );
+          const activities = res.data?.activities || res.data || [];
+          setRecentActivities(Array.isArray(activities) ? activities : []);
+        }
+      } catch (err) {
+        console.error("Error fetching recent activities:", err);
+        // Fallback: try localStorage
+        const storedRecent = localStorage.getItem("SenseiRecentActivities");
+        if (storedRecent) {
+          try { setRecentActivities(JSON.parse(storedRecent)); } catch {}
+        }
+      } finally {
+        setRecentLoading(false);
       }
-    } catch (err) {
-      console.error("Error fetching recent activities:", err);
-      const storedRecent = localStorage.getItem("SenseiRecentActivities");
-      if (storedRecent) {
-        try {
-          setRecentActivities(JSON.parse(storedRecent));
-        } catch {}
-      }
-    } finally {
-      setRecentLoading(false);
-    }
-  };
+    };
 
-  fetchRecentActivities();
-}, [status, session]);
+    fetchRecentActivities();
+  }, [status, session]);
 
   // ── Subject navigation ─────────────────────────────────────────────────────
   const handleSubjectClick = (subject) => {
@@ -481,7 +465,7 @@ const getColor = (i) => {
                   {childName || "User"}
                 </h1>
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
-                  Lets start your journey to a brighter future
+                  Let's start your journey to a brighter future
                 </p>
               </div>
               <NoSubjectsFound />
@@ -550,7 +534,7 @@ const getColor = (i) => {
                   {childName || "User"}
                 </h1>
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
-                  Lets start your journey to a brighter future
+                  Let's start your journey to a brighter future
                 </p>
               </div>
 
