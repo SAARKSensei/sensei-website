@@ -227,7 +227,7 @@ const MythFact = ({ questions = [] }) => {
                       : "text-white"
                   }
                 >
-                  It's a Myth
+                  Its a Myth
                 </span>
               </button>
 
@@ -246,7 +246,7 @@ const MythFact = ({ questions = [] }) => {
                       : "text-white"
                   }
                 >
-                  It's a Fact
+                  Its a Fact
                 </span>
               </button>
             </div>
