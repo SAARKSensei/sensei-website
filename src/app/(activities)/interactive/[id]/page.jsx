@@ -75,6 +75,7 @@ const Page = ({ params: { id } }) => {
   
   // Check if this is the last task of the last step
   const isLastTask = currProcess === TOTAL_STEPS - 1 && currChildTask === CHILD_TASKS_PER_STEP - 1;
+  const BASE_URL = "https://api.sensei.org.in";
 
   useEffect(() => {
     if (useMockData) {
@@ -86,7 +87,7 @@ const Page = ({ params: { id } }) => {
 
     const fetchProcessData = async () => {
       const res = await axios
-        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/interactive-activities/${id}`)
+        .get(`${ BASE_URL}/interactive-activities/${id}`)
         .catch((err) => console.log(err));
 
       if (res?.data) {
