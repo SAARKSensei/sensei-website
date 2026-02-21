@@ -38,7 +38,7 @@ const MaintenancePage = () => (
       </div>
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Under Maintenance</h1>
       <p className="text-gray-600 mb-6">
-        We&apos;re currently upgrading our system to serve you better. Please check back soon!
+        We're currently upgrading our system to serve you better. Please check back soon!
       </p>
       <div className="text-sm text-gray-500">Expected completion: Soon</div>
     </div>
@@ -456,19 +456,49 @@ const UserDashboard = () => {
         ════════════════════════════════════════════════════════════════════ */}
         {activeNav === "home" && (
           <>
-            {/* Center — leaves space for life-skills panel */}
-            <div className="flex-1 pr-[430px]">
-              <div className="mb-8">
+            {/* Subjects Carousel */}
+            <div className="flex-1 min-w-0 max-w-[720px] ml-6">
+              <div className="mb-6">
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8">Hello!</p>
-                {/* FIX 1: Use childName (from API) instead of userName (from session) */}
                 <h1 className="text-[36px] font-semibold bg-gradient-to-r from-[#F8BF3B] via-[#FF8B13] to-[#EF5F3D] bg-clip-text text-transparent tracking-tight leading-[44px]">
                   {childName || "User"}
                 </h1>
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
-                 Let&apos;s start your journey to a brighter future
+                  Let&apos;s start your journey to a brighter future
                 </p>
               </div>
-              <NoSubjectsFound />
+
+              {hasSubjects ? (
+                <div className="flex items-center">
+                  <div
+                    ref={carouselRef}
+                    className="flex gap-5 overflow-x-auto pb-4 scroll-smooth w-[570px]"
+                    style={{
+                      scrollbarWidth: "none",
+                      msOverflowStyle: "none",
+                      WebkitOverflowScrolling: "touch",
+                    }}
+                  >
+                    {filteredSubjects.map((subject, i) => (
+                      <SubjectCard
+                        key={subject.id || i}
+                        subject={subject}
+                        index={i}
+                        onClick={() => handleSubjectClick(subject)}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={scrollCarousel}
+                    className="flex-shrink-0 -ml-[31px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]"
+                  >
+                    <ChevronRight className="w-7 h-7 text-[#FF8B13]" strokeWidth={4} />
+                  </button>
+                </div>
+              ) : (
+                <NoSubjectsFound />
+              )}
             </div>
 
             {/* Life Skills Panel */}
@@ -534,7 +564,7 @@ const UserDashboard = () => {
                   {childName || "User"}
                 </h1>
                 <p className="text-[#2C3D68] text-2xl font-semibold tracking-tight leading-8 mt-1">
-                  Let&apos;s start your journey to a brighter future
+                  Let's start your journey to a brighter future
                 </p>
               </div>
 
