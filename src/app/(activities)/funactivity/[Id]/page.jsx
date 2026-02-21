@@ -22,31 +22,24 @@ export default function Home({ params: { Id } }) {
         setLoading(true);
         setError(null);
 
-        // ✅ 1. Fetch submodule details to get the name
+        // 1. Fetch submodule details to get the name
         const subRes = await fetch(`${BASE_URL}/api/sub-modules`);
         if (!subRes.ok) throw new Error("Failed to fetch submodule");
         const allSubs = await subRes.json();
         const currentSub = allSubs.find((s) => s.id === Id);
         setSubModule(currentSub || null);
 
-        // ✅ 2. Fetch ALL interactive activities and filter by subModuleId
-        const actRes = await fetch(`${BASE_URL}/api/interactive-activities`);
+        // 2. ✅ New API — fetch activities directly by submodule ID
+        const actRes = await fetch(`${BASE_URL}/api/interactive-activities/by-submodule/${Id}`);
         if (!actRes.ok) throw new Error("Failed to fetch activities");
         const allActivities = await actRes.json();
 
-        // Filter by current subModuleId and only active
-        const filtered = allActivities.filter(
-          (a) => a.subModuleId === Id && a.isActive === true
-        );
+        // 3. Filter only active + sort by orderIndex
+        const sorted = allActivities
+          .filter((a) => a.isActive === true)
+          .sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
 
-        // Sort by orderIndex
-        const sorted = filtered.sort(
-          (a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0)
-        );
-
-        // ✅ 3. Split by activityType
-        // DIY / Interactive → interactiveActivities
-        // Digital / Gamified → digitalActivities
+        // 4. Split by activityType
         const interactive = sorted.filter(
           (a) => a.activityType === "DIY" || a.activityType === "Interactive"
         );
@@ -108,7 +101,7 @@ export default function Home({ params: { Id } }) {
 
         <div className="flex w-full flex-col lg:pr-24 gap-10">
 
-          {/* ✅ Interactive Activities */}
+          {/* ✅ Interactive / DIY Activities */}
           {interactiveActivities.length > 0 && (
             <div className="flex flex-col gap-4">
               <h4 className="h5 text-left uppercase text-black">
@@ -116,6 +109,7 @@ export default function Home({ params: { Id } }) {
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 overflow-x-scroll">
                 {interactiveActivities.map((activity, index) => (
+                  // ✅ uses activity.title from new API response
                   <ActivityCard key={activity.id || index} activity={activity} />
                 ))}
               </div>
@@ -130,13 +124,14 @@ export default function Home({ params: { Id } }) {
               </h4>
               <div className="flex gap-4 overflow-x-scroll">
                 {digitalActivities.map((activity, index) => (
+                  // ✅ uses activity.title from new API response
                   <ActivityCard key={activity.id || index} activity={activity} />
                 ))}
               </div>
             </div>
           )}
 
-          {/* ✅ Empty state — no activities found */}
+          {/* ✅ Empty state */}
           {interactiveActivities.length === 0 && digitalActivities.length === 0 && (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <span style={{ fontSize: "48px" }}>📭</span>
