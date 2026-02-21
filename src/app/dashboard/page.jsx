@@ -347,39 +347,41 @@ const getColor = (i) => {
     }
   };
 
-    fetchSubjects();
+    useEffect(() => {
+  fetchSubjects();
 
-    const storedStrong = localStorage.getItem("SenseiStrongSkills");
-    const storedNeeds  = localStorage.getItem("SenseiNeedAttentionSkills");
-    if (storedStrong) setStrongSkills(JSON.parse(storedStrong));
-    if (storedNeeds)  setNeedAttentionSkills(JSON.parse(storedNeeds));
+  const storedStrong = localStorage.getItem("SenseiStrongSkills");
+  const storedNeeds = localStorage.getItem("SenseiNeedAttentionSkills");
 
-    // Fetch recent activities from API (only real user data — no placeholders)
-    const fetchRecentActivities = async () => {
-      setRecentLoading(true);
-      try {
-        const email = session?.user?.email;
-        if (email) {
-          const res = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/recent-activities?email=${email}`
-          );
-          const activities = res.data?.activities || res.data || [];
-          setRecentActivities(Array.isArray(activities) ? activities : []);
-        }
-      } catch (err) {
-        console.error("Error fetching recent activities:", err);
-        // Fallback: try localStorage
-        const storedRecent = localStorage.getItem("SenseiRecentActivities");
-        if (storedRecent) {
-          try { setRecentActivities(JSON.parse(storedRecent)); } catch {}
-        }
-      } finally {
-        setRecentLoading(false);
+  if (storedStrong) setStrongSkills(JSON.parse(storedStrong));
+  if (storedNeeds) setNeedAttentionSkills(JSON.parse(storedNeeds));
+
+  const fetchRecentActivities = async () => {
+    setRecentLoading(true);
+    try {
+      const email = session?.user?.email;
+      if (email) {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/recent-activities?email=${email}`
+        );
+        const activities = res.data?.activities || res.data || [];
+        setRecentActivities(Array.isArray(activities) ? activities : []);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching recent activities:", err);
+      const storedRecent = localStorage.getItem("SenseiRecentActivities");
+      if (storedRecent) {
+        try {
+          setRecentActivities(JSON.parse(storedRecent));
+        } catch {}
+      }
+    } finally {
+      setRecentLoading(false);
+    }
+  };
 
-    fetchRecentActivities();
-  }, [status, session]);
+  fetchRecentActivities();
+}, [status, session]);
 
   // ── Subject navigation ─────────────────────────────────────────────────────
   const handleSubjectClick = (subject) => {

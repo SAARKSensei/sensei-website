@@ -1,3 +1,150 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { subjects } from "@/utils/data";
+import { slug } from "@/utils/logic";
+import { SubjectSection } from "@/components/SubjectSection";
+import { useRouter } from "next/navigation";
+import MythFact from "@/components/MythFact";
+
+/* =========================================================
+   MAIN PAGE COMPONENT
+========================================================= */
+
+const Page = ({ params: { sub } }) => {
+  const [modalContent, setModalContent] = useState(null);
+  const router = useRouter();
+
+  const subject = subjects.find(
+    (s) => slug(s?.slug || s?.title) === sub
+  );
+
+  /* Store Myth Fact in localStorage */
+  useEffect(() => {
+    const mythFact = {
+      id: "self-social-awareness-1",
+      text: "Talking about emotions is for the weak.",
+      answer: "myth",
+    };
+
+    localStorage.setItem(
+      "myth-fact-data-self-social-awareness",
+      JSON.stringify(mythFact)
+    );
+  }, []);
+
+  /* Fallback UI instead of notFound (client component safe) */
+  if (!subject) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Subject not found</p>
+      </div>
+    );
+  }
+
+  const openModal = (concern) => setModalContent(concern);
+  const closeModal = () => setModalContent(null);
+
+  const mythFactQuestions = [
+    { text: "Talking about emotions is for the weak.", answer: "myth" },
+    { text: "Communicating feelings makes you stronger.", answer: "fact" },
+    { text: "SEL is for children only.", answer: "myth" },
+    { text: "Adults need SEL too.", answer: "fact" },
+    { text: "Ignoring emotions makes them disappear.", answer: "myth" },
+    { text: "Emotions grow when ignored.", answer: "fact" },
+  ];
+
+  return (
+    <div className="container mx-auto mt-6 p-2 py-10 xl:max-w-[1300px]">
+      <button
+        onClick={() => router.back()}
+        className="flex items-center gap-2 text-[#FF8B13]"
+      >
+        ← Back
+      </button>
+
+      <SubjectSection sub={sub} />
+
+      {/* Emotional Wellness Cards */}
+      {subject.title === "Emotional Wellness" && (
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {subject.concerns.map((c, i) => (
+            <EmoWellnessSubjectCard key={i} concern={c} openModal={openModal} />
+          ))}
+        </div>
+      )}
+
+      {/* Myth or Fact */}
+      {subject.title === "Self & Social Awareness" && (
+        <div className="mt-16">
+          <MythFact questions={mythFactQuestions} />
+        </div>
+      )}
+
+      {/* Modal */}
+      {modalContent && (
+        <ModalView concern={modalContent} onClose={closeModal} />
+      )}
+    </div>
+  );
+};
+
+/* =========================================================
+   CARD COMPONENT
+========================================================= */
+
+const EmoWellnessSubjectCard = ({ concern, openModal }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleClick = () => {
+    if (window.innerWidth < 768) setExpanded(!expanded);
+    else openModal(concern);
+  };
+
+  return (
+    <div className="flex flex-col rounded-xl bg-white shadow p-4">
+      <h3 className="text-[#FF8B13] font-bold">{concern.title}</h3>
+
+      <p className={`mt-2 ${!expanded && "line-clamp-4"}`}>
+        {concern.description}
+      </p>
+
+      <button onClick={handleClick} className="mt-auto text-[#FF8B13]">
+        {expanded ? "Show Less" : "Read More"}
+      </button>
+    </div>
+  );
+};
+
+/* =========================================================
+   MODAL COMPONENT
+========================================================= */
+
+const ModalView = ({ concern, onClose }) => (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+    onClick={onClose}
+  >
+    <div
+      className="bg-white p-6 rounded-xl max-w-xl w-full"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <h2 className="text-xl font-bold text-[#FF8B13]">
+        {concern.title}
+      </h2>
+      <p className="mt-4">{concern.description}</p>
+
+      <button
+        onClick={onClose}
+        className="mt-6 rounded bg-[#FF8B13] px-4 py-2 text-white"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+);
+
+export default Page;
 // "use client";
 // import { useState } from "react";
 // import { useEffect } from "react";
@@ -22,7 +169,7 @@
 //     setModalContent(concern);
 //   };
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //   const closeModal = () => {
 //     setModalContent(null);
 //   };
@@ -41,15 +188,15 @@
 // const mythFactQuestions = [
 //   { text: "Talking about emotions is for the weak.", answer: "myth" },
 //   { text: "Communicating feelings makes you stronger as you can manage what you understand.", answer: "fact" },
-=======
-  const closeModal = () => {
-    setModalContent(null);
-  };
+// =======
+//   const closeModal = () => {
+//     setModalContent(null);
+//   };
  
-const mythFactQuestions = [
-  { text: "Talking about emotions is for the weak.", answer: "myth" },
-  { text: "Communicating feelings makes you stronger as you can manage what you understand.", answer: "fact" },
->>>>>>> kunal
+// const mythFactQuestions = [
+//   { text: "Talking about emotions is for the weak.", answer: "myth" },
+//   { text: "Communicating feelings makes you stronger as you can manage what you understand.", answer: "fact" },
+// >>>>>>> kunal
 
 //   { text: "SEL is for children in school only.", answer: "myth" },
 //   { text: "Adults need SEL too. Ever met a boss who cannot control his temper? Exactly.", answer: "fact" },
@@ -480,135 +627,260 @@ const mythFactQuestions = [
 //   );
 // };
 
+//---------------------------------------------------------kuanl code------------------------
+// "use client";
 
-"use client";
+// import { useEffect, useState } from "react";
+// import { subjects } from "@/utils/data";
+// import { slug } from "@/utils/logic";
+// import { SubjectSection } from "@/components/SubjectSection";
+// import { useRouter } from "next/navigation";
+// import MythFact from "@/components/MythFact";
 
-import { useEffect, useState } from "react";
-import { subjects } from "@/utils/data";
-import { slug } from "@/utils/logic";
-import { SubjectSection } from "@/components/SubjectSection";
-import { useRouter, notFound } from "next/navigation";
-import MythFact from "@/components/MythFact";
+// const Page = ({ params: { sub } }) => {
+//   const [modalContent, setModalContent] = useState(null);
+//   const router = useRouter();
 
-const Page = ({ params: { sub } }) => {
-  const [modalContent, setModalContent] = useState(null);
-  const router = useRouter();
+//   const subject = subjects.find(
+//     (s) => slug(s?.slug || s?.title) === sub
+//   );
 
-  // ✅ Always compute subject
-  const subject = subjects.find(
-    (s) => slug(s?.slug || s?.title) === sub
-  );
+//   useEffect(() => {
+//     const mythFact = {
+//       id: "self-social-awareness-1",
+//       text: "Talking about emotions is for the weak.",
+//       answer: "myth",
+//     };
 
-  // ✅ FIX: Hooks must be BEFORE any conditional return
-  useEffect(() => {
-    const mythFact = {
-      id: "self-social-awareness-1",
-      text: "Talking about emotions is for the weak.",
-      answer: "myth",
-    };
+//     localStorage.setItem(
+//       "myth-fact-data-self-social-awareness",
+//       JSON.stringify(mythFact)
+//     );
+//   }, []);
 
-    localStorage.setItem(
-      "myth-fact-data-self-social-awareness",
-      JSON.stringify(mythFact)
-    );
-  }, []);
+//   // 👉 Instead of notFound() (server-only), render fallback UI
+//   if (!subject) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <p className="text-gray-500">Subject not found</p>
+//       </div>
+//     );
+//   }
 
-  // ✅ Safe after hooks
-  if (!subject) return notFound();
+//   const openModal = (concern) => setModalContent(concern);
+//   const closeModal = () => setModalContent(null);
 
-  const openModal = (concern) => setModalContent(concern);
-  const closeModal = () => setModalContent(null);
+//   const mythFactQuestions = [
+//     { text: "Talking about emotions is for the weak.", answer: "myth" },
+//     { text: "Communicating feelings makes you stronger.", answer: "fact" },
+//     { text: "SEL is for children only.", answer: "myth" },
+//     { text: "Adults need SEL too.", answer: "fact" },
+//     { text: "Ignoring emotions makes them disappear.", answer: "myth" },
+//     { text: "Emotions grow when ignored.", answer: "fact" },
+//   ];
 
-  const mythFactQuestions = [
-    { text: "Talking about emotions is for the weak.", answer: "myth" },
-    { text: "Communicating feelings makes you stronger.", answer: "fact" },
-    { text: "SEL is for children only.", answer: "myth" },
-    { text: "Adults need SEL too.", answer: "fact" },
-    { text: "Ignoring emotions makes them disappear.", answer: "myth" },
-    { text: "Emotions grow when ignored.", answer: "fact" },
-  ];
+//   return (
+//     <div className="container mx-auto mt-6 p-2 py-10 xl:max-w-[1300px]">
+//       <button
+//         onClick={() => router.back()}
+//         className="flex items-center gap-2 text-[#FF8B13]"
+//       >
+//         ← Back
+//       </button>
 
-  return (
-    <div className="container mx-auto mt-6 p-2 py-10 xl:max-w-[1300px]">
-      <button
-        onClick={() => router.back()}
-        className="flex items-center gap-2 text-[#FF8B13]"
-      >
-        ← Back
-      </button>
+//       <SubjectSection sub={sub} />
 
-      <SubjectSection sub={sub} />
+//       {subject.title === "Emotional Wellness" && (
+//         <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+//           {subject.concerns.map((c, i) => (
+//             <EmoWellnessSubjectCard key={i} concern={c} openModal={openModal} />
+//           ))}
+//         </div>
+//       )}
 
-      {subject.title === "Emotional Wellness" && (
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {subject.concerns.map((c, i) => (
-            <EmoWellnessSubjectCard key={i} concern={c} openModal={openModal} />
-          ))}
-        </div>
-      )}
+//       {subject.title === "Self & Social Awareness" && (
+//         <div className="mt-16">
+//           <MythFact questions={mythFactQuestions} />
+//         </div>
+//       )}
 
-      {subject.title === "Self & Social Awareness" && (
-        <div className="mt-16">
-          <MythFact questions={mythFactQuestions} />
-        </div>
-      )}
+//       {modalContent && (
+//         <ModalView concern={modalContent} onClose={closeModal} />
+//       )}
+//     </div>
+//   );
+// };
 
-      {modalContent && (
-        <ModalView concern={modalContent} onClose={closeModal} />
-      )}
-    </div>
-  );
-};
+// const EmoWellnessSubjectCard = ({ concern, openModal }) => {
+//   const [expanded, setExpanded] = useState(false);
 
-/* ---------- CARDS ---------- */
+//   const handleClick = () => {
+//     if (window.innerWidth < 768) setExpanded(!expanded);
+//     else openModal(concern);
+//   };
 
-const EmoWellnessSubjectCard = ({ concern, openModal }) => {
-  const [expanded, setExpanded] = useState(false);
+//   return (
+//     <div className="flex flex-col rounded-xl bg-white shadow p-4">
+//       <h3 className="text-[#FF8B13] font-bold">{concern.title}</h3>
 
-  const handleClick = () => {
-    if (window.innerWidth < 768) setExpanded(!expanded);
-    else openModal(concern);
-  };
+//       <p className={`mt-2 ${!expanded && "line-clamp-4"}`}>
+//         {concern.description}
+//       </p>
 
-  return (
-    <div className="flex flex-col rounded-xl bg-white shadow p-4">
-      <h3 className="text-[#FF8B13] font-bold">{concern.title}</h3>
+//       <button onClick={handleClick} className="mt-auto text-[#FF8B13]">
+//         {expanded ? "Show Less" : "Read More"}
+//       </button>
+//     </div>
+//   );
+// };
 
-      <p className={`mt-2 ${!expanded && "line-clamp-4"}`}>
-        {concern.description}
-      </p>
+// const ModalView = ({ concern, onClose }) => (
+//   <div
+//     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+//     onClick={onClose}
+//   >
+//     <div
+//       className="bg-white p-6 rounded-xl max-w-xl w-full"
+//       onClick={(e) => e.stopPropagation()}
+//     >
+//       <h2 className="text-xl font-bold text-[#FF8B13]">
+//         {concern.title}
+//       </h2>
+//       <p className="mt-4">{concern.description}</p>
 
-      <button onClick={handleClick} className="mt-auto text-[#FF8B13]">
-        {expanded ? "Show Less" : "Read More"}
-      </button>
-    </div>
-  );
-};
+//       <button
+//         onClick={onClose}
+//         className="mt-6 rounded bg-[#FF8B13] px-4 py-2 text-white"
+//       >
+//         Close
+//       </button>
+//     </div>
+//   </div>
+// );
 
-/* ---------- MODAL ---------- */
+// export default Page;
+//--------------------------------------kunal code ends here ----------------------------------------------
+// "use client";
 
-const ModalView = ({ concern, onClose }) => (
-  <div
-    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
-    onClick={onClose}
-  >
-    <div
-      className="bg-white p-6 rounded-xl max-w-xl w-full"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <h2 className="text-xl font-bold text-[#FF8B13]">
-        {concern.title}
-      </h2>
-      <p className="mt-4">{concern.description}</p>
+// import { useEffect, useState } from "react";
+// import { subjects } from "@/utils/data";
+// import { slug } from "@/utils/logic";
+// import { SubjectSection } from "@/components/SubjectSection";
+// import { useRouter, notFound } from "next/navigation";
+// import MythFact from "@/components/MythFact";
 
-      <button
-        onClick={onClose}
-        className="mt-6 rounded bg-[#FF8B13] px-4 py-2 text-white"
-      >
-        Close
-      </button>
-    </div>
-  </div>
-);
+// const Page = ({ params: { sub } }) => {
+//   const [modalContent, setModalContent] = useState(null);
+//   const router = useRouter();
 
-export default Page;
+//   const subject = subjects.find(
+//     (s) => slug(s?.slug || s?.title) === sub
+//   );
+
+//   useEffect(() => {
+//     const mythFact = {
+//       id: "self-social-awareness-1",
+//       text: "Talking about emotions is for the weak.",
+//       answer: "myth",
+//     };
+
+//     localStorage.setItem(
+//       "myth-fact-data-self-social-awareness",
+//       JSON.stringify(mythFact)
+//     );
+//   }, []);
+
+//   if (!subject) return notFound();
+
+//   const openModal = (concern) => setModalContent(concern);
+//   const closeModal = () => setModalContent(null);
+
+//   const mythFactQuestions = [
+//     { text: "Talking about emotions is for the weak.", answer: "myth" },
+//     { text: "Communicating feelings makes you stronger.", answer: "fact" },
+//     { text: "SEL is for children only.", answer: "myth" },
+//     { text: "Adults need SEL too.", answer: "fact" },
+//     { text: "Ignoring emotions makes them disappear.", answer: "myth" },
+//     { text: "Emotions grow when ignored.", answer: "fact" },
+//   ];
+
+//   return (
+//     <div className="container mx-auto mt-6 p-2 py-10 xl:max-w-[1300px]">
+//       <button
+//         onClick={() => router.back()}
+//         className="flex items-center gap-2 text-[#FF8B13]"
+//       >
+//         ← Back
+//       </button>
+
+//       <SubjectSection sub={sub} />
+
+//       {subject.title === "Emotional Wellness" && (
+//         <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+//           {subject.concerns.map((c, i) => (
+//             <EmoWellnessSubjectCard key={i} concern={c} openModal={openModal} />
+//           ))}
+//         </div>
+//       )}
+
+//       {subject.title === "Self & Social Awareness" && (
+//         <div className="mt-16">
+//           <MythFact questions={mythFactQuestions} />
+//         </div>
+//       )}
+
+//       {modalContent && (
+//         <ModalView concern={modalContent} onClose={closeModal} />
+//       )}
+//     </div>
+//   );
+// };
+
+// const EmoWellnessSubjectCard = ({ concern, openModal }) => {
+//   const [expanded, setExpanded] = useState(false);
+
+//   const handleClick = () => {
+//     if (window.innerWidth < 768) setExpanded(!expanded);
+//     else openModal(concern);
+//   };
+
+//   return (
+//     <div className="flex flex-col rounded-xl bg-white shadow p-4">
+//       <h3 className="text-[#FF8B13] font-bold">{concern.title}</h3>
+
+//       <p className={`mt-2 ${!expanded && "line-clamp-4"}`}>
+//         {concern.description}
+//       </p>
+
+//       <button onClick={handleClick} className="mt-auto text-[#FF8B13]">
+//         {expanded ? "Show Less" : "Read More"}
+//       </button>
+//     </div>
+//   );
+// };
+
+// const ModalView = ({ concern, onClose }) => (
+//   <div
+//     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+//     onClick={onClose}
+//   >
+//     <div
+//       className="bg-white p-6 rounded-xl max-w-xl w-full"
+//       onClick={(e) => e.stopPropagation()}
+//     >
+//       <h2 className="text-xl font-bold text-[#FF8B13]">
+//         {concern.title}
+//       </h2>
+//       <p className="mt-4">{concern.description}</p>
+
+//       <button
+//         onClick={onClose}
+//         className="mt-6 rounded bg-[#FF8B13] px-4 py-2 text-white"
+//       >
+//         Close
+//       </button>
+//     </div>
+//   </div>
+// );
+
+// export default Page;
