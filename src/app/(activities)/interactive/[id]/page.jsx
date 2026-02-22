@@ -9,24 +9,61 @@ import axios from "axios";
 import { notFound, useRouter } from "next/navigation";
 import Feedback from "@/components/activityComps/Feedback";
 
-// ✅ Correct BASE_URL with /api prefix
 const BASE_URL = "https://api.sensei.org.in/api";
+
+// ─── Helper: parse childTask string split by | into array of strings ──────────
+const parseChildTasks = (childTaskStr) => {
+  if (!childTaskStr) return [];
+  return childTaskStr
+    .split(/\s*\|\s*/)
+    .map((t) => t.trim())
+    .filter(Boolean);
+};
 
 const Page = ({ params: { id } }) => {
   const Router = useRouter();
+
+  // ── Activity metadata (cases 0, 1, 3) ──────────────────────────────────────
+  const [interactiveActivity, setInteractiveActivity] = useState(null);
   const [outcomesText, setOutcomesText] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // ── Processes from /interactive-processes/by-activity API (case 2) ──────────
+  const [processes, setProcesses] = useState([]);
+  const [processesLoading, setProcessesLoading] = useState(false);
+  const [processesError, setProcessesError] = useState(null);
+
+  // ── UI state ────────────────────────────────────────────────────────────────
   const [state, setState] = useState(0);
   const [infoOpen, setInfoOpen] = useState(false);
   const [currProcess, setCurrProcess] = useState(0);
   const [currChildTask, setCurrChildTask] = useState(0);
-  const [interactiveActivity, setInteractiveActivity] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const TOTAL_STEPS = 6;
-  const CHILD_TASKS_PER_STEP = 6;
+  // ── Derived — all dynamic, no hardcoded 6 ───────────────────────────────────
+  const TOTAL_STEPS = processes.length;
+  const currentStep = processes[currProcess] ?? null;
+  const childTasks = parseChildTasks(currentStep?.childTask);
+  const CHILD_TASKS_PER_STEP = childTasks.length;
+  const currentStepNumber = currProcess + 1;
+  const stepProgressPercentage =
+    TOTAL_STEPS > 0 ? (currentStepNumber / TOTAL_STEPS) * 100 : 0;
+  const isLastTask =
+    currProcess === TOTAL_STEPS - 1 &&
+    currChildTask === CHILD_TASKS_PER_STEP - 1;
 
+  // Strip leading "1." numbering from child task text
+  const currentChildTaskText =
+    childTasks[currChildTask]?.replace(/^\d+\.\s*/, "").trim() || "";
+
+  // mediaUrl: skip if "N.A" or empty
+  const mediaUrl =
+    currentStep?.mediaUrl && currentStep.mediaUrl.trim() !== "N.A"
+      ? currentStep.mediaUrl
+      : null;
+
+  // ── Navigation ──────────────────────────────────────────────────────────────
   const nextProcess = () => {
     setActiveButton("next");
     setTimeout(() => setActiveButton(null), 200);
@@ -50,25 +87,58 @@ const Page = ({ params: { id } }) => {
       setCurrChildTask((pre) => pre - 1);
     } else {
       if (currProcess > 0) {
+        // Jump to last child task of the previous step
+        const prevTasks = parseChildTasks(processes[currProcess - 1]?.childTask);
         setCurrProcess((pre) => pre - 1);
-        setCurrChildTask(CHILD_TASKS_PER_STEP - 1);
+        setCurrChildTask(Math.max(prevTasks.length - 1, 0));
       }
     }
     window.scrollTo(0, 0);
   };
 
-  const currentProcess = interactiveActivity?.processes?.[currProcess];
-  const imageUrl = currentProcess?.image;
-  const imageId = imageUrl?.split("/")?.[5];
+  // ── Fetch: activity metadata ────────────────────────────────────────────────
+  useEffect(() => {
+    const fetchActivity = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await axios.get(`${BASE_URL}/interactive-activities/${id}`);
+        if (res?.data) setInteractiveActivity(res.data);
+      } catch (err) {
+        console.error("Error fetching interactive activity:", err);
+        setError(err?.response?.status || "unknown");
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (id) fetchActivity();
+  }, [id]);
 
-  const currentStepNumber = currProcess + 1;
-  const stepProgressPercentage = (currentStepNumber / TOTAL_STEPS) * 100;
-  const isLastTask =
-    currProcess === TOTAL_STEPS - 1 &&
-    currChildTask === CHILD_TASKS_PER_STEP - 1;
+  // ── Fetch: processes for case 2 ─────────────────────────────────────────────
+  useEffect(() => {
+    const fetchProcesses = async () => {
+      setProcessesLoading(true);
+      setProcessesError(null);
+      try {
+        const res = await axios.get(
+          `${BASE_URL}/interactive-processes/by-activity/${id}`
+        );
+        if (Array.isArray(res?.data)) {
+          // Sort by stepOrder to guarantee correct sequence
+          const sorted = [...res.data].sort((a, b) => a.stepOrder - b.stepOrder);
+          setProcesses(sorted);
+        }
+      } catch (err) {
+        console.error("Error fetching processes:", err);
+        setProcessesError(err?.response?.status || "unknown");
+      } finally {
+        setProcessesLoading(false);
+      }
+    };
+    if (id) fetchProcesses();
+  }, [id]);
 
-  // ✅ processText — splits by |, removes numbering, ensures period at end,
-  // then joins as a single space-separated paragraph (no line breaks)
+  // ── Learning outcomes text ──────────────────────────────────────────────────
   const processText = (outcomes) => {
     if (!outcomes) return "";
     return outcomes
@@ -79,52 +149,27 @@ const Page = ({ params: { id } }) => {
         return trimmed.endsWith(".") ? trimmed : trimmed + ".";
       })
       .filter(Boolean)
-      .join(" | "); // ✅ pipe separator between each sentence
+      .join(" | ");
   };
 
   useEffect(() => {
-    const fetchProcessData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await axios.get(
-          `${BASE_URL}/interactive-activities/${id}`
-        );
-        if (res?.data) {
-          setInteractiveActivity(res.data);
-        }
-      } catch (err) {
-        console.error("Error fetching interactive activity:", err);
-        setError(err?.response?.status || "unknown");
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (id) fetchProcessData();
-  }, [id]);
-
-  useEffect(() => {
-    // ✅ Correct field — learningOutcome
     if (interactiveActivity?.learningOutcome) {
       setOutcomesText(processText(interactiveActivity.learningOutcome));
     }
   }, [interactiveActivity?.learningOutcome]);
 
-  // Loading state (only for case 2+)
+  // ── Global loading / error ──────────────────────────────────────────────────
   if (loading && state !== 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 font-semibold font-['Nunito']">
-            Loading activity…
-          </p>
+          <p className="text-gray-600 font-semibold font-['Nunito']">Loading activity…</p>
         </div>
       </div>
     );
   }
 
-  // Error state
   if (error && !interactiveActivity) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white px-6">
@@ -155,13 +200,13 @@ const Page = ({ params: { id } }) => {
     );
   }
 
+  // ── Switch ──────────────────────────────────────────────────────────────────
   switch (state) {
     case 0:
       return (
         <Loading
           activity={{
             outComes: outcomesText,
-            // ✅ Correct field — title
             name: interactiveActivity?.title,
             ageGroup: "5-7 years",
           }}
@@ -175,7 +220,6 @@ const Page = ({ params: { id } }) => {
       ) : (
         <Materials
           materials={interactiveActivity?.materialsRequired}
-          // ✅ NEW: pass keyObjectives so numbered list shows in "Are you ready?" screen
           keyObjectives={interactiveActivity?.keyObjectives}
           action={() => setState((pre) => pre + 1)}
         />
@@ -184,7 +228,6 @@ const Page = ({ params: { id } }) => {
     case 3:
       return interactiveActivity ? (
         <Feedback
-          // ✅ Correct fields — id and title
           activityId={interactiveActivity.id}
           activityName={interactiveActivity.title}
         />
@@ -195,9 +238,45 @@ const Page = ({ params: { id } }) => {
       );
 
     case 2:
+      // Processes loading
+      if (processesLoading) {
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-gray-600 font-semibold font-['Nunito']">Loading steps…</p>
+            </div>
+          </div>
+        );
+      }
+
+      // Processes error
+      if (processesError && processes.length === 0) {
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-white px-6">
+            <div className="text-center max-w-md">
+              <div className="text-6xl mb-4">⚠️</div>
+              <h2 className="text-2xl font-bold text-[#2C3D68] mb-2 font-['Nunito']">
+                Failed to load steps
+              </h2>
+              <p className="text-gray-500 mb-6 font-['Nunito']">
+                Could not load the activity steps. Please try again.
+              </p>
+              <button
+                onClick={() => Router.back()}
+                className="px-6 py-3 bg-[#2C3D68] text-white rounded-lg font-bold font-['Nunito'] hover:bg-[#1f2d4d] transition-all"
+              >
+                Go Back
+              </button>
+            </div>
+          </div>
+        );
+      }
+
       return (
         <div className="min-h-screen bg-white pb-24 font-['Nunito']">
-          {/* Header */}
+
+          {/* ── Header ─────────────────────────────────────────────────────── */}
           <header className="bg-[#2C3D68] px-5 pt-6 pb-5 w-full md:px-8 lg:px-12">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1 text-white text-sm font-semibold">
@@ -217,29 +296,34 @@ const Page = ({ params: { id } }) => {
             </div>
           </header>
 
-          {/* Main Content */}
+          {/* ── Main Content ────────────────────────────────────────────────── */}
           <div className="px-5 md:px-8 lg:px-12 xl:max-w-7xl xl:mx-auto">
             <div className="mt-6 flex flex-col gap-4">
+
+              {/* Step title + Hint button */}
               <div className="flex justify-between items-center gap-3">
                 <h2 className="text-[#FF8B13] text-lg font-medium leading-7 md:text-xl">
-                  {`${currProcess + 1}. ${currentProcess?.processName || "Get Ready!"}`}
+                  {`Step ${currentStep?.stepOrder ?? currentStepNumber}`}
                 </h2>
-                <button
-                  onClick={() => setInfoOpen(true)}
-                  className="flex items-center gap-2 px-[9px] py-[9px] rounded-[20px] border border-[#FF8B13] hover:bg-[#FFF5E6] transition-colors"
-                >
-                  <svg className="w-5 h-[18px]" viewBox="0 0 20 20" fill="none">
-                    <path
-                      d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z"
-                      fill="#FF8B13"
-                    />
-                  </svg>
-                  <span className="text-[#FF8B13] font-bold text-base leading-5">Hint</span>
-                </button>
+                {/* Hint button — only shown when hint text is available */}
+                {currentStep?.hint && (
+                  <button
+                    onClick={() => setInfoOpen(true)}
+                    className="flex items-center gap-2 px-[9px] py-[9px] rounded-[20px] border border-[#FF8B13] hover:bg-[#FFF5E6] transition-colors"
+                  >
+                    <svg className="w-5 h-[18px]" viewBox="0 0 20 20" fill="none">
+                      <path
+                        d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z"
+                        fill="#FF8B13"
+                      />
+                    </svg>
+                    <span className="text-[#FF8B13] font-bold text-base leading-5">Hint</span>
+                  </button>
+                )}
               </div>
 
-              {/* Sensei Avatar and Message */}
-              <div className="flex gap-4 md:gap-6">
+              {/* Sensei Avatar + Message — bubble auto-grows with long text */}
+              <div className="flex gap-4 md:gap-6 items-start">
                 <div className="flex-shrink-0">
                   <div className="w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 md:w-32 md:h-32 flex items-center justify-center overflow-hidden">
                     <Image
@@ -251,17 +335,19 @@ const Page = ({ params: { id } }) => {
                     />
                   </div>
                 </div>
-                <div className="flex-1 flex items-center max-w-[200px] md:max-w-xs lg:max-w-md">
+                {/* flex-1 lets bubble take remaining width; no max-w cap */}
+                <div className="flex-1">
                   <div className="bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg p-4">
                     <p className="text-[#666666] text-base leading-6 font-normal">
-                      {currentProcess?.senseiMessage || "Follow the steps carefully and have fun!"}
+                      {currentStep?.senseiMessage ||
+                        "Follow the steps carefully and have fun!"}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Progress Bar */}
+            {/* ── Progress Bar ─────────────────────────────────────────────── */}
             <div className="mt-6 flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-[#E6E6E6] rounded-[4px] overflow-hidden">
@@ -278,32 +364,27 @@ const Page = ({ params: { id } }) => {
               <p className="text-[#999999] text-sm font-medium leading-5">Follow below steps</p>
             </div>
 
-            {/* Image Preview */}
-            <div className="mt-4 relative w-full h-[197px] bg-[#D9D9D9] rounded-2xl overflow-hidden md:h-[300px] lg:h-[400px]">
-              {imageId ? (
+            {/* ── Image — only rendered when mediaUrl is valid ─────────────── */}
+            {mediaUrl && (
+              <div className="mt-4 relative w-full h-[197px] bg-[#D9D9D9] rounded-2xl overflow-hidden md:h-[300px] lg:h-[400px]">
                 <Image
-                  src={`https://drive.google.com/uc?export=view&id=${imageId}`}
-                  alt={currentProcess?.processName || "Activity step"}
+                  src={mediaUrl}
+                  alt={`Step ${currentStep?.stepOrder}`}
                   fill
                   className="object-cover"
                 />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg className="w-[70px] h-[50px]" viewBox="0 0 70 50" fill="none">
-                    <path d="M0 6C0 2.68629 2.68629 0 6 0H46C49.3137 0 52 2.68629 52 6V44C52 47.3137 49.3137 50 46 50H6C2.68629 50 0 47.3137 0 44V6Z" fill="white" />
-                    <path d="M52 12L70 0V50L52 38V12Z" fill="white" />
-                  </svg>
-                </div>
-              )}
-            </div>
+              </div>
+            )}
 
-            {/* Child Tasks Card */}
+            {/* ── Child Tasks Card — height auto-expands with content ───────── */}
             <div className="mt-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.12)] rounded-xl p-3">
               <p className="text-[#999999] text-sm font-medium leading-5 mb-3">
-                Child Tasks - Step {currProcess + 1}
+                Child Tasks - Step {currentStepNumber}
               </p>
-              <div className="flex justify-between items-center mb-3">
-                {Array.from({ length: CHILD_TASKS_PER_STEP }).map((_, index) => (
+
+              {/* Dynamic buttons — exactly as many as there are parsed tasks */}
+              <div className="flex flex-wrap gap-2 mb-3">
+                {childTasks.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrChildTask(index)}
@@ -317,14 +398,15 @@ const Page = ({ params: { id } }) => {
                   </button>
                 ))}
               </div>
-              <p className="text-[#333333] text-base font-semibold leading-6">
-                {currentProcess?.childMessage ||
-                  `Complete task ${currChildTask + 1} of step ${currProcess + 1}`}
+
+              {/* Actual task text — no fixed height, wraps naturally */}
+              <p className="text-[#333333] text-base font-semibold leading-7 whitespace-pre-line">
+                {currentChildTaskText}
               </p>
             </div>
           </div>
 
-          {/* Bottom Navigation */}
+          {/* ── Bottom Navigation ───────────────────────────────────────────── */}
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-5 md:px-8 lg:px-12">
             <div className="flex gap-8 max-w-[348px] mx-auto xl:max-w-7xl">
               {(currProcess > 0 || currChildTask > 0) && (
@@ -335,14 +417,21 @@ const Page = ({ params: { id } }) => {
                   }`}
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                    <path d="M15 18L9 12L15 6" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M15 18L9 12L15 6"
+                      stroke="#999999"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                   <span className="text-[#999999] font-bold text-base leading-6">Back</span>
                 </button>
               )}
               <button
                 onClick={nextProcess}
-                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all ${
+                disabled={CHILD_TASKS_PER_STEP === 0}
+                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all disabled:opacity-50 ${
                   activeButton === "next" ? "bg-[#1f2d4d]" : ""
                 } ${currProcess === 0 && currChildTask === 0 ? "w-full" : ""}`}
               >
@@ -350,28 +439,40 @@ const Page = ({ params: { id } }) => {
                   {isLastTask ? "Finish" : "Next"}
                 </span>
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M9 18L15 12L9 6"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </button>
             </div>
           </div>
 
-          {/* Info / Hint Modal */}
+          {/* ── Hint Modal — shows hint from API ────────────────────────────── */}
           {infoOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-5 z-50">
-              <div className="bg-white rounded-2xl p-6 max-w-md w-full">
+              <div className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-[#2C3D68]">Activity Info</h3>
-                  <button onClick={() => setInfoOpen(false)} className="text-gray-500 hover:text-gray-700">
+                  <h3 className="text-xl font-bold text-[#2C3D68]">Hint</h3>
+                  <button
+                    onClick={() => setInfoOpen(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                   </button>
                 </div>
-                {/* ✅ Correct field — objective */}
                 <p className="text-[#666666] leading-6">
-                  {interactiveActivity?.objective ||
-                    "This is an interactive activity designed to help children learn through movement and exploration."}
+                  {currentStep?.hint || "No hint available for this step."}
                 </p>
               </div>
             </div>
