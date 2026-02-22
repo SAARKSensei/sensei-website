@@ -12,12 +12,6 @@ import Feedback from "@/components/activityComps/Feedback";
 const BASE_URL = "https://api.sensei.org.in/api";
 
 // ─── Helper: parse childTask string into grouped tasks ───────────────────────
-// Each numbered item (1., 2., 3. ...) = one child task button.
-// Lettered sub-points (a., b., c. ...) and plain continuation lines are
-// grouped under their parent numbered item.
-// FALLBACK: if no numbered items exist at all (e.g. Step 7), the entire
-// content is treated as one single group so navigation still works.
-// Returns: [{ main: string, subItems: string[] }, ...]
 const parseChildTasksGrouped = (childTaskStr) => {
   if (!childTaskStr) return [];
 
@@ -30,7 +24,6 @@ const parseChildTasksGrouped = (childTaskStr) => {
   let currentGroup = null;
 
   for (const segment of segments) {
-    // New numbered item (1., 2., 10., ...) → start a fresh group
     if (/^\d+\./.test(segment)) {
       if (currentGroup) groups.push(currentGroup);
       currentGroup = {
@@ -38,12 +31,9 @@ const parseChildTasksGrouped = (childTaskStr) => {
         subItems: [],
       };
     } else {
-      // Lettered point (a., b., ...) OR plain continuation → belongs to current group
       if (currentGroup) {
         currentGroup.subItems.push(segment);
       } else {
-        // ✅ FALLBACK: no numbered item started yet — collect as plain sub-items
-        // under a single unnamed group
         if (groups.length === 0) {
           currentGroup = { main: segment, subItems: [] };
         }
@@ -53,7 +43,6 @@ const parseChildTasksGrouped = (childTaskStr) => {
 
   if (currentGroup) groups.push(currentGroup);
 
-  // ✅ FINAL FALLBACK: if still empty (shouldn't happen), wrap everything as one group
   if (groups.length === 0 && segments.length > 0) {
     return [{ main: segments[0], subItems: segments.slice(1) }];
   }
@@ -64,65 +53,47 @@ const parseChildTasksGrouped = (childTaskStr) => {
 const Page = ({ params: { id } }) => {
   const Router = useRouter();
 
-  // ── Activity metadata (cases 0, 1, 3) ──────────────────────────────────────
   const [interactiveActivity, setInteractiveActivity] = useState(null);
   const [outcomesText, setOutcomesText] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ── Processes from /interactive-processes/by-activity API (case 2) ──────────
   const [processes, setProcesses] = useState([]);
   const [processesLoading, setProcessesLoading] = useState(false);
   const [processesError, setProcessesError] = useState(null);
 
-  // ── UI state ────────────────────────────────────────────────────────────────
   const [state, setState] = useState(0);
   const [infoOpen, setInfoOpen] = useState(false);
   const [currProcess, setCurrProcess] = useState(0);
   const [currChildTask, setCurrChildTask] = useState(0);
   const [activeButton, setActiveButton] = useState(null);
 
-  // ── Derived — fully dynamic ─────────────────────────────────────────────────
   const TOTAL_STEPS = processes.length;
   const currentStep = processes[currProcess] ?? null;
-
-  // Grouped child tasks for current step
   const childTaskGroups = parseChildTasksGrouped(currentStep?.childTask);
   const CHILD_TASKS_PER_STEP = childTaskGroups.length;
-
   const currentStepNumber = currProcess + 1;
   const stepProgressPercentage =
     TOTAL_STEPS > 0 ? (currentStepNumber / TOTAL_STEPS) * 100 : 0;
-
-  // ✅ isLastTask: last step AND (last child task OR no child tasks at all)
   const isLastTask =
     currProcess === TOTAL_STEPS - 1 &&
     (CHILD_TASKS_PER_STEP === 0 || currChildTask === CHILD_TASKS_PER_STEP - 1);
-
-  // Current group to display
   const currentGroup = childTaskGroups[currChildTask] ?? null;
-
-  // mediaUrl: skip if "N.A" or empty
   const mediaUrl =
     currentStep?.mediaUrl && currentStep.mediaUrl.trim() !== "N.A"
       ? currentStep.mediaUrl
       : null;
 
-  // ── Navigation ──────────────────────────────────────────────────────────────
   const nextProcess = () => {
     setActiveButton("next");
     setTimeout(() => setActiveButton(null), 200);
-
     if (currChildTask < CHILD_TASKS_PER_STEP - 1) {
-      // More child tasks in this step
       setCurrChildTask((pre) => pre + 1);
     } else {
-      // Last child task (or no child tasks) — move to next step or finish
       if (currProcess < TOTAL_STEPS - 1) {
         setCurrProcess((pre) => pre + 1);
         setCurrChildTask(0);
       } else {
-        // ✅ All steps done → go to Feedback (state 3)
         setState((pre) => pre + 1);
       }
     }
@@ -144,7 +115,6 @@ const Page = ({ params: { id } }) => {
     window.scrollTo(0, 0);
   };
 
-  // ── Fetch: activity metadata ────────────────────────────────────────────────
   useEffect(() => {
     const fetchActivity = async () => {
       setLoading(true);
@@ -162,7 +132,6 @@ const Page = ({ params: { id } }) => {
     if (id) fetchActivity();
   }, [id]);
 
-  // ── Fetch: processes for case 2 ─────────────────────────────────────────────
   useEffect(() => {
     const fetchProcesses = async () => {
       setProcessesLoading(true);
@@ -185,7 +154,7 @@ const Page = ({ params: { id } }) => {
     if (id) fetchProcesses();
   }, [id]);
 
-  // ── Learning outcomes text ──────────────────────────────────────────────────
+  // ✅ Join with \n so each sentence appears on its own line in Loading screen
   const processText = (outcomes) => {
     if (!outcomes) return "";
     return outcomes
@@ -196,7 +165,7 @@ const Page = ({ params: { id } }) => {
         return trimmed.endsWith(".") ? trimmed : trimmed + ".";
       })
       .filter(Boolean)
-      .join(" | ");
+      .join("\n"); // ✅ newline — no pipe visible, each sentence on its own line
   };
 
   useEffect(() => {
@@ -205,7 +174,6 @@ const Page = ({ params: { id } }) => {
     }
   }, [interactiveActivity?.learningOutcome]);
 
-  // ── Global loading / error ──────────────────────────────────────────────────
   if (loading && state !== 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -223,11 +191,7 @@ const Page = ({ params: { id } }) => {
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-[#2C3D68] mb-2 font-['Nunito']">
-            {error === 401
-              ? "Unauthorized"
-              : error === 404
-              ? "Activity Not Found"
-              : "Something went wrong"}
+            {error === 401 ? "Unauthorized" : error === 404 ? "Activity Not Found" : "Something went wrong"}
           </h2>
           <p className="text-gray-500 mb-6 font-['Nunito']">
             {error === 401
@@ -247,7 +211,6 @@ const Page = ({ params: { id } }) => {
     );
   }
 
-  // ── Switch ──────────────────────────────────────────────────────────────────
   switch (state) {
     case 0:
       return (
@@ -266,8 +229,8 @@ const Page = ({ params: { id } }) => {
         notFound()
       ) : (
         <Materials
-          materials={interactiveActivity?.materialsRequired}
           keyObjectives={interactiveActivity?.keyObjectives}
+          objective={interactiveActivity?.objective}
           action={() => setState((pre) => pre + 1)}
         />
       );
@@ -301,12 +264,8 @@ const Page = ({ params: { id } }) => {
           <div className="min-h-screen flex items-center justify-center bg-white px-6">
             <div className="text-center max-w-md">
               <div className="text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-[#2C3D68] mb-2 font-['Nunito']">
-                Failed to load steps
-              </h2>
-              <p className="text-gray-500 mb-6 font-['Nunito']">
-                Could not load the activity steps. Please try again.
-              </p>
+              <h2 className="text-2xl font-bold text-[#2C3D68] mb-2 font-['Nunito']">Failed to load steps</h2>
+              <p className="text-gray-500 mb-6 font-['Nunito']">Could not load the activity steps. Please try again.</p>
               <button
                 onClick={() => Router.back()}
                 className="px-6 py-3 bg-[#2C3D68] text-white rounded-lg font-bold font-['Nunito'] hover:bg-[#1f2d4d] transition-all"
@@ -320,8 +279,6 @@ const Page = ({ params: { id } }) => {
 
       return (
         <div className="min-h-screen bg-white pb-24 font-['Nunito']">
-
-          {/* ── Header ─────────────────────────────────────────────────────── */}
           <header className="bg-[#2C3D68] px-5 pt-6 pb-5 w-full md:px-8 lg:px-12">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1 text-white text-sm font-semibold">
@@ -341,11 +298,8 @@ const Page = ({ params: { id } }) => {
             </div>
           </header>
 
-          {/* ── Main Content ────────────────────────────────────────────────── */}
           <div className="px-5 md:px-8 lg:px-12 xl:max-w-7xl xl:mx-auto">
             <div className="mt-6 flex flex-col gap-4">
-
-              {/* Step title + Hint button */}
               <div className="flex justify-between items-center gap-3">
                 <h2 className="text-[#FF8B13] text-lg font-medium leading-7 md:text-xl">
                   {`Step ${currentStep?.stepOrder ?? currentStepNumber}`}
@@ -356,41 +310,29 @@ const Page = ({ params: { id } }) => {
                     className="flex items-center gap-2 px-[9px] py-[9px] rounded-[20px] border border-[#FF8B13] hover:bg-[#FFF5E6] transition-colors"
                   >
                     <svg className="w-5 h-[18px]" viewBox="0 0 20 20" fill="none">
-                      <path
-                        d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z"
-                        fill="#FF8B13"
-                      />
+                      <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z" fill="#FF8B13" />
                     </svg>
                     <span className="text-[#FF8B13] font-bold text-base leading-5">Hint</span>
                   </button>
                 )}
               </div>
 
-              {/* Sensei Avatar + Message */}
               <div className="flex gap-4 md:gap-6 items-start">
                 <div className="flex-shrink-0">
                   <div className="w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 md:w-32 md:h-32 flex items-center justify-center overflow-hidden">
-                    <Image
-                      src={IconImage}
-                      alt="Sensei"
-                      width={116}
-                      height={116}
-                      className="object-cover w-full h-full"
-                    />
+                    <Image src={IconImage} alt="Sensei" width={116} height={116} className="object-cover w-full h-full" />
                   </div>
                 </div>
                 <div className="flex-1">
                   <div className="bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg p-4">
                     <p className="text-[#666666] text-base leading-6 font-normal">
-                      {currentStep?.senseiMessage ||
-                        "Follow the steps carefully and have fun!"}
+                      {currentStep?.senseiMessage || "Follow the steps carefully and have fun!"}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* ── Progress Bar ─────────────────────────────────────────────── */}
             <div className="mt-6 flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-[#E6E6E6] rounded-[4px] overflow-hidden">
@@ -400,32 +342,22 @@ const Page = ({ params: { id } }) => {
                   />
                 </div>
                 <span className="text-[#666666] text-sm font-semibold leading-5 min-w-[38px] text-right">
-                  {String(currentStepNumber).padStart(2, "0")}/
-                  {String(TOTAL_STEPS).padStart(2, "0")}
+                  {String(currentStepNumber).padStart(2, "0")}/{String(TOTAL_STEPS).padStart(2, "0")}
                 </span>
               </div>
               <p className="text-[#999999] text-sm font-medium leading-5">Follow below steps</p>
             </div>
 
-            {/* ── Image — only rendered when mediaUrl is valid ─────────────── */}
             {mediaUrl && (
               <div className="mt-4 relative w-full h-[197px] bg-[#D9D9D9] rounded-2xl overflow-hidden md:h-[300px] lg:h-[400px]">
-                <Image
-                  src={mediaUrl}
-                  alt={`Step ${currentStep?.stepOrder}`}
-                  fill
-                  className="object-cover"
-                />
+                <Image src={mediaUrl} alt={`Step ${currentStep?.stepOrder}`} fill className="object-cover" />
               </div>
             )}
 
-            {/* ── Child Tasks Card ──────────────────────────────────────────── */}
             <div className="mt-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.12)] rounded-xl p-3 mb-4">
               <p className="text-[#999999] text-sm font-medium leading-5 mb-3">
                 Child Tasks - Step {currentStepNumber}
               </p>
-
-              {/* Dynamic buttons — one per numbered task group */}
               {childTaskGroups.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {childTaskGroups.map((_, index) => (
@@ -443,8 +375,6 @@ const Page = ({ params: { id } }) => {
                   ))}
                 </div>
               )}
-
-              {/* Task content: main text + sub-items */}
               {currentGroup && (
                 <div className="flex flex-col gap-1">
                   <p className="text-[#333333] text-base font-semibold leading-7">
@@ -453,9 +383,7 @@ const Page = ({ params: { id } }) => {
                   {currentGroup.subItems.length > 0 && (
                     <div className="flex flex-col gap-1 mt-1 pl-2">
                       {currentGroup.subItems.map((item, i) => (
-                        <p key={i} className="text-[#555555] text-sm font-medium leading-6">
-                          {item}
-                        </p>
+                        <p key={i} className="text-[#555555] text-sm font-medium leading-6">{item}</p>
                       ))}
                     </div>
                   )}
@@ -464,15 +392,12 @@ const Page = ({ params: { id } }) => {
             </div>
           </div>
 
-          {/* ── Bottom Navigation ───────────────────────────────────────────── */}
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-5 md:px-8 lg:px-12">
             <div className="flex gap-8 max-w-[348px] mx-auto xl:max-w-7xl">
               {(currProcess > 0 || currChildTask > 0) && (
                 <button
                   onClick={prevProcess}
-                  className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-white border border-[#999999] rounded-lg transition-all ${
-                    activeButton === "back" ? "bg-gray-50 border-gray-400" : ""
-                  }`}
+                  className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-white border border-[#999999] rounded-lg transition-all ${activeButton === "back" ? "bg-gray-50 border-gray-400" : ""}`}
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
                     <path d="M15 18L9 12L15 6" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -480,12 +405,9 @@ const Page = ({ params: { id } }) => {
                   <span className="text-[#999999] font-bold text-base leading-6">Back</span>
                 </button>
               )}
-              {/* ✅ No disabled prop — always clickable */}
               <button
                 onClick={nextProcess}
-                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all ${
-                  activeButton === "next" ? "bg-[#1f2d4d]" : ""
-                } ${currProcess === 0 && currChildTask === 0 ? "w-full" : ""}`}
+                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all ${activeButton === "next" ? "bg-[#1f2d4d]" : ""} ${currProcess === 0 && currChildTask === 0 ? "w-full" : ""}`}
               >
                 <span className="text-white font-bold text-base leading-6">
                   {isLastTask ? "Finish" : "Next"}
@@ -497,7 +419,6 @@ const Page = ({ params: { id } }) => {
             </div>
           </div>
 
-          {/* ── Hint Modal ───────────────────────────────────────────────────── */}
           {infoOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-5 z-50">
               <div className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">

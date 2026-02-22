@@ -1,16 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Rafiki from "@/assets/in-Use/rafiki.svg";
-// import User from "@/assets//in-Use/user.svg";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const Loading = ({ action, activity }) => {
-  // ✅ outComes is now a single space-joined paragraph string — no splitting needed
   const [outcomesText, setOutcomesText] = useState(activity?.outComes || "");
-
   const [countdown, setCountdown] = useState(6);
-
   const Router = useRouter();
 
   useEffect(() => {
@@ -59,43 +55,20 @@ const Loading = ({ action, activity }) => {
       </svg>
 
       <div className="center-x relative mt-8 h-[150px] w-[150px]">
-        <svg
-          className="absolute left-0 top-0 h-full w-full"
-          viewBox="0 0 200 200"
-          fill="none"
-        >
-          <circle
-            r="90"
-            cx="100"
-            cy="100"
-            fill="transparent"
-            stroke="#e0e0e0"
-            strokeWidth="20px"
-            strokeDasharray="565.48px"
-            strokeDashoffset="0"
-          ></circle>
+        <svg className="absolute left-0 top-0 h-full w-full" viewBox="0 0 200 200" fill="none">
+          <circle r="90" cx="100" cy="100" fill="transparent" stroke="#e0e0e0" strokeWidth="20px" strokeDasharray="565.48px" strokeDashoffset="0" />
           <circle
             className="loading-circle"
-            r="90"
-            cx="100"
-            cy="100"
+            r="90" cx="100" cy="100"
             stroke="url(#paint0_linear_7083_33769)"
             strokeWidth="20px"
             strokeLinecap="round"
             strokeDashoffset="565.48px"
             fill="transparent"
             strokeDasharray="565.48px"
-          ></circle>
-
+          />
           <defs>
-            <linearGradient
-              id="paint0_linear_7083_33769"
-              x1="14.77"
-              y1="21.5385"
-              x2="107.011"
-              y2="21.9894"
-              gradientUnits="userSpaceOnUse"
-            >
+            <linearGradient id="paint0_linear_7083_33769" x1="14.77" y1="21.5385" x2="107.011" y2="21.9894" gradientUnits="userSpaceOnUse">
               <stop stopColor="#F8BF3B" />
               <stop offset="0.305" stopColor="#FF8B13" />
               <stop offset="1" stopColor="#EF5F3D" />
@@ -103,7 +76,6 @@ const Loading = ({ action, activity }) => {
           </defs>
         </svg>
 
-        {/* Countdown positioned inside the loader with relative sizing */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative flex h-3/4 w-3/4 items-center justify-center rounded-full border-2 border-primary bg-white text-secondary">
             <span className="text-6xl font-bold text-primary">{countdown}</span>
@@ -119,9 +91,9 @@ const Loading = ({ action, activity }) => {
           Age Group: {activity?.ageGroup || "5-10"} years old
         </p>
 
-        {/* ✅ Render as a single flowing paragraph — no line breaks, no bullet list */}
+        {/* ✅ Each sentence on its own line — no pipes visible */}
         {outcomesText ? (
-          <p className="mx-auto mt-4 min-w-96 max-w-lg text-center text-black font-semibold text-base leading-7">
+          <p className="mx-auto mt-4 min-w-96 max-w-lg text-center text-black font-semibold text-base leading-8 whitespace-pre-line">
             {outcomesText}
           </p>
         ) : null}
