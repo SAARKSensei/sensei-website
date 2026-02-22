@@ -6,19 +6,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 const Loading = ({ action, activity }) => {
-  const formatOutcomes = (outcomesText) => {
-    if (!outcomesText) return [];
-
-    const outcomesArray = outcomesText.split("\n");
-
-    return outcomesArray.map((outcome) => {
-      return outcome.replace(/^\d+\.\s*/, "");
-    });
-  };
-
-  const [outcomes, setOutcomes] = useState(() => {
-    return activity?.outComes ? formatOutcomes(activity.outComes) : [];
-  });
+  // ✅ outComes is now a single space-joined paragraph string — no splitting needed
+  const [outcomesText, setOutcomesText] = useState(activity?.outComes || "");
 
   const [countdown, setCountdown] = useState(6);
 
@@ -26,7 +15,7 @@ const Loading = ({ action, activity }) => {
 
   useEffect(() => {
     if (activity?.outComes) {
-      setOutcomes(formatOutcomes(activity.outComes));
+      setOutcomesText(activity.outComes);
     }
   }, [activity]);
 
@@ -113,7 +102,7 @@ const Loading = ({ action, activity }) => {
             </linearGradient>
           </defs>
         </svg>
-        
+
         {/* Countdown positioned inside the loader with relative sizing */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="relative flex h-3/4 w-3/4 items-center justify-center rounded-full border-2 border-primary bg-white text-secondary">
@@ -121,7 +110,7 @@ const Loading = ({ action, activity }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="mx-auto mb-20 mt-10 flex flex-col justify-center gap-2">
         <h3 className="h3 text-grad mx-auto font-bold">
           {activity?.name || "Loading Activity..."}
@@ -129,16 +118,13 @@ const Loading = ({ action, activity }) => {
         <p className="body-3 mx-auto text-secondary">
           Age Group: {activity?.ageGroup || "5-10"} years old
         </p>
-        <div className="mx-auto flex flex-col justify-center">
-          <h2 className="h5 text-semibold mx-auto mt-4 h-fit min-w-96 whitespace-pre-line text-center text-black underline-offset-4">
-            {outcomes.map((outcome, index) => (
-              <React.Fragment key={index}>
-                {outcome}
-                {index < outcomes.length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </h2>
-        </div>
+
+        {/* ✅ Render as a single flowing paragraph — no line breaks, no bullet list */}
+        {outcomesText ? (
+          <p className="mx-auto mt-4 min-w-96 max-w-lg text-center text-black font-semibold text-base leading-7">
+            {outcomesText}
+          </p>
+        ) : null}
       </div>
 
       <Rafiki className="absolute bottom-0 left-0 -z-10" />

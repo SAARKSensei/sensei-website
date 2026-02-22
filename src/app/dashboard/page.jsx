@@ -371,7 +371,7 @@ const UserDashboard = () => {
           ))}
         </div>
         <button onClick={scrollCarousel}
-          className="flex-shrink-0 -ml-[31px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]">
+          className="flex-shrink-0 ml-[16px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]">
           <ChevronRight className="w-7 h-7 text-[#FF8B13]" strokeWidth={4} />
         </button>
       </div>
