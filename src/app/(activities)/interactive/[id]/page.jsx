@@ -11,13 +11,54 @@ import Feedback from "@/components/activityComps/Feedback";
 
 const BASE_URL = "https://api.sensei.org.in/api";
 
-// ─── Helper: parse childTask string split by | into array of strings ──────────
-const parseChildTasks = (childTaskStr) => {
+// ─── Helper: parse childTask string into grouped tasks ───────────────────────
+// Each numbered item (1., 2., 3. ...) = one child task button.
+// Lettered sub-points (a., b., c. ...) and plain continuation lines are
+// grouped under their parent numbered item.
+// FALLBACK: if no numbered items exist at all (e.g. Step 7), the entire
+// content is treated as one single group so navigation still works.
+// Returns: [{ main: string, subItems: string[] }, ...]
+const parseChildTasksGrouped = (childTaskStr) => {
   if (!childTaskStr) return [];
-  return childTaskStr
+
+  const segments = childTaskStr
     .split(/\s*\|\s*/)
     .map((t) => t.trim())
     .filter(Boolean);
+
+  const groups = [];
+  let currentGroup = null;
+
+  for (const segment of segments) {
+    // New numbered item (1., 2., 10., ...) → start a fresh group
+    if (/^\d+\./.test(segment)) {
+      if (currentGroup) groups.push(currentGroup);
+      currentGroup = {
+        main: segment.replace(/^\d+\.\s*/, "").trim(),
+        subItems: [],
+      };
+    } else {
+      // Lettered point (a., b., ...) OR plain continuation → belongs to current group
+      if (currentGroup) {
+        currentGroup.subItems.push(segment);
+      } else {
+        // ✅ FALLBACK: no numbered item started yet — collect as plain sub-items
+        // under a single unnamed group
+        if (groups.length === 0) {
+          currentGroup = { main: segment, subItems: [] };
+        }
+      }
+    }
+  }
+
+  if (currentGroup) groups.push(currentGroup);
+
+  // ✅ FINAL FALLBACK: if still empty (shouldn't happen), wrap everything as one group
+  if (groups.length === 0 && segments.length > 0) {
+    return [{ main: segments[0], subItems: segments.slice(1) }];
+  }
+
+  return groups;
 };
 
 const Page = ({ params: { id } }) => {
@@ -41,21 +82,25 @@ const Page = ({ params: { id } }) => {
   const [currChildTask, setCurrChildTask] = useState(0);
   const [activeButton, setActiveButton] = useState(null);
 
-  // ── Derived — all dynamic, no hardcoded 6 ───────────────────────────────────
+  // ── Derived — fully dynamic ─────────────────────────────────────────────────
   const TOTAL_STEPS = processes.length;
   const currentStep = processes[currProcess] ?? null;
-  const childTasks = parseChildTasks(currentStep?.childTask);
-  const CHILD_TASKS_PER_STEP = childTasks.length;
+
+  // Grouped child tasks for current step
+  const childTaskGroups = parseChildTasksGrouped(currentStep?.childTask);
+  const CHILD_TASKS_PER_STEP = childTaskGroups.length;
+
   const currentStepNumber = currProcess + 1;
   const stepProgressPercentage =
     TOTAL_STEPS > 0 ? (currentStepNumber / TOTAL_STEPS) * 100 : 0;
+
+  // ✅ isLastTask: last step AND (last child task OR no child tasks at all)
   const isLastTask =
     currProcess === TOTAL_STEPS - 1 &&
-    currChildTask === CHILD_TASKS_PER_STEP - 1;
+    (CHILD_TASKS_PER_STEP === 0 || currChildTask === CHILD_TASKS_PER_STEP - 1);
 
-  // Strip leading "1." numbering from child task text
-  const currentChildTaskText =
-    childTasks[currChildTask]?.replace(/^\d+\.\s*/, "").trim() || "";
+  // Current group to display
+  const currentGroup = childTaskGroups[currChildTask] ?? null;
 
   // mediaUrl: skip if "N.A" or empty
   const mediaUrl =
@@ -67,13 +112,17 @@ const Page = ({ params: { id } }) => {
   const nextProcess = () => {
     setActiveButton("next");
     setTimeout(() => setActiveButton(null), 200);
+
     if (currChildTask < CHILD_TASKS_PER_STEP - 1) {
+      // More child tasks in this step
       setCurrChildTask((pre) => pre + 1);
     } else {
+      // Last child task (or no child tasks) — move to next step or finish
       if (currProcess < TOTAL_STEPS - 1) {
         setCurrProcess((pre) => pre + 1);
         setCurrChildTask(0);
       } else {
+        // ✅ All steps done → go to Feedback (state 3)
         setState((pre) => pre + 1);
       }
     }
@@ -87,10 +136,9 @@ const Page = ({ params: { id } }) => {
       setCurrChildTask((pre) => pre - 1);
     } else {
       if (currProcess > 0) {
-        // Jump to last child task of the previous step
-        const prevTasks = parseChildTasks(processes[currProcess - 1]?.childTask);
+        const prevGroups = parseChildTasksGrouped(processes[currProcess - 1]?.childTask);
         setCurrProcess((pre) => pre - 1);
-        setCurrChildTask(Math.max(prevTasks.length - 1, 0));
+        setCurrChildTask(Math.max(prevGroups.length - 1, 0));
       }
     }
     window.scrollTo(0, 0);
@@ -124,7 +172,6 @@ const Page = ({ params: { id } }) => {
           `${BASE_URL}/interactive-processes/by-activity/${id}`
         );
         if (Array.isArray(res?.data)) {
-          // Sort by stepOrder to guarantee correct sequence
           const sorted = [...res.data].sort((a, b) => a.stepOrder - b.stepOrder);
           setProcesses(sorted);
         }
@@ -238,7 +285,6 @@ const Page = ({ params: { id } }) => {
       );
 
     case 2:
-      // Processes loading
       if (processesLoading) {
         return (
           <div className="min-h-screen flex items-center justify-center bg-white">
@@ -250,7 +296,6 @@ const Page = ({ params: { id } }) => {
         );
       }
 
-      // Processes error
       if (processesError && processes.length === 0) {
         return (
           <div className="min-h-screen flex items-center justify-center bg-white px-6">
@@ -305,7 +350,6 @@ const Page = ({ params: { id } }) => {
                 <h2 className="text-[#FF8B13] text-lg font-medium leading-7 md:text-xl">
                   {`Step ${currentStep?.stepOrder ?? currentStepNumber}`}
                 </h2>
-                {/* Hint button — only shown when hint text is available */}
                 {currentStep?.hint && (
                   <button
                     onClick={() => setInfoOpen(true)}
@@ -322,7 +366,7 @@ const Page = ({ params: { id } }) => {
                 )}
               </div>
 
-              {/* Sensei Avatar + Message — bubble auto-grows with long text */}
+              {/* Sensei Avatar + Message */}
               <div className="flex gap-4 md:gap-6 items-start">
                 <div className="flex-shrink-0">
                   <div className="w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 md:w-32 md:h-32 flex items-center justify-center overflow-hidden">
@@ -335,7 +379,6 @@ const Page = ({ params: { id } }) => {
                     />
                   </div>
                 </div>
-                {/* flex-1 lets bubble take remaining width; no max-w cap */}
                 <div className="flex-1">
                   <div className="bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg p-4">
                     <p className="text-[#666666] text-base leading-6 font-normal">
@@ -376,33 +419,48 @@ const Page = ({ params: { id } }) => {
               </div>
             )}
 
-            {/* ── Child Tasks Card — height auto-expands with content ───────── */}
-            <div className="mt-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.12)] rounded-xl p-3">
+            {/* ── Child Tasks Card ──────────────────────────────────────────── */}
+            <div className="mt-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.12)] rounded-xl p-3 mb-4">
               <p className="text-[#999999] text-sm font-medium leading-5 mb-3">
                 Child Tasks - Step {currentStepNumber}
               </p>
 
-              {/* Dynamic buttons — exactly as many as there are parsed tasks */}
-              <div className="flex flex-wrap gap-2 mb-3">
-                {childTasks.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrChildTask(index)}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                      index <= currChildTask
-                        ? "bg-[#FF8B13] text-white shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
-                        : "border border-[#A4A4A4] text-[#999999] shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
-                    }`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
+              {/* Dynamic buttons — one per numbered task group */}
+              {childTaskGroups.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {childTaskGroups.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrChildTask(index)}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                        index <= currChildTask
+                          ? "bg-[#FF8B13] text-white shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
+                          : "border border-[#A4A4A4] text-[#999999] shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
+                      }`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
 
-              {/* Actual task text — no fixed height, wraps naturally */}
-              <p className="text-[#333333] text-base font-semibold leading-7 whitespace-pre-line">
-                {currentChildTaskText}
-              </p>
+              {/* Task content: main text + sub-items */}
+              {currentGroup && (
+                <div className="flex flex-col gap-1">
+                  <p className="text-[#333333] text-base font-semibold leading-7">
+                    {currentGroup.main}
+                  </p>
+                  {currentGroup.subItems.length > 0 && (
+                    <div className="flex flex-col gap-1 mt-1 pl-2">
+                      {currentGroup.subItems.map((item, i) => (
+                        <p key={i} className="text-[#555555] text-sm font-medium leading-6">
+                          {item}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -417,21 +475,15 @@ const Page = ({ params: { id } }) => {
                   }`}
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M15 18L9 12L15 6"
-                      stroke="#999999"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="M15 18L9 12L15 6" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                   <span className="text-[#999999] font-bold text-base leading-6">Back</span>
                 </button>
               )}
+              {/* ✅ No disabled prop — always clickable */}
               <button
                 onClick={nextProcess}
-                disabled={CHILD_TASKS_PER_STEP === 0}
-                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all disabled:opacity-50 ${
+                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all ${
                   activeButton === "next" ? "bg-[#1f2d4d]" : ""
                 } ${currProcess === 0 && currChildTask === 0 ? "w-full" : ""}`}
               >
@@ -439,35 +491,21 @@ const Page = ({ params: { id } }) => {
                   {isLastTask ? "Finish" : "Next"}
                 </span>
                 <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M9 18L15 12L9 6"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
+                  <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
             </div>
           </div>
 
-          {/* ── Hint Modal — shows hint from API ────────────────────────────── */}
+          {/* ── Hint Modal ───────────────────────────────────────────────────── */}
           {infoOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-5 z-50">
               <div className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                   <h3 className="text-xl font-bold text-[#2C3D68]">Hint</h3>
-                  <button
-                    onClick={() => setInfoOpen(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
+                  <button onClick={() => setInfoOpen(false)} className="text-gray-500 hover:text-gray-700">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
