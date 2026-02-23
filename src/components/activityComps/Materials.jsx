@@ -131,7 +131,7 @@ const Materials = ({ keyObjectives, objective, action }) => {
             onClick={action}
             className="flex-1 h-14 bg-[#FF8B13] hover:bg-[#e57a10] text-white font-bold text-base rounded-xl transition-all shadow-md"
           >
-            Let's Start
+           Let&apos;s Start
           </button>
         </div>
       </div>
