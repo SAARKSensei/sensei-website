@@ -47,6 +47,13 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      // ✅ Added for Google Drive GIF proxy route
+      {
+        protocol: "https",
+        hostname: "drive.usercontent.google.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

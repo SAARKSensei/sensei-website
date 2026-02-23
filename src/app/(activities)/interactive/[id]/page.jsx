@@ -11,6 +11,25 @@ import Feedback from "@/components/activityComps/Feedback";
 
 const BASE_URL = "https://api.sensei.org.in/api";
 
+// ─── Helper: convert Google Drive sharing URL → local API proxy URL ───────────
+// Google Drive blocks direct browser image loading (CORS/referrer restrictions).
+// We proxy the request server-side via /api/drive-media to bypass this.
+// Input:  "https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
+// Output: "/api/drive-media?id=FILE_ID"
+const getDirectMediaUrl = (url) => {
+  if (!url || url.trim() === "N.A") return null;
+  try {
+    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      // ✅ Use local proxy — server fetches from Drive, no CORS/referrer issues
+      return `/api/drive-media?id=${match[1]}`;
+    }
+    return url;
+  } catch {
+    return null;
+  }
+};
+
 // ─── Helper: parse childTask string into grouped tasks ───────────────────────
 const parseChildTasksGrouped = (childTaskStr) => {
   if (!childTaskStr) return [];
@@ -79,10 +98,9 @@ const Page = ({ params: { id } }) => {
     currProcess === TOTAL_STEPS - 1 &&
     (CHILD_TASKS_PER_STEP === 0 || currChildTask === CHILD_TASKS_PER_STEP - 1);
   const currentGroup = childTaskGroups[currChildTask] ?? null;
-  const mediaUrl =
-    currentStep?.mediaUrl && currentStep.mediaUrl.trim() !== "N.A"
-      ? currentStep.mediaUrl
-      : null;
+
+  // ✅ Convert to lh3.googleusercontent.com URL for reliable GIF rendering
+  const mediaUrl = getDirectMediaUrl(currentStep?.mediaUrl);
 
   const nextProcess = () => {
     setActiveButton("next");
@@ -154,7 +172,6 @@ const Page = ({ params: { id } }) => {
     if (id) fetchProcesses();
   }, [id]);
 
-  // ✅ Join with \n so each sentence appears on its own line in Loading screen
   const processText = (outcomes) => {
     if (!outcomes) return "";
     return outcomes
@@ -165,7 +182,7 @@ const Page = ({ params: { id } }) => {
         return trimmed.endsWith(".") ? trimmed : trimmed + ".";
       })
       .filter(Boolean)
-      .join("\n"); // ✅ newline — no pipe visible, each sentence on its own line
+      .join("\n");
   };
 
   useEffect(() => {
@@ -279,6 +296,8 @@ const Page = ({ params: { id } }) => {
 
       return (
         <div className="min-h-screen bg-white pb-24 font-['Nunito']">
+
+          {/* ── Header ─────────────────────────────────────────────────────── */}
           <header className="bg-[#2C3D68] px-5 pt-6 pb-5 w-full md:px-8 lg:px-12">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1 text-white text-sm font-semibold">
@@ -298,8 +317,11 @@ const Page = ({ params: { id } }) => {
             </div>
           </header>
 
+          {/* ── Main Content ────────────────────────────────────────────────── */}
           <div className="px-5 md:px-8 lg:px-12 xl:max-w-7xl xl:mx-auto">
             <div className="mt-6 flex flex-col gap-4">
+
+              {/* Step title + Hint button */}
               <div className="flex justify-between items-center gap-3">
                 <h2 className="text-[#FF8B13] text-lg font-medium leading-7 md:text-xl">
                   {`Step ${currentStep?.stepOrder ?? currentStepNumber}`}
@@ -317,6 +339,7 @@ const Page = ({ params: { id } }) => {
                 )}
               </div>
 
+              {/* Sensei Avatar + Message */}
               <div className="flex gap-4 md:gap-6 items-start">
                 <div className="flex-shrink-0">
                   <div className="w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 md:w-32 md:h-32 flex items-center justify-center overflow-hidden">
@@ -333,6 +356,7 @@ const Page = ({ params: { id } }) => {
               </div>
             </div>
 
+            {/* ── Progress Bar ─────────────────────────────────────────────── */}
             <div className="mt-6 flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-[#E6E6E6] rounded-[4px] overflow-hidden">
@@ -348,12 +372,29 @@ const Page = ({ params: { id } }) => {
               <p className="text-[#999999] text-sm font-medium leading-5">Follow below steps</p>
             </div>
 
+            {/* ── GIF display — lh3.googleusercontent.com serves GIFs animated ── */}
             {mediaUrl && (
-              <div className="mt-4 relative w-full h-[197px] bg-[#D9D9D9] rounded-2xl overflow-hidden md:h-[300px] lg:h-[400px]">
-                <Image src={mediaUrl} alt={`Step ${currentStep?.stepOrder}`} fill className="object-cover" />
+              <div className="mt-4 w-full rounded-2xl overflow-hidden bg-[#f5f5f5] flex items-center justify-center">
+                <img
+                  key={mediaUrl}
+                  src={mediaUrl}
+                  alt={`Step ${currentStep?.stepOrder}`}
+                  className="w-full rounded-2xl"
+                  style={{ maxHeight: "220px", objectFit: "contain" }}
+                  onError={(e) => {
+                    // ✅ Fallback: try uc?export=view if lh3 fails
+                    const match = currentStep?.mediaUrl?.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+                    if (match && match[1] && !e.currentTarget.src.includes("uc?export")) {
+                      e.currentTarget.src = `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                    } else {
+                      e.currentTarget.style.display = "none";
+                    }
+                  }}
+                />
               </div>
             )}
 
+            {/* ── Child Tasks Card ──────────────────────────────────────────── */}
             <div className="mt-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.12)] rounded-xl p-3 mb-4">
               <p className="text-[#999999] text-sm font-medium leading-5 mb-3">
                 Child Tasks - Step {currentStepNumber}
@@ -392,6 +433,7 @@ const Page = ({ params: { id } }) => {
             </div>
           </div>
 
+          {/* ── Bottom Navigation ───────────────────────────────────────────── */}
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-5 md:px-8 lg:px-12">
             <div className="flex gap-8 max-w-[348px] mx-auto xl:max-w-7xl">
               {(currProcess > 0 || currChildTask > 0) && (
@@ -419,6 +461,7 @@ const Page = ({ params: { id } }) => {
             </div>
           </div>
 
+          {/* ── Hint Modal ───────────────────────────────────────────────────── */}
           {infoOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-5 z-50">
               <div className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
