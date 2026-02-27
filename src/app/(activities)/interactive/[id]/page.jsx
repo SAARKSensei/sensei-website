@@ -295,35 +295,36 @@ const Page = ({ params: { id } }) => {
       }
 
       return (
-        <div className="min-h-screen bg-white pb-24 font-['Nunito']">
+        <div className="min-h-screen bg-white font-['Nunito'] pb-28">
 
-          {/* ── Header ─────────────────────────────────────────────────────── */}
-          <header className="bg-[#2C3D68] px-5 pt-6 pb-5 w-full md:px-8 lg:px-12">
+          {/* ╔══════════════════════════════════════════════════════════════════╗
+              MOBILE LAYOUT  (< lg)  — same as before: dark header + single col
+              DESKTOP LAYOUT (≥ lg)  — Figma design: breadcrumbs + two columns
+          ╚══════════════════════════════════════════════════════════════════╝ */}
+
+          {/* ── MOBILE ONLY: Dark header ──────────────────────────────────── */}
+          <header className="lg:hidden bg-[#2C3D68] px-5 pt-6 pb-5 w-full">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1 text-white text-sm font-semibold">
                 <span>Home</span>
                 <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
                   <path d="M5 3L9 7L5 11" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>
-                <span>Subjects</span>
-                <svg className="w-3.5 h-3.5" viewBox="0 0 14 14" fill="none">
-                  <path d="M5 3L9 7L5 11" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                </svg>
                 <span>{interactiveActivity?.activityType || "DIY"}</span>
               </div>
-              <h1 className="text-white text-xl font-medium leading-[30px] md:text-2xl lg:text-3xl">
+              <h1 className="text-white text-xl font-medium leading-[30px]">
                 {interactiveActivity?.title || "Activity"}
               </h1>
             </div>
           </header>
 
-          {/* ── Main Content ────────────────────────────────────────────────── */}
-          <div className="px-5 md:px-8 lg:px-12 xl:max-w-7xl xl:mx-auto">
+          {/* ── MOBILE ONLY: Single-column content ───────────────────────── */}
+          <div className="lg:hidden px-5 pb-4">
             <div className="mt-6 flex flex-col gap-4">
 
-              {/* Step title + Hint button */}
+              {/* Step title + Hint */}
               <div className="flex justify-between items-center gap-3">
-                <h2 className="text-[#FF8B13] text-lg font-medium leading-7 md:text-xl">
+                <h2 className="text-[#FF8B13] text-lg font-medium leading-7">
                   {`Step ${currentStep?.stepOrder ?? currentStepNumber}`}
                 </h2>
                 {currentStep?.hint && (
@@ -340,11 +341,9 @@ const Page = ({ params: { id } }) => {
               </div>
 
               {/* Sensei Avatar + Message */}
-              <div className="flex gap-4 md:gap-6 items-start">
-                <div className="flex-shrink-0">
-                  <div className="w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 md:w-32 md:h-32 flex items-center justify-center overflow-hidden">
-                    <Image src={IconImage} alt="Sensei" width={116} height={116} className="object-cover w-full h-full" />
-                  </div>
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 overflow-hidden">
+                  <Image src={IconImage} alt="Sensei" width={116} height={116} className="object-cover w-full h-full" />
                 </div>
                 <div className="flex-1">
                   <div className="bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg p-4">
@@ -356,7 +355,7 @@ const Page = ({ params: { id } }) => {
               </div>
             </div>
 
-            {/* ── Progress Bar ─────────────────────────────────────────────── */}
+            {/* Progress Bar */}
             <div className="mt-6 flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-[#E6E6E6] rounded-[4px] overflow-hidden">
@@ -372,29 +371,20 @@ const Page = ({ params: { id } }) => {
               <p className="text-[#999999] text-sm font-medium leading-5">Follow below steps</p>
             </div>
 
-            {/* ── GIF display — lh3.googleusercontent.com serves GIFs animated ── */}
+            {/* GIF — full width on mobile */}
             {mediaUrl && (
-              <div className="mt-4 w-full rounded-2xl overflow-hidden bg-[#f5f5f5] flex items-center justify-center">
+              <div className="mt-4 w-full rounded-2xl overflow-hidden bg-[#D9D9D9] flex items-center justify-center" style={{ height: "214px" }}>
                 <img
                   key={mediaUrl}
                   src={mediaUrl}
                   alt={`Step ${currentStep?.stepOrder}`}
-                  className="w-full rounded-2xl"
-                  style={{ maxHeight: "220px", objectFit: "contain" }}
-                  onError={(e) => {
-                    // ✅ Fallback: try uc?export=view if lh3 fails
-                    const match = currentStep?.mediaUrl?.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-                    if (match && match[1] && !e.currentTarget.src.includes("uc?export")) {
-                      e.currentTarget.src = `https://drive.google.com/uc?export=view&id=${match[1]}`;
-                    } else {
-                      e.currentTarget.style.display = "none";
-                    }
-                  }}
+                  className="w-full h-full object-cover rounded-2xl"
+                  onError={(e) => { e.currentTarget.style.display = "none"; }}
                 />
               </div>
             )}
 
-            {/* ── Child Tasks Card ──────────────────────────────────────────── */}
+            {/* Child Tasks Card */}
             <div className="mt-4 bg-white shadow-[0_2px_5px_rgba(0,0,0,0.12)] rounded-xl p-3 mb-4">
               <p className="text-[#999999] text-sm font-medium leading-5 mb-3">
                 Child Tasks - Step {currentStepNumber}
@@ -418,9 +408,7 @@ const Page = ({ params: { id } }) => {
               )}
               {currentGroup && (
                 <div className="flex flex-col gap-1">
-                  <p className="text-[#333333] text-base font-semibold leading-7">
-                    {currentGroup.main}
-                  </p>
+                  <p className="text-[#333333] text-base font-semibold leading-7">{currentGroup.main}</p>
                   {currentGroup.subItems.length > 0 && (
                     <div className="flex flex-col gap-1 mt-1 pl-2">
                       {currentGroup.subItems.map((item, i) => (
@@ -433,13 +421,162 @@ const Page = ({ params: { id } }) => {
             </div>
           </div>
 
-          {/* ── Bottom Navigation ───────────────────────────────────────────── */}
+          {/* ── DESKTOP ONLY (≥ lg): Figma layout ────────────────────────── */}
+          <div className="hidden lg:block w-full max-w-[1280px] mx-auto" style={{ padding: "40px 142px 0 142px" }}>
+            <div className="w-full max-w-[996px] flex flex-col gap-4">
+
+              {/* Breadcrumbs */}
+              <div className="flex flex-row items-center gap-6 h-10">
+                <button
+                  onClick={() => Router.back()}
+                  className="flex items-center justify-center w-10 h-10 bg-white border border-[#2C3D68] rounded-lg hover:bg-gray-50 transition-colors flex-shrink-0"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M15 18L9 12L15 6" stroke="#2C3D68" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <div className="flex flex-row items-center h-10">
+                  <button className="flex items-center justify-center px-2 py-2 gap-1 h-10 rounded-lg hover:bg-gray-50 transition-colors">
+                    <span className="font-bold text-sm leading-6 text-[#2C3D68]">My Learning</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#2C3D68" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </button>
+                  <button className="flex items-center justify-center px-2 py-2 gap-1 h-10 rounded-lg hover:bg-gray-50 transition-colors">
+                    <span className="font-bold text-sm leading-6 text-[#2C3D68]">{interactiveActivity?.activityType || "EW"}</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#2C3D68" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  </button>
+                  <button className="flex items-center justify-center px-2 py-2 h-10 rounded-lg hover:bg-gray-50 transition-colors">
+                    <span className="font-bold text-sm leading-6 text-[#2C3D68]">{interactiveActivity?.title || "Unit 1"}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Page Title */}
+              <h1 className="font-bold text-2xl leading-[30px] text-[#2C3D68]">
+                {interactiveActivity?.title || "Activity"}
+              </h1>
+
+              {/* Sensei section */}
+              <div className="flex flex-col gap-4">
+                {/* Step label + Hint */}
+                <div className="flex justify-between items-center h-[38px]">
+                  <h2 className="font-medium text-lg leading-7 text-[#333333]">
+                    {`${currentStepNumber}. ${currentStep?.senseiMessage?.split(".")?.[0] ?? `Step ${currentStep?.stepOrder ?? currentStepNumber}`}`}
+                  </h2>
+                  {currentStep?.hint && (
+                    <button
+                      onClick={() => setInfoOpen(true)}
+                      className="flex items-center gap-2 px-[9px] py-[9px] rounded-[20px] border border-[#FF8B13] hover:bg-[#FFF5E6] transition-colors"
+                    >
+                      <svg width="20" height="18" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z" fill="#FF8B13" />
+                      </svg>
+                      <span className="font-bold text-base leading-5 text-[#FF8B13]">Hint</span>
+                    </button>
+                  )}
+                </div>
+                {/* Avatar + message */}
+                <div className="flex gap-4 items-start h-[166px]">
+                  <div className="flex-shrink-0 w-[166px] h-[166px] border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] rounded-sm bg-gray-200 overflow-hidden">
+                    <Image src={IconImage} alt="Sensei" width={166} height={166} className="object-cover w-full h-full" />
+                  </div>
+                  <div className="flex flex-col justify-center flex-1 h-[166px]">
+                    <div className="inline-flex px-4 py-2 bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg">
+                      <p className="font-normal text-lg leading-6 text-[#666666]">
+                        {currentStep?.senseiMessage || "Follow the steps carefully and have fun!"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activities Progress */}
+              <div className="flex flex-col gap-1">
+                <p className="font-medium text-base leading-5 text-[#999999]">Activities Progress</p>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 h-3 bg-[#E6E6E6] rounded-[8px] overflow-hidden">
+                    <div
+                      className="h-full bg-[#FF8B13] rounded-[8px] transition-all duration-300"
+                      style={{ width: `${stepProgressPercentage}%` }}
+                    />
+                  </div>
+                  <span className="w-[43px] font-semibold text-base leading-5 text-[#666666] text-right flex-shrink-0">
+                    {String(currentStepNumber).padStart(2, "0")}/{String(TOTAL_STEPS).padStart(2, "0")}
+                  </span>
+                </div>
+              </div>
+
+              {/* Two columns: GIF (380px) + Child Tasks (flex-1) */}
+              <div className="flex flex-row items-start gap-4">
+
+                {/* LEFT: GIF 380×214 */}
+                <div className="flex flex-col gap-2 flex-shrink-0 w-[380px]">
+                  <p className="font-medium text-base leading-5 text-[#999999]">Video References</p>
+                  <div className="relative w-[380px] h-[214px] bg-[#D9D9D9] rounded-2xl overflow-hidden flex items-center justify-center">
+                    {mediaUrl ? (
+                      <img
+                        key={mediaUrl}
+                        src={mediaUrl}
+                        alt={`Step ${currentStep?.stepOrder}`}
+                        className="w-full h-full object-cover"
+                        onError={(e) => { e.currentTarget.style.display = "none"; }}
+                      />
+                    ) : (
+                      <div className="absolute flex items-center justify-center" style={{ width: 74, height: 74 }}>
+                        <svg width="70" height="50" viewBox="0 0 70 50" fill="none">
+                          <path d="M43.75 0H8.75C3.9375 0 0 3.9375 0 8.75V41.25C0 46.0625 3.9375 50 8.75 50H43.75C48.5625 50 52.5 46.0625 52.5 41.25V8.75C52.5 3.9375 48.5625 0 43.75 0ZM70 7.5L52.5 20V30L70 42.5V7.5Z" fill="white" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* RIGHT: Child Tasks flex-1 */}
+                <div className="flex flex-col gap-2 flex-1">
+                  <p className="font-medium text-base leading-5 text-[#999999]">Child Tasks</p>
+                  <div className="flex flex-col gap-3 bg-white shadow-[0px_2px_5px_rgba(0,0,0,0.12)] rounded-2xl p-6">
+                    {childTaskGroups.length > 0 && (
+                      <div className="flex justify-between items-center gap-2">
+                        {childTaskGroups.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={() => setCurrChildTask(index)}
+                            className={`flex items-center justify-center rounded-full font-bold text-xs leading-4 transition-all flex-1 h-8 ${
+                              index <= currChildTask
+                                ? "bg-[#FF8B13] text-white shadow-[0px_2px_5px_rgba(0,0,0,0.12)]"
+                                : "border border-[#A4A4A4] text-[#999999]"
+                            }`}
+                          >
+                            {index + 1}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    {currentGroup && (
+                      <div className="flex flex-col gap-1">
+                        <p className="font-semibold text-base leading-6 text-[#333333]">{currentGroup.main}</p>
+                        {currentGroup.subItems.length > 0 && (
+                          <div className="flex flex-col gap-1 mt-1 pl-2">
+                            {currentGroup.subItems.map((item, i) => (
+                              <p key={i} className="font-medium text-sm leading-6 text-[#555555]">{item}</p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* ── Bottom Navigation (shared mobile + desktop) ──────────────── */}
           <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-5 md:px-8 lg:px-12">
-            <div className="flex gap-8 max-w-[348px] mx-auto xl:max-w-7xl">
+            <div className="flex gap-4 max-w-[348px] mx-auto lg:max-w-[996px]">
               {(currProcess > 0 || currChildTask > 0) && (
                 <button
                   onClick={prevProcess}
-                  className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-white border border-[#999999] rounded-lg transition-all ${activeButton === "back" ? "bg-gray-50 border-gray-400" : ""}`}
+                  className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-white border border-[#999999] rounded-lg transition-all ${activeButton === "back" ? "bg-gray-50" : ""}`}
                 >
                   <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
                     <path d="M15 18L9 12L15 6" stroke="#999999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -449,7 +586,7 @@ const Page = ({ params: { id } }) => {
               )}
               <button
                 onClick={nextProcess}
-                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all ${activeButton === "next" ? "bg-[#1f2d4d]" : ""} ${currProcess === 0 && currChildTask === 0 ? "w-full" : ""}`}
+                className={`flex-1 flex items-center justify-center gap-2 h-14 px-4 bg-[#2C3D68] rounded-lg transition-all ${activeButton === "next" ? "bg-[#1f2d4d]" : ""}`}
               >
                 <span className="text-white font-bold text-base leading-6">
                   {isLastTask ? "Finish" : "Next"}
@@ -461,7 +598,7 @@ const Page = ({ params: { id } }) => {
             </div>
           </div>
 
-          {/* ── Hint Modal ───────────────────────────────────────────────────── */}
+          {/* ── Hint Modal (shared) ───────────────────────────────────────── */}
           {infoOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-5 z-50">
               <div className="bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
@@ -473,7 +610,7 @@ const Page = ({ params: { id } }) => {
                     </svg>
                   </button>
                 </div>
-                <p className="text-[#666666] leading-6">
+                <p className="font-['Nunito'] text-[#666666] leading-6">
                   {currentStep?.hint || "No hint available for this step."}
                 </p>
               </div>

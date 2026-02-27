@@ -42,6 +42,7 @@ const Page = () => {
   const currentUserData = useSelector((state) => state?.currentUser?.data);
   const parentData = useSelector((state) => state?.parents?.data);
   const childrenData = useSelector((state) => state?.children?.data);
+  const BASE_URL = "https://api.sensei.org.in";
 
   const dispatch = useDispatch();
 
@@ -50,7 +51,7 @@ const Page = () => {
   const getPlans = async () => {
     try {
       const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/pricing-plans`
+      `${BASE_URL}/api/pricing-plans`
     );
       if (response?.data) setPlans(response.data); //change later after multiple plans have been added
     } catch (error) {
@@ -84,7 +85,7 @@ const Page = () => {
   const createPaymentorder = async (data) => {
     let status;
     try {
-      const res = await axios.post( `${process.env.NEXT_PUBLIC_API_BASE_URL}/payments/create-order`, {
+      const res = await axios.post( `${BASE_URL}/payments/create-order`, {
         amount: data.planPrice,
         currency: "INR",
         receipt: `${data.childName + " " + plans.filter(item => item.price === data.planPrice)[0].name}`,
