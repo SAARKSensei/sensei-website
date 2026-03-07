@@ -450,11 +450,11 @@ export const navLinks = [
     title: "Curriculum",
     link: "/subjects",
   },
-  {
-    index: 7,
-    title: "School",
-    link: "/school",
-  },
+ // {
+ //   index: 7,
+  //  title: "School",
+ //   link: "/school",
+ // },
 ];
 export const ABLFilters = [
   {

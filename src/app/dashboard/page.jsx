@@ -294,6 +294,55 @@ const MobileBottomNav = ({ activeNav, setActiveNav, setSelectedSubject }) => (
   </div>
 );
 
+// ─── Desktop Horizontal Bottom Navbar (matches Figma exactly) ────────────────
+const DesktopBottomNav = ({ activeNav, setActiveNav, setSelectedSubject }) => (
+  <div
+    className="fixed bottom-6 left-1/2 z-50 hidden md:flex items-center justify-center"
+    style={{
+      transform: "translateX(-50%)",
+      width: "386px",
+      height: "80px",
+      background: "#2C3D68",
+      borderRadius: "16px",
+      padding: "16px",
+      gap: "56px",
+      boxShadow: "0px 8px 32px rgba(44,61,104,0.35)",
+    }}
+  >
+    {[
+      { key: "home",  Icon: Home,     iconSize: 24, strokeWidth: 2.5  },
+      { key: "book",  Icon: BookOpen, iconSize: 32, strokeWidth: 3    },
+      { key: "chart", Icon: FileText, iconSize: 32, strokeWidth: 3    },
+      { key: "user",  Icon: User,     iconSize: 32, strokeWidth: 3.5  },
+    ].map(({ key, Icon, iconSize, strokeWidth }) => {
+      const isActive = activeNav === key;
+      return (
+        <button
+          key={key}
+          onClick={() => { setActiveNav(key); setSelectedSubject(null); }}
+          style={{
+            width: "48px",
+            height: "48px",
+            borderRadius: "8px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: isActive ? "#FFFAF0" : "transparent",
+            flexShrink: 0,
+            transition: "background 0.2s",
+          }}
+        >
+          <Icon
+            style={{ width: `${iconSize}px`, height: `${iconSize}px` }}
+            color={isActive ? "#FF8B13" : "#FFFAF0"}
+            strokeWidth={strokeWidth}
+          />
+        </button>
+      );
+    })}
+  </div>
+);
+
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 const UserDashboard = () => {
   const { data: session, status } = useSession();
@@ -631,121 +680,97 @@ const UserDashboard = () => {
 
       {/* ════ DESKTOP ════ */}
       <div className="hidden md:block">
-        <div className="relative flex gap-6 px-6 py-6">
-
-          {/* Left Sidebar */}
-          <div className="w-20 flex-shrink-0 bg-[#2C3D68] h-[724px] flex flex-col items-center py-4 rounded-2xl">
-            <div className="flex flex-col gap-12 mt-2">
-              {[
-                { key: "home",  Icon: Home,     sw: 3 },
-                { key: "book",  Icon: BookOpen, sw: 3 },
-                { key: "chart", Icon: FileText, sw: 3 },
-              ].map(({ key, Icon, sw }) => (
-                <button key={key} onClick={() => { setActiveNav(key); setSelectedSubject(null); }}
-                  className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all ${activeNav === key ? "bg-white" : "hover:bg-white/10"}`}>
-                  <Icon className={`w-8 h-8 ${activeNav === key ? "text-[#FF8B13]" : "text-[#FFFAF0]"}`} strokeWidth={sw} />
-                </button>
-              ))}
+        {/* ── HOME ── */}
+        {activeNav === "home" && (
+          selectedSubject ? (
+            <div className="px-6 py-6 pb-28">
+              <SubjectView subject={selectedSubject} onBack={() => setSelectedSubject(null)} />
             </div>
-            <button onClick={() => { setActiveNav("user"); setSelectedSubject(null); }}
-              className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all mt-auto mb-2 ${activeNav === "user" ? "bg-white" : "hover:bg-white/10"}`}>
-              <User className={`w-8 h-8 ${activeNav === "user" ? "text-[#FF8B13]" : "text-[#FFFAF0]"}`} strokeWidth={3.5} />
-            </button>
-          </div>
-
-          {/* HOME */}
-          {activeNav === "home" && (
-            <>
-              {selectedSubject ? (
-                <div className="flex-1 min-w-0">
-                  <SubjectView subject={selectedSubject} onBack={() => setSelectedSubject(null)} />
-                </div>
-              ) : (
-                <>
-                  <div className="flex-1 min-w-0 max-w-[720px] ml-6">
-                    <Greeting large={true} />
-                    <SubjectCarousel />
-                  </div>
-                  <div className="absolute top-6 right-16 w-[350px] bg-[#FFF7F1] p-4 rounded-2xl flex flex-col gap-8">
-                    <h2 className="text-black text-2xl font-extrabold leading-8">Life-skills your child shows:</h2>
-                    <div className="flex gap-6">
-                      <div className="flex-1 flex flex-col gap-2">
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <div className="w-4 h-4 rounded-full bg-[#389F78] flex-shrink-0" />
-                          <span className="text-[#666666] font-bold text-base">Strong</span>
-                        </div>
-                        <div className="text-[#333333] font-bold text-[18px] leading-[25px]">
-                          {strongSkills.length > 0 ? strongSkills.map((s, i) => <div key={i}>{s}</div>) : <><div>Communication</div><div>Self-awareness</div><div>Problem Solving</div></>}
-                        </div>
-                      </div>
-                      <div className="flex-1 flex flex-col gap-2">
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <div className="w-4 h-4 rounded-full bg-[#EC5F3D] flex-shrink-0" />
-                          <span className="text-[#666666] font-bold text-base">Need Attention</span>
-                        </div>
-                        <div className="text-[#333333] font-bold text-[18px] leading-[25px]">
-                          {needAttentionSkills.length > 0 ? needAttentionSkills.map((s, i) => <div key={i}>{s}</div>) : <><div>Creativity</div><div>Empathy</div><div>Stress</div><div>Management</div></>}
-                        </div>
-                      </div>
-                    </div>
-                    <button className="w-full h-14 bg-[#2C3D68] text-white px-4 rounded-lg flex items-center justify-center gap-2 font-bold text-base hover:bg-[#1f2d4d] transition-all">
-                      <span>View Full Report</span>
-                      <ArrowRight className="w-6 h-6" strokeWidth={2} />
-                    </button>
-                  </div>
-                </>
-              )}
-            </>
-          )}
-
-          {/* BOOK */}
-          {activeNav === "book" && (
-            <div className="flex-1 min-w-0">
-              {selectedSubject ? (
-                <SubjectView subject={selectedSubject} onBack={() => setSelectedSubject(null)} />
-              ) : (
+          ) : (
+            <div className="relative flex gap-6 px-6 py-6 pb-28">
+              <div className="flex-1 min-w-0 max-w-[720px]">
+                <Greeting large={true} />
+                <SubjectCarousel />
+              </div>
+              <div className="absolute top-6 right-16 w-[350px] bg-[#FFF7F1] p-4 rounded-2xl flex flex-col gap-8">
+                <h2 className="text-black text-2xl font-extrabold leading-8">Life-skills your child shows:</h2>
                 <div className="flex gap-6">
-                  <div className="flex-1 min-w-0 max-w-[720px] ml-6">
-                    <Greeting large={true} />
-                    <SubjectCarousel />
-                  </div>
-                  <div className="flex-shrink-0 flex flex-col items-start"
-                    style={{ width: "350px", height: "560px", padding: "16px", gap: "15px", background: "#FFF7F1", boxShadow: "0px 2px 5px rgba(0,0,0,0.12)", borderRadius: "16px", marginLeft: "24px", marginTop: "122px" }}>
-                    <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 600, fontSize: "20px", lineHeight: "24px", letterSpacing: "-0.02em", color: "#666666", margin: 0 }}>Recent</h3>
-                    <div className="flex flex-row w-full" style={{ gap: "8px", height: "40px" }}>
-                      {["All", "Complete", "Pending"].map((f) => (
-                        <button key={f} onClick={() => setActiveFilter(f)} className="flex-1 flex items-center justify-center transition-all"
-                          style={{ height: "40px", padding: "8px", borderRadius: "8px", fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "14px", lineHeight: "24px", background: activeFilter === f ? "#2C3D68" : "#FFFFFF", color: activeFilter === f ? "#FFFFFF" : "#2C3D68", border: activeFilter === f ? "none" : "1px solid #2C3D68" }}>
-                          {f}
-                        </button>
-                      ))}
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <div className="w-4 h-4 rounded-full bg-[#389F78] flex-shrink-0" />
+                      <span className="text-[#666666] font-bold text-base">Strong</span>
                     </div>
-                    <div className="flex flex-col w-full overflow-y-auto flex-1" style={{ gap: "15px", scrollbarWidth: "thin" }}>
-                      {recentLoading ? (
-                        [...Array(3)].map((_, i) => <div key={i} className="animate-pulse" style={{ width: "318px", height: "122px", background: "#e5e7eb", borderRadius: "8px" }} />)
-                      ) : hasRecentActivities ? (
-                        recentActivities.map((activity, i) => <RecentItem key={i} activity={activity} />)
-                      ) : (
-                        <div className="flex flex-col items-center justify-center flex-1 gap-3">
-                          <div className="text-4xl">📋</div>
-                          <p style={{ fontFamily: "Nunito, sans-serif", fontWeight: 600, fontSize: "14px", color: "#999999", textAlign: "center", lineHeight: "20px" }}>
-                            No recent activities yet. Start a subject to see your progress here!
-                          </p>
-                        </div>
-                      )}
+                    <div className="text-[#333333] font-bold text-[18px] leading-[25px]">
+                      {strongSkills.length > 0 ? strongSkills.map((s, i) => <div key={i}>{s}</div>) : <><div>Communication</div><div>Self-awareness</div><div>Problem Solving</div></>}
+                    </div>
+                  </div>
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <div className="w-4 h-4 rounded-full bg-[#EC5F3D] flex-shrink-0" />
+                      <span className="text-[#666666] font-bold text-base">Need Attention</span>
+                    </div>
+                    <div className="text-[#333333] font-bold text-[18px] leading-[25px]">
+                      {needAttentionSkills.length > 0 ? needAttentionSkills.map((s, i) => <div key={i}>{s}</div>) : <><div>Creativity</div><div>Empathy</div><div>Stress</div><div>Management</div></>}
                     </div>
                   </div>
                 </div>
-              )}
+                <button className="w-full h-14 bg-[#2C3D68] text-white px-4 rounded-lg flex items-center justify-center gap-2 font-bold text-base hover:bg-[#1f2d4d] transition-all">
+                  <span>View Full Report</span>
+                  <ArrowRight className="w-6 h-6" strokeWidth={2} />
+                </button>
+              </div>
             </div>
-          )}
+          )
+        )}
 
-          {activeNav !== "home" && activeNav !== "book" && (
-            <div className="flex-1 flex items-center justify-center py-20">
-              <p className="text-gray-400 text-lg">Coming soon…</p>
-            </div>
-          )}
-        </div>
+        {/* ── BOOK ── */}
+        {activeNav === "book" && (
+          <div className="px-6 py-6 pb-28">
+            {selectedSubject ? (
+              <SubjectView subject={selectedSubject} onBack={() => setSelectedSubject(null)} />
+            ) : (
+              <div className="flex gap-6">
+                <div className="flex-1 min-w-0 max-w-[720px]">
+                  <Greeting large={true} />
+                  <SubjectCarousel />
+                </div>
+                <div className="flex-shrink-0 flex flex-col items-start"
+                  style={{ width: "350px", height: "560px", padding: "16px", gap: "15px", background: "#FFF7F1", boxShadow: "0px 2px 5px rgba(0,0,0,0.12)", borderRadius: "16px", marginLeft: "24px", marginTop: "122px" }}>
+                  <h3 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 600, fontSize: "20px", lineHeight: "24px", letterSpacing: "-0.02em", color: "#666666", margin: 0 }}>Recent</h3>
+                  <div className="flex flex-row w-full" style={{ gap: "8px", height: "40px" }}>
+                    {["All", "Complete", "Pending"].map((f) => (
+                      <button key={f} onClick={() => setActiveFilter(f)} className="flex-1 flex items-center justify-center transition-all"
+                        style={{ height: "40px", padding: "8px", borderRadius: "8px", fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "14px", lineHeight: "24px", background: activeFilter === f ? "#2C3D68" : "#FFFFFF", color: activeFilter === f ? "#FFFFFF" : "#2C3D68", border: activeFilter === f ? "none" : "1px solid #2C3D68" }}>
+                        {f}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="flex flex-col w-full overflow-y-auto flex-1" style={{ gap: "15px", scrollbarWidth: "thin" }}>
+                    {recentLoading ? (
+                      [...Array(3)].map((_, i) => <div key={i} className="animate-pulse" style={{ width: "318px", height: "122px", background: "#e5e7eb", borderRadius: "8px" }} />)
+                    ) : hasRecentActivities ? (
+                      recentActivities.map((activity, i) => <RecentItem key={i} activity={activity} />)
+                    ) : (
+                      <div className="flex flex-col items-center justify-center flex-1 gap-3">
+                        <div className="text-4xl">📋</div>
+                        <p style={{ fontFamily: "Nunito, sans-serif", fontWeight: 600, fontSize: "14px", color: "#999999", textAlign: "center", lineHeight: "20px" }}>
+                          No recent activities yet. Start a subject to see your progress here!
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── OTHER TABS ── */}
+        {activeNav !== "home" && activeNav !== "book" && (
+          <div className="flex items-center justify-center py-20">
+            <p className="text-gray-400 text-lg">Coming soon…</p>
+          </div>
+        )}
       </div>
 
       {/* ════ MOBILE ════ */}
@@ -770,7 +795,19 @@ const UserDashboard = () => {
         )}
       </div>
 
-      <MobileBottomNav activeNav={activeNav} setActiveNav={setActiveNav} setSelectedSubject={setSelectedSubject} />
+      {/* ── Desktop Horizontal Bottom Navbar (Figma-matched) ── */}
+      <DesktopBottomNav
+        activeNav={activeNav}
+        setActiveNav={setActiveNav}
+        setSelectedSubject={setSelectedSubject}
+      />
+
+      {/* ── Mobile Bottom Nav (unchanged) ── */}
+      <MobileBottomNav
+        activeNav={activeNav}
+        setActiveNav={setActiveNav}
+        setSelectedSubject={setSelectedSubject}
+      />
     </div>
   );
 };

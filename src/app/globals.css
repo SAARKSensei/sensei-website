@@ -397,3 +397,42 @@
       rgba(239, 95, 61, 1) 100%);
   border: 0px solid #00d0ff5e;
 }
+@keyframes smileBounce {
+  0%, 100% {
+    d: path("M89.418 154.891C89.418 154.891 153.471 185.001 209.332 156.305");
+  }
+  25% {
+    d: path("M89.418 152.891C89.418 152.891 153.471 190.001 209.332 153.305");
+  }
+  50% {
+    d: path("M89.418 150.891C89.418 150.891 153.471 193.001 209.332 151.305");
+  }
+  75% {
+    d: path("M89.418 153.891C89.418 153.891 153.471 187.001 209.332 155.305");
+  }
+}
+
+.animated-smile {
+  animation: smileBounce 3s ease-in-out infinite;
+}
+/* Green Card Eye Blink Animation */
+@keyframes blinkGreenEyes {
+  0%, 96%, 100% {
+    transform: scaleY(1);
+  }
+  98% {
+    transform: scaleY(0.1); /* Squash flat to look like closed eyes */
+  }
+}
+
+.green-eye-group {
+  transform-origin: center; /* Crucial: keeps eyes in place */
+  animation: blinkGreenEyes 4s ease-in-out infinite;
+}
+  
+
+@keyframes dreamBlink {
+  0%,  15%        { transform: scaleY(0); }   /* open              */
+  35%, 68%        { transform: scaleY(1); }   /* closed — hold     */
+  85%, 100%       { transform: scaleY(0); }   /* open again        */
+}
