@@ -1,6 +1,5 @@
 "use client";
 
-import { searches } from "@/utils/data";
 import { useState, useEffect } from "react";
 import { TiTick } from "react-icons/ti";
 
@@ -27,6 +26,7 @@ const TypingAni = ({ texts, speed, delay }) => {
       }
     }, d);
     return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, delay, ind, texts, speed]);
   return <>{currentText}</>;
 };

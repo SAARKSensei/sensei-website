@@ -436,7 +436,7 @@ export default function SchoolPage() {
               <h2 style={{ fontWeight:700, fontSize:48, lineHeight:"60px",
                            letterSpacing:"-0.02em", margin:0, color:"#333333" }}>
                 Strong academics{" "}
-                <span style={{ color:"#FF8B13" }}>aren't enough</span> anymore.
+                <span style={{ color:"#FF8B13" }}>aren&apos;t enough</span> anymore.
               </h2>
             </div>
 
@@ -518,7 +518,7 @@ export default function SchoolPage() {
                           boxSizing:"border-box", zIndex:2 }}>
               <p style={{ fontWeight:700, fontSize:26, lineHeight:"34px",
                           letterSpacing:"-0.02em", color:"#333333", margin:0 }}>
-                EQ is no longer an "extra" ; it's foundational to learning,
+                EQ is no longer an &quot;extra&quot; ; it&apos;s foundational to learning,
                 behaviour, and wellbeing.
               </p>
             </div>
