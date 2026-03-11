@@ -91,11 +91,17 @@ const Loading = ({ action, activity }) => {
           Age Group: {activity?.ageGroup || "5-10"} years old
         </p>
 
-        {/* ✅ Each sentence on its own line — no pipes visible */}
+        {/* ✅ Each sentence on its own line — block centered, text left-aligned, shifted right */}
         {outcomesText ? (
-          <p className="mx-auto mt-4 min-w-96 max-w-lg text-center text-black font-semibold text-base leading-8 whitespace-pre-line">
-            {outcomesText}
-          </p>
+          <div className="mt-4 w-full flex justify-center">
+            <div className="flex flex-col gap-1 pl-10">
+              {outcomesText.split("\n").filter(Boolean).map((line, i) => (
+                <p key={i} className="text-black font-semibold text-base leading-8">
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
         ) : null}
       </div>
 

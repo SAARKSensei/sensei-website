@@ -11,17 +11,11 @@ import Feedback from "@/components/activityComps/Feedback";
 
 const BASE_URL = "https://api.sensei.org.in/api";
 
-// ─── Helper: convert Google Drive sharing URL → local API proxy URL ───────────
-// Google Drive blocks direct browser image loading (CORS/referrer restrictions).
-// We proxy the request server-side via /api/drive-media to bypass this.
-// Input:  "https://drive.google.com/file/d/FILE_ID/view?usp=sharing"
-// Output: "/api/drive-media?id=FILE_ID"
 const getDirectMediaUrl = (url) => {
   if (!url || url.trim() === "N.A") return null;
   try {
     const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
     if (match && match[1]) {
-      // ✅ Use local proxy — server fetches from Drive, no CORS/referrer issues
       return `/api/drive-media?id=${match[1]}`;
     }
     return url;
@@ -30,7 +24,6 @@ const getDirectMediaUrl = (url) => {
   }
 };
 
-// ─── Helper: parse childTask string into grouped tasks ───────────────────────
 const parseChildTasksGrouped = (childTaskStr) => {
   if (!childTaskStr) return [];
 
@@ -85,6 +78,7 @@ const Page = ({ params: { id } }) => {
   const [infoOpen, setInfoOpen] = useState(false);
   const [currProcess, setCurrProcess] = useState(0);
   const [currChildTask, setCurrChildTask] = useState(0);
+  const [maxUnlockedChildTask, setMaxUnlockedChildTask] = useState(0);
   const [activeButton, setActiveButton] = useState(null);
 
   const TOTAL_STEPS = processes.length;
@@ -99,18 +93,20 @@ const Page = ({ params: { id } }) => {
     (CHILD_TASKS_PER_STEP === 0 || currChildTask === CHILD_TASKS_PER_STEP - 1);
   const currentGroup = childTaskGroups[currChildTask] ?? null;
 
-  // ✅ Convert to lh3.googleusercontent.com URL for reliable GIF rendering
   const mediaUrl = getDirectMediaUrl(currentStep?.mediaUrl);
 
   const nextProcess = () => {
     setActiveButton("next");
     setTimeout(() => setActiveButton(null), 200);
     if (currChildTask < CHILD_TASKS_PER_STEP - 1) {
-      setCurrChildTask((pre) => pre + 1);
+      const nextChild = currChildTask + 1;
+      setCurrChildTask(nextChild);
+      setMaxUnlockedChildTask((prev) => Math.max(prev, nextChild));
     } else {
       if (currProcess < TOTAL_STEPS - 1) {
         setCurrProcess((pre) => pre + 1);
         setCurrChildTask(0);
+        setMaxUnlockedChildTask(0);
       } else {
         setState((pre) => pre + 1);
       }
@@ -127,7 +123,9 @@ const Page = ({ params: { id } }) => {
       if (currProcess > 0) {
         const prevGroups = parseChildTasksGrouped(processes[currProcess - 1]?.childTask);
         setCurrProcess((pre) => pre - 1);
-        setCurrChildTask(Math.max(prevGroups.length - 1, 0));
+        const lastIdx = Math.max(prevGroups.length - 1, 0);
+        setCurrChildTask(lastIdx);
+        setMaxUnlockedChildTask(lastIdx);
       }
     }
     window.scrollTo(0, 0);
@@ -297,11 +295,6 @@ const Page = ({ params: { id } }) => {
       return (
         <div className="min-h-screen bg-white font-['Nunito'] pb-28">
 
-          {/* ╔══════════════════════════════════════════════════════════════════╗
-              MOBILE LAYOUT  (< lg)  — same as before: dark header + single col
-              DESKTOP LAYOUT (≥ lg)  — Figma design: breadcrumbs + two columns
-          ╚══════════════════════════════════════════════════════════════════╝ */}
-
           {/* ── MOBILE ONLY: Dark header ──────────────────────────────────── */}
           <header className="lg:hidden bg-[#2C3D68] px-5 pt-6 pb-5 w-full">
             <div className="flex flex-col gap-2">
@@ -312,9 +305,6 @@ const Page = ({ params: { id } }) => {
                 </svg>
                 <span>{interactiveActivity?.activityType || "DIY"}</span>
               </div>
-              <h1 className="text-white text-xl font-medium leading-[30px]">
-                {interactiveActivity?.title || "Activity"}
-              </h1>
             </div>
           </header>
 
@@ -324,8 +314,8 @@ const Page = ({ params: { id } }) => {
 
               {/* Step title + Hint */}
               <div className="flex justify-between items-center gap-3">
-                <h2 className="text-[#FF8B13] text-lg font-medium leading-7">
-                  {`Step ${currentStep?.stepOrder ?? currentStepNumber}`}
+                <h2 className="font-['Nunito'] font-bold text-2xl leading-[30px] text-[#2C3D68]">
+                  {`${currentStepNumber}. ${interactiveActivity?.title ?? `Step ${currentStepNumber}`}`}
                 </h2>
                 {currentStep?.hint && (
                   <button
@@ -342,8 +332,8 @@ const Page = ({ params: { id } }) => {
 
               {/* Sensei Avatar + Message */}
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-[116px] h-[116px] rounded border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] bg-gray-200 overflow-hidden">
-                  <Image src={IconImage} alt="Sensei" width={116} height={116} className="object-cover w-full h-full" />
+                <div className="flex-shrink-0 w-[116px] h-[116px] overflow-hidden">
+                  <Image src={IconImage} alt="Sensei" width={116} height={116} className="object-contain w-full h-full" />
                 </div>
                 <div className="flex-1">
                   <div className="bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg p-4">
@@ -378,7 +368,7 @@ const Page = ({ params: { id } }) => {
                   key={mediaUrl}
                   src={mediaUrl}
                   alt={`Step ${currentStep?.stepOrder}`}
-                  className="w-full h-full object-cover rounded-2xl"
+                  className="w-full h-full object-contain rounded-2xl"
                   onError={(e) => { e.currentTarget.style.display = "none"; }}
                 />
               </div>
@@ -391,19 +381,26 @@ const Page = ({ params: { id } }) => {
               </p>
               {childTaskGroups.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {childTaskGroups.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrChildTask(index)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                        index <= currChildTask
-                          ? "bg-[#FF8B13] text-white shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
-                          : "border border-[#A4A4A4] text-[#999999] shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
+                  {childTaskGroups.map((_, index) => {
+                    const isUnlocked = index <= maxUnlockedChildTask;
+                    const isActive = index === currChildTask;
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => isUnlocked && setCurrChildTask(index)}
+                        disabled={!isUnlocked}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                          isActive
+                            ? "bg-[#FF8B13] text-white shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
+                            : isUnlocked
+                            ? "border border-[#FF8B13] text-[#FF8B13] shadow-[0_2px_5px_rgba(0,0,0,0.12)] cursor-pointer"
+                            : "border border-[#D0D0D0] text-[#D0D0D0] cursor-not-allowed opacity-50"
+                        }`}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
               {currentGroup && (
@@ -450,17 +447,12 @@ const Page = ({ params: { id } }) => {
                 </div>
               </div>
 
-              {/* Page Title */}
-              <h1 className="font-bold text-2xl leading-[30px] text-[#2C3D68]">
-                {interactiveActivity?.title || "Activity"}
-              </h1>
-
               {/* Sensei section */}
               <div className="flex flex-col gap-4">
                 {/* Step label + Hint */}
                 <div className="flex justify-between items-center h-[38px]">
-                  <h2 className="font-medium text-lg leading-7 text-[#333333]">
-                    {`${currentStepNumber}. ${currentStep?.senseiMessage?.split(".")?.[0] ?? `Step ${currentStep?.stepOrder ?? currentStepNumber}`}`}
+                  <h2 className="font-['Nunito'] font-bold text-2xl leading-[30px] text-[#2C3D68]">
+                    {`${currentStepNumber}. ${interactiveActivity?.title ?? `Step ${currentStepNumber}`}`}
                   </h2>
                   {currentStep?.hint && (
                     <button
@@ -476,8 +468,8 @@ const Page = ({ params: { id } }) => {
                 </div>
                 {/* Avatar + message */}
                 <div className="flex gap-4 items-start h-[166px]">
-                  <div className="flex-shrink-0 w-[166px] h-[166px] border-4 border-white shadow-[-1px_2px_6px_rgba(0,0,0,0.36)] rounded-sm bg-gray-200 overflow-hidden">
-                    <Image src={IconImage} alt="Sensei" width={166} height={166} className="object-cover w-full h-full" />
+                  <div className="flex-shrink-0 w-[166px] h-[166px] overflow-hidden">
+                    <Image src={IconImage} alt="Sensei" width={166} height={166} className="object-contain w-full h-full" />
                   </div>
                   <div className="flex flex-col justify-center flex-1 h-[166px]">
                     <div className="inline-flex px-4 py-2 bg-white shadow-[-1px_2px_24px_rgba(0,0,0,0.16)] rounded-lg">
@@ -517,7 +509,7 @@ const Page = ({ params: { id } }) => {
                         key={mediaUrl}
                         src={mediaUrl}
                         alt={`Step ${currentStep?.stepOrder}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                         onError={(e) => { e.currentTarget.style.display = "none"; }}
                       />
                     ) : (
@@ -536,19 +528,26 @@ const Page = ({ params: { id } }) => {
                   <div className="flex flex-col gap-3 bg-white shadow-[0px_2px_5px_rgba(0,0,0,0.12)] rounded-2xl p-6">
                     {childTaskGroups.length > 0 && (
                       <div className="flex justify-between items-center gap-2">
-                        {childTaskGroups.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrChildTask(index)}
-                            className={`flex items-center justify-center rounded-full font-bold text-xs leading-4 transition-all flex-1 h-8 ${
-                              index <= currChildTask
-                                ? "bg-[#FF8B13] text-white shadow-[0px_2px_5px_rgba(0,0,0,0.12)]"
-                                : "border border-[#A4A4A4] text-[#999999]"
-                            }`}
-                          >
-                            {index + 1}
-                          </button>
-                        ))}
+                        {childTaskGroups.map((_, index) => {
+                          const isUnlocked = index <= maxUnlockedChildTask;
+                          const isActive = index === currChildTask;
+                          return (
+                            <button
+                              key={index}
+                              onClick={() => isUnlocked && setCurrChildTask(index)}
+                              disabled={!isUnlocked}
+                              className={`flex items-center justify-center rounded-full font-bold text-xs leading-4 transition-all flex-1 h-8 ${
+                                isActive
+                                  ? "bg-[#FF8B13] text-white shadow-[0px_2px_5px_rgba(0,0,0,0.12)]"
+                                  : isUnlocked
+                                  ? "border border-[#FF8B13] text-[#FF8B13] cursor-pointer"
+                                  : "border border-[#D0D0D0] text-[#D0D0D0] cursor-not-allowed opacity-50"
+                              }`}
+                            >
+                              {index + 1}
+                            </button>
+                          );
+                        })}
                       </div>
                     )}
                     {currentGroup && (

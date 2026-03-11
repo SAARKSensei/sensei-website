@@ -7,7 +7,7 @@ import Image from "next/image";
 import nodataimage from "@/assets/in-Use/nodataimg.svg?url";
 import {
   Home, BookOpen, FileText, User,
-  ArrowRight, Heart, ChevronRight, Clock, BarChart2,
+  ArrowRight, Heart, ChevronRight, ChevronLeft, Clock, BarChart2,
 } from "lucide-react";
 import SubjectView from "@/components/SubjectView";
 
@@ -440,8 +440,14 @@ const UserDashboard = () => {
     setSelectedSubject(subject);
   };
 
+  // ── Scroll right
   const scrollCarousel = () => {
     if (carouselRef.current) carouselRef.current.scrollBy({ left: 290, behavior: "smooth" });
+  };
+
+  // ── Scroll left
+  const scrollCarouselLeft = () => {
+    if (carouselRef.current) carouselRef.current.scrollBy({ left: -290, behavior: "smooth" });
   };
 
   const filteredSubjects    = activeFilter === "All" ? subjectData : subjectData.filter(() => true);
@@ -460,19 +466,34 @@ const UserDashboard = () => {
     );
   }
 
-  // ── Desktop carousel ──────────────────────────────────────────────────────
+  // ── Desktop carousel — left + right scroll buttons ────────────────────────
   const SubjectCarousel = () => (
     hasSubjects ? (
       <div className="flex items-center">
-        <div ref={carouselRef}
+        {/* Left scroll button */}
+        <button
+          onClick={scrollCarouselLeft}
+          className="flex-shrink-0 mr-[16px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]"
+        >
+          <ChevronLeft className="w-7 h-7 text-[#FF8B13]" strokeWidth={4} />
+        </button>
+
+        {/* Cards */}
+        <div
+          ref={carouselRef}
           className="flex gap-5 overflow-x-auto pb-4 scroll-smooth w-[570px]"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+        >
           {filteredSubjects.map((subject, i) => (
             <SubjectCard key={subject.id || i} subject={subject} index={i} onClick={() => handleSubjectClick(subject)} />
           ))}
         </div>
-        <button onClick={scrollCarousel}
-          className="flex-shrink-0 ml-[16px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]">
+
+        {/* Right scroll button */}
+        <button
+          onClick={scrollCarousel}
+          className="flex-shrink-0 ml-[16px] mb-4 w-[62px] h-[62px] rounded-full bg-[#FF8B13] bg-opacity-25 flex items-center justify-center hover:bg-opacity-40 transition-all z-10 border-4 border-[#FF8B13]"
+        >
           <ChevronRight className="w-7 h-7 text-[#FF8B13]" strokeWidth={4} />
         </button>
       </div>
