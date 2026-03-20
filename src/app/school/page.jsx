@@ -18,6 +18,8 @@ import AnimatedBlueCard   from "@/components/AnimatedBlueCard";
 import AnimatedLightBlueCard from "@/components/AnimatedLightBlueCard";
 import AnimatedRedCard from "@/components/AnimatedRedCard";
 import AnimatedGreenCard from "@/components/AnimatedGreenCard";
+import SchoolChallengeSection from "@/components/SchoolChallengeSection";
+import SchoolBuildingSection from "@/components/SchoolBuildingSection";
 
 const r      = (s)       => typeof s === "string" ? s : (s?.src ?? s);
 const clamp  = (v,lo,hi) => Math.min(Math.max(v, lo), hi);
@@ -544,6 +546,8 @@ export default function SchoolPage() {
 
           </div>
         </section>
+        <SchoolChallengeSection />
+       {/* <SchoolBuildingSection />*/}
 
       </main>
     </>

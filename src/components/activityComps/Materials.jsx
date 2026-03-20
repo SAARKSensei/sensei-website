@@ -53,7 +53,7 @@ const Materials = ({ keyObjectives, objective, action }) => {
             {objectiveItems.map((item, index) => (
               <div key={index} className="flex items-start gap-3">
                 {/* Numbered badge */}
-                <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FF8B13] text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#2C3D68] text-white text-xs font-bold flex items-center justify-center mt-0.5">
                   {index + 1}
                 </span>
                 <p className="text-[#333333] text-base leading-6 font-medium">

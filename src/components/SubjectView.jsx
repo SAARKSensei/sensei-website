@@ -157,7 +157,7 @@ export default function SubjectView({ subject, onBack }) {
         </div>
 
         {/* Two-column layout */}
-        <div style={{ display: "flex", flexDirection: "row", gap: "205px", padding: "16px", width: "100%", flex: 1 }}>
+        <div style={{ display: "flex", flexDirection: "row", gap: "205px", padding: "16px", width: "100%", flex: 1,justifyContent: "center" }}>
 
           {/* LEFT */}
           <div style={{ width: "587px", flexShrink: 0, display: "flex", flexDirection: "column", gap: "16px" }}>

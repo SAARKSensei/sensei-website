@@ -284,7 +284,7 @@ const Navbar = () => {
             >
               <div className="inline-flex items-center justify-center gap-2.5 self-stretch">
                 <div className="justify-center text-center font-['Nunito'] text-lg font-black leading-normal text-white">
-                  Login
+                  Sign Up
                 </div>
                 <svg
                   className="relative h-5 w-5 overflow-hidden"

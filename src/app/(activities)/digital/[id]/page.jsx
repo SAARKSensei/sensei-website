@@ -3,220 +3,201 @@ import Popup from "@/components/gamifiedActivities/Popup";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import cross from "@/assets/in-Use/cross-solid.svg?url";
-// import Infosvg from "@/assets/info.svg";
 import Activitybg from "@/assets/in-Use/activitybg.svg?url";
 import TextReader from "@/components/gamifiedActivities/textSpeach";
 import Loading from "@/components/gamifiedActivities/Loading";
-// import Star from "@/assets/star1.svg";
-// import Reward from "@/assets/reward.svg";
 import Info from "@/components/gamifiedActivities/Info";
-// import GetStarted from "@/components/activityComps/GetStarted";
-// import Materials from "@/components/activityComps/Materials";
 import axios from "axios";
-import next from "next";
 import Feedback from "@/components/activityComps/Feedback";
-// import Print from "@/components/miniComps/Print";
 import { notFound, useRouter } from "next/navigation";
+
+const BASE_URL = "https://api.sensei.org.in/api";
 
 const Page = ({ params: { id } }) => {
   const Router = useRouter();
-  const [status, setStatus] = useState(null);
-  const [state, setState] = useState(0);
-  const [infoOpen, setInfoOpen] = useState(false);
-  const [currQuestion, setcurrQuestion] = useState(0);
-  const [digitalActivity, setDigitalActivity] = useState(null);
-  const nextquestion = () => {
-    if (!status) {
-      setStatus(null);
-      return;
-    }
-    if (currQuestion !== digitalActivity?.questions?.length - 1) {
-      setcurrQuestion((pre) => pre + 1);
+  const [status, setStatus]               = useState(null);
+  const [state, setState]                 = useState(0);
+  const [infoOpen, setInfoOpen]           = useState(false);
+  const [currQuestion, setCurrQuestion]   = useState(0);
+  const [questions, setQuestions]         = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  // ✅ Handle answer selection
+  const handleAnswer = (option) => {
+    if (status !== null) return; // prevent re-clicking after answered
+    setSelectedOption(option);
+    setStatus(option.correct === true);
+  };
+
+  // ✅ Move to next question or go to feedback
+  const nextQuestion = () => {
+    if (status === null) return;
+    if (currQuestion !== questions.length - 1) {
+      setCurrQuestion((prev) => prev + 1);
     } else {
-      setState((pre) => pre + 1);
+      setState(2);
     }
     setStatus(null);
+    setSelectedOption(null);
   };
-  useEffect(() => {
-    const fetchquestionData = async () => {
-      const res = await axios
-        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/digital-activities/${id}`)
-        .catch((err) => console.log(err));
-      // console.log("digital: " + res);
 
-      if (res?.data) {
-        // console.log(res?.data);
-        setDigitalActivity(res?.data);
+  // ✅ Single API call only
+  useEffect(() => {
+    if (!id) return;
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/questions/digital-activity/${id}`);
+        if (res?.data && Array.isArray(res.data)) {
+          const sorted = res.data.sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
+          setQuestions(sorted);
+        }
+      } catch (err) {
+        console.error("Error fetching questions:", err);
       }
     };
-    fetchquestionData();
+    fetchData();
   }, [id]);
+
+  const currentQ = questions[currQuestion];
 
   switch (state) {
     case 0:
       return (
         <Loading
           activity={{
-            outComes: digitalActivity?.keyOutcomes,
-            name: digitalActivity?.digitalActivityName,
+            name: "Activity",       // no title in questions API
+            outComes: null,
             ageGroup: "5-7 years",
           }}
-          action={() => setState((pre) => pre + 1)}
+          action={() => setState(1)}
         />
       );
 
     case 2:
       return (
         <Feedback
-          activityName={digitalActivity.digitalActivityName}
-          activityId={digitalActivity.digitalActivityId}
+          activityName={"Activity"}
+          activityId={id}
         />
       );
+
     case 1:
-      return !digitalActivity ? (
-        notFound()
-      ) : (
-        <>
-          <div
-            style={{ backgroundImage: `url(${Activitybg.src})` }}
-            className="container relative mx-auto my-10 mb-5 flex h-fit max-w-[1000px] flex-col gap-8 p-5"
-          >
-            {infoOpen && (
-              <Info
-                activity={{
-                  intro: digitalActivity?.intro,
+      if (!questions.length || !currentQ) return notFound();
+
+      return (
+        <div
+          style={{ backgroundImage: `url(${Activitybg.src})` }}
+          className="container relative mx-auto my-10 mb-5 flex h-fit max-w-[1000px] flex-col gap-8 p-5"
+        >
+          {/* Info overlay — uses counsellorNote from first question */}
+          {infoOpen && (
+            <Info
+              activity={{ intro: questions[0]?.counsellorNote }}
+              action={() => setInfoOpen((prev) => !prev)}
+            />
+          )}
+
+          {/* Top bar — close + progress bar + counter */}
+          <div className="mt-8 flex items-center justify-center gap-4 md:mt-16">
+            <Image
+              src={cross}
+              onClick={() => Router.back()}
+              alt="close"
+              className="cursor-pointer"
+            />
+            <div className="flex w-full gap-1 p-2 sm:gap-2">
+              {questions.map((_, index) => (
+                <div
+                  key={index}
+                  className="relative -z-[1] block h-2 w-1/4 rounded-full bg-grey_1"
+                >
+                  {index <= currQuestion && (
+                    <span className="absolute z-[0] h-2 w-full rounded-full bg-primary" />
+                  )}
+                </div>
+              ))}
+            </div>
+            <h5 className="h5 text-secondary">
+              {currQuestion + 1}/{questions.length}
+            </h5>
+          </div>
+
+          {/* Info icon top right */}
+          <div className="flex justify-end">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              fill="none"
+              onClick={() => setInfoOpen((prev) => !prev)}
+              className="cursor-pointer"
+            >
+              <rect width="31" height="31" x="0.5" y="0.5" stroke="#9FC5EF" rx="15.5" />
+              <path
+                fill="#9FC5EF"
+                d="m17.279 14.059-3.15.394-.112.523.619.114c.404.096.484.242.396.645l-1.015 4.768c-.267 1.233.145 1.814 1.111 1.814.75 0 1.62-.347 2.015-.823l.12-.572c-.274.242-.676.339-.943.339-.378 0-.515-.266-.418-.733zm.096-2.871a1.375 1.375 0 1 1-2.75 0 1.375 1.375 0 0 1 2.75 0"
+              />
+            </svg>
+          </div>
+
+          {/* ✅ Question text */}
+          <p className="body_2 text-secondary">
+            {currQuestion + 1}. {currentQ.questionText}
+          </p>
+
+          {/* ✅ Hint */}
+          {currentQ.hint && (
+            <p style={{
+              fontFamily: "Nunito, sans-serif",
+              fontSize: "13px",
+              color: "#888",
+              fontStyle: "italic",
+            }}>
+              💡 {currentQ.hint}
+            </p>
+          )}
+
+          {/* ✅ Text reader */}
+          <TextReader
+            key={currentQ.id}
+            text={currentQ.questionText}
+            role={"Child"}
+          />
+
+          {/* ✅ Options */}
+          <div className="flex flex-col items-center gap-5 p-2">
+            {currentQ.options
+              .sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0))
+              .map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => handleAnswer(option)}
+                  disabled={status !== null}
+                  className="button-action-outline"
+                  style={{
+                    opacity: status !== null && selectedOption?.id !== option.id ? 0.6 : 1,
+                    border: selectedOption?.id === option.id
+                      ? status ? "2px solid green" : "2px solid red"
+                      : undefined,
+                  }}
+                >
+                  {option.optionText}
+                </button>
+              ))}
+
+            {/* ✅ Popup */}
+            {status !== null && (
+              <Popup
+                messege={{
+                  right: currentQ.explanation || "Great job! That's correct!",
+                  wrong: selectedOption?.hint || "That's not quite right!",
                 }}
-                action={() => setInfoOpen((pre) => !pre)}
+                status={status}
+                action={nextQuestion}
               />
             )}
-            <div className="mt-8 flex items-center justify-center gap-4 md:mt-16">
-              <Image src={cross} onClick={() => Router.back()} alt="cross" />
-              <div className="flex w-full gap-1 p-2 sm:gap-2">
-                {Array.from({
-                  length: digitalActivity?.questions?.length || 0,
-                }).map((_, index) => (
-                  <div
-                    className="relative -z-[1] block h-2 w-1/4 rounded-full bg-grey_1"
-                    key={index}
-                  >
-                    {index <= currQuestion && (
-                      <span className="absolute z-[0] h-2 w-full rounded-full bg-primary" />
-                    )}
-                  </div>
-                ))}
-              </div>
-              <h5 className="h5 text-secondary">
-                {currQuestion + 1 + "/" + digitalActivity?.questions?.length}
-              </h5>
-            </div>
-            <div>
-              <div className="flex justify-between">
-                <h5 className="body1_b text-grad">
-                  {digitalActivity?.digitalActivityName}
-                </h5>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  fill="none"
-                  onClick={() => setInfoOpen((pre) => !pre)}
-                  className="cursor-pointer"
-                >
-                  <rect
-                    width="31"
-                    height="31"
-                    x="0.5"
-                    y="0.5"
-                    stroke="#9FC5EF"
-                    rx="15.5"
-                  ></rect>
-                  <path
-                    fill="#9FC5EF"
-                    d="m17.279 14.059-3.15.394-.112.523.619.114c.404.096.484.242.396.645l-1.015 4.768c-.267 1.233.145 1.814 1.111 1.814.75 0 1.62-.347 2.015-.823l.12-.572c-.274.242-.676.339-.943.339-.378 0-.515-.266-.418-.733zm.096-2.871a1.375 1.375 0 1 1-2.75 0 1.375 1.375 0 0 1 2.75 0"
-                  ></path>
-                </svg>
-              </div>
-              <p className="body_2 text-secondary">
-                {digitalActivity?.questions[currQuestion]?.questionNumber +
-                  ". " +
-                  digitalActivity?.questions[currQuestion]?.questionName}{" "}
-              </p>
-            </div>
-
-            <Image
-              src={`https://drive.google.com/uc?export=view&id=${digitalActivity?.questions[currQuestion]?.questionImage.split("/")[5]}`}
-              alt={digitalActivity?.questions[currQuestion]?.questionName}
-              objectFit="cover"
-              sizes="100%"
-              width={500}
-              height={200}
-              className="mx-auto"
-            />
-            <div className="flex flex-col items-center gap-5 p-2">
-              <TextReader
-                key={
-                  digitalActivity?.questions[currQuestion]?.questionNumber +
-                  "sensei"
-                }
-                text={digitalActivity?.questions[currQuestion]?.senseiQuestion}
-                role={"Child"}
-              />
-              {[
-                digitalActivity?.questions[currQuestion]?.option1,
-                digitalActivity?.questions[currQuestion]?.option2,
-                digitalActivity?.questions[currQuestion]?.option3,
-              ].map((option, index) => (
-                <button
-                  onClick={() =>
-                    setStatus(
-                      digitalActivity?.questions[currQuestion]?.senseiAnswer ===
-                        option,
-                    )
-                  }
-                  key={index}
-                  className="button-action-outline"
-                >
-                  {option}
-                </button>
-              ))}{" "}
-              {status !== null && (
-                <Popup
-                  messege={{
-                    wrong:
-                      digitalActivity?.questions[currQuestion]
-                        ?.incorrectAnswerDescription,
-                    right:
-                      digitalActivity?.questions[currQuestion]
-                        ?.correctAnswerDescription,
-                  }}
-                  status={status}
-                  action={() => nextquestion()}
-                />
-              )}
-              {/* <div className="flex items-center gap-2">
-                <Reward className="h-8 w-8 rounded-full bg-secondary text-white" />
-
-                <h5 className="h5_b text-secondary">Reward</h5>
-              </div>
-              <div className="mx-auto flex w-full items-center gap-2 rounded-[10px] bg-[#0764A7] p-4 text-white">
-                <div className="flex flex-col gap-2">
-                  <p className="body_3">Congrats you have unlocked</p>
-                  <h5 className="h5_b">Confidence Star</h5>
-                </div>
-                <Star className="ml-auto h-[54px] w-[54px]" />
-                <span className="h5_b">x 1</span>
-              </div> */}
-            </div>
-            {/* <button
-              onClick={() => nextquestion()}
-              className="h5_b mx-auto w-[min(90vw,300px)] rounded-lg border-b-4 border-[#CD9003] bg-[#F8BF3B] px-6 py-2 text-secondary"
-            >
-              {currQuestion !== digitalActivity?.questions?.length - 1
-                ? "Continue"
-                : "Finish"}
-            </button> */}
           </div>
-        </>
+        </div>
       );
   }
 };

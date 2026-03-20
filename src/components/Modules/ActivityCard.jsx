@@ -94,23 +94,6 @@ const ActivityCard = ({ activity }) => {
           <span>5-7 years</span>
         </div>
 
-        {/* ✅ NEW: Show learning outcome preview instead of tags */}
-        {activity?.learningOutcome && activity.learningOutcome !== "N.A" && (
-          <p
-            style={{
-              fontFamily: "Nunito, sans-serif",
-              fontSize: "12px",
-              color: "#888",
-              lineHeight: "16px",
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            {activity.learningOutcome.split("|")[0].trim()}
-          </p>
-        )}
       </div>
     </Link>
   );

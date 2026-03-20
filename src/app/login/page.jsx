@@ -92,9 +92,9 @@ const page = () => {
           </p>
         </div> */}
           <div className="flex h-max w-full flex-col justify-end p-4 sm:relative sm:h-screen sm:w-1/2 sm:justify-center">
-            <p className="h3 font-semibold text-primary text-secondary max-sm:pt-10">
-              Login now and get started with the fun & easy-to-use interactive &
-              gamified activities.
+            <p className="h1 font-semibold text-primary text-secondary max-sm:pt-10">
+              Login now and get started with the fun .
+    
             </p>
             <div className="mt-12 flex h-12 w-full items-center">
               <button

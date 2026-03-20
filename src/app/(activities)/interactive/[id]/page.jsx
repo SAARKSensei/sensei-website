@@ -393,7 +393,7 @@ const Page = ({ params: { id } }) => {
                           isActive
                             ? "bg-[#FF8B13] text-white shadow-[0_2px_5px_rgba(0,0,0,0.12)]"
                             : isUnlocked
-                            ? "border border-[#FF8B13] text-[#FF8B13] shadow-[0_2px_5px_rgba(0,0,0,0.12)] cursor-pointer"
+                            ? "border border-[#22C55E] text-[#22C55E] shadow-[0_2px_5px_rgba(0,0,0,0.12)] cursor-pointer"
                             : "border border-[#D0D0D0] text-[#D0D0D0] cursor-not-allowed opacity-50"
                         }`}
                       >
@@ -540,7 +540,7 @@ const Page = ({ params: { id } }) => {
                                 isActive
                                   ? "bg-[#FF8B13] text-white shadow-[0px_2px_5px_rgba(0,0,0,0.12)]"
                                   : isUnlocked
-                                  ? "border border-[#FF8B13] text-[#FF8B13] cursor-pointer"
+                                  ? "border border-[#22C55E] text-[#22C55E] cursor-pointer"
                                   : "border border-[#D0D0D0] text-[#D0D0D0] cursor-not-allowed opacity-50"
                               }`}
                             >
