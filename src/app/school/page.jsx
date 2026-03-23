@@ -73,7 +73,7 @@ const CARDS = [
 ];
 
 export default function SchoolPage() {
-  const [activeTab, setActiveTab] = useState("school");
+  
 
   /* ── scroll state: prog (0→1), raw scrollY, viewport width ── */
   const [ss, setSS] = useState({ prog: 0, sy: 0, vw: 1440 });
@@ -349,47 +349,7 @@ export default function SchoolPage() {
         {/* ════════════════════════════════
             FIXED TAB PILL
         ════════════════════════════════ */}
-        <div style={{ position:"fixed", bottom:24, left:"50%",
-                      transform:"translateX(-50%)", zIndex:1000, width:271,
-                      height:72, background:"#FF8B13", borderRadius:16,
-                      boxShadow:"0px 16px 32px -4px rgba(12,12,13,0.10),0px 4px 4px -4px rgba(12,12,13,0.05)",
-                      display:"flex", alignItems:"center", padding:"16px", gap:32 }}>
-          <div style={{ display:"flex", alignItems:"center", gap:16, width:101, height:40 }}>
-            <button onClick={()=>setActiveTab("school")} className="tab-btn"
-                    style={{ width:40, height:40, borderRadius:8, flexShrink:0,
-                             background:activeTab==="school"?"#2C3D68":"rgba(255,255,255,0.3)",
-                             border:activeTab==="school"?"none":"1px solid #2C3D68",
-                             display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"
-                      stroke="white" strokeWidth="2" strokeLinejoin="round"/>
-                <path d="M9 21V12h6v9" stroke="white" strokeWidth="2" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <span style={{ fontFamily:"'Nunito', sans-serif", fontWeight:700,
-                           fontSize:14, lineHeight:"24px", color:"#333333" }}>School</span>
-          </div>
-          <div style={{ display:"flex", alignItems:"center", gap:16, width:106, height:40 }}>
-            <button onClick={()=>setActiveTab("parents")} className="tab-btn"
-                    style={{ width:40, height:40, borderRadius:8, flexShrink:0,
-                             background:activeTab==="parents"?"#2C3D68":"#FFFFFF",
-                             border:"1px solid #2C3D68",
-                             display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="9" cy="7" r="4"
-                        stroke={activeTab==="parents"?"white":"#2C3D68"} strokeWidth="2"/>
-                <path d="M2 21v-2a4 4 0 014-4h6a4 4 0 014 4v2"
-                      stroke={activeTab==="parents"?"white":"#2C3D68"}
-                      strokeWidth="2" strokeLinecap="round"/>
-                <path d="M19 8v6M16 11h6"
-                      stroke={activeTab==="parents"?"white":"#2C3D68"}
-                      strokeWidth="2" strokeLinecap="round"/>
-              </svg>
-            </button>
-            <span style={{ fontFamily:"'Nunito', sans-serif", fontWeight:700,
-                           fontSize:14, lineHeight:"24px", color:"#333333" }}>Parents</span>
-          </div>
-        </div>
+       
 
         {/* ════════════════════════════════════════════════
             FIXED OVERLAY — cartoons travel with scroll
@@ -547,7 +507,7 @@ export default function SchoolPage() {
           </div>
         </section>
         <SchoolChallengeSection />
-       {/* <SchoolBuildingSection />*/}
+        <SchoolBuildingSection />
 
       </main>
     </>

@@ -51,6 +51,97 @@ const CARD_NAME_COLORS = [
   "text-[#8B4FB5]",
 ];
 
+const RELATION_OPTIONS = [
+  "Father",
+  "Mother",
+  "Guardian",
+  "Grand Father",
+  "Grand Mother",
+  "Other",
+];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── JWT TOKEN HELPERS ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Store JWT in localStorage
+ */
+const storeJWT = (token) => {
+  if (token) localStorage.setItem("sensei_jwt", token);
+};
+
+/**
+ * Retrieve JWT from localStorage
+ */
+const getJWT = () => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem("sensei_jwt");
+  }
+  return null;
+};
+
+/**
+ * Remove JWT from localStorage (logout / token reset)
+ */
+const clearJWT = () => {
+  localStorage.removeItem("sensei_jwt");
+};
+
+/**
+ * Returns axios config with Authorization header attached.
+ * Use this for every authenticated API call.
+ * Example: axios.get(url, authHeaders())
+ */
+const authHeaders = () => {
+  const token = getJWT();
+  return token
+    ? { headers: { Authorization: `Bearer ${token}` } }
+    : {};
+};
+
+/**
+ * STEP 1 → STEP 2 → STEP 3
+ * Exchanges a Google ID token for a backend JWT.
+ * Called right after Google SSO succeeds.
+ *
+ * @param {string} googleIdToken  — the raw ID token from next-auth session
+ * @returns {string|null}          — JWT string, or null on failure
+ */
+const exchangeGoogleTokenForJWT = async (googleIdToken) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/api/auth/google?idToken=${encodeURIComponent(googleIdToken)}`
+    );
+
+    // Backend returns the JWT directly as a string,
+    // or nested inside a data/token field — handle both gracefully.
+    const jwt =
+      typeof res.data === "string"
+        ? res.data
+        : res.data?.token ||
+          res.data?.jwt   ||
+          res.data?.accessToken ||
+          null;
+
+    if (jwt) {
+      storeJWT(jwt);
+      console.log("✅ JWT stored successfully");
+    } else {
+      console.warn("⚠️ Auth response received but no token found:", res.data);
+    }
+
+    return jwt;
+  } catch (err) {
+    console.error(
+      "❌ Failed to exchange Google token for JWT:",
+      err?.response?.status,
+      err?.response?.data || err?.message
+    );
+    return null;
+  }
+};
+
 // ─── Maintenance Page ────────────────────────────────────────────────────────
 const MaintenancePage = () => (
   <div className="min-h-screen bg-gradient-to-br from-blue-50 to-orange-50 flex items-center justify-center p-4">
@@ -251,7 +342,6 @@ const ChildrenModal = ({ childData, onClose }) => {
   const [grade,     setGrade]     = useState(childData?.grade || "");
   const [medical,   setMedical]   = useState(childData?.medicalHistory || "");
 
-  // Input row with pencil icon
   const InputRow = ({ label, value, onChange, placeholder }) => (
     <div className="flex flex-col gap-2 w-full">
       <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "14px", color: "#454C52" }}>
@@ -278,19 +368,16 @@ const ChildrenModal = ({ childData, onClose }) => {
   );
 
   return (
-    /* Backdrop */
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center"
       style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(3px)" }}
       onClick={onClose}
     >
-      {/* Modal card */}
       <div
         className="relative flex flex-col items-center"
         style={{ width: "340px", background: "#FFFFFF", borderRadius: "11px", padding: "57px 20px 20px", gap: "10px" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Child avatar at top (overlapping) */}
         <div
           className="absolute flex items-center justify-center"
           style={{ width: "80px", height: "80px", top: "-40px", left: "50%", transform: "translateX(-50%)", background: "#FFFFFF", borderRadius: "50%", boxShadow: "0px 2px 5px rgba(0,0,0,0.12)" }}
@@ -303,7 +390,6 @@ const ChildrenModal = ({ childData, onClose }) => {
               {firstName.charAt(0).toUpperCase() || "C"}
             </span>
           </div>
-          {/* Edit pencil on avatar */}
           <div
             className="absolute flex items-center justify-center"
             style={{ width: "19px", height: "19px", bottom: "4px", right: "4px", background: "#D1CACA", borderRadius: "4.75px" }}
@@ -314,17 +400,13 @@ const ChildrenModal = ({ childData, onClose }) => {
           </div>
         </div>
 
-        {/* Title */}
         <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "24px", color: "#FF8B13", textTransform: "capitalize", marginBottom: "4px" }}>
           Children Details
         </h2>
 
-        {/* Form fields */}
         <div className="flex flex-col gap-5 w-full">
-          {/* Name: First + Last */}
           <div className="flex flex-col gap-2 w-full">
             <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "14px", color: "#454C52" }}>Name</span>
-            {/* First Name */}
             <div
               className="flex flex-row items-center px-[14px] gap-2 w-full"
               style={{ height: "46px", background: "#FFFFFF", borderRadius: "8px", boxShadow: "0px 2px 5px rgba(103,110,118,0.08), 0px 0px 0px 1px rgba(103,110,118,0.16), 0px 1px 1px rgba(0,0,0,0.12)" }}
@@ -340,7 +422,6 @@ const ChildrenModal = ({ childData, onClose }) => {
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.333 2a1.886 1.886 0 0 1 2.667 2.667L4.667 14H2v-2.667L11.333 2z" stroke="#FF8B13" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
             </div>
-            {/* Last Name */}
             <div
               className="flex flex-row items-center px-[14px] gap-2 w-full"
               style={{ height: "46px", background: "#FFFFFF", borderRadius: "8px", boxShadow: "0px 2px 5px rgba(103,110,118,0.08), 0px 0px 0px 1px rgba(103,110,118,0.16), 0px 1px 1px rgba(0,0,0,0.12)" }}
@@ -367,7 +448,7 @@ const ChildrenModal = ({ childData, onClose }) => {
   );
 };
 
-// ─── Shared Modal Input Row (plain, with pencil) ──────────────────────────────
+// ─── Shared Modal Input Row ───────────────────────────────────────────────────
 const ModalInputRow = ({ label, value, onChange, placeholder, type = "text" }) => (
   <div className="flex flex-col gap-2 w-full">
     <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "14px", color: "#454C52" }}>{label}</span>
@@ -385,13 +466,12 @@ const ModalInputRow = ({ label, value, onChange, placeholder, type = "text" }) =
   </div>
 );
 
-// ─── Shared Phone Input Row (with IN dropdown) ────────────────────────────────
+// ─── Shared Phone Input Row ───────────────────────────────────────────────────
 const ModalPhoneRow = ({ value, onChange }) => (
   <div className="flex flex-col gap-2 w-full">
     <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "14px", color: "#454C52" }}>Phone number</span>
     <div className="flex flex-row items-center w-full"
       style={{ height: "44px", background: "#FFFFFF", borderRadius: "8px", boxShadow: "0px 2px 5px rgba(103,110,118,0.08), 0px 0px 0px 1px rgba(103,110,118,0.16), 0px 1px 1px rgba(0,0,0,0.12)", overflow: "hidden" }}>
-      {/* IN dropdown */}
       <div className="flex items-center gap-1 px-3 h-full flex-shrink-0"
         style={{ borderRight: "1px solid rgba(103,110,118,0.16)", minWidth: "61px" }}>
         <span style={{ fontFamily: "Nunito, sans-serif", fontSize: "16px", color: "#676E76" }}>IN</span>
@@ -406,7 +486,7 @@ const ModalPhoneRow = ({ value, onChange }) => (
   </div>
 );
 
-// ─── Shared Modal Email Row (with envelope icon, no pencil) ───────────────────
+// ─── Shared Modal Email Row ───────────────────────────────────────────────────
 const ModalEmailRow = ({ value, onChange }) => (
   <div className="flex flex-col gap-2 w-full">
     <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "14px", color: "#454C52" }}>Email</span>
@@ -494,7 +574,7 @@ const ProfileActionBtn = ({ icon: Icon, label, onClick }) => (
   </button>
 );
 
-// ─── Profile Page (Mobile + Desktop) ─────────────────────────────────────────
+// ─── Profile Page ─────────────────────────────────────────────────────────────
 const ProfilePage = ({ parentData, childData, plan, session }) => {
   const [showChildrenModal, setShowChildrenModal] = useState(false);
   const [showParentsModal,  setShowParentsModal]  = useState(false);
@@ -518,8 +598,6 @@ const ProfilePage = ({ parentData, childData, plan, session }) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-white pb-28">
-
-      {/* ── Sub-header: My Profile — fixed, truly full width ── */}
       <div
         className="fixed left-0 right-0 z-40 flex items-center gap-2 px-4"
         style={{ top: "72px", height: "53px", background: "#FFFFFF", boxShadow: "0px 2px 5px rgba(0,0,0,0.12)" }}
@@ -535,24 +613,15 @@ const ProfilePage = ({ parentData, childData, plan, session }) => {
         </span>
       </div>
 
-      {/* ── Content (offset for fixed header) ── */}
       <div className="flex flex-col items-center px-5 pt-6 gap-6" style={{ marginTop: "53px" }}>
         <div className="w-full max-w-[390px] md:max-w-[480px] mx-auto flex flex-col gap-6">
-
-          {/* ── Profile Card ── */}
           <div className="relative w-full rounded-[16px] overflow-hidden" style={{ minHeight: "345px" }}>
-            {/* Gradient bg */}
             <div className="absolute inset-0" style={{ background: "linear-gradient(90.28deg, #F8BF3B 13.22%, #FF8B13 38.21%, #EF5F3D 95.18%)" }} />
-
-            {/* Decorative rings */}
             {[535, 497, 459, 420, 382, 343, 305, 267, 228, 190, 152].map((size, i) => (
               <div key={i} className="absolute pointer-events-none"
                 style={{ width: `${size}px`, height: `${size * 0.977}px`, left: `${-160 + i * 23}px`, top: `${-56 + i * 23}px`, border: "1.08px solid rgba(255,255,255,0.5)", borderRadius: "50%", opacity: 0.3 + i * 0.07, transform: "rotate(165deg)" }} />
             ))}
-
-            {/* Avatar + name + buttons */}
             <div className="relative flex flex-col items-center pt-8 pb-6 gap-4 z-10">
-              {/* Avatar */}
               <div className="relative">
                 {session?.user?.image ? (
                   <img src={session.user.image} alt={parentName}
@@ -564,14 +633,11 @@ const ProfilePage = ({ parentData, childData, plan, session }) => {
                     <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 800, fontSize: "42px", color: "#fff" }}>{avatarLetter}</span>
                   </div>
                 )}
-                {/* Notification badge */}
                 <div className="absolute -top-1 -right-1 w-[30px] h-[30px] rounded-full flex items-center justify-center"
                   style={{ background: "#000", border: "3px solid #fff", boxShadow: "0px 2px 4px rgba(0,0,0,0.15)" }}>
                   <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "11px", color: "#fff" }}>8</span>
                 </div>
               </div>
-
-              {/* Name */}
               <div className="flex flex-col items-center gap-1">
                 <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "26px", lineHeight: "28px", color: "#fff", textTransform: "capitalize", textAlign: "center" }}>
                   {parentName}
@@ -580,8 +646,6 @@ const ProfilePage = ({ parentData, childData, plan, session }) => {
                   {subtitle}
                 </p>
               </div>
-
-              {/* Quick action buttons */}
               <div className="w-[calc(100%-40px)] bg-white rounded-[11px] flex flex-row justify-around items-center py-5 px-4"
                 style={{ boxShadow: "0px 2px 5px rgba(0,0,0,0.12)" }}>
                 <ProfileActionBtn icon={Users}         label="Children" onClick={() => setShowChildrenModal(true)} />
@@ -592,7 +656,6 @@ const ProfilePage = ({ parentData, childData, plan, session }) => {
             </div>
           </div>
 
-          {/* ── Current Plan Card ── */}
           <div className="relative w-full">
             <div className="absolute -top-[14px] left-5 px-4 py-1 rounded-[4px] z-10"
               style={{ background: "linear-gradient(90.28deg, #F8BF3B 13.22%, #FF8B13 38.21%, #EF5F3D 95.18%)" }}>
@@ -617,11 +680,9 @@ const ProfilePage = ({ parentData, childData, plan, session }) => {
               </button>
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* ── Modals ── */}
       {showChildrenModal && (
         <ChildrenModal childData={childData} onClose={() => setShowChildrenModal(false)} />
       )}
@@ -682,6 +743,201 @@ const DesktopBottomNav = ({ activeNav, setActiveNav, setSelectedSubject }) => (
 );
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// ── SIGNUP MODAL: Field + RelationDropdown defined OUTSIDE the modal ──────────
+// ── (defining them inside caused re-mount on every keystroke → focus loss) ────
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── Reusable text input field ─────────────────────────────────────────────────
+const SignupField = ({ label, value, onChange, placeholder, type = "text", readOnly = false, required = false }) => (
+  <div className="flex flex-col gap-2 flex-1 min-w-0">
+    <label style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px", lineHeight: "20px", color: "#666666" }}>
+      {label}{required && <span style={{ color: "#EF5F3D" }}> *</span>}
+    </label>
+    <div style={{ display: "flex", alignItems: "center", padding: "12px 16px", height: "48px", background: readOnly ? "#F8F8F8" : "#FFFFFF", boxShadow: "0px 1px 4px rgba(12,12,13,0.10), 0px 1px 4px rgba(12,12,13,0.05)", borderRadius: "8px" }}>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        readOnly={readOnly}
+        className="flex-1 outline-none bg-transparent w-full"
+        style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "16px", lineHeight: "24px", color: value ? "#333333" : "#999999", cursor: readOnly ? "not-allowed" : "text" }}
+      />
+    </div>
+  </div>
+);
+
+// ── Relation dropdown — receives state as props instead of closing over it ────
+const SignupRelationDropdown = ({ relation, setRelation, showRelDrop, setShowRelDrop }) => (
+  <div className="flex flex-col gap-2 flex-1 min-w-0">
+    <label style={{ fontFamily: "Inter, sans-serif", fontWeight: 500, fontSize: "14px", lineHeight: "20px", color: "#666666" }}>
+      Relation with Child<span style={{ color: "#EF5F3D" }}> *</span>
+    </label>
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setShowRelDrop((p) => !p)}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", height: "48px", width: "100%", background: "#FFFFFF", boxShadow: "0px 1px 4px rgba(12,12,13,0.10), 0px 1px 4px rgba(12,12,13,0.05)", borderRadius: showRelDrop ? "8px 8px 0 0" : "8px", border: "none", cursor: "pointer" }}
+      >
+        <span style={{ fontFamily: "Inter, sans-serif", fontWeight: 400, fontSize: "16px", color: relation ? "#333333" : "#999999" }}>
+          {relation || "Select Item"}
+        </span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+          style={{ transform: showRelDrop ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s", flexShrink: 0 }}>
+          <path d="M5 8l5 5 5-5" stroke="#999999" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      </button>
+      {showRelDrop && (
+        <div className="absolute left-0 right-0 z-50 overflow-hidden"
+          style={{ top: "48px", background: "#FFFFFF", borderRadius: "0 0 8px 8px", boxShadow: "0px 4px 12px rgba(0,0,0,0.12)", border: "1px solid #F0F0F0", borderTop: "none" }}>
+          {RELATION_OPTIONS.map((opt) => (
+            <button key={opt} type="button"
+              onClick={() => { setRelation(opt); setShowRelDrop(false); }}
+              className="w-full text-left px-4 py-3 transition-colors"
+              style={{ fontFamily: "Inter, sans-serif", fontSize: "15px", color: opt === relation ? "#FF8B13" : "#333333", fontWeight: opt === relation ? 700 : 400, border: "none", background: opt === relation ? "#FFF7F1" : "transparent", cursor: "pointer", borderBottom: "1px solid #F5F5F5" }}
+              onMouseEnter={(e) => { if (opt !== relation) e.currentTarget.style.background = "#FFF7F1"; }}
+              onMouseLeave={(e) => { if (opt !== relation) e.currentTarget.style.background = "transparent"; }}>
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── PARENT SIGNUP MODAL ───────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+const ParentSignupModal = ({ session, onComplete }) => {
+  const [parentName,  setParentName]  = useState(session?.user?.name  || "");
+  const [parentEmail, setParentEmail] = useState(session?.user?.email || "");
+  const [parentPhone, setParentPhone] = useState("");
+  const [relation,    setRelation]    = useState("");
+  const [showRelDrop, setShowRelDrop] = useState(false);
+  const [childName,   setChildName]   = useState("");
+  const [ageGroup,    setAgeGroup]    = useState("");
+  const [grade,       setGrade]       = useState("");
+  const [schoolName,  setSchoolName]  = useState("");
+  const [submitting,  setSubmitting]  = useState(false);
+  const [error,       setError]       = useState("");
+
+  const handleSubmit = async () => {
+    if (!parentName.trim() || !parentEmail.trim() || !parentPhone.trim() || !relation) {
+      setError("Please fill in all required parent fields.");
+      return;
+    }
+    if (!childName.trim() || !ageGroup.trim() || !grade.trim()) {
+      setError("Please fill in all required child fields.");
+      return;
+    }
+
+    setError("");
+    setSubmitting(true);
+
+    try {
+      const userName = parentEmail.split("@")[0];
+
+      // ── Create Parent — now with JWT auth header ───────────────────────────
+      await axios.post(
+        `${BASE_URL}/api/parent-users`,
+        {
+          name:                 parentName.trim(),
+          email:                parentEmail.trim(),
+          userName,
+          phone:                parentPhone.trim(),
+          password:             "google_sso_user",
+          maritalStatus:        "",
+          occupation:           "",
+          relationWithChildren: relation,
+          spouseName:           "",
+          spouseGender:         "",
+          spousePhone:          "",
+        },
+        authHeaders()   // ✅ JWT attached
+      );
+
+      // ── Child creation (uncomment when API is ready) ───────────────────────
+      // await axios.post(
+      //   `${BASE_URL}/api/child-users`,
+      //   { parentId: newParentId, childName: childName.trim(), ageGroup: ageGroup.trim(), grade: grade.trim(), schoolName: schoolName.trim() },
+      //   authHeaders()
+      // );
+
+      onComplete();
+    } catch (err) {
+      console.error("Signup error:", err);
+      setError(
+        err?.response?.data?.message ||
+        "Something went wrong. Please try again."
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+      <div className="w-full flex flex-col overflow-y-auto"
+        style={{ maxWidth: "727px", maxHeight: "95vh", background: "#FFF7F1", borderRadius: "8px", padding: "24px", gap: "16px" }}
+        onClick={(e) => e.stopPropagation()}>
+        <div className="flex flex-col md:flex-row" style={{ gap: "0px" }}>
+          <div className="flex flex-col flex-1" style={{ gap: "16px", paddingRight: "0px" }}>
+            <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "20px", lineHeight: "30px", color: "#000000", margin: 0 }}>
+              Enter Parent Details
+            </h2>
+            <SignupField label="Parent Name"        required value={parentName}  onChange={setParentName}  placeholder="Type Here" />
+            <SignupField label="Parent Email ID"     required value={parentEmail} onChange={setParentEmail} placeholder="Type Here" type="email" readOnly={!!session?.user?.email} />
+            <SignupField label="Parent Phone Number" required value={parentPhone} onChange={setParentPhone} placeholder="Type Here" type="tel" />
+            <SignupRelationDropdown relation={relation} setRelation={setRelation} showRelDrop={showRelDrop} setShowRelDrop={setShowRelDrop} />
+          </div>
+          <div className="hidden md:block flex-shrink-0 self-stretch mx-4" style={{ width: "1px", background: "#CCCCCC", margin: "30px 16px" }} />
+          <div className="block md:hidden my-4" style={{ height: "1px", background: "#E0E0E0" }} />
+          <div className="flex flex-col flex-1" style={{ gap: "16px" }}>
+            <h2 style={{ fontFamily: "Nunito, sans-serif", fontWeight: 500, fontSize: "20px", lineHeight: "30px", color: "#000000", margin: 0 }}>
+              Enter Child Details
+            </h2>
+            <SignupField label="Child Name" required value={childName}  onChange={setChildName}  placeholder="Type Here" />
+            <div className="flex gap-4">
+              <SignupField label="Age Group(Yrs)" required value={ageGroup} onChange={setAgeGroup} placeholder="Type Here" />
+              <SignupField label="Grade"          required value={grade}    onChange={setGrade}    placeholder="Type Here" />
+            </div>
+            <SignupField label="School Name" value={schoolName} onChange={setSchoolName} placeholder="Type Here" />
+          </div>
+        </div>
+
+        {error && (
+          <div style={{ background: "#FEE9E9", borderRadius: "6px", padding: "10px 14px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0 }}>
+              <circle cx="10" cy="10" r="9" stroke="#EF5F3D" strokeWidth="1.5"/>
+              <path d="M10 6v4M10 14h.01" stroke="#EF5F3D" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "13px", color: "#EF5F3D", fontWeight: 600, margin: 0 }}>{error}</p>
+          </div>
+        )}
+
+        <button onClick={handleSubmit} disabled={submitting}
+          style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", padding: "16px", gap: "8px", width: "100%", height: "56px", background: submitting ? "#4A5A88" : "#2C3D68", borderRadius: "8px", border: "none", cursor: submitting ? "not-allowed" : "pointer", transition: "background 0.2s, opacity 0.2s", opacity: submitting ? 0.85 : 1 }}
+          onMouseEnter={(e) => { if (!submitting) e.currentTarget.style.background = "#1F2D52"; }}
+          onMouseLeave={(e) => { if (!submitting) e.currentTarget.style.background = "#2C3D68"; }}>
+          {submitting ? (
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <>
+              <span style={{ fontFamily: "Nunito, sans-serif", fontWeight: 700, fontSize: "16px", lineHeight: "24px", color: "#FFFFFF" }}>Sign Up</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // ── MAIN DASHBOARD ────────────────────────────────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
 const UserDashboard = () => {
@@ -701,11 +957,10 @@ const UserDashboard = () => {
   const [plan,                 setPlan]                 = useState("");
   const [childName,            setChildName]            = useState("");
   const [customUserData,       setCustomUserData]       = useState(false);
-
-  // ── NEW: Step 4 + 5 state ──────────────────────────────────────────────────
   const [parentId,             setParentId]             = useState(null);
   const [parentData,           setParentData]           = useState(null);
   const [childData,            setChildData]            = useState(null);
+  const [showSignupModal,      setShowSignupModal]      = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/login");
@@ -714,77 +969,118 @@ const UserDashboard = () => {
   useEffect(() => {
     if (status !== "authenticated") return;
 
-    // ── STEP 4: Check / Create Parent ─────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // STEP 1–3: Exchange Google ID Token → Backend JWT → Store in localStorage
+    // Priority order:
+    //   1. Already stored in localStorage  → reuse it
+    //   2. session.backendJWT from route.js → store & reuse it
+    //   3. session.id_token fallback        → exchange manually
+    // ══════════════════════════════════════════════════════════════════════════
+    const ensureJWT = async () => {
+      // ── Priority 1: already stored from a previous call ───────────────────
+      const existingJWT = getJWT();
+      if (existingJWT) {
+        console.log("ℹ️ JWT already present in localStorage, skipping exchange");
+        return existingJWT;
+      }
+
+      // ── Priority 2: route.js already exchanged the token at login time ────
+      // session.backendJWT is set by the updated signIn() + session() callbacks
+      if (session?.backendJWT) {
+        storeJWT(session.backendJWT);
+        console.log("✅ JWT taken directly from session.backendJWT");
+        return session.backendJWT;
+      }
+
+      // ── Priority 3: fallback — exchange Google id_token manually ──────────
+      // session.id_token is forwarded by the jwt() + session() callbacks in route.js
+      const googleIdToken = session?.id_token || session?.idToken;
+
+      if (!googleIdToken) {
+        console.warn(
+          "⚠️ No JWT source found in session.\n" +
+          "Make sure route.js has the updated callbacks that set session.backendJWT and session.id_token."
+        );
+        return null;
+      }
+
+      console.log("ℹ️ Falling back to manual Google id_token exchange");
+      const jwt = await exchangeGoogleTokenForJWT(googleIdToken);
+      return jwt;
+    };
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // STEP 4: Check / Create Parent — all requests use JWT via authHeaders()
+    // ══════════════════════════════════════════════════════════════════════════
     const initParent = async () => {
       const email = session?.user?.email;
       const name  = session?.user?.name || "";
       if (!email) return null;
 
       try {
-        // 4a. Check if parent exists by email
-        const checkRes = await axios.get(`${BASE_URL}/api/parent-users/email?email=${email}`);
+        // ✅ JWT header attached
+        const checkRes = await axios.get(
+          `${BASE_URL}/api/parent-users/email?email=${encodeURIComponent(email)}`,
+          authHeaders()
+        );
 
-        if (checkRes.data?.parentId) {
-          // Parent found ✅
-          const pid = checkRes.data.parentId;
+        console.log("initParent full response:", JSON.stringify(checkRes.data));
+
+        const responseData = checkRes.data;
+        const pid =
+          responseData?.parentId  ||
+          responseData?.parent_id ||
+          responseData?.id        ||
+          responseData?.data?.parentId ||
+          responseData?.data?.id  ||
+          null;
+
+        console.log("Resolved parentId:", pid);
+
+        if (pid) {
           setParentId(pid);
-
-          // 4b. Fetch full parent data (includes childUsers + activePlanId)
-          const fullRes = await axios.get(`${BASE_URL}/api/parent-users/${pid}`);
-          const pData   = fullRes.data;
-          setParentData(pData);
-
-          // ── STEP 5: Extract child + active plan ──────────────────────────
-          if (pData?.childUsers?.length > 0) {
-            const child = pData.childUsers[0];
-            setChildData(child);
-            setChildName(child.childName || name);
-          } else {
-            setChildName(pData?.name || name);
+          try {
+            // ✅ JWT header attached
+            const fullRes = await axios.get(
+              `${BASE_URL}/api/parent-users/${pid}`,
+              authHeaders()
+            );
+            const pData = fullRes.data;
+            setParentData(pData);
+            if (pData?.childUsers?.length > 0) {
+              const child = pData.childUsers[0];
+              setChildData(child);
+              setChildName(child.childName || name);
+            } else {
+              setChildName(pData?.name || name);
+            }
+          } catch (fullErr) {
+            console.error("Failed to fetch full parent data:", fullErr);
+            setChildName(name);
           }
-
           return pid;
+        } else {
+          console.log("No parentId found in response - showing signup modal");
+          setShowSignupModal(true);
+          setChildName(name);
+          return null;
         }
       } catch (err) {
-        // "User not found" → create parent
-        if (err?.response?.data?.message === "User not found" || err?.response?.status === 404) {
-          try {
-            // 4c. Create new parent with name + email only
-            const userName = email.split("@")[0];
-            const createRes = await axios.post(`${BASE_URL}/api/parent-users`, {
-              name,
-              email,
-              userName,
-              phone:                "",
-              password:             "google_sso_user",
-              maritalStatus:        "",
-              occupation:           "",
-              relationWithChildren: "",
-              spouseName:           "",
-              spouseGender:         "",
-              spousePhone:          "",
-            });
-
-            const newPid = createRes.data?.parentId || createRes.data?.id;
-            if (newPid) {
-              setParentId(newPid);
-              setChildName(name);
-              // Fetch newly created parent data
-              try {
-                const newFullRes = await axios.get(`${BASE_URL}/api/parent-users/${newPid}`);
-                setParentData(newFullRes.data);
-              } catch {}
-            }
-            return newPid;
-          } catch (createErr) {
-            console.error("Failed to create parent:", createErr);
-          }
-        }
+        console.log(
+          "initParent error - showing signup modal.",
+          "HTTP status:", err?.response?.status,
+          "Response:", JSON.stringify(err?.response?.data),
+          "Message:", err?.message
+        );
+        setShowSignupModal(true);
+        setChildName(name);
+        return null;
       }
-      return null;
     };
 
-    // ── STEP 6: Fetch subjects ─────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // STEP 6: Fetch subjects — JWT header attached
+    // ══════════════════════════════════════════════════════════════════════════
     const fetchSubjects = async () => {
       try {
         const email = session?.user?.email;
@@ -792,7 +1088,11 @@ const UserDashboard = () => {
 
         let hasUserData = false;
         try {
-          const res = await axios.get(`${BASE_URL}/parent-users/getPricingPlan?email=${email}`);
+          // ✅ JWT header attached
+          const res = await axios.get(
+            `${BASE_URL}/parent-users/getPricingPlan?email=${email}`,
+            authHeaders()
+          );
           if (res.data?.pricingPlan) {
             setPlan(res.data.pricingPlan.name === "No active plan found for this user."
               ? "Upgrade Now!"
@@ -810,7 +1110,11 @@ const UserDashboard = () => {
 
         if (!hasUserData) {
           try {
-            const response = await axios.get(`${BASE_URL}/api/subjects`);
+            // ✅ JWT header attached
+            const response = await axios.get(
+              `${BASE_URL}/api/subjects`,
+              authHeaders()
+            );
             setSubjectData(response.data || []);
             setCustomUserData(false);
           } catch {
@@ -824,26 +1128,32 @@ const UserDashboard = () => {
       }
     };
 
-    // ── Run all init steps ─────────────────────────────────────────────────
     const init = async () => {
-      await initParent();
+      await ensureJWT();   // ← FIRST: get & store JWT
+      await initParent();  // ← THEN:  all API calls use the JWT
       await fetchSubjects();
     };
     init();
 
-    // ── Life skills from localStorage ──────────────────────────────────────
+    // Life skills from localStorage
     const storedStrong = localStorage.getItem("SenseiStrongSkills");
     const storedNeeds  = localStorage.getItem("SenseiNeedAttentionSkills");
     if (storedStrong) setStrongSkills(JSON.parse(storedStrong));
     if (storedNeeds)  setNeedAttentionSkills(JSON.parse(storedNeeds));
 
-    // ── Recent Activities ──────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // Recent Activities — JWT header attached
+    // ══════════════════════════════════════════════════════════════════════════
     const fetchRecentActivities = async () => {
       setRecentLoading(true);
       try {
         const email = session?.user?.email;
         if (email) {
-          const res = await axios.get(`${BASE_URL}/recent-activities?email=${email}`);
+          // ✅ JWT header attached
+          const res = await axios.get(
+            `${BASE_URL}/recent-activities?email=${email}`,
+            authHeaders()
+          );
           const activities = res.data?.activities || res.data || [];
           setRecentActivities(Array.isArray(activities) ? activities : []);
         }
@@ -857,6 +1167,39 @@ const UserDashboard = () => {
 
     fetchRecentActivities();
   }, [status, session]);
+
+  // ── Re-fetch parent data after successful signup ───────────────────────────
+  const handleSignupComplete = async () => {
+    setShowSignupModal(false);
+    const email = session?.user?.email;
+    if (!email) return;
+
+    try {
+      // ✅ JWT header attached
+      const checkRes = await axios.get(
+        `${BASE_URL}/api/parent-users/email?email=${encodeURIComponent(email)}`,
+        authHeaders()
+      );
+      if (checkRes.data?.parentId) {
+        const pid = checkRes.data.parentId;
+        setParentId(pid);
+        // ✅ JWT header attached
+        const fullRes = await axios.get(
+          `${BASE_URL}/api/parent-users/${pid}`,
+          authHeaders()
+        );
+        const pData = fullRes.data;
+        setParentData(pData);
+        if (pData?.childUsers?.length > 0) {
+          const child = pData.childUsers[0];
+          setChildData(child);
+          setChildName(child.childName || session?.user?.name || "");
+        }
+      }
+    } catch (err) {
+      console.error("Post-signup fetch error:", err);
+    }
+  };
 
   const handleSubjectClick = (subject) => {
     if (subject.modules) localStorage.setItem("modules", JSON.stringify(subject.modules));
@@ -880,11 +1223,13 @@ const UserDashboard = () => {
           <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-gray-600 font-semibold">Loading…</p>
         </div>
+        {showSignupModal && (
+          <ParentSignupModal session={session} onComplete={handleSignupComplete} />
+        )}
       </div>
     );
   }
 
-  // ── Desktop carousel (used in BOOK tab only) ─────────────────────────────
   const SubjectCarousel = () => (
     hasSubjects ? (
       <div className="flex items-center">
@@ -906,7 +1251,6 @@ const UserDashboard = () => {
     ) : <NoSubjectsFound />
   );
 
-  // ── Desktop grid (used in HOME tab — no scroll, all cards in one row) ────
   const SubjectGrid = () => (
     hasSubjects ? (
       <div className="flex flex-nowrap gap-5 pb-4">
@@ -917,7 +1261,6 @@ const UserDashboard = () => {
     ) : <NoSubjectsFound />
   );
 
-  // ── Greeting ──────────────────────────────────────────────────────────────
   const Greeting = ({ large = true }) => (
     <div className={large ? "mb-6" : "mb-5"}>
       <p className={`text-[#2C3D68] font-semibold tracking-tight leading-8 ${large ? "text-2xl" : "text-xl"}`}>Hello!</p>
@@ -930,7 +1273,6 @@ const UserDashboard = () => {
     </div>
   );
 
-  // ── Mobile Home Content ───────────────────────────────────────────────────
   const MobileHomeContent = () => (
     <div className="flex flex-col min-h-screen bg-white">
       <div className="px-5 pt-5 pb-6"
@@ -988,7 +1330,6 @@ const UserDashboard = () => {
     </div>
   );
 
-  // ── Mobile Home Full (with Life Skills panel) ─────────────────────────────
   const MobileHomeFull = () => (
     <div className="flex flex-col min-h-screen bg-white">
       <div className="px-5 pt-5 pb-6"
@@ -1055,17 +1396,12 @@ const UserDashboard = () => {
     </div>
   );
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // RENDER
-  // ══════════════════════════════════════════════════════════════════════════
   return (
     <div className="min-h-screen bg-white">
       <div style={{ height: "72px" }} />
 
       {/* ════ DESKTOP ════ */}
       <div className="hidden md:block">
-
-        {/* ── HOME ── */}
         {activeNav === "home" && (
           selectedSubject ? (
             <div className="px-6 py-6 pb-28">
@@ -1108,7 +1444,6 @@ const UserDashboard = () => {
           )
         )}
 
-        {/* ── BOOK ── */}
         {activeNav === "book" && (
           <div className="px-6 py-6 pb-28">
             {selectedSubject ? (
@@ -1150,21 +1485,14 @@ const UserDashboard = () => {
           </div>
         )}
 
-        {/* ── PROFILE (Desktop) ── */}
         {activeNav === "user" && (
           <div className="px-6 py-6 pb-28 flex justify-center">
             <div className="w-full max-w-[600px]">
-              <ProfilePage
-                parentData={parentData}
-                childData={childData}
-                plan={plan}
-                session={session}
-              />
+              <ProfilePage parentData={parentData} childData={childData} plan={plan} session={session} />
             </div>
           </div>
         )}
 
-        {/* ── OTHER TABS ── */}
         {activeNav !== "home" && activeNav !== "book" && activeNav !== "user" && (
           <div className="flex items-center justify-center py-20">
             <p className="text-gray-400 text-lg">Coming soon…</p>
@@ -1179,23 +1507,14 @@ const UserDashboard = () => {
             ? <div className="px-4 py-4 pb-28"><SubjectView subject={selectedSubject} onBack={() => setSelectedSubject(null)} /></div>
             : <MobileHomeFull />
         )}
-
         {activeNav === "book" && (
           selectedSubject
             ? <div className="px-4 py-4 pb-28"><SubjectView subject={selectedSubject} onBack={() => setSelectedSubject(null)} /></div>
             : <MobileHomeContent />
         )}
-
-        {/* ── PROFILE (Mobile) ── */}
         {activeNav === "user" && (
-          <ProfilePage
-            parentData={parentData}
-            childData={childData}
-            plan={plan}
-            session={session}
-          />
+          <ProfilePage parentData={parentData} childData={childData} plan={plan} session={session} />
         )}
-
         {activeNav !== "home" && activeNav !== "book" && activeNav !== "user" && (
           <div className="flex items-center justify-center py-20">
             <p className="text-gray-400 text-lg">Coming soon…</p>
@@ -1206,6 +1525,11 @@ const UserDashboard = () => {
       {/* ── Navbars ── */}
       <DesktopBottomNav activeNav={activeNav} setActiveNav={setActiveNav} setSelectedSubject={setSelectedSubject} />
       <MobileBottomNav  activeNav={activeNav} setActiveNav={setActiveNav} setSelectedSubject={setSelectedSubject} />
+
+      {/* ── Parent Signup Modal ── */}
+      {showSignupModal && (
+        <ParentSignupModal session={session} onComplete={handleSignupComplete} />
+      )}
     </div>
   );
 };
